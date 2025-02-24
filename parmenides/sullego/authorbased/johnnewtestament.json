@@ -1,0 +1,412 @@
+[
+  {
+    "quizType":"authorbased",
+    "theme":"John - The New Testament",
+    "reference":"/texts?author=John&book=New+Testament&reference=1",
+    "set":1,
+    "segment":"1.1",
+    "fullSentence":"ΕΝ ΑΡΧΗ ἦν ὁ λόγος, καὶ ὁ λόγος ἦν πρὸς τὸν θεόν, καὶ θεὸς ἦν ὁ λόγος.",
+    "translation":"In the beginning was the Word, and the Word was with God, and the Word was God.",
+    "grammarQuestionOptions":{
+      "verbs":[
+        "aorist mid part - plural - nom/acc",
+        "3rd plural - fut - ind - act",
+        "3rd plural - aorist - ind - act",
+        "3rd plural - pres - ind - act",
+        "3rd sing - impf - ind - act",
+        "3rd sing - aorist - ind - act",
+        "3rd sing - pres - ind - act",
+        "1st sing - pres - ind - act",
+        "2nd sing - pres - ind - act",
+        "3rd sing - impf - ind - mid/psv",
+        "3rd plur - impf - ind - mid/psv"
+      ],
+      "nouns":[
+        "sing - nom",
+        "sing - fem - acc",
+        "sing - gen",
+        "sing - dat",
+        "sing - acc",
+        "plural - nom",
+        "plural - gen",
+        "plural - neut - nom",
+        "plural - masc/neut - dat",
+        "plural - dat"
+      ],
+      "misc":[ ]
+    },
+    "content":[
+      {
+        "greek":"ἀρχή",
+        "translation":"a beginning, rule, office, empire",
+        "wordsInText":[
+          "ΑΡΧΗ"
+        ],
+        "hasGrammarQuestions":true,
+        "grammarQuestions":[
+          {
+            "correctAnswer":"sing - nom",
+            "typeOfWord":"noun",
+            "wordInText":"ΑΡΧΗ"
+          }
+        ]
+      },
+      {
+        "greek":"θεός",
+        "translation":"god",
+        "wordsInText":[
+          "θεόν",
+          "θεὸς"
+        ],
+        "hasGrammarQuestions":true,
+        "grammarQuestions":[
+          {
+            "correctAnswer":"sing - acc",
+            "typeOfWord":"noun",
+            "wordInText":"θεόν"
+          },
+          {
+            "correctAnswer":"sing - nom",
+            "typeOfWord":"noun",
+            "wordInText":"θεὸς"
+          }
+        ]
+      },
+      {
+        "greek":"εἰμί",
+        "translation":"to be",
+        "wordsInText":[
+          "ἦν"
+        ],
+        "hasGrammarQuestions":true,
+        "grammarQuestions":[
+          {
+            "correctAnswer":"3rd sing - impf - ind - act",
+            "typeOfWord":"verb",
+            "wordInText":"ἦν"
+          }
+        ]
+      },
+      {
+        "greek":"καί",
+        "translation":"and/also",
+        "wordsInText":[
+          "καὶ"
+        ]
+      },
+      {
+        "greek":"λόγος",
+        "translation":"the word",
+        "wordsInText":[
+          "λόγος"
+        ],
+        "hasGrammarQuestions":true,
+        "grammarQuestions":[
+          {
+            "correctAnswer":"sing - nom",
+            "typeOfWord":"noun",
+            "wordInText":"λόγος"
+          }
+        ]
+      },
+      {
+        "greek":"ὁ",
+        "translation":"the",
+        "wordsInText":[
+          "ὁ",
+          "τὸν"
+        ],
+        "hasGrammarQuestions":false
+      },
+      {
+        "greek":"πρός",
+        "translation":"(w. gen.) from, (w. dat.) at, near, in addition to; (w. acc.) to, toward, regarding",
+        "wordsInText":[
+          "πρὸς"
+        ],
+        "hasGrammarQuestions":false
+      },
+      {
+        "greek":"ἐν",
+        "translation":"(time) in, at, or during the time of",
+        "wordsInText":[
+          "ΕΝ"
+        ],
+        "hasGrammarQuestions":false
+      }
+    ]
+  },
+  {
+    "quizType":"authorbased",
+    "theme":"John - The New Testament",
+    "reference":"/texts?author=John&book=New+Testament&reference=1",
+    "set":1,
+    "segment":"1.2",
+    "fullSentence":"Οὗτος ἦν ἐν ἀρχῇ πρὸς τὸν θεόν.",
+    "translation":"The same was in the beginning with God.",
+    "grammarQuestionOptions":{
+      "verbs":[
+        "aorist mid part - plural - nom/acc",
+        "3rd plural - fut - ind - act",
+        "3rd plural - aorist - ind - act",
+        "3rd plural - pres - ind - act",
+        "3rd sing - impf - ind - act",
+        "3rd sing - aorist - ind - act",
+        "3rd sing - pres - ind - act",
+        "1st sing - pres - ind - act",
+        "2nd sing - pres - ind - act",
+        "3rd sing - impf - ind - mid/psv",
+        "3rd plur - impf - ind - mid/psv"
+      ],
+      "nouns":[
+        "sing - nom",
+        "sing - fem - acc",
+        "sing - gen",
+        "sing - dat",
+        "sing - acc",
+        "plural - nom",
+        "plural - gen",
+        "plural - neut - nom",
+        "plural - masc/neut - dat",
+        "plural - dat"
+      ],
+      "misc":[ ]
+    },
+    "content":[
+      {
+        "greek":"ἀρχή",
+        "translation":"a beginning, rule, office, empire",
+        "wordsInText":[
+          "ἀρχῇ"
+        ],
+        "hasGrammarQuestions":true,
+        "grammarQuestions":[
+          {
+            "correctAnswer":"sing - dat",
+            "typeOfWord":"noun",
+            "wordInText":"ἀρχῇ"
+          }
+        ]
+      },
+      {
+        "greek":"θεός",
+        "translation":"god",
+        "wordsInText":[
+          "θεόν"
+        ],
+        "hasGrammarQuestions":true,
+        "grammarQuestions":[
+          {
+            "correctAnswer":"sing - acc",
+            "typeOfWord":"noun",
+            "wordInText":"θεόν"
+          }
+        ]
+      },
+      {
+        "greek":"ἐν",
+        "translation":"(time) in, at, or during the time of",
+        "wordsInText":[
+          "ἐν"
+        ]
+      },
+      {
+        "greek":"εἰμί",
+        "translation":"to be",
+        "wordsInText":[
+          "ἦν"
+        ],
+        "hasGrammarQuestions":true,
+        "grammarQuestions":[
+          {
+            "correctAnswer":"3rd sing - impf - ind - act",
+            "typeOfWord":"verb",
+            "wordInText":"ἦν"
+          }
+        ]
+      },
+      {
+        "greek":"ὁ",
+        "translation":"the",
+        "wordsInText":[
+          "τὸν"
+        ],
+        "hasGrammarQuestions":false
+      },
+      {
+        "greek":"πρός",
+        "translation":"(w. gen.) from, (w. dat.) at, near, in addition to; (w. acc.) to, toward, regarding",
+        "wordsInText":[
+          "πρὸς"
+        ],
+        "hasGrammarQuestions":false
+      },
+      {
+        "greek":"οὗτος",
+        "translation":"this; that",
+        "wordsInText":[
+          "Οὗτος"
+        ],
+        "hasGrammarQuestions":true,
+        "grammarQuestions":[
+          {
+            "correctAnswer":"sing - nom",
+            "typeOfWord":"pronoun",
+            "wordInText":"Οὗτος"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "quizType":"authorbased",
+    "theme":"John - The New Testament",
+    "reference":"/texts?author=John&book=New+Testament&reference=1",
+    "set":1,
+    "segment":"1.5",
+    "fullSentence":"καὶ τὸ φῶς ἐν τῇ σκοτίᾳ φαίνει, καὶ ἡ σκοτία αὐτὸ οὐ κατέλαβεν.",
+    "translation":"The light shines in the darkness, and the darkness hasn't overcome it.",
+    "grammarQuestionOptions":{
+      "verbs":[
+        "aorist mid part - plural - nom/acc",
+        "3rd plural - fut - ind - act",
+        "3rd plural - aorist - ind - act",
+        "3rd plural - pres - ind - act",
+        "3rd sing - impf - ind - act",
+        "3rd sing - aorist - ind - act",
+        "3rd sing - pres - ind - act",
+        "1st sing - pres - ind - act",
+        "2nd sing - pres - ind - act",
+        "3rd sing - impf - ind - mid/psv",
+        "3rd plur - impf - ind - mid/psv"
+      ],
+      "nouns":[
+        "sing - nom",
+        "sing - fem - acc",
+        "sing - gen",
+        "sing - dat",
+        "sing - acc",
+        "sing - neut - acc",
+        "plural - nom",
+        "plural - gen",
+        "plural - neut - nom",
+        "plural - masc/neut - dat",
+        "plural - dat"
+      ],
+      "misc":[ ]
+    },
+    "content":[
+      {
+        "greek":"αὐτός",
+        "translation":"self (unemph. 3rd pers.pronoun;); the same",
+        "wordsInText":[
+          "αὐτὸ"
+        ],
+        "hasGrammarQuestions":true,
+        "grammarQuestions":[
+          {
+            "correctAnswer":"sing - neut - acc",
+            "typeOfWord":"pronoun",
+            "wordInText":"αὐτὸ"
+          }
+        ]
+      },
+      {
+        "greek":"καί",
+        "translation":"and, also",
+        "wordsInText":[
+          "καὶ"
+        ]
+      },
+      {
+        "greek":"ἐν",
+        "translation":"(time) in, at, or during the time of",
+        "wordsInText":[
+          "ἐν"
+        ]
+      },
+      {
+        "greek":"καταλαμβάνω",
+        "translation":"to seize upon, lay hold of",
+        "wordsInText":[
+          "κατέλαβεν"
+        ],
+        "hasGrammarQuestions":true,
+        "grammarQuestions":[
+          {
+            "correctAnswer":"3rd sing - aorist - ind - act",
+            "typeOfWord":"verb",
+            "wordInText":"κατέλαβεν"
+          }
+        ]
+      },
+      {
+        "greek":"ὁ",
+        "translation":"the",
+        "wordsInText":[
+          "τὸ",
+          "ἡ",
+          "τῇ"
+        ]
+      },
+      {
+        "greek":"οὐ",
+        "translation":"not",
+        "wordsInText":[
+          "οὐ"
+        ]
+      },
+      {
+        "greek":"σκοτία",
+        "translation":"darkness, gloom",
+        "wordsInText":[
+          "σκοτία",
+          "σκοτίᾳ"
+        ],
+        "hasGrammarQuestions":true,
+        "grammarQuestions":[
+          {
+            "correctAnswer":"sing - nom",
+            "typeOfWord":"noun",
+            "wordInText":"σκοτία"
+          },
+          {
+            "correctAnswer":"sing - dat",
+            "typeOfWord":"noun",
+            "wordInText":"σκοτίᾳ"
+          }
+        ]
+      },
+      {
+        "greek":"φαίνω",
+        "translation":"to bring to light, make to appear",
+        "wordsInText":[
+          "φαίνει"
+        ],
+        "hasGrammarQuestions":true,
+        "grammarQuestions":[
+          {
+            "correctAnswer":"3rd sing - pres - ind - act",
+            "typeOfWord":"verb",
+            "wordInText":"φαίνει"
+          }
+        ]
+      },
+      {
+        "greek":"φάος",
+        "translation":"light, daylight",
+        "wordsInText":[
+          "φῶς"
+        ],
+        "hasGrammarQuestions":true,
+        "grammarQuestions":[
+          {
+            "correctAnswer":"sing - neut - nom",
+            "typeOfWord":"noun",
+            "wordInText":"φῶς"
+          }
+        ]
+      }
+    ]
+  }
+]

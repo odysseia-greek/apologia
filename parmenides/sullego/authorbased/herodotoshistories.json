@@ -1,0 +1,2720 @@
+[
+  {
+    "quizType": "authorbased",
+    "theme": "Herodotos - Histories",
+    "reference": "/texts?author=Herodotos&book=Histories&reference=1.1",
+    "set": 1,
+    "segment": "1.1.0",
+    "fullSentence": "Ἡροδότου Ἁλικαρνησσέος ἱστορίης ἀπόδεξις ἥδε, ὡς μήτε τὰ γενόμενα ἐξ ἀνθρώπων τῷ χρόνῳ ἐξίτηλα γένηται, μήτε ἔργα μεγάλα τε καὶ θωμαστά, τὰ μὲν Ἕλλησι τὰ δὲ βαρβάροισι ἀποδεχθέντα, ἀκλεᾶ γένηται, τά τε ἄλλα καὶ διʼ ἣν αἰτίην ἐπολέμησαν ἀλλήλοισι.",
+    "translation": "This is the display of the inquiry of Herodotus of Halicarnassus, so that things done by man not be forgotten in time, and that great and marvelous deeds, some displayed by the Hellenes, some by the barbarians, not lose their glory, including among others what was the cause of their waging war on each other.",
+    "grammarQuestionOptions": {
+      "verbs": [
+        "aorist psv part - plural - neut",
+        "aorist mid part - plural - nom/acc",
+        "3rd sing - aorist - mid - subj",
+        "3rd plural - aorist - ind - act"
+      ],
+      "nouns": [
+        "sing - nom",
+        "sing - fem - acc",
+        "sing - gen",
+        "sing - dat",
+        "sing - acc",
+        "plural - nom",
+        "plural - gen",
+        "plural - neut - nom",
+        "plural - masc/neut - dat",
+        "plural - dat",
+        "plural - nom/acc"
+      ],
+      "misc": [
+      ]
+    },
+    "content": [
+      {
+        "greek": "αἰτία",
+        "translation": "a charge, accusation",
+        "wordsInText": [
+          "αἰτίην"
+        ],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "sing - fem - acc",
+            "typeOfWord": "noun",
+            "extraInformation": "Ionic ending",
+            "wordInText": "αἰτίην"
+          }
+        ]
+      },
+      {
+        "greek": "ὅς",
+        "translation": "who, that, which: relative pronoun",
+        "wordsInText": [
+          "ἣν"
+        ],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "sing - fem - acc",
+            "typeOfWord": "noun",
+            "wordInText": "ἣν"
+          }
+        ]
+      },
+      {
+        "greek": "ἀκλεής",
+        "translation": "without fame, inglorious, unsung",
+        "wordsInText": [
+          "ἀκλεᾶ"
+        ],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "plural - neut - nom",
+            "typeOfWord": "noun",
+            "wordInText": "ἀκλεᾶ"
+          }
+        ]
+      },
+      {
+        "greek": "Ἁλικαρνασσεύς",
+        "translation": "a Halicarnassian",
+        "wordsInText": [
+          "Ἁλικαρνησσέος"
+        ],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "sing - gen",
+            "typeOfWord": "noun",
+            "wordInText": "Ἁλικαρνησσέος"
+          }
+        ]
+      },
+      {
+        "greek": "ἀλλήλων",
+        "translation": "of one another, to one another, one another",
+        "wordsInText": [
+          "ἀλλήλοισι"
+        ],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "plural - masc/neut - dat",
+            "typeOfWord": "noun",
+            "extraInformation": "Epic form of ἀλλήλων",
+            "wordInText": "ἀλλήλοισι"
+          }
+        ]
+      },
+      {
+        "greek": "ἄλλος",
+        "translation": "other, another",
+        "wordsInText": [
+          "ἄλλα"
+        ],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "ἄνθρωπος",
+        "translation": "man, person, human",
+        "wordsInText": [
+          "ἀνθρώπων"
+        ],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "plural - gen",
+            "typeOfWord": "noun",
+            "wordInText": "ἀνθρώπων"
+          }
+        ]
+      },
+      {
+        "greek": "ἀποδείκνυμι",
+        "translation": "display, appoint, demonstrate",
+        "wordsInText": [
+          "ἀποδεχθέντα"
+        ],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "aorist psv part - plural - neut",
+            "typeOfWord": "verb",
+            "wordInText": "ἀποδεχθέντα"
+          }
+        ]
+      },
+      {
+        "greek": "ἀπόδεξις",
+        "translation": "setting, showing forth, publication (Ionic form of ἀπόδειξις)",
+        "wordsInText": [
+          "ἀπόδεξις"
+        ],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "sing - nom",
+            "typeOfWord": "noun",
+            "wordInText": "ἀπόδεξις",
+            "extraInformation": "Ionic form of ἀπόδειξις"
+          }
+        ]
+      },
+      {
+        "greek": "βάρβαρος",
+        "translation": "barbarous",
+        "wordsInText": [
+          "βαρβάροισι"
+        ],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "plural - dat",
+            "typeOfWord": "noun",
+            "wordInText": "βαρβάροισι",
+            "extraInformation": "βαρβάροισι is the Epic/Ionic and Aeolic ending of the Attic βᾰρβᾰροις"
+          }
+        ]
+      },
+      {
+        "greek": "γίγνομαι",
+        "translation": "become, be born",
+        "wordsInText": [
+          "γενόμενα",
+          "γένηται"
+        ],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "aorist mid part - plural - nom/acc",
+            "typeOfWord": "verb",
+            "wordInText": "γενόμενα"
+          },
+          {
+            "correctAnswer": "3rd sing - aorist - mid - subj",
+            "typeOfWord": "verb",
+            "wordInText": "γένηται"
+          }
+        ]
+      },
+      {
+        "greek": "δέ",
+        "translation": "but",
+        "wordsInText": [
+          "δὲ"
+        ],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "διά",
+        "translation": "through c. gen.; because of c. acc",
+        "wordsInText": [
+          "διʼ"
+        ],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "ἐκ",
+        "translation": "from out of",
+        "wordsInText": [
+          "ἐξ"
+        ],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "Ἕλλην",
+        "translation": "Hellen; Greek",
+        "wordsInText": [
+          "Ἕλλησι"
+        ],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "plural - dat",
+            "typeOfWord": "noun",
+            "wordInText": "Ἕλλησι"
+          }
+        ]
+      },
+      {
+        "greek": "ἐξίτηλος",
+        "translation": "going out, losing colour, fading, evanescent",
+        "wordsInText": [
+          "ἐξίτηλα"
+        ],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "plural - neut - nom",
+            "typeOfWord": "noun",
+            "wordInText": "ἐξίτηλα"
+          }
+        ]
+      },
+      {
+        "greek": "ἔργον",
+        "translation": "work, deed",
+        "wordsInText": [
+          "ἔργα"
+        ],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "plural - nom/acc",
+            "typeOfWord": "noun",
+            "wordInText": "ἔργα"
+          }
+        ]
+      },
+      {
+        "greek": "Ἡρόδοτος",
+        "translation": "Herodotus",
+        "wordsInText": [
+          "Ἡροδότου"
+        ],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "sing - gen",
+            "typeOfWord": "noun",
+            "wordInText": "Ἡροδότου"
+          }
+        ]
+      },
+      {
+        "greek": "θαυμαστός",
+        "translation": "wondrous, wonderful, marvellous",
+        "wordsInText": [
+          "θωμαστά"
+        ],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "plural - nom",
+            "typeOfWord": "noun",
+            "wordInText": "θωμαστά"
+          }
+        ]
+      },
+      {
+        "greek": "ἱστορία",
+        "translation": "a learning by inquiry, inquiry",
+        "wordsInText": [
+          "ἱστορίης"
+        ],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "sing - gen",
+            "typeOfWord": "noun",
+            "wordInText": "ἱστορίης"
+          }
+        ]
+      },
+      {
+        "greek": "καί",
+        "translation": "and, also",
+        "wordsInText": [
+          "καὶ"
+        ],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "μέγας",
+        "translation": "big, great",
+        "wordsInText": [
+          "μεγάλα"
+        ],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "μέν",
+        "translation": "on the one hand, on the other hand",
+        "wordsInText": [
+          "μὲν"
+        ],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "μήτε",
+        "translation": "neither / nor",
+        "wordsInText": [
+          "μήτε"
+        ],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "ὁ",
+        "translation": "the",
+        "wordsInText": [
+          "τὰ",
+          "τῷ",
+          "τά"
+        ],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "τε",
+        "translation": "and",
+        "wordsInText": [
+          "τε"
+        ],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "ὡς",
+        "translation": "as, how",
+        "wordsInText": [
+          "ὡς"
+        ],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "χρόνος",
+        "translation": "time",
+        "wordsInText": [
+          "χρόνῳ"
+        ],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "sing - dat",
+            "typeOfWord": "noun",
+            "wordInText": "χρόνῳ"
+          }
+        ]
+      },
+      {
+        "greek": "ὅδε",
+        "translation": "this",
+        "wordsInText": [
+          "ἥδε"
+        ],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "πολεμέω",
+        "translation": "to make war, to be at war",
+        "wordsInText": [
+          "ἐπολέμησαν"
+        ],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "3rd plural - aorist - ind - act",
+            "typeOfWord": "verb",
+            "wordInText": "ἐπολέμησαν"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "quizType": "authorbased",
+    "theme": "Herodotos - Histories",
+    "reference": "/texts?author=Herodotos&book=Histories&reference=1.1",
+    "set": 1,
+    "segment": "1.1.1",
+    "fullSentence": "Περσέων μέν νυν οἱ λόγιοι Φοίνικας αἰτίους φασὶ γενέσθαι τῆς διαφορῆς. τούτους γὰρ ἀπὸ τῆς Ἐρυθρῆς καλεομένης θαλάσσης ἀπικομένους ἐπὶ τήνδε τὴν θάλασσαν, καὶ οἰκήσαντας τοῦτον τὸν χῶρον τὸν καὶ νῦν οἰκέουσι, αὐτίκα ναυτιλίῃσι μακρῇσι ἐπιθέσθαι, ἀπαγινέοντας δὲ φορτία Αἰγύπτιά τε καὶ Ἀσσύρια τῇ τε ἄλλῃ ἐσαπικνέεσθαι καὶ δὴ καὶ ἐς Ἄργος.",
+    "translation": "The Persian learned men say that the Phoenicians were the cause of the dispute. These (they say) came to our seas from the sea which is called Red, and having settled in the country which they still occupy, at once began to make long voyages. Among other places to which they carried Egyptian and Assyrian merchandise, they came to Argos,",
+    "content": [
+      {
+        "greek": "Αἰγύπτιος",
+        "translation": "Egyptian",
+        "wordsInText": [
+          "Αἰγύπτιά"
+        ]
+      },
+      {
+        "greek": "αἴτιος",
+        "translation": "to blame, blameworthy, culpable",
+        "wordsInText": [
+          "αἰτίους"
+        ]
+      },
+      {
+        "greek": "ἄλλῃ",
+        "translation": "in another place, elsewhere",
+        "wordsInText": [
+          "ἄλλῃ"
+        ]
+      },
+      {
+        "greek": "ἀπαγινέω",
+        "translation": "paying tribute",
+        "wordsInText": [
+          "ἀπαγινέοντας"
+        ]
+      },
+      {
+        "greek": "ἀπό",
+        "translation": "from, away from. c. gen.",
+        "wordsInText": [
+          "ἀπὸ"
+        ]
+      },
+      {
+        "greek": "Ἄργος",
+        "translation": "Argos",
+        "wordsInText": [
+          "Ἄργος"
+        ]
+      },
+      {
+        "greek": "Ἀσσύριος",
+        "translation": "Assyrian",
+        "wordsInText": [
+          "Ἀσσύρια"
+        ]
+      },
+      {
+        "greek": "αὐτίκα",
+        "translation": "forthwith, straightway, at once",
+        "wordsInText": [
+          "αὐτίκα"
+        ]
+      },
+      {
+        "greek": "ἀφικνέομαι",
+        "translation": "to come to",
+        "wordsInText": [
+          "ἀπικομένους"
+        ]
+      },
+      {
+        "greek": "γάρ",
+        "translation": "for",
+        "wordsInText": [
+          "γὰρ"
+        ]
+      },
+      {
+        "greek": "γίγνομαι",
+        "translation": "become, be born",
+        "wordsInText": [
+          "γενέσθαι"
+        ]
+      },
+      {
+        "greek": "δέ",
+        "translation": "but",
+        "wordsInText": [
+          "δὲ"
+        ]
+      },
+      {
+        "greek": "δή",
+        "translation": "discourse particle. now, already, truly, indeed, in truth etc.",
+        "wordsInText": [
+          "δὴ"
+        ]
+      },
+      {
+        "greek": "διαφορά",
+        "translation": "difference, distinction",
+        "wordsInText": [
+          "διαφορῆς"
+        ]
+      },
+      {
+        "greek": "εἰς",
+        "translation": "into, to c. acc.",
+        "wordsInText": [
+          "ἐς"
+        ]
+      },
+      {
+        "greek": "εἰσαφικνέομαι",
+        "translation": "to come into",
+        "wordsInText": [
+          "ἐσαπικνέεσθαι"
+        ]
+      },
+      {
+        "greek": "ἐπί",
+        "translation": "on, upon with gen., dat., and acc.",
+        "wordsInText": [
+          "ἐπὶ"
+        ]
+      },
+      {
+        "greek": "ἐπιτίθημι",
+        "translation": "to lay, put on; (mid.) to attack",
+        "wordsInText": [
+          "ἐπιθέσθαι"
+        ]
+      },
+      {
+        "greek": "ἐρυθρός",
+        "translation": "red",
+        "wordsInText": [
+          "Ἐρυθρῆς"
+        ]
+      },
+      {
+        "greek": "θάλασσα",
+        "translation": "the sea",
+        "wordsInText": [
+          "θάλασσαν",
+          "θαλάσσης"
+        ]
+      },
+      {
+        "greek": "καί",
+        "translation": "and, also",
+        "wordsInText": [
+          "καὶ"
+        ]
+      },
+      {
+        "greek": "καλέω",
+        "translation": "to call, summon",
+        "wordsInText": [
+          "καλεομένης"
+        ]
+      },
+      {
+        "greek": "λόγιος",
+        "translation": "versed in tales",
+        "wordsInText": [
+          "λόγιοι"
+        ]
+      },
+      {
+        "greek": "μακρός",
+        "translation": "long",
+        "wordsInText": [
+          "μακρῇσι"
+        ]
+      },
+      {
+        "greek": "μέν",
+        "translation": "on the one hand, on the other hand",
+        "wordsInText": [
+          "μέν"
+        ]
+      },
+      {
+        "greek": "ναυτιλία",
+        "translation": "sailing, seamanship",
+        "wordsInText": [
+          "ναυτιλίῃσι"
+        ]
+      },
+      {
+        "greek": "νῦν",
+        "translation": "now at this very time",
+        "wordsInText": [
+          "νυν",
+          "νῦν"
+        ]
+      },
+      {
+        "greek": "ὁ",
+        "translation": "the",
+        "wordsInText": [
+          "οἱ",
+          "τῆς",
+          "τὴν",
+          "τὸν",
+          "τῇ"
+        ]
+      },
+      {
+        "greek": "ὅδε",
+        "translation": "this",
+        "wordsInText": [
+          "τήνδε"
+        ]
+      },
+      {
+        "greek": "οἰκέω",
+        "translation": "to inhabit, occupy",
+        "wordsInText": [
+          "οἰκήσαντας",
+          "οἰκέουσι"
+        ]
+      },
+      {
+        "greek": "οὗτος",
+        "translation": "this; that",
+        "wordsInText": [
+          "τοῦτον",
+          "τούτους"
+        ]
+      },
+      {
+        "greek": "Πέρσης",
+        "translation": "a Persian; Perses (pr.n.)",
+        "wordsInText": [
+          "Περσέων"
+        ]
+      },
+      {
+        "greek": "τε",
+        "translation": "and",
+        "wordsInText": [
+          "τε"
+        ]
+      },
+      {
+        "greek": "φημί",
+        "translation": "to say, to claim",
+        "wordsInText": [
+          "φασὶ"
+        ]
+      },
+      {
+        "greek": "Φοῖνιξ",
+        "translation": "a Phoenician",
+        "wordsInText": [
+          "Φοίνικας"
+        ]
+      },
+      {
+        "greek": "φορτίον",
+        "translation": "a load, burden",
+        "wordsInText": [
+          "φορτία"
+        ]
+      },
+      {
+        "greek": "χῶρος",
+        "translation": "a piece of ground, ground, place",
+        "wordsInText": [
+          "χῶρον"
+        ]
+      }
+    ]
+  },
+  {
+    "quizType": "authorbased",
+    "theme": "Herodotos - Histories",
+    "reference": "/texts?author=Herodotos&book=Histories&reference=1.1",
+    "set": 1,
+    "segment": "1.1.2",
+    "fullSentence": "τὸ δὲ Ἄργος τοῦτον τὸν χρόνον προεῖχε ἅπασι τῶν ἐν τῇ νῦν Ἑλλάδι καλεομένῃ χωρῇ. ἀπικομένους δὲ τούς Φοίνικας ἐς δὴ τὸ Ἄργος τοῦτο διατίθεσθαι τὸν φόρτον.",
+    "translation": "which was at that time preeminent in every way among the people of what is now called Hellas. The Phoenicians came to Argos, and set out their cargo.",
+    "content": [
+      {
+        "greek": "ἅπας",
+        "translation": "quite all, the whole",
+        "wordsInText": [
+          "ἅπασι"
+        ]
+      },
+      {
+        "greek": "Ἄργος",
+        "translation": "Argos",
+        "wordsInText": [
+          "Ἄργος"
+        ]
+      },
+      {
+        "greek": "ἀφικνέομαι",
+        "translation": "to come to",
+        "wordsInText": [
+          "ἀπικομένους"
+        ]
+      },
+      {
+        "greek": "δέ",
+        "translation": "but",
+        "wordsInText": [
+          "δὲ"
+        ]
+      },
+      {
+        "greek": "δή",
+        "translation": "discourse particle. now, already, truly, indeed, in truth etc.",
+        "wordsInText": [
+          "δὴ"
+        ]
+      },
+      {
+        "greek": "διατίθημι",
+        "translation": "to place separately, arrange",
+        "wordsInText": [
+          "διατίθεσθαι"
+        ]
+      },
+      {
+        "greek": "εἰς",
+        "translation": "into, to c. acc.",
+        "wordsInText": [
+          "ἐς"
+        ]
+      },
+      {
+        "greek": "Ἑλλάς",
+        "translation": "Hellas",
+        "wordsInText": [
+          "Ἑλλάδι"
+        ]
+      },
+      {
+        "greek": "ἐν",
+        "translation": "in, among. c. dat.",
+        "wordsInText": [
+          "ἐν"
+        ]
+      },
+      {
+        "greek": "καλέω",
+        "translation": "to call, summon",
+        "wordsInText": [
+          "καλεομένῃ"
+        ]
+      },
+      {
+        "greek": "νῦν",
+        "translation": "now at this very time",
+        "wordsInText": [
+          "νῦν"
+        ]
+      },
+      {
+        "greek": "ὁ",
+        "translation": "the",
+        "wordsInText": [
+          "τὸ",
+          "τὸν",
+          "τῶν",
+          "τῇ",
+          "τούς"
+        ]
+      },
+      {
+        "greek": "οὗτος",
+        "translation": "this; that",
+        "wordsInText": [
+          "τοῦτον",
+          "τοῦτο"
+        ]
+      },
+      {
+        "greek": "προέχω",
+        "translation": "to hold before, to pretend; to jut out, to excel",
+        "wordsInText": [
+          "προεῖχε"
+        ]
+      },
+      {
+        "greek": "Φοῖνιξ",
+        "translation": "a Phoenician",
+        "wordsInText": [
+          "Φοίνικας"
+        ]
+      },
+      {
+        "greek": "φόρτος",
+        "translation": "a load, a ship's freight",
+        "wordsInText": [
+          "φόρτον"
+        ]
+      },
+      {
+        "greek": "χρόνος",
+        "translation": "time",
+        "wordsInText": [
+          "χρόνον"
+        ]
+      },
+      {
+        "greek": "χώρα",
+        "translation": "land",
+        "wordsInText": [
+          "χωρῇ"
+        ]
+      }
+    ]
+  },
+  {
+    "quizType": "authorbased",
+    "theme": "Herodotos - Histories",
+    "reference": "/texts?author=Herodotos&book=Histories&reference=1.1",
+    "set": 1,
+    "segment": "1.1.3",
+    "fullSentence": "πέμπτῃ δὲ ἢ ἕκτῃ ἡμέρῃ ἀπʼ ἧς ἀπίκοντο, ἐξεμπολημένων σφι σχεδόν πάντων, ἐλθεῖν ἐπὶ τὴν θάλασσαν γυναῖκας ἄλλας τε πολλάς καὶ δὴ καὶ τοῦ βασιλέος θυγατέρα· τὸ δέ οἱ οὔνομα εἶναι, κατὰ τὠυτὸ τὸ καὶ Ἕλληνές λέγουσι, Ἰοῦν τὴν Ἰνάχου·",
+    "translation": "On the fifth or sixth day after their arrival, when their wares were almost all sold, many women came to the shore and among them especially the daughter of the king, whose name was Io (according to Persians and Greeks alike), the daughter of Inachus.",
+    "content": [
+      {
+        "greek": "ἄλλος",
+        "translation": "other, another",
+        "wordsInText": [
+          "ἄλλας"
+        ]
+      },
+      {
+        "greek": "ἀπό",
+        "translation": "from, away from. c. gen",
+        "wordsInText": [
+          "ἀπʼ"
+        ]
+      },
+      {
+        "greek": "αὐτός",
+        "translation": "the same; unemph. 3rd pers.pronoun; -self",
+        "wordsInText": [
+          "τὠυτὸ"
+        ]
+      },
+      {
+        "greek": "ἀφικνέομαι",
+        "translation": "to come to",
+        "wordsInText": [
+          "ἀπίκοντο"
+        ]
+      },
+      {
+        "greek": "βασιλεύς",
+        "translation": "a king, chief",
+        "wordsInText": [
+          "βασιλέος"
+        ]
+      },
+      {
+        "greek": "γυνή",
+        "translation": "a woman",
+        "wordsInText": [
+          "γυναῖκας"
+        ]
+      },
+      {
+        "greek": "δέ",
+        "translation": "but",
+        "wordsInText": [
+          "δὲ"
+        ]
+      },
+      {
+        "greek": "δή",
+        "translation": "discourse particle. now, already, truly, indeed, in truth etc.",
+        "wordsInText": [
+          "δὴ"
+        ]
+      },
+      {
+        "greek": "εἰμί",
+        "translation": "to be",
+        "wordsInText": [
+          "εἶναι"
+        ]
+      },
+      {
+        "greek": "ἕκτος",
+        "translation": "sixth",
+        "wordsInText": [
+          "ἕκτῃ"
+        ]
+      },
+      {
+        "greek": "Ἕλλην",
+        "translation": "Hellen; Greek",
+        "wordsInText": [
+          "Ἕλληνές"
+        ]
+      },
+      {
+        "greek": "ἐξεμπολάω",
+        "translation": "to traffic; to sell off",
+        "wordsInText": [
+          "ἐξεμπολημένων"
+        ]
+      },
+      {
+        "greek": "ἐπί",
+        "translation": "on, upon with gen., dat., and acc.",
+        "wordsInText": [
+          "ἐπὶ"
+        ]
+      },
+      {
+        "greek": "ἔρχομαι",
+        "translation": "to come",
+        "wordsInText": [
+          "ἐλθεῖν"
+        ]
+      },
+      {
+        "greek": "ἡμέρα",
+        "translation": "day",
+        "wordsInText": [
+          "ἡμέρῃ"
+        ]
+      },
+      {
+        "greek": "θάλασσα",
+        "translation": "the sea",
+        "wordsInText": [
+          "θάλασσαν"
+        ]
+      },
+      {
+        "greek": "θυγάτηρ",
+        "translation": "a daughter",
+        "wordsInText": [
+          "θυγατέρα"
+        ]
+      },
+      {
+        "greek": "Ἴναχος",
+        "translation": "Inachus",
+        "wordsInText": [
+          "Ἰνάχου"
+        ]
+      },
+      {
+        "greek": "Ἰώ",
+        "translation": "Io",
+        "wordsInText": [
+          "Ἰοῦν"
+        ]
+      },
+      {
+        "greek": "καί",
+        "translation": "and, also",
+        "wordsInText": [
+          "καὶ"
+        ]
+      },
+      {
+        "greek": "κατά",
+        "translation": "down, against with gen.; according to, throughout with acc",
+        "wordsInText": [
+          "κατὰ"
+        ]
+      },
+      {
+        "greek": "λέγω",
+        "translation": "to pick; to say",
+        "wordsInText": [
+          "λέγουσι"
+        ]
+      },
+      {
+        "greek": "ὁ",
+        "translation": "the",
+        "wordsInText": [
+          "ἢ",
+          "τὴν",
+          "τοῦ",
+          "τὸ"
+        ]
+      },
+      {
+        "greek": "ὄνομα",
+        "translation": "name",
+        "wordsInText": [
+          "οὔνομα"
+        ]
+      },
+      {
+        "greek": "ὅς",
+        "translation": "who, that, which: relative pronoun",
+        "wordsInText": [
+          "ἧς"
+        ]
+      },
+      {
+        "greek": "οὗ",
+        "translation": "him/her",
+        "wordsInText": [
+          "οἱ"
+        ]
+      },
+      {
+        "greek": "πᾶς",
+        "translation": "all, the whole",
+        "wordsInText": [
+          "πάντων"
+        ]
+      },
+      {
+        "greek": "πέμπτος",
+        "translation": "the fifth, oneself with four others",
+        "wordsInText": [
+          "πέμπτῃ"
+        ]
+      },
+      {
+        "greek": "πολύς",
+        "translation": "much",
+        "wordsInText": [
+          "πολλάς"
+        ]
+      },
+      {
+        "greek": "σφεῖς",
+        "translation": "themselves (reflexive), they (personal pronoun, third person)",
+        "wordsInText": [
+          "σφι"
+        ]
+      },
+      {
+        "greek": "σχεδόν",
+        "translation": "close, near, hard by, nigh",
+        "wordsInText": [
+          "σχεδόν"
+        ]
+      },
+      {
+        "greek": "τε",
+        "translation": "and",
+        "wordsInText": [
+          "τε"
+        ]
+      }
+    ]
+  },
+  {
+    "quizType": "authorbased",
+    "theme": "Herodotos - Histories",
+    "reference": "/texts?author=Herodotos&book=Histories&reference=1.1",
+    "set": 1,
+    "segment": "1.1.4",
+    "fullSentence": "ταύτας στάσας κατά πρύμνην τῆς νεὸς ὠνέεσθαι τῶν φορτίων τῶν σφι ἦν θυμός μάλιστα· καὶ τοὺς Φοίνικας διακελευσαμένους ὁρμῆσαι ἐπʼ αὐτάς. τὰς μὲν δὴ πλεῦνας τῶν γυναικῶν ἀποφυγεῖν, τὴν δὲ Ἰοῦν σὺν ἄλλῃσι ἁρπασθῆναι. ἐσβαλομένους δὲ ἐς τὴν νέα οἴχεσθαι ἀποπλέοντας ἐπʼ Αἰγύπτου.",
+    "translation": "As these stood about the stern of the ship bargaining for the wares they liked, the Phoenicians incited one another to set upon them. Most of the women escaped: Io and others were seized and thrown into the ship, which then sailed away for Egypt.",
+    "content": [
+      {
+        "greek": "Αἴγυπτος",
+        "translation": "Egypt (f.); king Aegyptus (m.)",
+        "wordsInText": [
+          "Αἰγύπτου"
+        ]
+      },
+      {
+        "greek": "ἄλλος",
+        "translation": "other, another",
+        "wordsInText": [
+          "ἄλλῃσι"
+        ]
+      },
+      {
+        "greek": "ἀποπλέω",
+        "translation": "to sail away, sail off",
+        "wordsInText": [
+          "ἀποπλέοντας"
+        ]
+      },
+      {
+        "greek": "ἀποφεύγω",
+        "translation": "to flee from, escape",
+        "wordsInText": [
+          "ἀποφυγεῖν"
+        ]
+      },
+      {
+        "greek": "ἁρπάζω",
+        "translation": "to snatch away, carry off",
+        "wordsInText": [
+          "ἁρπασθῆναι"
+        ]
+      },
+      {
+        "greek": "αὐτός",
+        "translation": "the same; unemph. 3rd pers.pronoun; -self",
+        "wordsInText": [
+          "αὐτάς"
+        ]
+      },
+      {
+        "greek": "γυνή",
+        "translation": "a woman",
+        "wordsInText": [
+          "γυναικῶν"
+        ]
+      },
+      {
+        "greek": "δέ",
+        "translation": "but",
+        "wordsInText": [
+          "δὲ"
+        ]
+      },
+      {
+        "greek": "δή",
+        "translation": "discourse particle. now, already, truly, indeed, in truth etc.",
+        "wordsInText": [
+          "δὴ"
+        ]
+      },
+      {
+        "greek": "διακελεύομαι",
+        "translation": "to exhort, give orders, direct",
+        "wordsInText": [
+          "διακελευσαμένους"
+        ]
+      },
+      {
+        "greek": "εἰμί",
+        "translation": "to be",
+        "wordsInText": [
+          "ἦν"
+        ]
+      },
+      {
+        "greek": "εἰς",
+        "translation": "into, to c. acc.",
+        "wordsInText": [
+          "ἐς"
+        ]
+      },
+      {
+        "greek": "εἰσβάλλω",
+        "translation": "to throw into, put into",
+        "wordsInText": [
+          "ἐσβαλομένους"
+        ]
+      },
+      {
+        "greek": "ἐπί",
+        "translation": "on, upon with gen., dat., and acc.",
+        "wordsInText": [
+          "ἐπʼ"
+        ]
+      },
+      {
+        "greek": "θυμός",
+        "translation": "the soul",
+        "wordsInText": [
+          "θυμός"
+        ]
+      },
+      {
+        "greek": "ἵστημι",
+        "translation": "to make to stand",
+        "wordsInText": [
+          "στάσας"
+        ]
+      },
+      {
+        "greek": "Ἰώ",
+        "translation": "Io",
+        "wordsInText": [
+          "Ἰοῦν"
+        ]
+      },
+      {
+        "greek": "καί",
+        "translation": "and, also",
+        "wordsInText": [
+          "καὶ"
+        ]
+      },
+      {
+        "greek": "κατά",
+        "translation": "down, against with gen.; according to, throughout with acc",
+        "wordsInText": [
+          "κατά"
+        ]
+      },
+      {
+        "greek": "μάλιστα",
+        "translation": "most",
+        "wordsInText": [
+          "μάλιστα"
+        ]
+      },
+      {
+        "greek": "μέν",
+        "translation": "on the one hand, on the other hand",
+        "wordsInText": [
+          "μὲν"
+        ]
+      },
+      {
+        "greek": "ναῦς",
+        "translation": "a ship",
+        "wordsInText": [
+          "νεὸς",
+          "νέα"
+        ]
+      },
+      {
+        "greek": "ὁ",
+        "translation": "the",
+        "wordsInText": [
+          "τῆς",
+          "τῶν",
+          "τὰς",
+          "τοὺς",
+          "τὴν"
+        ]
+      },
+      {
+        "greek": "οἴχομαι",
+        "translation": "to be gone, to have gone",
+        "wordsInText": [
+          "οἴχεσθαι"
+        ]
+      },
+      {
+        "greek": "ὁρμάω/ὁρμέω",
+        "translation": "to set in motion, urge; to be moored, lie at anchor",
+        "wordsInText": [
+          "ὁρμῆσαι"
+        ]
+      },
+      {
+        "greek": "οὗτος",
+        "translation": "this;that",
+        "wordsInText": [
+          "ταύτας"
+        ]
+      },
+      {
+        "greek": "πλείων",
+        "translation": "more, larger",
+        "wordsInText": [
+          "πλεῦνας"
+        ]
+      },
+      {
+        "greek": "πρύμνα",
+        "translation": "the hindmost part of a ship, the stern, poop",
+        "wordsInText": [
+          "πρύμνην"
+        ]
+      },
+      {
+        "greek": "σύν",
+        "translation": "along with, in company with, together with",
+        "wordsInText": [
+          "σὺν"
+        ]
+      },
+      {
+        "greek": "σφεῖς",
+        "translation": "themselves (reflexive), they (personal pronoun, third person)",
+        "wordsInText": [
+          "σφι"
+        ]
+      },
+      {
+        "greek": "Φοῖνιξ",
+        "translation": "a Phoenician",
+        "wordsInText": [
+          "Φοίνικας"
+        ]
+      },
+      {
+        "greek": "φορτίον",
+        "translation": "a load, burden",
+        "wordsInText": [
+          "φορτίων"
+        ]
+      },
+      {
+        "greek": "ὠνέομαι",
+        "translation": "to buy purchase",
+        "wordsInText": [
+          "ὠνέεσθαι"
+        ]
+      }
+    ]
+  },
+  {
+    "quizType": "authorbased",
+    "theme": "Herodotos - Histories",
+    "reference": "/texts?author=Herodotos&book=Histories&reference=7.138",
+    "set": 1,
+    "segment": "7.138.1",
+    "fullSentence": "ἡ δὲ στρατηλασίη ἡ βασιλέος οὔνομα μὲν εἶχε ὡς ἐπʼ Ἀθήνας ἐλαύνει, κατίετο δὲ ἐς πᾶσαν τὴν Ἑλλάδα. πυνθανόμενοι δὲ ταῦτα πρὸ πολλοῦ οἱ Ἕλληνες οὐκ ἐν ὁμοίῳ πάντες ἐποιεῦντο.",
+    "translation": "The professed intent of the king's march was to attack Athens, but in truth all Greece was his aim. This the Greeks had long since learned, but not all of them regarded the matter alike.",
+    "grammarQuestionOptions": {
+      "verbs": [
+        "aorist psv part - plural - neut",
+        "present mid part - plural - masc",
+        "3rd sing - pres - ind - act",
+        "3rd sing - impf - ind - act",
+        "3rd sing - impf - ind - mid/psv",
+        "3rd plur - impf - ind - mid/psv"
+      ],
+      "nouns": [
+        "sing - nom",
+        "sing - fem - acc",
+        "sing - gen",
+        "sing - dat",
+        "sing - acc",
+        "plural - nom",
+        "plural - gen",
+        "plural - neut - nom",
+        "plural - masc/neut - dat",
+        "plural - dat",
+        "plural - nom/acc"
+      ],
+      "misc": []
+    },
+    "content": [
+      {
+        "greek": "Ἀθῆναι",
+        "translation": "the city of Athens",
+        "wordsInText": ["Ἀθήνας"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "sing - acc",
+            "typeOfWord": "noun",
+            "wordInText": "Ἀθήνας"
+          }
+        ]
+      },
+      {
+        "greek": "βασιλεύς, βασιλέος (Ionic)",
+        "translation": "a king, chief",
+        "wordsInText": ["βασιλέος"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "sing - gen",
+            "typeOfWord": "noun",
+            "extraInformation": "Ionic ending",
+            "wordInText": "βασιλέος"
+          }
+        ]
+      },
+      {
+        "greek": "ἐλαύνω",
+        "translation": "to drive, drive on, set in motion",
+        "wordsInText": ["ἐλαύνει"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "3rd sing - pres - ind - act",
+            "typeOfWord": "verb",
+            "wordInText": "ἐλαύνει"
+          }
+        ]
+      },
+      {
+        "greek": "Ἑλλάς",
+        "translation": "Hellas; Greece",
+        "wordsInText": ["Ἑλλάδα"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "sing - acc",
+            "typeOfWord": "noun",
+            "wordInText": "Ἑλλάδα"
+          }
+        ]
+      },
+      {
+        "greek": "Ἕλλην",
+        "translation": "Hellen; Greek",
+        "wordsInText": ["Ἕλληνες"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "plural - nom",
+            "typeOfWord": "noun",
+            "wordInText": "Ἕλληνες"
+          }
+        ]
+      },
+      {
+        "greek": "ἔχω",
+        "translation": "to have",
+        "wordsInText": ["εἶχε"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "3rd sing - impf - ind - act",
+            "typeOfWord": "verb",
+            "wordInText": "εἶχε"
+          }
+        ]
+      },
+      {
+        "greek": "καθίημι",
+        "translation": "to send down, let fall",
+        "wordsInText": ["κατίετο"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "3rd sing - impf - ind - mid/psv",
+            "typeOfWord": "verb",
+            "wordInText": "κατίετο",
+            "extraInformation": "καθῑστᾰτο is the Attic form καθίημι is Ionic"
+          }
+        ]
+      },
+      {
+        "greek": "ὅμοιος",
+        "translation": "like, resembling",
+        "wordsInText": ["ὁμοίῳ"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "sing - dat",
+            "typeOfWord": "noun",
+            "wordInText": "ὁμοίῳ"
+          }
+        ]
+      },
+      {
+        "greek": "ὄνομα",
+        "translation": "name",
+        "wordsInText": ["οὔνομα"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "sing - nom",
+            "typeOfWord": "noun",
+            "wordInText": "οὔνομα",
+            "extraInformation": "Ionic form of ὄνομα"
+          }
+        ]
+      },
+      {
+        "greek": "ποιέω",
+        "translation": "to make, to do",
+        "wordsInText": ["ἐποιεῦντο"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "3rd plur - impf - ind - mid/psv",
+            "typeOfWord": "verb",
+            "wordInText": "ἐποιεῦντο",
+            "extraInformation": "ἐποιοῦντο in Attic Greek. -ῦντο is an Ionic ending"
+          }
+        ]
+      },
+      {
+        "greek": "πολύς",
+        "translation": "much, many",
+        "wordsInText": ["πολλοῦ"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "sing - gen",
+            "typeOfWord": "noun",
+            "wordInText": "πολλοῦ"
+          }
+        ]
+      },
+      {
+        "greek": "στρατηλασία",
+        "translation": "an expedition, campaign",
+        "wordsInText": ["στρατηλασίη"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "sing - nom",
+            "typeOfWord": "noun",
+            "wordInText": "στρατηλασίη"
+          }
+        ]
+      },
+      {
+        "greek": "πυνθάνομαι",
+        "translation": "to learn by hearsay",
+        "wordsInText": ["πυνθανόμενοι"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "present mid part - plural - masc",
+            "typeOfWord": "verb",
+            "wordInText": "πυνθανόμενοι"
+          }
+        ]
+      },
+      {
+        "greek": "οὗτος",
+        "translation": "this; that",
+        "wordsInText": ["ταῦτα"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "plural - nom/acc",
+            "typeOfWord": "noun",
+            "wordInText": "ταῦτα"
+          }
+        ]
+      },
+        {
+          "greek": "δέ",
+          "translation": "but",
+          "wordsInText": ["δὲ"],
+          "hasGrammarQuestions": false
+        },
+        {
+          "greek": "εἰς",
+          "translation": "into, to c. acc",
+          "wordsInText": ["ἐς"],
+          "hasGrammarQuestions": false
+        },
+        {
+          "greek": "ἐν",
+          "translation": "in, among. c. dat.",
+          "wordsInText": ["ἐν"],
+          "hasGrammarQuestions": false
+        },
+        {
+          "greek": "ἐπί",
+          "translation": "on, upon with gen., dat., and acc.",
+          "wordsInText": ["ἐπʼ"],
+          "hasGrammarQuestions": false
+        },
+        {
+          "greek": "μέν",
+          "translation": "on the one hand, on the other hand",
+          "wordsInText": ["μὲν"],
+          "hasGrammarQuestions": false
+        },
+        {
+          "greek": "ὁ",
+          "translation": "the",
+          "wordsInText": ["ἡ", "τὴν", "οἱ"],
+          "hasGrammarQuestions": false
+        },
+        {
+          "greek": "οὐ",
+          "translation": "not",
+          "wordsInText": ["οὐκ"],
+          "hasGrammarQuestions": false
+        },
+        {
+          "greek": "πᾶς",
+          "translation": "all, the whole",
+          "wordsInText": ["πάντες", "πᾶσαν"],
+          "hasGrammarQuestions": false
+        },
+        {
+          "greek": "πρό",
+          "translation": "before",
+          "wordsInText": ["πρὸ"],
+          "hasGrammarQuestions": false
+        },
+        {
+          "greek": "ὡς",
+          "translation": "as, how",
+          "wordsInText": ["ὡς"],
+          "hasGrammarQuestions": false
+        }
+
+    ]
+  },
+  {
+    "quizType": "authorbased",
+    "theme": "Herodotos - Histories",
+    "reference": "/texts?author=Herodotos&book=Histories&reference=7.138",
+    "set": 1,
+    "segment": "7.138.2",
+    "fullSentence": "οἱ μὲν γὰρ αὐτῶν δόντες γῆν καὶ ὕδωρ τῷ Πέρσῃ εἶχον θάρσος ὡς οὐδὲν πεισόμενοι ἄχαρι πρὸς τοῦ βαρβάρου· οἱ δὲ οὐ δόντες ἐν δείματι μεγάλῳ κατέστασαν, ἅτε οὔτε νεῶν ἐουσέων ἐν τῇ Ἑλλάδι ἀριθμὸν ἀξιομάχων δέκεσθαι τὸν ἐπιόντα, οὔτε βουλομένων τῶν πολλῶν ἀντάπτεσθαι τοῦ πολέμου, μηδιζόντων δὲ προθύμως.",
+    "translation": "Those of them who had paid the tribute of earth and water to the Persian were of good courage, thinking that the foreigner would do them no harm, but they who had refused tribute were afraid, since there were not enough ships in Hellas to do battle with their invader; furthermore, the greater part of them had no stomach for grappling with the war, but were making haste to side with the Persian.",
+    "content": [
+      {
+        "greek": "ὁ",
+        "translation": "the",
+        "wordsInText": [
+          "τῷ",
+          "τοῦ",
+          "τῇ",
+          "τὸν",
+          "τῶν"
+        ]
+      },
+      {
+        "greek": "μέν",
+        "translation": "on the one hand, on the other hand",
+        "wordsInText": [
+          "μὲν"
+        ]
+      },
+      {
+        "greek": "γάρ",
+        "translation": "for",
+        "wordsInText": [
+          "γὰρ"
+        ]
+      },
+      {
+        "greek": "αὐτός",
+        "translation": "the same; unemph. 3rd pers.pronoun; -self",
+        "wordsInText": [
+          "αὐτῶν"
+        ]
+      },
+      {
+        "greek": "δίδωμι",
+        "translation": "to give",
+        "wordsInText": [
+          "δόντες"
+        ]
+      },
+      {
+        "greek": "γῆ",
+        "translation": "earth",
+        "wordsInText": [
+          "γῆν"
+        ]
+      },
+      {
+        "greek": "καί",
+        "translation": "and, also",
+        "wordsInText": [
+          "καὶ"
+        ]
+      },
+      {
+        "greek": "ὕδωρ",
+        "translation": "water",
+        "wordsInText": [
+          "ὕδωρ"
+        ]
+      },
+      {
+        "greek": "Πέρσῃ",
+        "translation": "a Persian; Perses (pr.n.)",
+        "wordsInText": [
+          "Πέρσῃ"
+        ]
+      },
+      {
+        "greek": "ἔχω",
+        "translation": "to have",
+        "wordsInText": [
+          "εἶχον"
+        ]
+      },
+      {
+        "greek": "θάρσος",
+        "translation": "courage, boldness",
+        "wordsInText": [
+          "θάρσος"
+        ]
+      },
+      {
+        "greek": "ὡς",
+        "translation": "as, how",
+        "wordsInText": [
+          "ὡς"
+        ]
+      },
+      {
+        "greek": "οὐδείς",
+        "translation": "not one, nobody",
+        "wordsInText": [
+          "οὐδὲν"
+        ]
+      },
+      {
+        "greek": "πάσχω",
+        "translation": "to experience, to suffer",
+        "wordsInText": [
+          "πεισόμενοι"
+        ]
+      },
+      {
+        "greek": "ἄχαρις",
+        "translation": "without grace",
+        "wordsInText": [
+          "ἄχαρι"
+        ]
+      },
+      {
+        "greek": "πρός",
+        "translation": "from (w. gen.);  at, near, in addition to (w. dat.);to, toward, regarding (w. acc.)",
+        "wordsInText": [
+          "πρὸς"
+        ]
+      },
+      {
+        "greek": "βάρβαρος",
+        "translation": "barbarous, barbarian",
+        "wordsInText": [
+          "βαρβάρου"
+        ]
+      },
+      {
+        "greek": "δέ",
+        "translation": "but",
+        "wordsInText": [
+          "δὲ"
+        ]
+      },
+      {
+        "greek": "οὐ",
+        "translation": "not",
+        "wordsInText": [
+          "οὐ"
+        ]
+      },
+      {
+        "greek": "ἐν",
+        "translation": "in, among. c. dat.",
+        "wordsInText": [
+          "ἐν"
+        ]
+      },
+      {
+        "greek": "δεῖμα",
+        "translation": "fear, affright",
+        "wordsInText": [
+          "δείματι"
+        ]
+      },
+      {
+        "greek": "μέγας",
+        "translation": "big, great",
+        "wordsInText": [
+          "μεγάλῳ"
+        ]
+      },
+      {
+        "greek": "καθίστημι",
+        "translation": "to set down, place",
+        "wordsInText": [
+          "κατέστασαν"
+        ]
+      },
+      {
+        "greek": "ἅτε",
+        "translation": "just as (both pre-and postposed); w. part.: because",
+        "wordsInText": [
+          "ἅτε"
+        ]
+      },
+      {
+        "greek": "οὔτε",
+        "translation": "neither / nor",
+        "wordsInText": [
+          "οὔτε"
+        ]
+      },
+      {
+        "greek": "ναῦς",
+        "translation": "a ship",
+        "wordsInText": [
+          "νεῶν"
+        ]
+      },
+      {
+        "greek": "εἰμί",
+        "translation": "to be",
+        "wordsInText": [
+          "ἐουσέων"
+        ]
+      },
+      {
+        "greek": "Ἑλλάς",
+        "translation": "Hellas, Greece",
+        "wordsInText": [
+          "Ἑλλάδι"
+        ]
+      },
+      {
+        "greek": "ἀριθμός",
+        "translation": "number",
+        "wordsInText": [
+          "ἀριθμὸν"
+        ]
+      },
+      {
+        "greek": "ἀξιόμαχος",
+        "translation": "a match for",
+        "wordsInText": [
+          "ἀξιομάχων"
+        ]
+      },
+      {
+        "greek": "δέχομαι",
+        "translation": "to take, accept, receive",
+        "wordsInText": [
+          "δέκεσθαι"
+        ]
+      },
+      {
+        "greek": "ἔπειμι",
+        "translation": "(go) come upon, approach, attack",
+        "wordsInText": [
+          "ἐπιόντα"
+        ]
+      },
+      {
+        "greek": "βούλομαι",
+        "translation": "to will, wish, be willing",
+        "wordsInText": [
+          "βουλομένων"
+        ]
+      },
+      {
+        "greek": "πολύς",
+        "translation": "much, many",
+        "wordsInText": [
+          "πολλῶν"
+        ]
+      },
+      {
+        "greek": "ἀνθάπτομαι",
+        "translation": "to lay hold of in turn",
+        "wordsInText": [
+          "ἀντάπτεσθαι"
+        ]
+      },
+      {
+        "greek": "πόλεμος",
+        "translation": "battle, fight, war",
+        "wordsInText": [
+          "πολέμου"
+        ]
+      },
+      {
+        "greek": "μηδίζω",
+        "translation": "to be a Mede in language, side with the Medes",
+        "wordsInText": [
+          "μηδιζόντων"
+        ]
+      },
+      {
+        "greek": "πρόθυμος",
+        "translation": "ready, willing, eager, zealous",
+        "wordsInText": [
+          "προθύμως"
+        ]
+      },
+      {
+        "greek": "οἱ",
+        "translation": "those who (on the one hand) + μὲν, those who (on the other hand) + δὲ",
+        "wordsInText": [
+          "οἱ"
+        ]
+      }
+    ]
+  },
+  {
+    "quizType": "authorbased",
+    "theme": "Herodotos - Histories",
+    "reference": "/texts?author=Herodotos&book=Histories&reference=7.142",
+    "set": 1,
+    "segment": "7.142.3",
+    "fullSentence": "κατὰ ταῦτα τὰ ἔπεα συνεχέοντο αἱ γνῶμαι τῶν φαμένων τὰς νέας τὸ ξύλινον τεῖχος εἶναι· οἱ γὰρ χρησμολόγοι ταύτῃ ταῦτα ἐλάμβανον, ὡς ἀμφὶ Σαλαμῖνα δεῖ σφεας ἑσσωθῆναι ναυμαχίην παρασκευασαμένους.",
+    "translation": "These verses confounded the opinion of those who said that their ships were the wooden wall, for the readers of oracles took the verses to mean that they should offer battle by sea near Salamis and be there overthrown.",
+    "content": [
+      {
+        "greek": "ἀμφί",
+        "translation": "on both sides",
+        "wordsInText": [
+          "ἀμφὶ"
+        ]
+      },
+      {
+        "greek": "γάρ",
+        "translation": "for",
+        "wordsInText": [
+          "γὰρ"
+        ]
+      },
+      {
+        "greek": "γνώμη",
+        "translation": "a means of knowing, a mark, token, opinion",
+        "wordsInText": [
+          "γνῶμαι"
+        ]
+      },
+      {
+        "greek": "δεῖ",
+        "translation": "it is necessary",
+        "wordsInText": [
+          "δεῖ"
+        ]
+      },
+      {
+        "greek": "εἰμί",
+        "translation": "to be",
+        "wordsInText": [
+          "εἶναι"
+        ]
+      },
+      {
+        "greek": "ἔπος",
+        "translation": "promise; one's word; word as opposed to deed",
+        "wordsInText": [
+          "ἔπεα"
+        ]
+      },
+      {
+        "greek": "ἡσσάομαι",
+        "translation": "to be less than another, inferior to",
+        "wordsInText": [
+          "ἑσσωθῆναι"
+        ]
+      },
+      {
+        "greek": "κατά",
+        "translation": "down, against with gen.; according to, throughout with acc.",
+        "wordsInText": [
+          "κατὰ"
+        ]
+      },
+      {
+        "greek": "λαμβάνω",
+        "translation": "to take, seize, receive",
+        "wordsInText": [
+          "ἐλάμβανον"
+        ]
+      },
+      {
+        "greek": "ναυμαχία",
+        "translation": "a sea-fight",
+        "wordsInText": [
+          "ναυμαχίην"
+        ]
+      },
+      {
+        "greek": "ναῦς",
+        "translation": "a ship",
+        "wordsInText": [
+          "νέας"
+        ]
+      },
+      {
+        "greek": "ξύλινος",
+        "translation": "of wood, wooden",
+        "wordsInText": [
+          "ξύλινον"
+        ]
+      },
+      {
+        "greek": "ὁ",
+        "translation": "the",
+        "wordsInText": [
+          "αἱ",
+          "τῶν",
+          "τὰ",
+          "τὰς",
+          "τὸ",
+          "οἱ"
+        ]
+      },
+      {
+        "greek": "οὗτος",
+        "translation": "this; that",
+        "wordsInText": [
+          "ταῦτα"
+        ]
+      },
+      {
+        "greek": "παρασκευάζω",
+        "translation": "to get ready, prepare",
+        "wordsInText": [
+          "παρασκευασαμένους"
+        ]
+      },
+      {
+        "greek": "Σαλαμίς",
+        "translation": "Salamis (island)",
+        "wordsInText": [
+          "Σαλαμῖνα"
+        ]
+      },
+      {
+        "greek": "σφεῖς",
+        "translation": "they (personal pronoun) themselves (reflexive pronoun)",
+        "wordsInText": [
+          "σφεας"
+        ]
+      },
+      {
+        "greek": "ταύτῃ",
+        "translation": "in this way",
+        "wordsInText": [
+          "ταύτῃ"
+        ]
+      },
+      {
+        "greek": "τεῖχος",
+        "translation": "a wall",
+        "wordsInText": [
+          "τεῖχος"
+        ]
+      },
+      {
+        "greek": "φημί",
+        "translation": "to say, to claim",
+        "wordsInText": [
+          "φαμένων"
+        ]
+      },
+      {
+        "greek": "ὡς",
+        "translation": "as, how",
+        "wordsInText": [
+          "ὡς"
+        ]
+      },
+      {
+        "greek": "συγχέω",
+        "translation": "to pour together, commingle, confound",
+        "wordsInText": [
+          "συνεχέοντο"
+        ]
+      },
+      {
+        "greek": "χρησμολόγος",
+        "translation": "uttering oracles, divining",
+        "wordsInText": [
+          "χρησμολόγοι"
+        ]
+      }
+    ]
+  },
+  {
+    "quizType": "authorbased",
+    "theme": "Herodotos - Histories",
+    "reference": "/texts?author=Herodotos&book=Histories&reference=7.208",
+    "set": 1,
+    "segment": "7.208.3",
+    "fullSentence": "τοὺς μὲν δὴ ὥρα γυμναζομένους τῶν ἀνδρῶν, τοὺς δὲ τὰς κόμας κτενιζομένους. ταῦτα δὴ θεώμενος ἐθώμαζε καὶ τὸ πλῆθος ἐμάνθανε. μαθὼν δὲ πάντα ἀτρεκέως ἀπήλαυνε ὀπίσω κατʼ ἡσυχίην· οὔτε γάρ τις ἐδίωκε ἀλογίης τε ἐνεκύρησε πολλῆς· ἀπελθών τε ἔλεγε πρὸς Ξέρξην τά περ ὀπώπεε πάντα.",
+    "translation": "He saw some of the men exercising naked and others combing their hair. He marvelled at the sight and took note of their numbers. When he had observed it all carefully, he rode back in leisure, since no one pursued him or paid him any attention at all. So he returned and told Xerxes all that he had seen.",
+    "content": [
+      {
+        "greek": "ἀλογία",
+        "translation": "want of respect",
+        "wordsInText": [
+          "ἀλογίης"
+        ]
+      },
+      {
+        "greek": "ἀνήρ",
+        "translation": "a man",
+        "wordsInText": [
+          "ἀνδρῶν"
+        ]
+      },
+      {
+        "greek": "ἀπελαύνω",
+        "translation": "to drive away, expel from",
+        "wordsInText": [
+          "ἀπήλαυνε"
+        ]
+      },
+      {
+        "greek": "ἀπέρχομαι",
+        "translation": "to go away, depart from",
+        "wordsInText": [
+          "ἀπελθών"
+        ]
+      },
+      {
+        "greek": "ἀτρεκής",
+        "translation": "real, genuine",
+        "wordsInText": [
+          "ἀτρεκέως"
+        ]
+      },
+      {
+        "greek": "γάρ",
+        "translation": "for",
+        "wordsInText": [
+          "γάρ"
+        ]
+      },
+      {
+        "greek": "γυμνάζω",
+        "translation": "to train naked, train in gymnastic exercise",
+        "wordsInText": [
+          "γυμναζομένους"
+        ]
+      },
+      {
+        "greek": "δέ",
+        "translation": "but",
+        "wordsInText": [
+          "δὲ"
+        ]
+      },
+      {
+        "greek": "δή",
+        "translation": "interactional particle",
+        "wordsInText": [
+          "δὴ"
+        ]
+      },
+      {
+        "greek": "διώκω",
+        "translation": "to pursue",
+        "wordsInText": [
+          "ἐδίωκε"
+        ]
+      },
+      {
+        "greek": "ἐγκύρω",
+        "translation": "to fall in with, light upon, meet with",
+        "wordsInText": [
+          "ἐνεκύρησε"
+        ]
+      },
+      {
+        "greek": "ἡσυχία",
+        "translation": "stillness, rest, quiet",
+        "wordsInText": [
+          "ἡσυχίην"
+        ]
+      },
+      {
+        "greek": "θαυμάζω",
+        "translation": "to wonder, marvel, be astonished",
+        "wordsInText": [
+          "ἐθώμαζε"
+        ]
+      },
+      {
+        "greek": "θεάομαι",
+        "translation": "to look on, gaze at, view, behold",
+        "wordsInText": [
+          "θεώμενος"
+        ]
+      },
+      {
+        "greek": "καί",
+        "translation": "and, also",
+        "wordsInText": [
+          "καὶ"
+        ]
+      },
+      {
+        "greek": "κατά",
+        "translation": "down, against with gen.; according to, throughout with acc.",
+        "wordsInText": [
+          "κατʼ"
+        ]
+      },
+      {
+        "greek": "κόμη",
+        "translation": "the hair, hair of the head ",
+        "wordsInText": [
+          "κόμας"
+        ]
+      },
+      {
+        "greek": "κτενίζω",
+        "translation": "to comb, curry",
+        "wordsInText": [
+          "κτενιζομένους"
+        ]
+      },
+      {
+        "greek": "λέγω",
+        "translation": "to pick; to say",
+        "wordsInText": [
+          "ἔλεγε"
+        ]
+      },
+      {
+        "greek": "μανθάνω",
+        "translation": "to learn",
+        "wordsInText": [
+          "ἐμάνθανε",
+          "μαθὼν"
+        ]
+      },
+      {
+        "greek": "μέν",
+        "translation": "on the one hand, on the other hand",
+        "wordsInText": [
+          "μὲν"
+        ]
+      },
+      {
+        "greek": "Ξέρξης",
+        "translation": "Xerxes",
+        "wordsInText": [
+          "Ξέρξην"
+        ]
+      },
+      {
+        "greek": "ὁ",
+        "translation": "the",
+        "wordsInText": [
+          "τοὺς",
+          "τὰς",
+          "τῶν",
+          "τά",
+          "τὸ"
+        ]
+      },
+      {
+        "greek": "ὀπίσω",
+        "translation": "backwards",
+        "wordsInText": [
+          "ὀπίσω"
+        ]
+      },
+      {
+        "greek": "ὁράω",
+        "translation": "to see",
+        "wordsInText": [
+          "ὀπώπεε"
+        ]
+      },
+      {
+        "greek": "οὔτε",
+        "translation": "neither, nor",
+        "wordsInText": [
+          "οὔτε"
+        ]
+      },
+      {
+        "greek": "οὗτος",
+        "translation": "this, that",
+        "wordsInText": [
+          "ταῦτα"
+        ]
+      },
+      {
+        "greek": "πᾶς",
+        "translation": "all, the whole",
+        "wordsInText": [
+          "πάντα"
+        ]
+      },
+      {
+        "greek": "περ",
+        "translation": "precisely; w. pple. even though (later καίπερ)",
+        "wordsInText": [
+          "περ"
+        ]
+      },
+      {
+        "greek": "πλῆθος",
+        "translation": "a great number, a throng, crowd, multitude",
+        "wordsInText": [
+          "πλῆθος"
+        ]
+      },
+      {
+        "greek": "πολύς",
+        "translation": "much, many",
+        "wordsInText": [
+          "πολλῆς"
+        ]
+      },
+      {
+        "greek": "πρός",
+        "translation": "from (w. gen.);  at, near, in addition to (w. dat.);to, toward, regarding (w. acc.)",
+        "wordsInText": [
+          "πρὸς"
+        ]
+      },
+      {
+        "greek": "τε",
+        "translation": "and",
+        "wordsInText": [
+          "τε"
+        ]
+      },
+      {
+        "greek": "τις",
+        "translation": "any one, any thing, some one, some thing;",
+        "wordsInText": [
+          "τις"
+        ]
+      },
+      {
+        "greek": "ὥρα",
+        "translation": "time, season, climate",
+        "wordsInText": [
+          "ὥρα"
+        ]
+      }
+    ]
+  },
+  {
+    "quizType": "authorbased",
+    "theme": "Herodotos - Histories",
+    "reference": "/texts?author=Herodotos&book=Histories&reference=7.209",
+    "set": 1,
+    "segment": "7.209.3",
+    "fullSentence": "ἄκουσον δὲ καὶ νῦν· οἱ ἄνδρες οὗτοι ἀπίκαται μαχησόμενοι ἡμῖν περὶ τῆς ἐσόδου, καὶ ταῦτα παρασκευάζονται. νόμος γάρ σφι ἔχων οὕτω ἐστί· ἐπεὰν μέλλωσι κινδυνεύειν τῇ ψυχῇ, τότε τὰς κεφαλὰς κοσμέονται.",
+    "translation": "So hear me now. These men have come to fight us for the pass, and it for this that they are preparing. This is their custom: when they are about to risk their lives, they arrange their hair.",
+    "content": [
+      {
+        "greek": "ἀκούω",
+        "translation": "to hear",
+        "wordsInText": [
+          "ἄκουσον"
+        ]
+      },
+      {
+        "greek": "ἀνήρ",
+        "translation": "a man",
+        "wordsInText": [
+          "ἄνδρες"
+        ]
+      },
+      {
+        "greek": "ἀφικνέομαι",
+        "translation": "to come to",
+        "wordsInText": [
+          "ἀπίκαται"
+        ]
+      },
+      {
+        "greek": "γάρ",
+        "translation": "for",
+        "wordsInText": [
+          "γάρ"
+        ]
+      },
+      {
+        "greek": "δέ",
+        "translation": "but",
+        "wordsInText": [
+          "δὲ"
+        ]
+      },
+      {
+        "greek": "ἐγώ",
+        "translation": "I (first person pronoun)",
+        "wordsInText": [
+          "ἡμῖν"
+        ]
+      },
+      {
+        "greek": "εἰμί",
+        "translation": "to be",
+        "wordsInText": [
+          "ἐστί"
+        ]
+      },
+      {
+        "greek": "εἴσοδος",
+        "translation": "a way in, entrance",
+        "wordsInText": [
+          "ἐσόδου"
+        ]
+      },
+      {
+        "greek": "ἐπεί",
+        "translation": "after, since, when",
+        "wordsInText": [
+          "ἐπεὰν"
+        ]
+      },
+      {
+        "greek": "ἔχω",
+        "translation": "to have",
+        "wordsInText": [
+          "ἔχων"
+        ]
+      },
+      {
+        "greek": "καί",
+        "translation": "and, also",
+        "wordsInText": [
+          "καὶ"
+        ]
+      },
+      {
+        "greek": "κεφαλή",
+        "translation": "the head",
+        "wordsInText": [
+          "κεφαλὰς"
+        ]
+      },
+      {
+        "greek": "κινδυνεύω",
+        "translation": "to be daring, to make a venture, take the risk, do a daring thing",
+        "wordsInText": [
+          "κινδυνεύειν"
+        ]
+      },
+      {
+        "greek": "κοσμέω",
+        "translation": "to order, arrange",
+        "wordsInText": [
+          "κοσμέονται"
+        ]
+      },
+      {
+        "greek": "μάχομαι",
+        "translation": "to fight",
+        "wordsInText": [
+          "μαχησόμενοι"
+        ]
+      },
+      {
+        "greek": "μέλλω",
+        "translation": "to think of doing, intend to do, to be about to do",
+        "wordsInText": [
+          "μέλλωσι"
+        ]
+      },
+      {
+        "greek": "νόμος",
+        "translation": "usage, custom, law, ordinance",
+        "wordsInText": [
+          "νόμος"
+        ]
+      },
+      {
+        "greek": "νῦν",
+        "translation": "now at this very time",
+        "wordsInText": [
+          "νῦν"
+        ]
+      },
+      {
+        "greek": "ὁ",
+        "translation": "the",
+        "wordsInText": [
+          "οἱ",
+          "τῇ",
+          "τῆς",
+          "τὰς"
+        ]
+      },
+      {
+        "greek": "οὗτος",
+        "translation": "this, that",
+        "wordsInText": [
+          "οὗτοι",
+          "ταῦτα"
+        ]
+      },
+      {
+        "greek": "οὕτως",
+        "translation": "so, in this manner",
+        "wordsInText": [
+          "οὕτω"
+        ]
+      },
+      {
+        "greek": "παρασκευάζω",
+        "translation": "to get ready, prepare",
+        "wordsInText": [
+          "παρασκευάζονται"
+        ]
+      },
+      {
+        "greek": "περί",
+        "translation": "round about with gen., dat., and acc.",
+        "wordsInText": [
+          "περὶ"
+        ]
+      },
+      {
+        "greek": "σφεῖς",
+        "translation": "personal and (ind.) reflexive pronoun",
+        "wordsInText": [
+          "σφι"
+        ]
+      },
+      {
+        "greek": "τοτέ",
+        "translation": "at times, now and then",
+        "wordsInText": [
+          "τότε"
+        ]
+      },
+      {
+        "greek": "ψυχή",
+        "translation": "breath, soul",
+        "wordsInText": [
+          "ψυχῇ"
+        ]
+      }
+    ]
+  },
+  {
+    "quizType": "authorbased",
+    "theme": "Herodotos - Histories",
+    "reference": "/texts?author=Herodotos&book=Histories&reference=8.65",
+    "set": 1,
+    "segment": "8.65.3",
+    "fullSentence": "καὶ ἢν μέν γε κατασκήψῃ ἐς τὴν Πελοπόννησον, κίνδυνος αὐτῷ τε βασιλέι καὶ τῇ στρατιῇ τῇ ἐν τῇ ἠπείρῳ ἔσται, ἢν δὲ ἐπὶ τὰς νέας τράπηται τὰς ἐν Σαλαμῖνι, τὸν ναυτικὸν στρατὸν κινδυνεύσει βασιλεὺς ἀποβαλεῖν.",
+    "translation": "If it descends upon the Peloponnese, the king himself and his army on the mainland will be endangered. If, however, it turns towards the ships at Salamis, the king will be in danger of losing his fleet.",
+    "content": [
+      {
+        "greek": "ἀποβάλλω",
+        "translation": "to throw off",
+        "wordsInText": [
+          "ἀποβαλεῖν"
+        ]
+      },
+      {
+        "greek": "αὐτός",
+        "translation": "self; [the] same (unemph. 3rd pers.pronoun)",
+        "wordsInText": [
+          "αὐτῷ"
+        ]
+      },
+      {
+        "greek": "βασιλεύς",
+        "translation": "a king, chief",
+        "wordsInText": [
+          "βασιλεὺς",
+          "βασιλέι"
+        ]
+      },
+      {
+        "greek": "γε",
+        "translation": "at least, at any rate",
+        "wordsInText": [
+          "γε"
+        ]
+      },
+      {
+        "greek": "δέ",
+        "translation": "but",
+        "wordsInText": [
+          "δὲ"
+        ]
+      },
+      {
+        "greek": "ἐάν",
+        "translation": "if",
+        "wordsInText": [
+          "ἢν"
+        ]
+      },
+      {
+        "greek": "εἰμί",
+        "translation": "to be",
+        "wordsInText": [
+          "ἔσται"
+        ]
+      },
+      {
+        "greek": "εἰς",
+        "translation": "into, to c. acc.",
+        "wordsInText": [
+          "ἐς"
+        ]
+      },
+      {
+        "greek": "ἐν",
+        "translation": "in, among. c. dat.",
+        "wordsInText": [
+          "ἐν"
+        ]
+      },
+      {
+        "greek": "ἐπί",
+        "translation": "on, upon with gen., dat., and acc.",
+        "wordsInText": [
+          "ἐπὶ"
+        ]
+      },
+      {
+        "greek": "ἤπειρος",
+        "translation": "terra-firma, the land",
+        "wordsInText": [
+          "ἠπείρῳ"
+        ]
+      },
+      {
+        "greek": "καί",
+        "translation": "and, also",
+        "wordsInText": [
+          "καὶ"
+        ]
+      },
+      {
+        "greek": "κατασκήπτω",
+        "translation": "to rush down",
+        "wordsInText": [
+          "κατασκήψῃ"
+        ]
+      },
+      {
+        "greek": "κινδυνεύω",
+        "translation": "to be daring, to make a venture, take the risk, do a daring thing",
+        "wordsInText": [
+          "κινδυνεύσει"
+        ]
+      },
+      {
+        "greek": "κίνδυνος",
+        "translation": "a danger, risk, hazard, venture, enterprise",
+        "wordsInText": [
+          "κίνδυνος"
+        ]
+      },
+      {
+        "greek": "μέν",
+        "translation": "on the one hand, on the other hand",
+        "wordsInText": [
+          "μέν"
+        ]
+      },
+      {
+        "greek": "ναῦς",
+        "translation": "a ship",
+        "wordsInText": [
+          "νέας"
+        ]
+      },
+      {
+        "greek": "ναυτικός",
+        "translation": "seafaring, naval",
+        "wordsInText": [
+          "ναυτικὸν"
+        ]
+      },
+      {
+        "greek": "ὁ",
+        "translation": "the",
+        "wordsInText": [
+          "τὴν",
+          "τὰς",
+          "τὸν"
+        ]
+      },
+      {
+        "greek": "Πελοπόννησος",
+        "translation": "the Peloponnesus",
+        "wordsInText": [
+          "Πελοπόννησον"
+        ]
+      },
+      {
+        "greek": "Σαλαμίς",
+        "translation": "Salamis (Island)",
+        "wordsInText": [
+          "Σαλαμῖνι"
+        ]
+      },
+      {
+        "greek": "στρατιά",
+        "translation": "army",
+        "wordsInText": [
+          "στρατιῇ"
+        ]
+      },
+      {
+        "greek": "στρατός",
+        "translation": "an encamped army",
+        "wordsInText": [
+          "στρατὸν"
+        ]
+      },
+      {
+        "greek": "τε",
+        "translation": "and",
+        "wordsInText": [
+          "τε"
+        ]
+      },
+      {
+        "greek": "τῇ",
+        "translation": "here, there",
+        "wordsInText": [
+          "τῇ"
+        ]
+      },
+      {
+        "greek": "τρέπω",
+        "translation": "turn, divert, turn back, rout an enemy",
+        "wordsInText": [
+          "τράπηται"
+        ]
+      }
+    ]
+  }
+]

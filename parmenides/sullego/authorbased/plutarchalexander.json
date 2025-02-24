@@ -1,0 +1,565 @@
+[
+  {
+    "quizType": "authorbased",
+    "theme": "Plutarch - Alexander",
+    "reference": "/texts?author=Ploutarchos&book=Alexander&reference=6",
+    "set": 1,
+    "segment": "6.1",
+    "fullSentence": "ἐπεὶ δὲ Φιλονίκου τοῦ Θεσσαλοῦ τὸν Βουκεφάλαν ἀγαγόντος ὤνιον τῷ Φιλίππῳ τρισκαίδεκα ταλάντων κατέβησαν εἰς τὸ πεδίον δοκιμάσοντες τὸν ἵππον, ἐδόκει τε χαλεπὸς εἶναι καὶ κομιδῇ δύσχρηστος, οὔτε ἀναβάτην προσιέμενος οὔτε φωνὴν ὑπομένων τινὸς τῶν περὶ τὸν Φίλιππον, ἀλλʼ ἁπάντων κατεξανιστάμενος",
+    "translation": "Once upon a time Philoneicus the Thessalian brought Bucephalas, offering to sell him to Philip for thirteen talents, and they went down into the plain to try the horse, who appeared to be savage and altogether intractable, neither allowing any one to mount him, nor heeding the voice of any of Philip’s attendants, but rearing up against all of them.",
+    "content": [
+      {
+        "greek": "ἄγω",
+        "translation": "to lead",
+        "wordsInText": [
+          "ἀγαγόντος"
+        ]
+      },
+      {
+        "greek": "ἀλλά",
+        "translation": "otherwise, but",
+        "wordsInText": [
+          "ἀλλʼ"
+        ]
+      },
+      {
+        "greek": "ἀναβαίνω",
+        "translation": "to go up, mount, to go up to",
+        "wordsInText": [
+          "ἀναβάτην"
+        ]
+      },
+      {
+        "greek": "ἅπας",
+        "translation": "quite all, the whole",
+        "wordsInText": [
+          "ἁπάντων"
+        ]
+      },
+      {
+        "greek": "Βουκεφάλας",
+        "translation": "Bucephalas",
+        "wordsInText": [
+          "Βουκεφάλαν"
+        ]
+      },
+      {
+        "greek": "δέ",
+        "translation": "but",
+        "wordsInText": [
+          "δὲ"
+        ]
+      },
+      {
+        "greek": "δοκέω",
+        "translation": "seem, impers. it seems best..",
+        "wordsInText": [
+          "ἐδόκει"
+        ]
+      },
+      {
+        "greek": "δύσχρηστος",
+        "translation": "hard to use, nearly useless",
+        "wordsInText": [
+          "δύσχρηστος"
+        ]
+      },
+      {
+        "greek": "δοκιμάζω",
+        "translation": "to try out",
+        "wordsInText": [
+          "δοκιμάσοντες"
+        ]
+      },
+      {
+        "greek": "εἰμί",
+        "translation": "to be",
+        "wordsInText": [
+          "εἶναι"
+        ]
+      },
+      {
+        "greek": "εἰς",
+        "translation": "into, to c. acc.",
+        "wordsInText": [
+          "εἰς"
+        ]
+      },
+      {
+        "greek": "ἐπεί",
+        "translation": "after, since, when",
+        "wordsInText": [
+          "ἐπεὶ"
+        ]
+      },
+      {
+        "greek": "Θεσσαλός",
+        "translation": "Thessalian",
+        "wordsInText": [
+          "Θεσσαλοῦ"
+        ]
+      },
+      {
+        "greek": "ἵππος",
+        "translation": "a horse, mare",
+        "wordsInText": [
+          "ἵππον"
+        ]
+      },
+      {
+        "greek": "καί",
+        "translation": "and, also",
+        "wordsInText": [
+          "καὶ"
+        ]
+      },
+      {
+        "greek": "καταβαίνω",
+        "translation": "to step down, go",
+        "wordsInText": [
+          "κατέβησαν"
+        ]
+      },
+      {
+        "greek": "κατεξανισταμαι",
+        "translation": "rise up against",
+        "wordsInText": [
+          "κατεξανιστάμενος"
+        ]
+      },
+      {
+        "greek": "κομιδῇ",
+        "translation": "exactly, just",
+        "wordsInText": [
+          "κομιδῇ"
+        ]
+      },
+      {
+        "greek": "ὁ",
+        "translation": "the",
+        "wordsInText": [
+          "τοῦ",
+          "τὸν",
+          "τὸ",
+          "τῶν"
+        ]
+      },
+      {
+        "greek": "οὔτε",
+        "translation": "neither / nor",
+        "wordsInText": [
+          "οὔτε"
+        ]
+      },
+      {
+        "greek": "πεδίον",
+        "translation": "a plain",
+        "wordsInText": [
+          "πεδίον"
+        ]
+      },
+      {
+        "greek": "περί",
+        "translation": "around, round about with gen., dat., and acc.",
+        "wordsInText": [
+          "περὶ"
+        ]
+      },
+      {
+        "greek": "προσίημι",
+        "translation": "to send to",
+        "wordsInText": [
+          "προσιέμενος"
+        ]
+      },
+      {
+        "greek": "τάλαντον",
+        "translation": "a balance, talent (weight, often of gold or silver)",
+        "wordsInText": [
+          "ταλάντων"
+        ]
+      },
+      {
+        "greek": "τε",
+        "translation": "and",
+        "wordsInText": [
+          "τε"
+        ]
+      },
+      {
+        "greek": "τις",
+        "translation": "any one, any thing, some one, some thing",
+        "wordsInText": [
+          "τινὸς"
+        ]
+      },
+      {
+        "greek": "τρεισκαίδεκα",
+        "translation": "thirteen",
+        "wordsInText": [
+          "τρισκαίδεκα"
+        ]
+      },
+      {
+        "greek": "τῷ",
+        "translation": "therefore, in this wise, thereupon ",
+        "wordsInText": [
+          "τῷ"
+        ]
+      },
+      {
+        "greek": "ὑπομένω",
+        "translation": "to stay behind, survive",
+        "wordsInText": [
+          "ὑπομένων"
+        ]
+      },
+      {
+        "greek": "Φίλιππος",
+        "translation": "Philip, Philippus",
+        "wordsInText": [
+          "Φιλίππῳ",
+          "Φίλιππον"
+        ]
+      },
+      {
+        "greek": "Φιλόνικος",
+        "translation": "Philoneicus (name), fond of victory",
+        "wordsInText": [
+          "Φιλονίκου"
+        ]
+      },
+      {
+        "greek": "φωνή",
+        "translation": "a sound, tone",
+        "wordsInText": [
+          "φωνὴν"
+        ]
+      },
+      {
+        "greek": "χαλεπός",
+        "translation": "hard to bear, painful; difficult",
+        "wordsInText": [
+          "χαλεπὸς"
+        ]
+      },
+      {
+        "greek": "ὤνιος",
+        "translation": "to be bought, for sale ",
+        "wordsInText": [
+          "ὤνιον"
+        ]
+      }
+    ]
+  },
+  {
+    "quizType": "authorbased",
+    "theme": "Plutarch - Alexander",
+    "reference": "/texts?author=Ploutarchos&book=Alexander&reference=31",
+    "set": 1,
+    "segment": "31.7",
+    "fullSentence": "ὁ δὲ τὸ μνημονευόμενον εἰπὼν, οὐ κλέπτω τὴν νίκην, ἐνίοις μὲν ἔδοξε μειρακιώδη καὶ κενὴν ἀπόκρισιν πεποιῆσθαι, παίζων πρὸς τοσοῦτον κίνδυνον, ἐνίοις δὲ καὶ τῷ παρόντι θαρρεῖν καὶ στοχάζεσθαι τοῦ μέλλοντος ὀρθῶς, μὴ διδοὺς πρόφασιν ἡττηθέντι Δαρείῳ πρὸς ἄλλην αὖθις ἀναθαρρῆσαι πεῖραν, αἰτιωμένῳ τούτων νύκτα καὶ σκότος, ὡς ὄρη καὶ στενὰ καὶ θάλασσαν τῶν προτέρων.",
+    "translation": "But he gave them the celebrated answer, I will not steal my victory; whereupon some thought that he had made a vainglorious reply, and was jesting in the presence of so great a peril. Others, however, thought that he had confidence in the present situation and estimated the future correctly, not offering Dareius in case of defeat an excuse to pluck up courage again for another attempt, by laying the blame this time upon darkness and night, as he had before upon mountains, defiles, and sea.",
+    "content": [
+      {
+        "greek": "ἄλλος",
+        "translation": "other, another",
+        "wordsInText": [
+          "ἄλλην"
+        ]
+      },
+      {
+        "greek": "αἰτιάομαι",
+        "translation": "to accuse, to blame",
+        "wordsInText": [
+          "αἰτιωμένῳ"
+        ]
+      },
+      {
+        "greek": "ἀναθαρσέω",
+        "translation": "to regain courage",
+        "wordsInText": [
+          "ἀναθαρρῆσαι"
+        ]
+      },
+      {
+        "greek": "ἀπόκρισις",
+        "translation": "a separating; a reply",
+        "wordsInText": [
+          "ἀπόκρισιν"
+        ]
+      },
+      {
+        "greek": "αὖθις",
+        "translation": "back, back again ",
+        "wordsInText": [
+          "αὖθις"
+        ]
+      },
+      {
+        "greek": "Δαρεῖος",
+        "translation": "Darius",
+        "wordsInText": [
+          "Δαρείῳ"
+        ]
+      },
+      {
+        "greek": "δὲ",
+        "translation": "but",
+        "wordsInText": [
+          "δὲ"
+        ]
+      },
+      {
+        "greek": "δίδωμι",
+        "translation": "to give",
+        "wordsInText": [
+          "διδοὺς"
+        ]
+      },
+      {
+        "greek": "δοκέω",
+        "translation": "seem, impers. it seems best.",
+        "wordsInText": [
+          "ἔδοξε"
+        ]
+      },
+      {
+        "greek": "ἔνιοι",
+        "translation": "some",
+        "wordsInText": [
+          "ἐνίοις"
+        ]
+      },
+      {
+        "greek": "ἡσσάομαι",
+        "translation": "to be less than another, inferior to",
+        "wordsInText": [
+          "ἡττηθέντι"
+        ]
+      },
+      {
+        "greek": "θάλασσα",
+        "translation": "the sea",
+        "wordsInText": [
+          "θάλασσαν"
+        ]
+      },
+      {
+        "greek": "θαρσέω",
+        "translation": "to be of good courage, take courage",
+        "wordsInText": [
+          "θαρρεῖν"
+        ]
+      },
+      {
+        "greek": "καί",
+        "translation": "and, also",
+        "wordsInText": [
+          "καὶ"
+        ]
+      },
+      {
+        "greek": "κενός",
+        "translation": "empty",
+        "wordsInText": [
+          "κενὴν"
+        ]
+      },
+      {
+        "greek": "κίνδυνος",
+        "translation": "a danger, risk, hazard, venture, enterprise",
+        "wordsInText": [
+          "κίνδυνον"
+        ]
+      },
+      {
+        "greek": "κλέπτω",
+        "translation": "to steal, to cheat",
+        "wordsInText": [
+          "κλέπτω"
+        ]
+      },
+      {
+        "greek": "λέγω",
+        "translation": "to pick; to say",
+        "wordsInText": [
+          "εἰπὼν"
+        ]
+      },
+      {
+        "greek": "μειρακιώδης",
+        "translation": "becoming a youth, youthful",
+        "wordsInText": [
+          "μειρακιώδη"
+        ]
+      },
+      {
+        "greek": "μέλλω",
+        "translation": "to think of doing, intend to do, to be about to do",
+        "wordsInText": [
+          "μέλλοντος"
+        ]
+      },
+      {
+        "greek": "μέν",
+        "translation": "on the one hand, on the other hand",
+        "wordsInText": [
+          "μὲν"
+        ]
+      },
+      {
+        "greek": "μή",
+        "translation": "not",
+        "wordsInText": [
+          "μὴ"
+        ]
+      },
+      {
+        "greek": "μνημονεύω",
+        "translation": "to call to mind, remember",
+        "wordsInText": [
+          "μνημονευόμενον"
+        ]
+      },
+      {
+        "greek": "νίκη",
+        "translation": "victory",
+        "wordsInText": [
+          "νίκην"
+        ]
+      },
+      {
+        "greek": "νύξ",
+        "translation": "the night",
+        "wordsInText": [
+          "νύκτα"
+        ]
+      },
+      {
+        "greek": "ὁ",
+        "translation": "the",
+        "wordsInText": [
+          "ὁ",
+          "τὸ",
+          "τὴν",
+          "τῷ",
+          "τοῦ",
+          "τῶν"
+        ]
+      },
+      {
+        "greek": "ὀρθός",
+        "translation": "straight",
+        "wordsInText": [
+          "ὀρθῶς"
+        ]
+      },
+      {
+        "greek": "ὄρος",
+        "translation": "a mountain, hill ",
+        "wordsInText": [
+          "ὄρη"
+        ]
+      },
+      {
+        "greek": "οὐ",
+        "translation": "not",
+        "wordsInText": [
+          "οὐ"
+        ]
+      },
+      {
+        "greek": "οὗτος",
+        "translation": "this; that",
+        "wordsInText": [
+          "τούτων"
+        ]
+      },
+      {
+        "greek": "παίζω",
+        "translation": "to play like a child, to sport, play",
+        "wordsInText": [
+          "παίζων"
+        ]
+      },
+      {
+        "greek": "πάρειμι",
+        "translation": "be present",
+        "wordsInText": [
+          "παρόντι"
+        ]
+      },
+      {
+        "greek": "πεῖρα",
+        "translation": "a trial, attempt, essay, experiment",
+        "wordsInText": [
+          "πεῖραν"
+        ]
+      },
+      {
+        "greek": "ποιέω",
+        "translation": "to make, to do",
+        "wordsInText": [
+          "πεποιῆσθαι"
+        ]
+      },
+      {
+        "greek": "πρός",
+        "translation": "from (w. gen.); at, near, in addition to (w. dat.);  to, toward, regarding (w. acc.)",
+        "wordsInText": [
+          "πρὸς"
+        ]
+      },
+      {
+        "greek": "πρότερος",
+        "translation": "before, earlier",
+        "wordsInText": [
+          "προτέρων"
+        ]
+      },
+      {
+        "greek": "πρόφασις",
+        "translation": "that which is alleged as the cause, an allegation, plea",
+        "wordsInText": [
+          "πρόφασιν"
+        ]
+      },
+      {
+        "greek": "σκότος",
+        "translation": "darkness, gloom",
+        "wordsInText": [
+          "σκότος"
+        ]
+      },
+      {
+        "greek": "στενός",
+        "translation": "narrow, strait",
+        "wordsInText": [
+          "στενὰ"
+        ]
+      },
+      {
+        "greek": "στοχάζομαι",
+        "translation": "to aim",
+        "wordsInText": [
+          "στοχάζεσθαι"
+        ]
+      },
+      {
+        "greek": "τοσοῦτος",
+        "translation": "so large, so tall",
+        "wordsInText": [
+          "τοσοῦτον"
+        ]
+      },
+      {
+        "greek": "ὡς",
+        "translation": "asm how",
+        "wordsInText": [
+          "ὡς"
+        ]
+      }
+    ]
+  }
+]

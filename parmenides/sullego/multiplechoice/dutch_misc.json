@@ -1,0 +1,770 @@
+[
+  {
+    "quizMetadata": {
+      "language": "Dutch"
+    },
+    "quizType": "multiplechoice",
+    "theme": "Misc - Nederlands",
+    "set": 1,
+    "content": [
+      {
+        "translation": "dus, dan, inderdaad, natuurlijk",
+        "greek": "δή"
+      },
+      {
+        "translation": "dat (eigenlijk: hoe)",
+        "greek": "ὡς"
+      },
+      {
+        "translation": "niet",
+        "greek": "μή"
+      },
+      {
+        "translation": "dat (eigenlijk: hoe), in vergelijkingen zoals, als",
+        "greek": "ὡς"
+      },
+      {
+        "translation": "niet",
+        "greek": "μή"
+      },
+      {
+        "translation": "al, reeds, nu, eindelijk",
+        "greek": "ἤδη"
+      },
+      {
+        "translation": "tegelijk",
+        "greek": "ἅμα"
+      },
+      {
+        "translation": "tweemaal",
+        "greek": "δίς"
+      },
+      {
+        "translation": "1., ... in, naar (binnen); 2. tot, voor, om (doelaangevend) ",
+        "greek": "εἰς"
+      },
+      {
+        "translation": "toch",
+        "greek": "ὅμως"
+      },
+      {
+        "translation": "misschien",
+        "greek": "ἴσως"
+      },
+      {
+        "translation": "tenslotte",
+        "greek": "τέλος"
+      },
+      {
+        "translation": "opnieuw, weer, verder",
+        "greek": "αὖθις"
+      },
+      {
+        "translation": "buiten",
+        "greek": "ἐκτός"
+      },
+      {
+        "translation": "met moeite, ternauwernood",
+        "greek": "μογις"
+      },
+      {
+        "translation": "slechts, alleen",
+        "greek": "μόνον"
+      },
+      {
+        "translation": "hevig, zeer, erg",
+        "greek": "σφόδρα"
+      },
+      {
+        "translation": "bijna",
+        "greek": "σχεδόν"
+      },
+      {
+        "translation": "snel",
+        "greek": "ταχέως"
+      },
+      {
+        "translation": "meer, liever",
+        "greek": "μάλλον"
+      }
+    ],
+    "progress": {
+      "timesCorrect": 0,
+      "timesIncorrect": 0,
+      "averageAccuracy": 0
+    }
+  },
+  {
+    "quizMetadata": {
+      "language": "Dutch"
+    },
+    "quizType": "multiplechoice",
+    "theme": "Misc - Nederlands",
+    "set": 2,
+    "content": [
+      {
+        "translation": "evenzo, op dezelfde wijze",
+        "greek": "ὡσαύτως"
+      },
+      {
+        "translation": "later, in de toekomst",
+        "greek": "ὕστερον"
+      },
+      {
+        "translation": "uit-de-voeten, uit de weg, weg",
+        "greek": "ἐκποδών"
+      },
+      {
+        "translation": "dikwijls",
+        "greek": "πολλάκις"
+      },
+      {
+        "translation": "eerder, vroeger",
+        "greek": "πρότερον"
+      },
+      {
+        "translation": "toen, nadat (+ indic. verleden tijd)",
+        "greek": "ἐπεί/ἐπειδή"
+      },
+      {
+        "translation": "(of) ... of (vragend)",
+        "greek": "πότερον ... ἤ"
+      },
+      {
+        "translation": "eerst, in de eerste plaats",
+        "greek": "πρῶτον/τὸ πρῶτον"
+      },
+      {
+        "translation": "omhoog, boven",
+        "greek": "ἄνω"
+      },
+      {
+        "translation": "nog niet",
+        "greek": "οὐπω"
+      },
+      {
+        "translation": "acht",
+        "greek": "ὀκτώ"
+      },
+      {
+        "translation": "neutrale markering van de vocativus",
+        "greek": " ὦ"
+      },
+      {
+        "translation": "of",
+        "greek": "ἤ"
+      },
+      {
+        "translation": "1. of; 2. dan (in een vergelijking)",
+        "greek": "ἤ"
+      },
+      {
+        "translation": "1. en 2. maar",
+        "greek": "δέ"
+      },
+      {
+        "translation": "niet",
+        "greek": "οὐ"
+      },
+      {
+        "translation": "wat, waarom",
+        "greek": "τί"
+      },
+      {
+        "translation": "in, op, te midden van",
+        "greek": "ἐν"
+      },
+      {
+        "translation": "goed",
+        "greek": "εὖ"
+      },
+      {
+        "translation": "1. opnieuw, weer, verder, 2. op zijn beurt",
+        "greek": "αὖ"
+      }
+    ],
+    "progress": {
+      "timesCorrect": 0,
+      "timesIncorrect": 0,
+      "averageAccuracy": 0
+    }
+  },
+  {
+    "quizMetadata": {
+      "language": "Dutch"
+    },
+    "quizType": "multiplechoice",
+    "theme": "Misc - Nederlands",
+    "set": 3,
+    "content": [
+      {
+        "translation": "vertalen met een klemtoon, soms met tenminste, althans",
+        "greek": "γε"
+      },
+      {
+        "translation": "indien, als (conditioneel)",
+        "greek": "εἰ"
+      },
+      {
+        "translation": "1. indien, als (conditioneel); 2. of (vraagnzin)",
+        "greek": "εἰ"
+      },
+      {
+        "translation": "1., ... in, naar (binnen); 2. tot, voor, om (doelaangevend) ",
+        "greek": "ἐς"
+      },
+      {
+        "translation": "want",
+        "greek": "γάρ"
+      },
+      {
+        "translation": "1. en 2. ook, zelfs",
+        "greek": "και"
+      },
+      {
+        "translation": "altijd, steeds",
+        "greek": "ἀεί"
+      },
+      {
+        "translation": "twee",
+        "greek": "διό"
+      },
+      {
+        "translation": "dat (na verba van zeggen en menen)",
+        "greek": "ὅτι"
+      },
+      {
+        "translation": "dus, dan, welnu",
+        "greek": "οὖν"
+      },
+      {
+        "translation": "nog",
+        "greek": "ἔτι"
+      },
+      {
+        "translation": "1. dat (na verba van zeggen en menen); 2. omdat",
+        "greek": "ὅτι"
+      },
+      {
+        "translation": "1. ergens; 2. denk ik, misschien",
+        "greek": "που"
+      },
+      {
+        "translation": "zo, op deze/de volgende manier",
+        "greek": "ὧδε"
+      },
+      {
+        "translation": "maar",
+        "greek": "ἀλλά"
+      },
+      {
+        "translation": "1. en niet 2. ook niet, zelfs niet",
+        "greek": "οὐδέ"
+      },
+      {
+        "translation": "kijk eens!",
+        "greek": "ιδού"
+      },
+      {
+        "translation": "waar?",
+        "greek": "ποῦ;"
+      },
+      {
+        "translation": "zeer",
+        "greek": "μάλα"
+      },
+      {
+        "translation": "tien",
+        "greek": "δέκα"
+      }
+    ],
+    "progress": {
+      "timesCorrect": 0,
+      "timesIncorrect": 0,
+      "averageAccuracy": 0
+    }
+  },
+  {
+    "quizMetadata": {
+      "language": "Dutch"
+    },
+    "quizType": "multiplechoice",
+    "theme": "Misc - Nederlands",
+    "set": 4,
+    "content": [
+      {
+        "translation": "daar, daarginds",
+        "greek": "ἐκεῖ"
+      },
+      {
+        "translation": "volkomen, heel, zeker",
+        "greek": "πάνυ"
+      },
+      {
+        "translation": "toen, op dat moment, dan",
+        "greek": "τότε"
+      },
+      {
+        "translation": "1. maar, toch 2. vooruit (bij een verzoek of bevel)",
+        "greek": "ἀλλά"
+      },
+      {
+        "translation": "eens, ooit, soms",
+        "greek": "ποτε"
+      },
+      {
+        "translation": "zeer, juist, precies(benadrukt het voorafgaande woord)",
+        "greek": "-περ"
+      },
+      {
+        "translation": "hoe?",
+        "greek": "πῶς;"
+      },
+      {
+        "translation": "let op!",
+        "greek": "ἰδού"
+      },
+      {
+        "translation": "hier(langs), op deze manier",
+        "greek": "τῃδε"
+      },
+      {
+        "translation": "1. verspreid over, ter hoogte van 2. volgens wat betreft 3. per, bij ... tegelijk (+ acc.)",
+        "greek": "κατά"
+      },
+      {
+        "translation": "volstrekt niet, geenszins",
+        "greek": "οὐδέν"
+      },
+      {
+        "translation": "uit",
+        "greek": "ἐκ/ἐξ"
+      },
+      {
+        "translation": "zoals",
+        "greek": "ὥσπερ"
+      },
+      {
+        "translation": "op de plaats zelf, ter plekke",
+        "greek": "αὐτοῦ"
+      },
+      {
+        "translation": "terug, weer",
+        "greek": "πάλιν"
+      },
+      {
+        "translation": "hierheen",
+        "greek": "δεῦρο"
+      },
+      {
+        "translation": "lang geleden, vroeger, allang",
+        "greek": "πάλαι"
+      },
+      {
+        "translation": "(net) zoals",
+        "greek": "ὧσπερ"
+      },
+      {
+        "translation": "tot aan (+ gen.)",
+        "greek": "μέχρι"
+      },
+      {
+        "translation": "niet meer",
+        "greek": "οὐκέτι"
+      }
+    ],
+    "progress": {
+      "timesCorrect": 0,
+      "timesIncorrect": 0,
+      "averageAccuracy": 0
+    }
+  },
+  {
+    "quizMetadata": {
+      "language": "Dutch"
+    },
+    "quizType": "multiplechoice",
+    "theme": "Misc - Nederlands",
+    "set": 5,
+    "content": [
+      {
+        "translation": "nooit",
+        "greek": "οὔποτε"
+      },
+      {
+        "translation": "... in, naar (binnen)",
+        "greek": "εἰς/ἐς"
+      },
+      {
+        "translation": "daarna, dan",
+        "greek": "ἔπειτα"
+      },
+      {
+        "translation": "en",
+        "greek": "... τε"
+      },
+      {
+        "translation": "naar huis",
+        "greek": "οἴκαδε"
+      },
+      {
+        "translation": "evenwel, toch",
+        "greek": "καίτοι"
+      },
+      {
+        "translation": "hier, hierheen",
+        "greek": "ἐνθάδε"
+      },
+      {
+        "translation": "sinds",
+        "greek": "ἀφ΄ οὗ"
+      },
+      {
+        "translation": "meteen",
+        "greek": "αὐτίκα"
+      },
+      {
+        "translation": "welnu, dus",
+        "greek": "τοίνυν"
+      },
+      {
+        "translation": "maar, echter",
+        "greek": "μέντοι"
+      },
+      {
+        "translation": "het meest, het liefst, vooral, bij uistek, zeker",
+        "greek": "μάλιστα"
+      },
+      {
+        "translation": "waarom?",
+        "greek": "διὰ τί;"
+      },
+      {
+        "translation": "toch wel?, soms niet?, niet?",
+        "greek": "ἆρ' οὐ;"
+      },
+      {
+        "translation": "op die manier, zo",
+        "greek": "οὕτω(ς)"
+      },
+      {
+        "translation": "toch niet?, toch zeker niet?, soms?",
+        "greek": "ἆρα μή;"
+      },
+      {
+        "translation": "1. daar, daarheen; 2. in die situatie, toen, nu",
+        "greek": "ἐνταῦθα"
+      },
+      {
+        "translation": "welnu, nu (geeft een overgang naar een ander onderwerp)",
+        "greek": "μὲν οὖν"
+      },
+      {
+        "translation": "(ja)zeker, inderdaad",
+        "greek": "καὶ μήν"
+      },
+      {
+        "translation": "aan de achterkant, later",
+        "greek": "ὄπισθεν"
+      }
+    ],
+    "progress": {
+      "timesCorrect": 0,
+      "timesIncorrect": 0,
+      "averageAccuracy": 0
+    }
+  },
+  {
+    "quizMetadata": {
+      "language": "Dutch"
+    },
+    "quizType": "multiplechoice",
+    "theme": "Misc - Nederlands",
+    "set": 6,
+    "content": [
+      {
+        "translation": "waar",
+        "greek": "οὗ rel."
+      },
+      {
+        "translation": "daarom",
+        "greek": "διὰ τοῦτο"
+      },
+      {
+        "translation": "op … af, naar",
+        "greek": "ἐπί + acc"
+      },
+      {
+        "translation": "natuurlijk",
+        "greek": "δῆλον ὅτι"
+      },
+      {
+        "translation": "als niet, indien niet",
+        "greek": "μή + ptc."
+      },
+      {
+        "translation": "omdat, in de veronderstelling dat (bij een subjectieve reden",
+        "greek": "ὡς + ptc."
+      },
+      {
+        "translation": "aan de voorkant, van voren",
+        "greek": "προσθε(ν)"
+      },
+      {
+        "translation": "omdat, in de veronderstelling dat (bij subjectieve reden)",
+        "greek": "ὡς + ptc."
+      },
+      {
+        "translation": "wegens, door toedoen van, dankzij",
+        "greek": "δία + acc."
+      },
+      {
+        "translation": "onder, aan de voet van",
+        "greek": "ὑπό + dat."
+      },
+      {
+        "translation": "met, in gezelschap van, met behulp van",
+        "greek": "σύν + dat."
+      },
+      {
+        "translation": "behalve",
+        "greek": "πλήν + gen"
+      },
+      {
+        "translation": "1. door (...heen), 2. door middel van",
+        "greek": "διά + gen."
+      },
+      {
+        "translation": "tijdens",
+        "greek": "ἐπί + gen."
+      },
+      {
+        "translation": "1. van ... vandaan, vanaf; 2. vanaf, sinds  ",
+        "greek": "ἀπό + gen."
+      },
+      {
+        "translation": "1. op; 2. tijdens",
+        "greek": "ἐπί + gen."
+      },
+      {
+        "translation": "wat dat betreft, mֶet het oog hierop, in reactie hierop",
+        "greek": "πρὸς ταῦτα"
+      },
+      {
+        "translation": "aan, bij",
+        "greek": "ἐπί + dat."
+      },
+      {
+        "translation": "en óók, en vooral, en in het bijzonder",
+        "greek": "καὶ δὴ καί"
+      },
+      {
+        "translation": "voor (van tijd en plaats), liever dan",
+        "greek": "προ + gen."
+      }
+    ],
+    "progress": {
+      "timesCorrect": 0,
+      "timesIncorrect": 0,
+      "averageAccuracy": 0
+    }
+  },
+  {
+    "quizMetadata": {
+      "language": "Dutch"
+    },
+    "quizType": "multiplechoice",
+    "theme": "Misc - Nederlands",
+    "set": 7,
+    "content": [
+      {
+        "translation": "tegelijk/samen met",
+        "greek": "ἅμα + dat."
+      },
+      {
+        "translation": "terwijl",
+        "greek": "ἅμα + ptc."
+      },
+      {
+        "translation": "omdat (bij een objectieve reden)",
+        "greek": "ἅτε + ptc."
+      },
+      {
+        "translation": "tegelijk/samen met",
+        "greek": "ἅμα + dat."
+      },
+      {
+        "translation": "terwijl",
+        "greek": "ἅμα + ptc."
+      },
+      {
+        "translation": "langs ... omhoog, (verspreid) over",
+        "greek": "ἀνά + acc."
+      },
+      {
+        "translation": "zowel...als",
+        "greek": "και ... και"
+      },
+      {
+        "translation": "zonder",
+        "greek": "ἄνευ + gen."
+      },
+      {
+        "translation": "na",
+        "greek": "μετά + acc."
+      },
+      {
+        "translation": "naar, tot, tegen",
+        "greek": "πρός + acc."
+      },
+      {
+        "translation": "(samen) met",
+        "greek": "μετά + gen."
+      },
+      {
+        "translation": "met betrekking tot, om, over",
+        "greek": "περί + gen."
+      },
+      {
+        "translation": "1. verspreid over, ter hoogte van; 2. volgens, wat betreft",
+        "greek": "κατά + acc."
+      },
+      {
+        "translation": "aan de zijde van, bij",
+        "greek": "παρά + dat."
+      },
+      {
+        "translation": "van (de zijde van)",
+        "greek": "παρά + gen."
+      },
+      {
+        "translation": "om, rondom",
+        "greek": "περί + acc."
+      },
+      {
+        "translation": "door (toedoen van)",
+        "greek": "ὑπό + gen.,"
+      },
+      {
+        "translation": "van/aan de kant van",
+        "greek": "πρός + gen."
+      },
+      {
+        "translation": "bij, tegen ... aan",
+        "greek": "πρός + dat."
+      },
+      {
+        "translation": "niet",
+        "greek": "οὐ, οὐκ, οὐχ"
+      }
+    ],
+    "progress": {
+      "timesCorrect": 0,
+      "timesIncorrect": 0,
+      "averageAccuracy": 0
+    }
+  },
+  {
+    "quizMetadata": {
+      "language": "Dutch"
+    },
+    "quizType": "multiplechoice",
+    "theme": "Misc - Nederlands",
+    "set": 8,
+    "content": [
+      {
+        "translation": "tegelijk",
+        "greek": "ἅμα bijwoord"
+      },
+      {
+        "translation": "dat (eigenlijk: hoe)",
+        "greek": "ὡς (als ὅτι)"
+      },
+      {
+        "translation": "alsof",
+        "greek": "ὧσπερ + ptc."
+      },
+      {
+        "translation": "1. uit; 2. sinds",
+        "greek": "ἐκ/ἐξ + gen."
+      },
+      {
+        "translation": "tenminste",
+        "greek": "γοῦν (γε οὖν)"
+      },
+      {
+        "translation": "tussen",
+        "greek": "μεταξύ + gen."
+      },
+      {
+        "translation": "zeer, erg, luid ",
+        "greek": "μεγά bijwoord"
+      },
+      {
+        "translation": "veel",
+        "greek": "πολύ bijwoord"
+      },
+      {
+        "translation": "hoewel",
+        "greek": "καίπερ + ptc."
+      },
+      {
+        "translation": "of ... of, hetzij ... hetzij",
+        "greek": "εἴτε ... εἴτε"
+      },
+      {
+        "translation": "apart van, zonder",
+        "greek": "χωρίς + gen.,"
+      },
+      {
+        "translation": "tegelijk",
+        "greek": "ἅμα adverbium"
+      },
+      {
+        "translation": "neutraal niet vertalen",
+        "greek": "ἆρα vraagwoord"
+      },
+      {
+        "translation": "daar(langs), op die manier",
+        "greek": "ταύτῃ bijwoord"
+      },
+      {
+        "translation": "om te (geeft een bedoeling aan)",
+        "greek": "ὡς + ptc. fut."
+      },
+      {
+        "translation": "..., maar ...",
+        "greek": "μέν ..., δέ ..."
+      },
+      {
+        "translation": "dat (eigenlijk hoe)",
+        "greek": "ὡς + indir. rede"
+      },
+      {
+        "translation": "en (nauwe verbinding)",
+        "greek": "τε καί/τε ... καί"
+      },
+      {
+        "translation": "zoals, als",
+        "greek": "ὡς in vergelijkingen"
+      },
+      {
+        "translation": "zoals, als",
+        "greek": "ὡς in vergelijkingen"
+      },
+      {
+        "translation": "niet alleen ... maar ook",
+        "greek": "ού μόνον ... ἀλλὰ καί"
+      },
+      {
+        "translation": "ter wille van, wegens, om",
+        "greek": "ἕνεκα (meestal) + gen."
+      }
+    ],
+    "progress": {
+      "timesCorrect": 0,
+      "timesIncorrect": 0,
+      "averageAccuracy": 0
+    }
+  }
+]
