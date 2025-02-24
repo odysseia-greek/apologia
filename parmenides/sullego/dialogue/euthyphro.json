@@ -1,0 +1,128 @@
+[
+  {
+  "quizMetadata": {
+    "language": "English"
+  },
+  "quizType": "dialogue",
+  "theme": "Plato - Euthyphro",
+  "set": 1,
+  "dialogue": {
+    "introduction": "Plato's \"Euthyphro\" is an early dialogue, rich in philosophical and ethical inquiry, set in the heart of ancient Athens. It features a conversation between Socrates and Euthyphro, a religious expert, outside the Athenian courthouse. The dialogue delves into the nature of piety and virtue, as Socrates, ever the inquisitive philosopher, seeks to understand the essence of these concepts through his dialectical method of questioning. This work is not just an exploration of ethical principles, but also a prelude to Socrates' own trial, offering profound insights into the philosophical climate of Athens and the intellectual rigor that defined Socratic thought. \"Euthyphro\" stands as a seminal text in the study of ethics and philosophy, posing timeless questions about morality and the divine.",
+    "speakers": [
+      {
+        "name": "ΕΥΘΥΦΡΩΝ",
+        "shorthand": "ΣΩ",
+        "translation": "Socrates"
+      },
+      {
+        "name": "ΣΩΚΡΑΤΗΣ",
+        "shorthand": "ΕΥΘ",
+        "translation": "Euthyphro"
+      }
+    ],
+    "section": "3e-4b",
+    "linkToPerseus": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0059.tlg001.perseus-grc1:3-4?right=perseus-eng2"
+  },
+  "content": [
+    {
+      "place": 1,
+      "speaker": "ΕΥΘ",
+      "greek": "ἀλλʼ ἴσως οὐδὲν ἔσται, ὦ Σώκρατες, πρᾶγμα, ἀλλὰ σύ τε κατὰ νοῦν ἀγωνιῇ τὴν δίκην, οἶμαι δὲ καὶ ἐμὲ τὴν ἐμήν.",
+      "translation": "Well, Socrates, perhaps it won’t amount to much, and you will bring your case to a satisfactory ending, as I think I shall mine."
+    },
+    {
+      "place": 2,
+      "speaker": "ΣΩ",
+      "greek": "ἔστιν δὲ δὴ σοί, ὦ Εὐθύφρων, τίς ἡ δίκη; φεύγεις αὐτὴν ἢ διώκεις;",
+      "translation": "What is your case, Euthyphro? Are you defending or prosecuting?"
+    },
+    {
+      "place": 3,
+      "speaker": "ΕΥΘ",
+      "greek": "διώκω.",
+      "translation": "Prosecuting."
+    },
+    {
+      "place": 4,
+      "speaker": "ΣΩ",
+      "greek": "τίνα;",
+      "translation": "Whom?"
+    },
+    {
+      "place": 5,
+      "speaker": "ΕΥΘ",
+      "greek": "ὃν διώκων αὖ δοκῶ μαίνεσθαι.",
+      "translation": "Such a man that they think I am insane because I am prosecuting him."
+    },
+    {
+      "place": 6,
+      "speaker": "ΣΩ",
+      "greek": "τί δέ; πετόμενόν τινα διώκεις;",
+      "translation": "Why? Are you prosecuting one who has wings to fly away with?"
+    },
+    {
+      "place": 7,
+      "speaker": "ΕΥΘ",
+      "greek": "πολλοῦ γε δεῖ πέτεσθαι, ὅς γε τυγχάνει ὢν εὖ μάλα πρεσβύτης.",
+      "translation": "No flying for him at his ripe old age."
+    },
+    {
+      "place": 8,
+      "speaker": "ΣΩ",
+      "greek": "τίς οὗτος;",
+      "translation": "Who is he?"
+    },
+    {
+      "place": 9,
+      "speaker": "ΕΥΘ",
+      "greek": "ὁ ἐμὸς πατήρ.",
+      "translation": "My father."
+    },
+    {
+      "place": 10,
+      "speaker": "ΣΩ",
+      "greek": "ὁ σός, ὦ βέλτιστε;",
+      "translation": "Your father, my dear man?"
+    },
+    {
+      "place": 11,
+      "speaker": "ΕΥΘ",
+      "greek": "πάνυ μὲν οὖν.",
+      "translation": "Certainly."
+    },
+    {
+      "place": 12,
+      "speaker": "ΣΩ",
+      "greek": "ἔστιν δὲ τί τὸ ἔγκλημα καὶ τίνος ἡ δίκη;",
+      "translation": "But what is the charge, and what is the suit about?"
+    },
+    {
+      "place": 13,
+      "speaker": "ΕΥΘ",
+      "greek": "φόνου, ὦ Σώκρατες.",
+      "translation": "Murder, Socrates."
+    },
+    {
+      "place": 14,
+      "speaker": "ΣΩ",
+      "greek": "Ἡράκλεις. ἦ που, ὦ Εὐθύφρων, ἀγνοεῖται ὑπὸ τῶν πολλῶν ὅπῃ ποτὲ ὀρθῶς ἔχει· οὐ γὰρ οἶμαί γε τοῦ ἐπιτυχόντος ὀρθῶς αὐτὸ πρᾶξαι ἀλλὰ πόρρω που ἤδη σοφίας ἐλαύνοντος.",
+      "translation": "Heracles! Surely, Euthyphro, most people do not know where the right lies; for I fancy it is not everyone who can rightly do what you are doing, but only one who is already very far advanced in wisdom."
+    },
+    {
+      "place": 15,
+      "speaker": "ΕΥΘ",
+      "greek": "πόρρω μέντοι νὴ Δία, ὦ Σώκρατες.",
+      "translation": "Very far, indeed, Socrates, by Zeus."
+    },
+    {
+      "place": 16,
+      "speaker": "ΣΩ",
+      "greek": "ἔστιν δὲ δὴ τῶν οἰκείων τις ὁ τεθνεὼς ὑπὸ τοῦ σοῦ πατρός; ἢ δῆλα δή; οὐ γὰρ ἄν που ὑπέρ γε ἀλλοτρίου ἐπεξῇσθα φόνου αὐτῷ.",
+      "translation": "Is the one who was killed by your father a relative? But of course he was; for you would not bring a charge of murder against him on a stranger’s account."
+    }
+  ]
+}
+]
+
+
+

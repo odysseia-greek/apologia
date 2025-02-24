@@ -1,0 +1,216 @@
+[
+  {
+    "quizType": "authorbased",
+    "theme": "Matthew - The New Testament Gospel Of Matthew",
+    "reference": "/texts?author=Matthew&book=New+Testament,+Gospel+of+Matthew&reference=12",
+    "set": 1,
+    "segment": "12.1",
+    "fullSentence": "Ἐν ἐκείνῳ τῷ καιρῷ ἐπορεύθη ὁ Ἰησοῦς τοῖς σάββασιν διὰ τῶν σπορίμων· οἱ δὲ μαθηταὶ αὐτοῦ ἐπείνασαν, καὶ ἤρξαντο τίλλειν στάχυας καὶ ἐσθίειν.",
+    "translation": "At that time, Jesus went on the Sabbath day through the grain fields. His disciples were hungry and began to pluck heads of grain and to eat.",
+    "content": [
+      {
+        "greek": "αὐτοῦ",
+        "translation": "at the very place, just here, just there",
+        "wordsInText": [
+          "αὐτοῦ"
+        ]
+      },
+      {
+        "greek": "δέ",
+        "translation": "but",
+        "wordsInText": [
+          "δὲ"
+        ]
+      },
+      {
+        "greek": "διά",
+        "translation": "through c. gen.; because of c. acc.",
+        "wordsInText": [
+          "διὰ"
+        ]
+      },
+      {
+        "greek": "ἐκεῖνος",
+        "translation": "that over there, that",
+        "wordsInText": [
+          "ἐκείνῳ"
+        ]
+      },
+      {
+        "greek": "ἐν",
+        "translation": "in, among. c. dat.",
+        "wordsInText": [
+          "Ἐν"
+        ]
+      },
+      {
+        "greek": "ἐσθίω",
+        "translation": "to eat",
+        "wordsInText": [
+          "ἐσθίειν"
+        ]
+      },
+      {
+        "greek": "Ἰησοῦς",
+        "translation": "Joshua; Jesus",
+        "wordsInText": [
+          "Ἰησοῦς"
+        ]
+      },
+      {
+        "greek": "καί",
+        "translation": "and, also",
+        "wordsInText": [
+          "καὶ"
+        ]
+      },
+      {
+        "greek": "καιρός",
+        "translation": "time; the right moment, opportunity",
+        "wordsInText": [
+          "καιρῷ"
+        ]
+      },
+      {
+        "greek": "μαθητής",
+        "translation": "a learner, pupil",
+        "wordsInText": [
+          "μαθηταὶ"
+        ]
+      },
+      {
+        "greek": "ὁ",
+        "translation": "the",
+        "wordsInText": [
+          "ὁ",
+          "τῶν",
+          "τοῖς",
+          "οἱ"
+        ]
+      },
+      {
+        "greek": "πεινάω",
+        "translation": "to be hungry, suffer hunger, be famished",
+        "wordsInText": [
+          "ἐπείνασαν"
+        ]
+      },
+      {
+        "greek": "Σάββατον",
+        "translation": "sabbath",
+        "wordsInText": [
+          "σάββασιν"
+        ]
+      },
+      {
+        "greek": "σπόριμος",
+        "translation": "sown, to be sown, fit for sowing",
+        "wordsInText": [
+          "σπορίμων"
+        ]
+      },
+      {
+        "greek": "στάχυς",
+        "translation": "an ear of corn",
+        "wordsInText": [
+          "στάχυας"
+        ]
+      },
+      {
+        "greek": "τίλλω",
+        "translation": "to pluck",
+        "wordsInText": [
+          "τίλλειν"
+        ]
+      },
+      {
+        "greek": "τῷ",
+        "translation": "therefore, in this wise, thereupon",
+        "wordsInText": [
+          "τῷ"
+        ]
+      },
+      {
+        "greek": "ἄρχω",
+        "translation": "(to be first) to rule, to begin",
+        "wordsInText": [
+          "ἤρξαντο"
+        ]
+      },
+      {
+        "greek": "πορεύω",
+        "translation": "to make to go, carry, convey",
+        "wordsInText": [
+          "ἐπορεύθη"
+        ]
+      }
+    ]
+  },
+  {
+    "quizType": "authorbased",
+    "theme": "Matthew - The New Testament Gospel Of Matthew",
+    "reference": "/texts?author=Matthew&book=New+Testament,+Gospel+of+Matthew&reference=12",
+    "set": 1,
+    "segment": "12.37",
+    "fullSentence": "ἐκ γὰρ τῶν λόγων σου δικαιωθήσῃ, καὶ ἐκ τῶν λόγων σου καταδικασθήσῃ.",
+    "translation": "For by your words you will be justified, and by your words you will be condemned.",
+    "content": [
+      {
+        "greek": "γάρ",
+        "translation": "for",
+        "wordsInText": [
+          "γὰρ"
+        ]
+      },
+      {
+        "greek": "δικαιόω",
+        "translation": "to set right",
+        "wordsInText": [
+          "δικαιωθήσῃ"
+        ]
+      },
+      {
+        "greek": "ἐκ",
+        "translation": "from out of",
+        "wordsInText": [
+          "ἐκ"
+        ]
+      },
+      {
+        "greek": "καί",
+        "translation": "and, also",
+        "wordsInText": [
+          "καὶ"
+        ]
+      },
+      {
+        "greek": "καταδικάζω",
+        "translation": "to give judgment against",
+        "wordsInText": [
+          "καταδικασθήσῃ"
+        ]
+      },
+      {
+        "greek": "λόγος",
+        "translation": "the word; reason",
+        "wordsInText": [
+          "λόγων"
+        ]
+      },
+      {
+        "greek": "ὁ",
+        "translation": "the",
+        "wordsInText": [
+          "τῶν"
+        ]
+      },
+      {
+        "greek": "σύ",
+        "translation": "you (personal pronoun)",
+        "wordsInText": [
+          "σου"
+        ]
+      }
+    ]
+  }
+]

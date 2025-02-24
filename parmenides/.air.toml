@@ -1,0 +1,25 @@
+root = "/app"
+tmp_dir = "tmp"
+
+[build]
+cmd = 'go build -gcflags "all=-N -l" github.com/odysseia-greek/apologia/parmenides .'
+post_cmd = ["echo 'building complete - now running in delve'"]
+bin = "/app/parmenides"
+full_bin = "dlv --listen=:2345 --headless=true --api-version=2 --accept-multiclient exec /app/parmenides"
+watch = ["./..."]
+include_ext = ["go", "tpl", "tmpl", "html"]
+exclude_regex = ["_test\\.go"]
+log = "air.log"
+
+[color]
+main = "magenta"
+watcher = "cyan"
+build = "yellow"
+runner = "green"
+
+[misc]
+clean_on_exit = true
+
+[log]
+time = true
+main_only = false

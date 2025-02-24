@@ -1,0 +1,396 @@
+[
+  {
+    "quizMetadata":{
+      "language":"English"
+    },
+    "quizType":"media",
+    "theme":"Social",
+    "set": 1,
+    "segment": "City Life",
+    "content":[
+      {
+        "greek":"ἡ ἀγορά",
+        "translation":"market place",
+        "imageURL":"agora.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ὁ οἶκος",
+        "translation":"house",
+        "imageURL":"house.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ἡ ὁδός",
+        "translation":"road",
+        "imageURL":"road.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ἡ πύλη",
+        "translation":"gate",
+        "imageURL":"gate.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ὁ δικαστής",
+        "translation":"judge",
+        "imageURL":"judge.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ὁ νόμος",
+        "translation":"law",
+        "imageURL":"law.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ἡ δημοκρατία",
+        "translation":"democracy",
+        "imageURL":"democracy.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ή πόλις",
+        "translation":"city",
+        "imageURL":"city.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ἄριστος",
+        "translation":"best",
+        "imageURL":"best.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"πολύς",
+        "translation":"many",
+        "imageURL":"many.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"φιλόσοφος",
+        "translation":"philosopher",
+        "imageURL":"philosopher.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ὁ ποιητής",
+        "translation":"poet",
+        "imageURL":"poet.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ὁ βασιλεύς",
+        "translation":"king",
+        "imageURL":"king.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ή βασιλεία",
+        "translation":"queen",
+        "imageURL":"queen.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"τό τεῖχος",
+        "translation":"wall",
+        "imageURL":"wall.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"τό ἱερόν",
+        "translation":"temple",
+        "imageURL":"temple.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ὁ ῥήτωρ",
+        "translation":"orator",
+        "imageURL":"orator.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ὁ τύραννος",
+        "translation":"tyrant",
+        "imageURL":"tyrant.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"τό θέατρον",
+        "translation":"theatre",
+        "imageURL":"theatre.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"τό στάδιον",
+        "translation":"stadium",
+        "imageURL":"stadium.webp",
+        "audioFile":""
+      }
+    ]
+  },
+  {
+    "quizMetadata": {
+      "language": "English"
+    },
+    "quizType": "media",
+    "theme":"Social",
+    "set": 1,
+    "segment": "War",
+    "content": [
+      {
+        "greek": "στρατιά",
+        "translation": "army",
+        "imageURL": "army.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ὁπλιτικός",
+        "translation": "of or for a man-at-arms, fit to serve as hoplite",
+        "imageURL": "hoplite.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ἀσπίς",
+        "translation": "a round shield",
+        "imageURL": "shield.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "βοείη",
+        "translation": "an ox-hide, ox-hide shield",
+        "imageURL": "oxhide.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "πόλεμος",
+        "translation": "battle, fight, war",
+        "imageURL": "war.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "στρατηγός",
+        "translation": "the leader, general",
+        "imageURL": "general.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ξίφος",
+        "translation": "a sword",
+        "imageURL": "sword.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "δόρυ",
+        "translation": "tree, plank, spear",
+        "imageURL": "spear.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ἱππεύς",
+        "translation": "a horseman",
+        "imageURL": "horseman.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "τόξον",
+        "translation": "a bow",
+        "imageURL": "bow.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "τοξότης",
+        "translation": "a bowman, archer",
+        "imageURL": "archer.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "φάλαγξ",
+        "translation": "a line of battle, battle-array",
+        "imageURL": "battlearray.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "Σπάρτη",
+        "translation": "Sparta",
+        "imageURL": "sparta.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "Λακεδαιμόνιος",
+        "translation": "Spartan",
+        "imageURL": "spartan.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ναυτικός",
+        "translation": "seafaring, naval",
+        "imageURL": "naval.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "μάχιμος",
+        "translation": "fit for battle, warlike",
+        "imageURL": "warlike.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "κόρυς",
+        "translation": "a helmet, helm, casque",
+        "imageURL": "helmet.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "πανοπλία",
+        "translation": "suit of armour of a ὁπλίτης",
+        "imageURL": "armour.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "θώραξ",
+        "translation": "a breastplate, cuirass, corslet",
+        "imageURL": "breastplate.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "δύναμις",
+        "translation": "power, might, strength",
+        "imageURL": "strength.webp",
+        "audioFile": ""
+      }
+    ]
+  },
+  {
+    "quizMetadata": {
+      "language": "English"
+    },
+    "quizType": "media",
+    "theme":"Social",
+    "segment": "Democracy",
+    "set": 1,
+    "content": [
+      {
+        "greek": "δημοκρατία",
+        "translation": "democracy, popular government",
+        "imageURL": "democracy.webp",
+        "audioFile": ""
+      },
+      {
+        "translation": "(fellow) citizen",
+        "greek": "πολίτης",
+        "imageURL": "citizen.webp",
+        "audioFile": ""
+      },
+      {
+        "translation": "an assembly of the citizens regularly summoned, the legislative assembly",
+        "greek": "ἐκκλησία",
+        "imageURL": "assembly.webp",
+        "audioFile": ""
+      },
+      {
+        "translation": "will, determination; council, senate",
+        "greek": "βουλή",
+        "imageURL": "council.webp",
+        "audioFile": ""
+      },
+      {
+        "translation": "people; (originally) a country-district, country, land",
+        "greek": "δῆμος",
+        "imageURL": "people.webp",
+        "audioFile": ""
+      },
+      {
+        "greek":"ή ἀγορά",
+        "translation":"market place, an assembly of the people",
+        "imageURL":"agora.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ὁ νόμος",
+        "translation":"law",
+        "imageURL":"law.webp",
+        "audioFile":""
+      },
+
+      {
+        "translation": "a proposition carried by vote, a decree",
+        "greek": "ψήφισμα",
+        "imageURL": "decree.webp",
+        "audioFile": ""
+      },
+      {
+        "translation": "a ruler, commander, chief, captain",
+        "greek": "ἄρχων",
+        "imageURL": "ruler.webp",
+        "audioFile": ""
+      },
+      {
+        "translation": "leader, guide",
+        "greek": "ἡγεμών",
+        "imageURL": "leader.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "δημαγωγός",
+        "translation": "a popular leader",
+        "imageURL": "demagogue.webp",
+        "audioFile": ""
+      },
+      {
+        "translation": "a judge",
+        "greek": "δικαστής",
+        "imageURL": "judge.webp",
+        "audioFile": ""
+      },
+      {
+        "translation": "peace, time of peace",
+        "greek": "εἰρήνη",
+        "imageURL": "peace.webp",
+        "audioFile": ""
+      },
+      {
+        "translation": "a city",
+        "greek": "πόλις",
+        "imageURL": "city.webp",
+        "audioFile": ""
+      },
+      {
+        "translation": "righteousness, justice",
+        "greek": "δικαιοσύνη",
+        "imageURL": "justice.webp",
+        "audioFile": ""
+      },
+      {
+        "translation": "freedom, liberty",
+        "greek": "ἐλευθερία",
+        "imageURL": "freedom.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ἰσονομία",
+        "translation": "equal rights, equality",
+        "imageURL": "equality.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "Ἀθῆναι",
+        "translation": "Athens",
+        "imageURL": "athens.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "πολύς",
+        "translation": "many",
+        "imageURL": "many.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ὀστρακισμός",
+        "translation": "ostracism",
+        "imageURL": "ostracism.webp",
+        "audioFile": ""
+      }
+    ]
+  }
+]

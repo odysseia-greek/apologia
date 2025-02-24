@@ -1,0 +1,264 @@
+[
+  {
+    "quizMetadata":{
+      "language":"English"
+    },
+    "quizType":"media",
+    "theme":"Economy",
+    "set":1,
+    "segment":"The Market",
+    "content":[
+      {
+        "greek":"ή ἀγορά",
+        "translation":"agora",
+        "imageURL":"agora.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ὁ ἄρτος",
+        "translation":"bread",
+        "imageURL":"bread.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ὁ τυρός",
+        "translation":"cheese",
+        "imageURL":"cheese.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ὁ χαλκός",
+        "translation":"bronze",
+        "imageURL":"bronze.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"τὸ ἀργύριον",
+        "translation":"coin",
+        "imageURL":"coin.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ὁ ἰχθύς",
+        "translation":"fish",
+        "imageURL":"fish.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ὁ χρυσός",
+        "translation":"gold",
+        "imageURL":"gold.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ή χορδή",
+        "translation":"sausage/gut",
+        "imageURL":"sausage.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"τό κρέας",
+        "translation":"meat",
+        "imageURL":"meat.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ὁ ἔμπορος",
+        "translation":"merchant",
+        "imageURL":"merchant.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ή ἐλαία",
+        "translation":"olive",
+        "imageURL":"olive.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ή ῥόα",
+        "translation":"pomegranate",
+        "imageURL":"pomegranate.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ὁ κέραμος",
+        "translation":"pottery",
+        "imageURL":"pottery.webp",
+        "audioFile":""
+      },
+      {
+        "greek": "ἡ στοά",
+        "translation": "stoa",
+        "imageURL": "stoa.webp",
+        "audioFile": ""
+      },
+      {
+        "greek":"ὁ οἶνος",
+        "translation":"wine",
+        "imageURL":"wine.webp",
+        "audioFile":""
+      },
+      {
+        "greek": "μέλι",
+        "translation": "honey",
+        "imageURL": "honey.webp",
+        "audioFile": ""
+      },
+      {
+        "greek":"γυνή",
+        "translation":"woman",
+        "imageURL":"woman.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"χλαμύς",
+        "translation":"cloak",
+        "imageURL":"cloak.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"τὸ κρόκος",
+        "translation":"saffron",
+        "imageURL":"saffron.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"τὸ ἐλέφαντον",
+        "translation":"ivory",
+        "imageURL":"ivory.webp",
+        "audioFile":""
+      }
+    ]
+  },
+  {
+    "quizMetadata": {
+      "language": "English"
+    },
+    "quizType": "media",
+    "theme": "Economy",
+    "set": 1,
+    "segment": "Trade",
+    "content": [
+      {
+        "greek": "Ἀθῆναι",
+        "translation": "athens",
+        "imageURL": "athens.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "τὸ ἐμπόριον",
+        "translation": "trading station",
+        "imageURL": "tradingstation.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ὁ πλοῦτος",
+        "translation": "wealth",
+        "imageURL": "wealth.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ὁ ἄργυρος",
+        "translation": "silver",
+        "imageURL": "silver.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ὁ δοῦλος",
+        "translation": "slave",
+        "imageURL": "slave.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ὁ ἔμπορος",
+        "translation": "merchant",
+        "imageURL": "merchant.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "τὸ πλοῖον",
+        "translation": "ship",
+        "imageURL": "ship.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ἡ Φοινίκη",
+        "translation": "phoenicia",
+        "imageURL": "phoenicia.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ὄνος",
+        "translation": "an ass",
+        "imageURL": "ass.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "τὸ σίτος",
+        "translation": "grain",
+        "imageURL": "grain.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "τὸ μετάλλιον",
+        "translation": "metalwork",
+        "imageURL": "metalwork.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "τὸ βαμβάκιον",
+        "translation": "cotton",
+        "imageURL": "cotton.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ἡ κεραμεία",
+        "translation": "pottery",
+        "imageURL": "pottery.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ἡ διακίνησις",
+        "translation": "transportation",
+        "imageURL": "transportation.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ἡ συμμαχία",
+        "translation": "alliance",
+        "imageURL": "alliance.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ὁ πρεσβευτής",
+        "translation": "ambassador",
+        "imageURL": "ambassador.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ὕφασμα",
+        "translation": "textile",
+        "imageURL": "textile.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ἡ Σικελία",
+        "translation": "sicily",
+        "imageURL": "sicily.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "τὸ ξύλον",
+        "translation": "wood",
+        "imageURL": "wood.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ὁ ἀργυραμοιβός",
+        "translation": "money changer",
+        "imageURL": "moneychanger.webp",
+        "audioFile": ""
+      }
+    ]
+  }
+]

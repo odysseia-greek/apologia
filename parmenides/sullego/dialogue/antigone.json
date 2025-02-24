@@ -1,0 +1,167 @@
+[
+  {
+  "quizMetadata": {
+    "language": "English"
+  },
+  "quizType": "dialogue",
+  "theme": "Sophocles - Antigone",
+  "set": 1,
+  "dialogue": {
+    "introduction": "Sophocles' 'Antigone,' a profound and compelling Greek tragedy, was written around 441 BCE and is the third installment of his Theban Trilogy. The play centers on the titular character, Antigone, whose defiant actions against the state's authority pose significant moral and philosophical dilemmas. Sophocles weaves a narrative that challenges the boundaries of human law and divine decree, bringing to the forefront themes of loyalty, justice, and the role of women in ancient Greek society.  Set in the aftermath of a civil war in Thebes, 'Antigone' confronts the tragic consequences of the conflict between Oedipus' sons, Eteocles and Polynices. King Creon, the new ruler of Thebes and Antigone's uncle, decrees that Eteocles shall receive a proper burial while Polynices, deemed a traitor, is to be left unburied. This edict sets the stage for the central conflict of the play, as Antigone, driven by familial duty and religious obligation, defies Creon's order and buries her brother Polynices, thereby incurring Creon's wrath.  Sophocles' exploration of Antigone's resolve against Creon's authoritarian rule delves into the complexities of individual versus state, the conflict between moral and legal obligations, and the struggle between patriarchal authority and female agency. The play is not only a cornerstone of ancient Greek drama but also a timeless reflection on the nature of resistance, the ethics of governance, and the unyielding strength of personal conviction. 'Antigone' remains a powerful text in its exploration of the human spirit's capacity for courage and defiance in the face of unjust laws.",
+    "speakers": [
+      {
+        "name": "ΙΣΜΗΝΗ",
+        "shorthand": "Ἰσμήνη",
+        "translation": "Ismene"
+      },
+      {
+        "name": "ΑΝΤΙΓΟΝΗ",
+        "shorthand": "Ἀντιγόνη",
+        "translation": "Antigone"
+      }
+    ],
+    "section": "40-100",
+    "linkToPerseus": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0011.tlg002.perseus-grc2:40-100/?right=perseus-eng2"
+  },
+  "content": [
+    {
+      "place": 1,
+      "speaker": "Ἰσμήνη",
+      "greek": "τί δʼ, ὦ ταλαῖφρον, εἰ τάδʼ ἐν τούτοις, ἐγὼ λύουσʼ ἂν ἢ ʼφάπτουσα προσθείμην πλέον;",
+      "translation": "Poor sister, if things have come to this, what would I profit by loosening or tightening this knot?"
+    },
+    {
+      "place": 2,
+      "speaker": "Ἀντιγόνη",
+      "greek": "εἰ ξυμπονήσεις καὶ ξυνεργάσει σκόπει.",
+      "translation": "Consider whether you will share the toil and the task."
+    },
+    {
+      "place": 3,
+      "speaker": "Ἰσμήνη",
+      "greek": "ποῖόν τι κινδύνευμα; ποῦ γνώμης ποτʼ εἶ;",
+      "translation": "What are you hazarding? What do you intend?"
+    },
+    {
+      "place": 4,
+      "speaker": "Ἀντιγόνη",
+      "greek": "εἰ τὸν νεκρὸν ξὺν τῇδε κουφιεῖς χερί.",
+      "translation": "Will you join your hand to mine in order to lift his corpse?"
+    },
+    {
+      "place": 5,
+      "speaker": "Ἰσμήνη",
+      "greek": "ἦ γὰρ νοεῖς θάπτειν σφʼ, ἀπόρρητον πόλει;",
+      "translation": "You plan to bury him—when it is forbidden to the city?"
+    },
+    {
+      "place": 6,
+      "speaker": "Ἀντιγόνη",
+      "greek": "τὸν γοῦν ἐμὸν καὶ τὸν σόν, ἢν σὺ μὴ θέλῃς ἀδελφόν· οὐ γὰρ δὴ προδοῦσʼ ἁλώσομαι.",
+      "translation": "Yes, he is my brother, and yours too, even if you wish it otherwise. I will never be convicted of betraying him."
+    },
+    {
+      "place": 7,
+      "speaker": "Ἰσμήνη",
+      "greek": "ὦ σχετλία, Κρέοντος ἀντειρηκότος;",
+      "translation": "Hard girl! Even when Creon has forbidden it?"
+    },
+    {
+      "place": 8,
+      "speaker": "Ἀντιγόνη",
+      "greek": "ἀλλʼ οὐδὲν αὐτῷ τῶν ἐμῶν μʼ εἴργειν μέτα.",
+      "translation": "No, he has no right to keep me from my own."
+    },
+    {
+      "place": 9,
+      "speaker": "Ἰσμήνη",
+      "greek": "οἴμοι. φρόνησον, ὦ κασιγνήτη, πατὴρ ὡς νῷν ἀπεχθὴς δυσκλεής τʼ ἀπώλετο, πρὸς αὐτοφώρων ἀμπλακημάτων διπλᾶς ὄψεις ἀράξας αὐτὸς αὐτουργῷ χερί. ἔπειτα μήτηρ καὶ γυνή, διπλοῦν ἔπος, πλεκταῖσιν ἀρτάναισι λωβᾶται βίον· τρίτον δʼ ἀδελφὼ δύο μίαν καθʼ ἡμέραν αὐτοκτονοῦντε τὼ ταλαιπώρω μόρον κοινὸν κατειργάσαντʼ ἐπαλλήλοιν χεροῖν. νῦν δʼ αὖ μόνα δὴ νὼ λελειμμένα σκόπει ὅσῳ κάκιστʼ ὀλούμεθʼ, εἰ νόμου βίᾳ ψῆφον τυράννων ἢ κράτη παρέξιμεν. ἀλλʼ ἐννοεῖν χρὴ τοῦτο μὲν γυναῖχʼ ὅτι ἔφυμεν, ὡς πρὸς ἄνδρας οὐ μαχουμένα. ἔπειτα δʼ οὕνεκʼ ἀρχόμεσθʼ ἐκ κρεισσόνων, καὶ ταῦτʼ ἀκούειν κἄτι τῶνδʼ ἀλγίονα. ἐγὼ μὲν οὖν αἰτοῦσα τοὺς ὑπὸ χθονὸς ξύγγνοιαν ἴσχειν, ὡς βιάζομαι τάδε, τοῖς ἐν τέλει βεβῶσι πείσομαι· τὸ γὰρ περισσὰ πράσσειν οὐκ ἔχει νοῦν οὐδένα..",
+      "translation": "Ah, no! Think, sister, how our father perished in hatred and infamy, when, because of the crimes that he himself detected, he smashed both his eyes with self-blinding hand; then his mother-wife, two names in one, with a twisted noose destroyed her life; lastly, our two brothers in a single day, both unhappy murderers of their own flesh and blood, worked with mutual hands their common doom. And now we, in turn—we two who have been left all alone—consider how much more miserably we will be destroyed, if in defiance of the law we transgress against an autocrat’s decree or his powers. No, we must remember, first, that ours is a woman’s nature, and accordingly not suited to battles against men; and next, that we are ruled by the more powerful, so that we must obey in these things and in things even more stinging. I, therefore, will ask those below for pardon, since I am forced to this, and will obey those who have come to authority. It is foolish to do what is fruitless."
+    },
+    {
+      "place": 10,
+      "speaker": "Ἀντιγόνη",
+      "greek": "οὔτʼ ἂν κελεύσαιμʼ οὔτʼ ἄν, εἰ θέλοις ἔτι πράσσειν, ἐμοῦ γʼ ἂν ἡδέως δρῴης μέτα. ἀλλʼ ἴσθʼ ὁποῖά σοι δοκεῖ, κεῖνον δʼ ἐγὼ θάψω· καλόν μοι τοῦτο ποιούσῃ θανεῖν. φίλη μετʼ αὐτοῦ κείσομαι, φίλου μέτα, ὅσια πανουργήσασʼ. ἐπεὶ πλείων χρόνος ὃν δεῖ μʼ ἀρέσκειν τοῖς κάτω τῶν ἐνθάδε. ἐκεῖ γὰρ αἰεὶ κείσομαι· σοὶ δʼ, εἰ δοκεῖ, τὰ τῶν θεῶν ἔντιμʼ ἀτιμάσασʼ ἔχε.",
+      "translation": "I would not encourage you—no, nor, even if you were willing later, would I welcome you as my partner in this action. No, be the sort that pleases you. I will bury him—it would honor me to die while doing that. I shall rest with him, loved one with loved one, a pious criminal. For the time is greater that I must serve the dead than the living, since in that world I will rest forever. But if you so choose, continue to dishonor what the gods in honor have established."
+    },
+    {
+      "place": 11,
+      "speaker": "Ἰσμήνη",
+      "greek": "ἐγὼ μὲν οὐκ ἄτιμα ποιοῦμαι, τὸ δὲ βίᾳ πολιτῶν δρᾶν ἔφυν ἀμήχανος.",
+      "translation": "I do them no dishonor. But to act in violation of the citizens’ will—of that I am by nature incapable."
+    },
+    {
+      "place": 12,
+      "speaker": "Ἀντιγόνη",
+      "greek": "σὺ μὲν τάδʼ ἂν προὔχοιʼ· ἐγὼ δὲ δὴ τάφον χώσουσʼ ἀδελφῷ φιλτάτῳ πορεύσομαι.",
+      "translation": "You can make that your pretext! Regardless, I will go now to heap a tomb over the brother I love."
+    },
+    {
+      "place": 13,
+      "speaker": "Ἰσμήνη",
+      "greek": "οἴμοι ταλαίνης, ὡς ὑπερδέδοικά σου.",
+      "translation": "Oh no, unhappy sister! I fear for you!"
+    },
+    {
+      "place": 14,
+      "speaker": "Ἀντιγόνη",
+      "greek": "μὴ ʼμοῦ προτάρβει· τὸν σὸν ἐξόρθου πότμον.",
+      "translation": "Do not tremble for me. Straighten out your own destiny."
+    },
+    {
+      "place": 15,
+      "speaker": "Ἰσμήνη",
+      "greek": "ἀλλʼ οὖν προμηνύσῃς γε τοῦτο μηδενὶ τοὔργον, κρυφῇ δὲ κεῦθε, σὺν δʼ αὔτως ἐγώ.",
+      "translation": "Then at least disclose the deed to no one before you do it. Conceal it, instead, in secrecy—and so, too, will I."
+    },
+    {
+      "place": 16,
+      "speaker": "Ἀντιγόνη",
+      "greek": "οἴμοι, καταύδα· πολλὸν ἐχθίων ἔσει σιγῶσʼ, ἐὰν μὴ πᾶσι κηρύξῃς τάδε.",
+      "translation": "Go on! Denounce it! You will be far more hated for your silence, if you fail to proclaim these things to everyone."
+    },
+    {
+      "place": 17,
+      "speaker": "Ἰσμήνη",
+      "greek": "θερμὴν ἐπὶ ψυχροῖσι καρδίαν ἔχεις.",
+      "translation": "You have a hot heart for chilling deeds."
+    },
+    {
+      "place": 18,
+      "speaker": "Ἀντιγόνη",
+      "greek": "ἀλλʼ οἶδʼ ἀρέσκουσʼ οἷς μάλισθʼ ἁδεῖν με χρή.",
+      "translation": "I know that I please those whom I am most bound to please."
+    },
+    {
+      "place": 19,
+      "speaker": "Ἰσμήνη",
+      "greek": "εἰ καὶ δυνήσει γʼ· ἀλλʼ ἀμηχάνων ἐρᾷς.",
+      "translation": "Yes, if you will also have the power. But you crave the impossible."
+    },
+    {
+      "place": 20,
+      "speaker": "Ἀντιγόνη",
+      "greek": "οὐκοῦν, ὅταν δὴ μὴ σθένω, πεπαύσομαι.",
+      "translation": "Why then, when my strength fails, I will have finished."
+    },
+    {
+      "place": 21,
+      "speaker": "Ἰσμήνη",
+      "greek": "ἀρχὴν δὲ θηρᾶν οὐ πρέπει τἀμήχανα.",
+      "translation": "An impossible hunt should not be tried in the first place."
+    },
+    {
+      "place": 22,
+      "speaker": "Ἀντιγόνη",
+      "greek": "εἰ ταῦτα λέξεις, ἐχθαρεῖ μὲν ἐξ ἐμοῦ, ἐχθρὰ δὲ τῷ θανόντι προσκείσει δίκῃ. ἀλλʼ ἔα με καὶ τὴν ἐξ ἐμοῦ δυσβουλίαν παθεῖν τὸ δεινὸν τοῦτο· πείσομαι γὰρ οὐ τοσοῦτον οὐδὲν ὥστε μὴ οὐ καλῶς θανεῖν.",
+      "translation": "If you mean that, you will have my hatred, and you will be subject to punishment as the enemy of the dead. But leave me and the foolish plan I have authored to suffer this terrible thing, for I will not suffer anything so terrible that my death will lack honor."
+    },
+    {
+      "place": 23,
+      "speaker": "Ἰσμήνη",
+      "greek": "ἀλλʼ εἰ δοκεῖ σοι, στεῖχε· τοῦτο δʼ ἴσθʼ ὅτι ἄνους μὲν ἔρχει, τοῖς φίλοις δʼ ὀρθῶς φίλη.",
+      "translation": "Go, then, if you so decide. And of this be sure: though your path is foolish, to your loved ones your love is straight and true."
+    }
+  ]
+}
+]

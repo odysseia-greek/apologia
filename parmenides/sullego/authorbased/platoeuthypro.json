@@ -1,0 +1,176 @@
+[
+  {
+    "quizType":"authorbased",
+    "theme":"Plato - Euthyphro",
+    "reference":"/texts?author=Plato&book=Euthyphro&reference=2",
+    "set":1,
+    "segment":"2.2",
+    "fullSentence":"ΣΩ. οὔτοι δὴ Ἀθηναῖοί γε, ὦ Εὐθύφρων, δίκην αὐτὴν καλοῦσιν ἀλλὰ γραφήν.",
+    "translation":"Socrates. Our Athenians, Euthyphro, do not call it an action, but an indictment.",
+    "grammarQuestionOptions":{
+      "verbs":[
+        "pres part - sing - fem - dat",
+        "pres part - plural - masc - nom",
+        "aorist mid part - plural - nom/acc",
+        "3rd plural - fut - ind - act",
+        "3rd plural - aorist - ind - act",
+        "3rd sing - perf - ind - mid",
+        "3rd plural - pres - ind - act",
+        "1st plur - pres - ind - mid",
+        "3rd sing - pres - ind - act",
+        "3rd sing - pres - ind - mid",
+        "1st sing - pres - ind - act",
+        "3rd sing - aorist - ind - mid",
+        "pres - inf - act",
+        "pres - part - act",
+        "aorist inf - act"
+      ],
+      "nouns":[
+        "sing - nom",
+        "sing - fem - acc",
+        "sing - gen",
+        "sing - dat",
+        "sing - acc",
+        "plural - nom",
+        "plural - gen",
+        "plural - neut - nom",
+        "plural - masc/neut - dat",
+        "plural - dat"
+      ],
+      "misc":[ ]
+    },
+    "content":[
+      {
+        "greek":"ΣΩ",
+        "translation":"Socrates (short hand)",
+        "wordsInText":[
+          "ΣΩ"
+        ],
+        "hasGrammarQuestions":false
+      },
+      {
+        "greek":"Ἀθηναῖος",
+        "translation":"Athenian, of Athens",
+        "wordsInText":[
+          "Ἀθηναῖοί"
+        ],
+        "hasGrammarQuestions":true,
+        "grammarQuestions":[
+          {
+            "correctAnswer":"plural - nom",
+            "typeOfWord":"noun",
+            "wordInText":"Ἀθηναῖοί"
+          }
+        ]
+      },
+      {
+        "greek":"Εὐθύφρων",
+        "translation":"Euthyphro",
+        "wordsInText":[
+          "Εὐθύφρων"
+        ],
+        "hasGrammarQuestions":false
+      },
+      {
+        "greek":"οὔτοι",
+        "translation":"indeed not",
+        "wordsInText":[
+          "οὔτοι"
+        ],
+        "hasGrammarQuestions":false
+      },
+      {
+        "greek":"δὴ",
+        "translation":"discourse particle. now, already, truly, indeed, in truth etc.",
+        "wordsInText":[
+          "δὴ"
+        ],
+        "hasGrammarQuestions":false
+      },
+      {
+        "greek":"ὦ",
+        "translation":"O! oh!",
+        "wordsInText":[
+          "ὦ"
+        ],
+        "hasGrammarQuestions":false
+      },
+      {
+        "greek":"ἀλλά",
+        "translation":"otherwise, but",
+        "wordsInText":[
+          "ἀλλὰ"
+        ],
+        "hasGrammarQuestions":false
+      },
+      {
+        "greek":"δίκη",
+        "translation":"justice, lawsuit, penalty",
+        "wordsInText":[
+          "δίκην"
+        ],
+        "hasGrammarQuestions":true,
+        "grammarQuestions":[
+          {
+            "correctAnswer":"sing - acc",
+            "typeOfWord":"noun",
+            "wordInText":"δίκην"
+          }
+        ]
+      },
+      {
+        "greek":"καλέω",
+        "translation":"to call, summon",
+        "wordsInText":[
+          "καλοῦσιν"
+        ],
+        "hasGrammarQuestions":true,
+        "grammarQuestions":[
+          {
+            "correctAnswer":"3rd plural - pres - ind - act",
+            "typeOfWord":"verb",
+            "wordInText":"καλοῦσιν"
+          }
+        ]
+      },
+      {
+        "greek":"γραφή",
+        "translation":"drawing, writing; indictment",
+        "wordsInText":[
+          "γραφήν"
+        ],
+        "hasGrammarQuestions":true,
+        "grammarQuestions":[
+          {
+            "correctAnswer":"sing - acc",
+            "typeOfWord":"noun",
+            "wordInText":"γραφήν"
+          }
+        ]
+      },
+      {
+        "greek":"γε",
+        "translation":"at least, at any rate",
+        "wordsInText":[
+          "γε"
+        ],
+        "hasGrammarQuestions":false
+      },
+      {
+        "greek":"αὐτός",
+        "translation":"the same; unemph. 3rd pers. pronoun; -self",
+        "wordsInText":[
+          "αὐτὴν"
+        ],
+        "hasGrammarQuestions":true,
+        "grammarQuestions":[
+          {
+            "correctAnswer":"sing - fem - acc",
+            "typeOfWord":"pronoun",
+            "wordInText":"αὐτὴν"
+          }
+        ]
+      }
+    ]
+  }
+]
