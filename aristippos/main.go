@@ -52,7 +52,7 @@ func main() {
 
 	server = grpc.NewServer(grpc.UnaryInterceptor(hedone.MediaInterceptor))
 
-	pb.RegisterAristipposServiceServer(server, config)
+	pb.RegisterAristipposServer(server, config)
 
 	logging.Info(fmt.Sprintf("Server listening on %s", port))
 	if err := server.Serve(listener); err != nil {

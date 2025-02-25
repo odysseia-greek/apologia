@@ -30,7 +30,7 @@ type MediaServiceImpl struct {
 	Randomizer randomizer.Random
 	Client     service.OdysseiaClient
 	Streamer   pbar.TraceService_ChorusClient
-	pb.UnimplementedAristipposServiceServer
+	pb.UnimplementedAristipposServer
 }
 
 type MediaServiceClient struct {
@@ -38,7 +38,7 @@ type MediaServiceClient struct {
 }
 
 type MediaClient struct {
-	media pb.AristipposServiceClient
+	media pb.AristipposClient
 }
 
 func NewAristipposClient(address string) (*MediaClient, error) {
@@ -49,7 +49,7 @@ func NewAristipposClient(address string) (*MediaClient, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to connect to tracing service: %w", err)
 	}
-	client := pb.NewAristipposServiceClient(conn)
+	client := pb.NewAristipposClient(conn)
 	return &MediaClient{media: client}, nil
 }
 

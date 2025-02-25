@@ -3,11 +3,11 @@ option go_package = "github.com/odysseia-greek/apologia/aristippos/proto";
 
 package apologia_aristippos;
 
-service AristipposService {
-  rpc Health (HealthRequest) returns (HealthResponse);
-  rpc Options (OptionsRequest) returns (AggregatedOptions);
-  rpc Question (CreationRequest) returns (QuizResponse);
-  rpc Answer (AnswerRequest) returns (ComprehensiveResponse);
+service Aristippos {
+  rpc Health (HealthRequest) returns (HealthResponse) {};
+  rpc Options (OptionsRequest) returns (AggregatedOptions) {};
+  rpc Question (CreationRequest) returns (QuizResponse) {};
+  rpc Answer (AnswerRequest) returns (ComprehensiveResponse) {};
 }
 
 // Empty request messages since these endpoints require no body

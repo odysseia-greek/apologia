@@ -18,194 +18,194 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// AristipposServiceClient is the client API for AristipposService service.
+// AristipposClient is the client API for Aristippos service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type AristipposServiceClient interface {
+type AristipposClient interface {
 	Health(ctx context.Context, in *HealthRequest, opts ...grpc.CallOption) (*HealthResponse, error)
 	Options(ctx context.Context, in *OptionsRequest, opts ...grpc.CallOption) (*AggregatedOptions, error)
 	Question(ctx context.Context, in *CreationRequest, opts ...grpc.CallOption) (*QuizResponse, error)
 	Answer(ctx context.Context, in *AnswerRequest, opts ...grpc.CallOption) (*ComprehensiveResponse, error)
 }
 
-type aristipposServiceClient struct {
+type aristipposClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewAristipposServiceClient(cc grpc.ClientConnInterface) AristipposServiceClient {
-	return &aristipposServiceClient{cc}
+func NewAristipposClient(cc grpc.ClientConnInterface) AristipposClient {
+	return &aristipposClient{cc}
 }
 
-func (c *aristipposServiceClient) Health(ctx context.Context, in *HealthRequest, opts ...grpc.CallOption) (*HealthResponse, error) {
+func (c *aristipposClient) Health(ctx context.Context, in *HealthRequest, opts ...grpc.CallOption) (*HealthResponse, error) {
 	out := new(HealthResponse)
-	err := c.cc.Invoke(ctx, "/apologia_aristippos.AristipposService/Health", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/apologia_aristippos.Aristippos/Health", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *aristipposServiceClient) Options(ctx context.Context, in *OptionsRequest, opts ...grpc.CallOption) (*AggregatedOptions, error) {
+func (c *aristipposClient) Options(ctx context.Context, in *OptionsRequest, opts ...grpc.CallOption) (*AggregatedOptions, error) {
 	out := new(AggregatedOptions)
-	err := c.cc.Invoke(ctx, "/apologia_aristippos.AristipposService/Options", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/apologia_aristippos.Aristippos/Options", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *aristipposServiceClient) Question(ctx context.Context, in *CreationRequest, opts ...grpc.CallOption) (*QuizResponse, error) {
+func (c *aristipposClient) Question(ctx context.Context, in *CreationRequest, opts ...grpc.CallOption) (*QuizResponse, error) {
 	out := new(QuizResponse)
-	err := c.cc.Invoke(ctx, "/apologia_aristippos.AristipposService/Question", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/apologia_aristippos.Aristippos/Question", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *aristipposServiceClient) Answer(ctx context.Context, in *AnswerRequest, opts ...grpc.CallOption) (*ComprehensiveResponse, error) {
+func (c *aristipposClient) Answer(ctx context.Context, in *AnswerRequest, opts ...grpc.CallOption) (*ComprehensiveResponse, error) {
 	out := new(ComprehensiveResponse)
-	err := c.cc.Invoke(ctx, "/apologia_aristippos.AristipposService/Answer", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/apologia_aristippos.Aristippos/Answer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// AristipposServiceServer is the server API for AristipposService service.
-// All implementations must embed UnimplementedAristipposServiceServer
+// AristipposServer is the server API for Aristippos service.
+// All implementations must embed UnimplementedAristipposServer
 // for forward compatibility
-type AristipposServiceServer interface {
+type AristipposServer interface {
 	Health(context.Context, *HealthRequest) (*HealthResponse, error)
 	Options(context.Context, *OptionsRequest) (*AggregatedOptions, error)
 	Question(context.Context, *CreationRequest) (*QuizResponse, error)
 	Answer(context.Context, *AnswerRequest) (*ComprehensiveResponse, error)
-	mustEmbedUnimplementedAristipposServiceServer()
+	mustEmbedUnimplementedAristipposServer()
 }
 
-// UnimplementedAristipposServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedAristipposServiceServer struct {
+// UnimplementedAristipposServer must be embedded to have forward compatible implementations.
+type UnimplementedAristipposServer struct {
 }
 
-func (UnimplementedAristipposServiceServer) Health(context.Context, *HealthRequest) (*HealthResponse, error) {
+func (UnimplementedAristipposServer) Health(context.Context, *HealthRequest) (*HealthResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Health not implemented")
 }
-func (UnimplementedAristipposServiceServer) Options(context.Context, *OptionsRequest) (*AggregatedOptions, error) {
+func (UnimplementedAristipposServer) Options(context.Context, *OptionsRequest) (*AggregatedOptions, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Options not implemented")
 }
-func (UnimplementedAristipposServiceServer) Question(context.Context, *CreationRequest) (*QuizResponse, error) {
+func (UnimplementedAristipposServer) Question(context.Context, *CreationRequest) (*QuizResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Question not implemented")
 }
-func (UnimplementedAristipposServiceServer) Answer(context.Context, *AnswerRequest) (*ComprehensiveResponse, error) {
+func (UnimplementedAristipposServer) Answer(context.Context, *AnswerRequest) (*ComprehensiveResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Answer not implemented")
 }
-func (UnimplementedAristipposServiceServer) mustEmbedUnimplementedAristipposServiceServer() {}
+func (UnimplementedAristipposServer) mustEmbedUnimplementedAristipposServer() {}
 
-// UnsafeAristipposServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to AristipposServiceServer will
+// UnsafeAristipposServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to AristipposServer will
 // result in compilation errors.
-type UnsafeAristipposServiceServer interface {
-	mustEmbedUnimplementedAristipposServiceServer()
+type UnsafeAristipposServer interface {
+	mustEmbedUnimplementedAristipposServer()
 }
 
-func RegisterAristipposServiceServer(s grpc.ServiceRegistrar, srv AristipposServiceServer) {
-	s.RegisterService(&AristipposService_ServiceDesc, srv)
+func RegisterAristipposServer(s grpc.ServiceRegistrar, srv AristipposServer) {
+	s.RegisterService(&Aristippos_ServiceDesc, srv)
 }
 
-func _AristipposService_Health_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Aristippos_Health_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(HealthRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AristipposServiceServer).Health(ctx, in)
+		return srv.(AristipposServer).Health(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/apologia_aristippos.AristipposService/Health",
+		FullMethod: "/apologia_aristippos.Aristippos/Health",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AristipposServiceServer).Health(ctx, req.(*HealthRequest))
+		return srv.(AristipposServer).Health(ctx, req.(*HealthRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AristipposService_Options_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Aristippos_Options_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OptionsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AristipposServiceServer).Options(ctx, in)
+		return srv.(AristipposServer).Options(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/apologia_aristippos.AristipposService/Options",
+		FullMethod: "/apologia_aristippos.Aristippos/Options",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AristipposServiceServer).Options(ctx, req.(*OptionsRequest))
+		return srv.(AristipposServer).Options(ctx, req.(*OptionsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AristipposService_Question_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Aristippos_Question_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreationRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AristipposServiceServer).Question(ctx, in)
+		return srv.(AristipposServer).Question(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/apologia_aristippos.AristipposService/Question",
+		FullMethod: "/apologia_aristippos.Aristippos/Question",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AristipposServiceServer).Question(ctx, req.(*CreationRequest))
+		return srv.(AristipposServer).Question(ctx, req.(*CreationRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AristipposService_Answer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Aristippos_Answer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AnswerRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AristipposServiceServer).Answer(ctx, in)
+		return srv.(AristipposServer).Answer(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/apologia_aristippos.AristipposService/Answer",
+		FullMethod: "/apologia_aristippos.Aristippos/Answer",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AristipposServiceServer).Answer(ctx, req.(*AnswerRequest))
+		return srv.(AristipposServer).Answer(ctx, req.(*AnswerRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// AristipposService_ServiceDesc is the grpc.ServiceDesc for AristipposService service.
+// Aristippos_ServiceDesc is the grpc.ServiceDesc for Aristippos service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var AristipposService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "apologia_aristippos.AristipposService",
-	HandlerType: (*AristipposServiceServer)(nil),
+var Aristippos_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "apologia_aristippos.Aristippos",
+	HandlerType: (*AristipposServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Health",
-			Handler:    _AristipposService_Health_Handler,
+			Handler:    _Aristippos_Health_Handler,
 		},
 		{
 			MethodName: "Options",
-			Handler:    _AristipposService_Options_Handler,
+			Handler:    _Aristippos_Options_Handler,
 		},
 		{
 			MethodName: "Question",
-			Handler:    _AristipposService_Question_Handler,
+			Handler:    _Aristippos_Question_Handler,
 		},
 		{
 			MethodName: "Answer",
-			Handler:    _AristipposService_Answer_Handler,
+			Handler:    _Aristippos_Answer_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
