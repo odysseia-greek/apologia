@@ -3,14 +3,13 @@ package main
 import (
 	"fmt"
 	"github.com/odysseia-greek/agora/plato/logging"
-	"github.com/odysseia-greek/apologia/sokrates/quiz"
-	"golang.org/x/net/context"
-	"log"
+	"github.com/odysseia-greek/apologia/sokrates/routing"
+	"github.com/odysseia-greek/apologia/sokrates/schemas"
 	"net/http"
 	"os"
 )
 
-const standardPort = ":5000"
+const standardPort = ":8080"
 
 func main() {
 	port := os.Getenv("PORT")
@@ -34,18 +33,13 @@ func main() {
 	logging.System("starting up.....")
 	logging.System("starting up and getting env variables")
 
-	ctx := context.Background()
+	handler := schemas.HomerosHandler()
 
-	sokratesConfig, err := quiz.CreateNewConfig(ctx)
-	if err != nil {
-		log.Print(err)
-		log.Fatal("death has found me")
-	}
+	logging.Debug(fmt.Sprintf("%v", handler))
+	srv := routing.InitRoutes(handler.Streamer)
 
-	srv := quiz.InitRoutes(sokratesConfig)
-
-	logging.System(fmt.Sprintf("%s : %s", "running on port", port))
-	err = http.ListenAndServe(port, srv)
+	logging.System(fmt.Sprintf("running on port %s", port))
+	err := http.ListenAndServe(port, srv)
 	if err != nil {
 		panic(err)
 	}

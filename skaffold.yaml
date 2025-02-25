@@ -1,0 +1,36 @@
+apiVersion: skaffold/v4beta12
+kind: Config
+metadata:
+  name: odysseia
+deploy:
+  kubeContext: k3d-odysseia
+  tolerateFailuresUntilDeadline: true
+
+build:
+  local:
+    push: false
+
+profiles:
+  - name: aristippos
+    build:
+      artifacts:
+        - image: ghcr.io/odysseia-greek/aristippos
+          context: ./aristippos
+          docker:
+            target: prod
+            buildArgs:
+              project_name: "aristippos"
+          sync:
+            manual:
+              - src: '**/*.go'
+                dest: '/app'
+      platforms: ["linux/arm64"]
+
+    deploy:
+      helm:
+        releases:
+          - name: aristippos
+            chartPath: ../../odysseia-greek/mykenai/themistokles/odysseia/charts/aristippos
+            valuesFiles:
+              - ../../odysseia-greek/mykenai/themistokles/odysseia/values/local.yaml
+              - ../../odysseia-greek/mykenai/themistokles/odysseia/values/skaffold-values.yaml

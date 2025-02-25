@@ -1,4 +1,4 @@
-package quiz
+package hedone
 
 import (
 	"context"
@@ -8,44 +8,42 @@ import (
 	"github.com/odysseia-greek/agora/aristoteles/models"
 	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
-	plato "github.com/odysseia-greek/agora/plato/models"
 	"github.com/odysseia-greek/agora/plato/service"
 	aristophanes "github.com/odysseia-greek/attike/aristophanes/comedy"
 	pbar "github.com/odysseia-greek/attike/aristophanes/proto"
 	"github.com/odysseia-greek/delphi/ptolemaios/diplomat"
 	pb "github.com/odysseia-greek/delphi/ptolemaios/proto"
-	aristarchos "github.com/odysseia-greek/olympia/aristarchos/scholar"
 	"google.golang.org/grpc/metadata"
 	"os"
 	"time"
 )
 
 const (
-	defaultIndex string = "quiz"
+	defaultIndex string = "aggregator"
 )
 
-func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
+var streamer pbar.TraceService_ChorusClient
+
+func CreateNewConfig(ctx context.Context) (*MediaServiceImpl, error) {
 	tls := config.BoolFromEnv(config.EnvTlSKey)
 
 	tracer, err := aristophanes.NewClientTracer(aristophanes.DefaultAddress)
-	if err != nil {
-		logging.Error(err.Error())
-	}
-
 	healthy := tracer.WaitForHealthyState()
 	if !healthy {
 		logging.Error("tracing service not ready - restarting seems the only option")
 		os.Exit(1)
 	}
 
-	streamer, err := tracer.Chorus(ctx)
+	streamer, err = tracer.Chorus(ctx)
 	if err != nil {
 		logging.Error(err.Error())
 	}
 
+	var cfg models.Config
 	ambassador := diplomat.NewClientAmbassador()
-	ambassadorHealthy := ambassador.WaitForHealthyState()
-	if !ambassadorHealthy {
+
+	healthy = ambassador.WaitForHealthyState()
+	if !healthy {
 		logging.Info("ambassador service not ready - restarting seems the only option")
 		os.Exit(1)
 	}
@@ -111,7 +109,7 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 
 	elasticService := aristoteles.ElasticService(tls)
 
-	cfg := models.Config{
+	cfg = models.Config{
 		Service:     elasticService,
 		Username:    vaultConfig.ElasticUsername,
 		Password:    vaultConfig.ElasticPassword,
@@ -128,58 +126,23 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 		return nil, err
 	}
 
+	index := config.StringFromEnv(config.EnvIndex, defaultIndex)
+
 	randomizer, err := config.CreateNewRandomizer()
 	if err != nil {
 		return nil, err
 	}
-
-	index := config.StringFromEnv(config.EnvIndex, defaultIndex)
-	searchWord := config.StringFromEnv(config.EnvSearchWord, config.DefaultSearchWord)
 
 	client, err := config.CreateOdysseiaClient()
 	if err != nil {
 		return nil, err
 	}
 
-	ticker := time.NewTicker(30 * time.Second)
-	quizAttempts := make(chan plato.QuizAttempt)
-	aggregatedResult := make(map[string]plato.QuizAttempt)
-
-	aggregatorAddress := config.StringFromEnv(config.EnvAggregatorAddress, config.DefaultAggregatorAddress)
-	aggregator, err := aristarchos.NewClientAggregator(aggregatorAddress)
-	if err != nil {
-		logging.Error(err.Error())
-		return nil, err
-	}
-	aggregatorHealthy := aggregator.WaitForHealthyState()
-	if !aggregatorHealthy {
-		logging.Debug("aggregator service not ready - restarting seems the only option")
-		os.Exit(1)
-	}
-
-	// New context for aggregator streamer
-	aggrContext, aggregatorCancel := context.WithCancel(context.Background())
-	aristarchosStreamer, err := aggregator.CreateNewEntry(aggrContext)
-	if err != nil {
-		logging.Error(err.Error())
-		return nil, err
-	}
-
-	ctx, cancel := context.WithCancel(ctx)
-
-	return &SokratesHandler{
-		Elastic:            elastic,
-		Randomizer:         randomizer,
-		Client:             client,
-		SearchWord:         searchWord,
-		Index:              index,
-		QuizAttempts:       quizAttempts,
-		AggregatedAttempts: aggregatedResult,
-		Ticker:             ticker,
-		Streamer:           streamer,
-		Cancel:             cancel,
-		Aggregator:         aristarchosStreamer,
-		AggregatorClient:   aggregator,
-		AggregatorCancel:   aggregatorCancel,
+	return &MediaServiceImpl{
+		Index:      index,
+		Elastic:    elastic,
+		Randomizer: randomizer,
+		Client:     client,
+		Streamer:   streamer,
 	}, nil
 }

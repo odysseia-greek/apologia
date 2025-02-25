@@ -1,0 +1,143 @@
+syntax = "proto3";
+option go_package = "github.com/odysseia-greek/apologia/aristippos/proto";
+
+package apologia_aristippos;
+
+service AristipposService {
+  rpc Health (HealthRequest) returns (HealthResponse);
+  rpc Options (OptionsRequest) returns (AggregatedOptions);
+  rpc Question (CreationRequest) returns (QuizResponse);
+  rpc Answer (AnswerRequest) returns (ComprehensiveResponse);
+}
+
+// Empty request messages since these endpoints require no body
+message HealthRequest {}
+
+message OptionsRequest {
+  string quiz_type = 1;
+}
+
+// Response message for health check
+message HealthResponse {
+  bool healthy = 1;
+  string time = 2;
+  string version = 3;
+  DatabaseHealth database_health = 4;
+}
+
+// Nested message for database health details
+message DatabaseHealth {
+  bool healthy = 1;
+  string cluster_name = 2;
+  string server_name = 3;
+  string server_version = 4;
+}
+
+// Response message for quiz options
+message AggregatedOptions {
+  repeated Theme themes = 1;
+}
+
+// Structure for quiz themes
+message Theme {
+  string name = 1;
+  repeated Segment segments = 2;
+}
+
+// Structure for segments within a theme
+message Segment {
+  string name = 1;
+  float max_set = 2;
+}
+
+// Request message for creating a quiz question
+message CreationRequest {
+  string theme = 1;
+  string set = 2;
+  string segment = 3; // Optional
+  string quiz_type = 4;
+  string order = 5;
+  repeated string exclude_words = 6;
+}
+
+// Response message for quiz creation
+message QuizResponse {
+  string quiz_item = 1;
+  int32 number_of_items = 2;
+  repeated Options options = 3;
+}
+
+// Quiz options (word, audio, image)
+message Options {
+  string option = 1;
+  string audio_url = 2;  // Optional
+  string image_url = 3;  // Optional
+}
+
+
+
+// Request message for checking an answer
+message AnswerRequest {
+  string theme = 1;
+  string set = 2;
+  string quiz_type = 3;
+  string segment = 4; // Optional
+  bool comprehensive = 5; // Optional
+  string answer = 6;
+  string quiz_word = 7;
+}
+
+// Response message for answer validation
+message ComprehensiveResponse {
+  bool correct = 1;
+  string quiz_word = 2;
+  AnalyzeTextResponse found_in_text = 3; // Optional
+  repeated Meros similar_words = 4; // Optional
+  Progress progress = 5; // Optional
+}
+
+// Structure for tracking progress statistics
+message Progress {
+  int32 times_correct = 1;
+  int32 times_incorrect = 2;
+  float average_accuracy = 3;
+}
+
+// Similar words structure
+message Meros {
+  string greek = 1;
+  string english = 2;
+  string dutch = 3; // Optional
+  string linked_word = 4; // Optional
+  string original = 5; // Optional
+}
+
+// Text analysis response
+message AnalyzeTextResponse {
+  string rootword = 1;
+  string part_of_speech = 2;
+  repeated Conjugations conjugations = 3;
+  repeated AnalyzeResult texts = 4;
+}
+
+// Conjugation details
+message Conjugations {
+  string word = 1;
+  string rule = 2;
+}
+
+// Analysis result per text reference
+message AnalyzeResult {
+  string reference_link = 1;
+  string author = 2;
+  string book = 3;
+  string reference = 4;
+  Rhema text = 5;
+}
+
+// Text details
+message Rhema {
+  string greek = 1;
+  repeated string translations = 2;
+  string section = 3;
+}
