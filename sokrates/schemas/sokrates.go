@@ -2,6 +2,52 @@ package schemas
 
 import "github.com/graphql-go/graphql"
 
+func quizArgs() graphql.FieldConfigArgument {
+	return graphql.FieldConfigArgument{
+		"theme": &graphql.ArgumentConfig{
+			Type: graphql.String,
+		},
+		"set": &graphql.ArgumentConfig{
+			Type: graphql.String,
+		},
+		"segment": &graphql.ArgumentConfig{
+			Type: graphql.String,
+		},
+		"quizType": &graphql.ArgumentConfig{
+			Type: graphql.String,
+		},
+		"order": &graphql.ArgumentConfig{
+			Type: graphql.String,
+		},
+		"excludeWords": &graphql.ArgumentConfig{
+			Type: graphql.NewList(graphql.String),
+		},
+	}
+}
+
+func answerArgs() graphql.FieldConfigArgument {
+	return graphql.FieldConfigArgument{
+		"theme": &graphql.ArgumentConfig{
+			Type: graphql.String,
+		},
+		"set": &graphql.ArgumentConfig{
+			Type: graphql.String,
+		},
+		"segment": &graphql.ArgumentConfig{
+			Type: graphql.String,
+		},
+		"quizType": &graphql.ArgumentConfig{
+			Type: graphql.String,
+		},
+		"quizWord": &graphql.ArgumentConfig{
+			Type: graphql.String,
+		},
+		"answer": &graphql.ArgumentConfig{
+			Type: graphql.String,
+		},
+	}
+}
+
 var optionsType = graphql.NewObject(graphql.ObjectConfig{
 	Name: "Options",
 	Fields: graphql.Fields{

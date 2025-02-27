@@ -14,7 +14,6 @@ service Aristippos {
 message HealthRequest {}
 
 message OptionsRequest {
-  string quiz_type = 1;
 }
 
 // Response message for health check
@@ -55,9 +54,8 @@ message CreationRequest {
   string theme = 1;
   string set = 2;
   string segment = 3; // Optional
-  string quiz_type = 4;
-  string order = 5;
-  repeated string exclude_words = 6;
+  string order = 4;
+  repeated string exclude_words = 5;
 }
 
 // Response message for quiz creation
@@ -74,13 +72,10 @@ message Options {
   string image_url = 3;  // Optional
 }
 
-
-
 // Request message for checking an answer
 message AnswerRequest {
   string theme = 1;
   string set = 2;
-  string quiz_type = 3;
   string segment = 4; // Optional
   bool comprehensive = 5; // Optional
   string answer = 6;
@@ -93,14 +88,6 @@ message ComprehensiveResponse {
   string quiz_word = 2;
   AnalyzeTextResponse found_in_text = 3; // Optional
   repeated Meros similar_words = 4; // Optional
-  Progress progress = 5; // Optional
-}
-
-// Structure for tracking progress statistics
-message Progress {
-  int32 times_correct = 1;
-  int32 times_incorrect = 2;
-  float average_accuracy = 3;
 }
 
 // Similar words structure

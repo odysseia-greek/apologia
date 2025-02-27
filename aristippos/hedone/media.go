@@ -47,14 +47,14 @@ func (m *MediaServiceImpl) Health(context.Context, *pb.HealthRequest) (*pb.Healt
 }
 
 func (m *MediaServiceImpl) Options(ctx context.Context, request *pb.OptionsRequest) (*pb.AggregatedOptions, error) {
-	query := quizAggregationQuery(request.QuizType)
+	query := quizAggregationQuery()
 
 	elasticResult, err := m.Elastic.Query().MatchRaw(m.Index, query)
 	if err != nil {
 		return nil, fmt.Errorf("error in elasticSearch: %s", err.Error())
 	}
 
-	result, err := parseAggregationResult(elasticResult, request.QuizType)
+	result, err := parseAggregationResult(elasticResult)
 	if err != nil {
 		return nil, fmt.Errorf("error in elasticSearch: %s", err.Error())
 	}
@@ -82,7 +82,7 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 			SEGMENT: request.Segment,
 		},
 		{
-			QUIZTYPE: request.QuizType,
+			QUIZTYPE: MEDIA,
 		},
 	}
 
@@ -340,9 +340,20 @@ func (m *MediaServiceImpl) gatherComprehensiveData(answer *pb.ComprehensiveRespo
 
 	for similarWords := range similarWordsChan {
 		defer similarWords.Body.Close()
-		err := json.NewDecoder(similarWords.Body).Decode(&answer.SimilarWords)
+		var extended models.ExtendedResponse
+		err := json.NewDecoder(similarWords.Body).Decode(&extended)
 		if err != nil {
 			logging.Error(fmt.Sprintf("error while decoding: %s", err.Error()))
+		}
+
+		for _, meros := range extended.Hits {
+			answer.SimilarWords = append(answer.SimilarWords, &pb.Meros{
+				Greek:      meros.Hit.Greek,
+				English:    meros.Hit.English,
+				Dutch:      meros.Hit.Dutch,
+				LinkedWord: meros.Hit.LinkedWord,
+				Original:   meros.Hit.Original,
+			})
 		}
 	}
 }

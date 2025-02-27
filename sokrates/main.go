@@ -33,7 +33,7 @@ func main() {
 	logging.System("starting up.....")
 	logging.System("starting up and getting env variables")
 
-	handler := schemas.HomerosHandler()
+	handler := schemas.SokratesHandler()
 
 	logging.Debug(fmt.Sprintf("%v", handler))
 	srv := routing.InitRoutes(handler.Streamer)

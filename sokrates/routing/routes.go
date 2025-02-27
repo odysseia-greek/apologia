@@ -18,7 +18,7 @@ func InitRoutes(tracer pb.TraceService_ChorusClient) *mux.Router {
 		GraphiQL: false,
 	})
 
-	serveMux.Handle("/graphql", middleware.Adapt(srv, middleware.LogRequestDetails(tracer), middleware.SetCorsHeaders()))
+	serveMux.Handle("/sokrates/graphql", middleware.Adapt(srv, middleware.LogRequestDetails(tracer), middleware.SetCorsHeaders()))
 
 	return serveMux
 }

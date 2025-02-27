@@ -6,12 +6,12 @@ import (
 	pb "github.com/odysseia-greek/apologia/aristippos/proto"
 )
 
-func quizAggregationQuery(quizType string) map[string]interface{} {
+func quizAggregationQuery() map[string]interface{} {
 	return map[string]interface{}{
 		"size": 0,
 		"query": map[string]interface{}{
 			"term": map[string]interface{}{
-				"quizType": quizType,
+				"quizType": MEDIA,
 			},
 		},
 		"aggs": map[string]interface{}{
@@ -40,7 +40,7 @@ func quizAggregationQuery(quizType string) map[string]interface{} {
 	}
 }
 
-func parseAggregationResult(rawESOutput []byte, quizType string) (*pb.AggregatedOptions, error) {
+func parseAggregationResult(rawESOutput []byte) (*pb.AggregatedOptions, error) {
 	// Define a structure to match the raw ES aggregation result format
 	var esResponse struct {
 		Aggregations struct {
