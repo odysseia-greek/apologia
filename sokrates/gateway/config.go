@@ -2,7 +2,6 @@ package gateway
 
 import (
 	"context"
-	"github.com/odysseia-greek/agora/archytas"
 	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/apologia/aristippos/hedone"
@@ -11,11 +10,6 @@ import (
 )
 
 func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
-	cache, err := archytas.CreateBadgerClient()
-	if err != nil {
-		return nil, err
-	}
-
 	randomizer, err := config.CreateNewRandomizer()
 	if err != nil {
 		return nil, err
@@ -50,7 +44,6 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 	}
 
 	return &SokratesHandler{
-		Cache:       cache,
 		Streamer:    streamer,
 		Randomizer:  randomizer,
 		MediaClient: mediaClient,

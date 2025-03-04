@@ -2,14 +2,14 @@ package gateway
 
 import (
 	"context"
-	"github.com/odysseia-greek/agora/plato/models"
 	"github.com/odysseia-greek/agora/plato/service"
 	pbartrippos "github.com/odysseia-greek/apologia/aristippos/proto"
+	"github.com/odysseia-greek/apologia/sokrates/graph/model"
 	"google.golang.org/grpc/metadata"
 	"time"
 )
 
-func (s *SokratesHandler) CreateMediaQuiz(request *pbartrippos.CreationRequest, requestID string) (*models.QuizResponse, error) {
+func (s *SokratesHandler) CreateMediaQuiz(request *pbartrippos.CreationRequest, requestID string) (*model.QuizResponse, error) {
 	mediaClientCtx, ctxCancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer ctxCancel()
 	md := metadata.New(map[string]string{service.HeaderKey: requestID})
@@ -20,23 +20,23 @@ func (s *SokratesHandler) CreateMediaQuiz(request *pbartrippos.CreationRequest, 
 		return nil, err
 	}
 
-	quizResponse := &models.QuizResponse{
-		QuizItem:      grpcResponse.QuizItem,
-		NumberOfItems: int(grpcResponse.NumberOfItems),
+	quizResponse := &model.QuizResponse{
+		QuizItem:      &grpcResponse.QuizItem,
+		NumberOfItems: &grpcResponse.NumberOfItems,
 	}
 
 	for _, opt := range grpcResponse.Options {
-		quizResponse.Options = append(quizResponse.Options, models.Options{
-			Option:   opt.Option,
-			AudioUrl: opt.AudioUrl,
-			ImageUrl: opt.ImageUrl,
+		quizResponse.Options = append(quizResponse.Options, &model.Options{
+			Option:   &opt.Option,
+			AudioURL: &opt.AudioUrl,
+			ImageURL: &opt.ImageUrl,
 		})
 	}
 
 	return quizResponse, nil
 }
 
-func (s *SokratesHandler) CheckMedia(request *pbartrippos.AnswerRequest, requestID string) (*models.ComprehensiveResponse, error) {
+func (s *SokratesHandler) CheckMedia(request *pbartrippos.AnswerRequest, requestID string) (*model.ComprehensiveResponse, error) {
 	mediaClientCtx, ctxCancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer ctxCancel()
 	md := metadata.New(map[string]string{service.HeaderKey: requestID})

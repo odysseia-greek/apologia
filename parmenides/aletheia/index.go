@@ -23,7 +23,6 @@ func quizIndex(policyName string) map[string]interface{} {
 				"set": map[string]interface{}{
 					"type": "integer",
 				},
-				// 'content' field is not defined here as it won't be queried
 			},
 		},
 	}

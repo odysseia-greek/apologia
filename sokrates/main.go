@@ -1,23 +1,26 @@
 package main
 
 import (
+	"context"
 	"fmt"
-	"github.com/odysseia-greek/agora/plato/logging"
-	"github.com/odysseia-greek/apologia/sokrates/routing"
-	"github.com/odysseia-greek/apologia/sokrates/schemas"
+	"github.com/odysseia-greek/apologia/sokrates/gateway"
+	"log"
 	"net/http"
 	"os"
+
+	"github.com/odysseia-greek/agora/plato/logging"
+	"github.com/odysseia-greek/apologia/sokrates/routing"
 )
 
 const standardPort = ":8080"
 
 func main() {
+	// Set up port with environment variable fallback
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = standardPort
 	}
 
-	//https://patorjk.com/software/taag/#p=display&f=Crawford2&t=SOKRATES
 	logging.System(`
   _____  ___   __  _  ____    ____  ______    ___  _____
  / ___/ /   \ |  |/ ]|    \  /    ||      |  /  _]/ ___/
@@ -30,17 +33,18 @@ func main() {
 `)
 	logging.System("\"ἓν οἶδα ὅτι οὐδὲν οἶδα\"")
 	logging.System("\"I know one thing, that I know nothing\"")
-	logging.System("starting up.....")
-	logging.System("starting up and getting env variables")
+	logging.System("starting up and getting environment variables...")
 
-	handler := schemas.SokratesHandler()
-
-	logging.Debug(fmt.Sprintf("%v", handler))
-	srv := routing.InitRoutes(handler.Streamer)
-
-	logging.System(fmt.Sprintf("running on port %s", port))
-	err := http.ListenAndServe(port, srv)
+	handler, err := gateway.CreateNewConfig(context.Background())
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
+	}
+
+	graphqlServer := routing.InitRoutes(handler)
+
+	logging.System(fmt.Sprintf("Server running on port %s", port))
+	err = http.ListenAndServe(port, graphqlServer)
+	if err != nil {
+		log.Fatal("Server failed to start: ", err)
 	}
 }

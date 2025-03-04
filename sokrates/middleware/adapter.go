@@ -5,7 +5,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/google/uuid"
 	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/attike/aristophanes/comedy"
 	pb "github.com/odysseia-greek/attike/aristophanes/proto"
@@ -69,6 +68,9 @@ func SetCorsHeaders() Adapter {
 func LogRequestDetails(tracer pb.TraceService_ChorusClient) Adapter {
 	return func(f http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			requestId := r.Header.Get(config.HeaderKey)
+			trace := traceFromString(requestId)
+
 			bodyBytes, err := io.ReadAll(r.Body)
 			if err != nil {
 				http.Error(w, "Failed to read request body", http.StatusInternalServerError)
@@ -96,37 +98,51 @@ func LogRequestDetails(tracer pb.TraceService_ChorusClient) Adapter {
 				}
 			}
 
-			traceID := uuid.New().String()
 			spanID := comedy.GenerateSpanID()
-			traceRequest := 0
 
-			payload := &pb.StartTraceRequest{
-				Method:        r.Method,
-				Url:           r.URL.RequestURI(),
-				Host:          r.Host,
-				RemoteAddress: r.RemoteAddr,
-				RootQuery:     query,
-				Operation:     operationName,
+			payload := &pb.TraceRequestWithBody{
+				Method:    r.Method,
+				Url:       r.URL.RequestURI(),
+				Host:      r.Host,
+				Operation: operationName,
+				RootQuery: query,
 			}
 
 			parabasis := &pb.ParabasisRequest{
-				TraceId:      traceID,
-				ParentSpanId: spanID,
+				TraceId:      trace.TraceId,
+				ParentSpanId: trace.SpanId,
 				SpanId:       spanID,
-				RequestType: &pb.ParabasisRequest_StartTrace{
-					StartTrace: payload,
+				RequestType: &pb.ParabasisRequest_TraceBody{
+					TraceBody: payload,
 				},
 			}
 			if err := tracer.Send(parabasis); err != nil {
 				logging.Error(fmt.Sprintf("failed to send trace data: %v", err))
 			}
 
-			logging.Trace(fmt.Sprintf("trace with requestID: %s and span: %s", traceID, spanID))
+			logging.Trace(fmt.Sprintf("trace with requestID: %s and parentSpan: %s and span: %s", trace.TraceId, trace.SpanId, spanID))
 
-			requestID := fmt.Sprintf("%s+%s+%d", traceID, spanID, traceRequest)
-
-			ctx := context.WithValue(r.Context(), config.HeaderKey, requestID)
+			ctx := context.WithValue(r.Context(), config.HeaderKey, requestId)
 			f.ServeHTTP(w, r.WithContext(ctx))
 		})
 	}
+}
+
+func traceFromString(requestId string) *pb.TraceBare {
+	splitID := strings.Split(requestId, "+")
+
+	trace := &pb.TraceBare{}
+
+	if len(splitID) >= 3 {
+		trace.Save = splitID[2] == "1"
+	}
+
+	if len(splitID) >= 1 {
+		trace.TraceId = splitID[0]
+	}
+	if len(splitID) >= 2 {
+		trace.SpanId = splitID[1]
+	}
+
+	return trace
 }
