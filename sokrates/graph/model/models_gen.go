@@ -45,6 +45,12 @@ type MediaAnswerInput struct {
 	Comprehensive *bool   `json:"comprehensive,omitempty"`
 }
 
+type MediaOptions struct {
+	AudioURL *string `json:"audioUrl,omitempty"`
+	ImageURL *string `json:"imageUrl,omitempty"`
+	Option   *string `json:"option,omitempty"`
+}
+
 type MediaQuizInput struct {
 	ExcludeWords []*string `json:"excludeWords,omitempty"`
 	Theme        *string   `json:"theme,omitempty"`
@@ -53,19 +59,38 @@ type MediaQuizInput struct {
 	Order        *string   `json:"order,omitempty"`
 }
 
-type Options struct {
-	AudioURL *string `json:"audioUrl,omitempty"`
-	ImageURL *string `json:"imageUrl,omitempty"`
-	Option   *string `json:"option,omitempty"`
+type MediaQuizResponse struct {
+	NumberOfItems *int32          `json:"numberOfItems,omitempty"`
+	Options       []*MediaOptions `json:"options,omitempty"`
+	QuizItem      *string         `json:"quizItem,omitempty"`
 }
 
-type Query struct {
+type MultipleChoiceAnswerInput struct {
+	Theme         *string `json:"theme,omitempty"`
+	Set           *string `json:"set,omitempty"`
+	QuizWord      *string `json:"quizWord,omitempty"`
+	Answer        *string `json:"answer,omitempty"`
+	Comprehensive *bool   `json:"comprehensive,omitempty"`
 }
 
-type QuizResponse struct {
+type MultipleChoiceResponse struct {
 	NumberOfItems *int32     `json:"numberOfItems,omitempty"`
 	Options       []*Options `json:"options,omitempty"`
 	QuizItem      *string    `json:"quizItem,omitempty"`
+}
+
+type MultipleQuizInput struct {
+	ExcludeWords []*string `json:"excludeWords,omitempty"`
+	Theme        *string   `json:"theme,omitempty"`
+	Set          *string   `json:"set,omitempty"`
+	Order        *string   `json:"order,omitempty"`
+}
+
+type Options struct {
+	Option *string `json:"option,omitempty"`
+}
+
+type Query struct {
 }
 
 type Rhema struct {

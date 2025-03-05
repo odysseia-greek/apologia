@@ -1,0 +1,110 @@
+syntax = "proto3";
+option go_package = "github.com/odysseia-greek/apologia/kriton/proto";
+
+package apologia_kriton;
+
+service Kriton {
+  rpc Health (HealthRequest) returns (HealthResponse) {};
+  rpc Options (OptionsRequest) returns (AggregatedOptions) {};
+  rpc Question (CreationRequest) returns (QuizResponse) {};
+  rpc Answer (AnswerRequest) returns (AnswerResponse) {};
+}
+
+// Empty request messages since these endpoints require no body
+message HealthRequest {}
+
+message OptionsRequest {
+}
+
+// Response message for health check
+message HealthResponse {
+  bool healthy = 1;
+  string time = 2;
+  string version = 3;
+  DatabaseHealth database_health = 4;
+}
+
+// Nested message for database health details
+message DatabaseHealth {
+  bool healthy = 1;
+  string cluster_name = 2;
+  string server_name = 3;
+  string server_version = 4;
+}
+
+// Response message for quiz options
+message AggregatedOptions {
+  repeated Theme themes = 1;
+}
+
+// Structure for quiz themes
+message Theme {
+  string name = 1;
+  repeated Segment segments = 2;
+}
+
+// Structure for segments within a theme
+message Segment {
+  string name = 1;
+  float max_set = 2;
+}
+
+message AnswerResponse {
+  double percentage = 1;
+  repeated DialogueContent input = 2;
+  repeated DialogueContent answer = 3;
+  repeated DialogueCorrection wronglyPlaced = 4;
+}
+
+message DialogueContent {
+  string translation = 1;
+  optional string greek = 2;
+  optional int32 place = 3;
+  optional string speaker = 4;
+}
+
+message DialogueCorrection {
+  string translation = 1;
+  optional string greek = 2;
+  optional int32 place = 3;
+  optional string speaker = 4;
+  optional int32 correctPlace = 5;
+}
+
+message QuizResponse {
+  QuizMetadata quizMetadata = 1;
+  optional string theme = 2;
+  optional int32 set = 3;
+  optional string segment = 4;
+  optional string reference = 5;
+  optional Dialogue dialogue = 6;
+  repeated DialogueContent content = 7;
+}
+
+message QuizMetadata {
+  string language = 1;
+}
+
+message Dialogue {
+  string introduction = 1;
+  repeated Speaker speakers = 2;
+  string section = 3;
+  string linkToPerseus = 4;
+}
+
+message Speaker {
+  string name = 1;
+  string shorthand = 2;
+  string translation = 3;
+}
+
+message CreationRequest {
+  string theme = 1;
+  string set = 2;
+}
+
+message AnswerRequest {
+  optional string theme = 1;
+  optional int32 set = 2;
+  repeated DialogueContent content = 3;
+}

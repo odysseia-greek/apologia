@@ -3,7 +3,6 @@
     "quizMetadata":{
       "language":"English"
     },
-    "quizType":"media",
     "theme":"Basic",
     "set": 1,
     "segment": "First Words 1",
@@ -134,7 +133,6 @@
     "quizMetadata":{
       "language":"English"
     },
-    "quizType":"media",
     "theme":"Basic",
     "set": 1,
     "segment": "First Words 2",
@@ -265,7 +263,6 @@
     "quizMetadata": {
       "language": "English"
     },
-    "quizType": "media",
     "theme":"Basic",
     "set": 1,
     "segment": "Animals",
@@ -396,7 +393,6 @@
     "quizMetadata":{
       "language":"English"
     },
-    "quizType":"media",
     "theme":"Basic",
     "segment": "Common Verbs 1",
     "set": 1,
@@ -527,7 +523,6 @@
     "quizMetadata":{
       "language":"English"
     },
-    "quizType":"media",
     "theme":"Basic",
     "segment": "Common Verbs 2",
     "set": 1,
@@ -658,7 +653,6 @@
     "quizMetadata":{
       "language":"English"
     },
-    "quizType":"media",
     "theme":"Basic",
     "segment": "Common Verbs 3",
     "set": 1,
@@ -789,7 +783,6 @@
     "quizMetadata": {
       "language": "English"
     },
-    "quizType": "media",
     "theme": "Basic",
     "segment": "Common Verbs 4",
     "set": 1,

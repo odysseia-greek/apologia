@@ -10,9 +10,7 @@ func quizAggregationQuery() map[string]interface{} {
 	return map[string]interface{}{
 		"size": 0,
 		"query": map[string]interface{}{
-			"term": map[string]interface{}{
-				"quizType": MEDIA,
-			},
+			"match_all": map[string]interface{}{},
 		},
 		"aggs": map[string]interface{}{
 			"unique_themes": map[string]interface{}{

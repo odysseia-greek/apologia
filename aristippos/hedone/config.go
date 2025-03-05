@@ -18,10 +18,6 @@ import (
 	"time"
 )
 
-const (
-	defaultIndex string = "aggregator"
-)
-
 var streamer pbar.TraceService_ChorusClient
 
 func CreateNewConfig(ctx context.Context) (*MediaServiceImpl, error) {
@@ -126,7 +122,10 @@ func CreateNewConfig(ctx context.Context) (*MediaServiceImpl, error) {
 		return nil, err
 	}
 
-	index := config.StringFromEnv(config.EnvIndex, defaultIndex)
+	index := config.StringFromEnv(config.EnvIndex, "")
+	if index == "" {
+		return nil, fmt.Errorf("no index found in environment please set %s", config.EnvIndex)
+	}
 
 	randomizer, err := config.CreateNewRandomizer()
 	if err != nil {

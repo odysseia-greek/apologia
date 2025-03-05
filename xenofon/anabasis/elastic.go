@@ -1,9 +1,9 @@
-package triakonta
+package anabasis
 
 import (
 	"encoding/json"
 	"fmt"
-	pb "github.com/odysseia-greek/apologia/kritias/proto"
+	pb "github.com/odysseia-greek/apologia/xenofon/proto"
 )
 
 func quizAggregationQuery() map[string]interface{} {

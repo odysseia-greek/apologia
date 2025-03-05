@@ -1,11 +1,11 @@
-package gateway
+package multiplechoice
 
 import (
-	pbartrippos "github.com/odysseia-greek/apologia/aristippos/proto"
+	pbkritias "github.com/odysseia-greek/apologia/kritias/proto"
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
 )
 
-func mapComprehensiveResponse(grpcResp *pbartrippos.ComprehensiveResponse) *model.ComprehensiveResponse {
+func MapComprehensiveResponse(grpcResp *pbkritias.ComprehensiveResponse) *model.ComprehensiveResponse {
 	if grpcResp == nil {
 		return nil
 	}
@@ -36,7 +36,7 @@ func mapComprehensiveResponse(grpcResp *pbartrippos.ComprehensiveResponse) *mode
 	return mappedResponse
 }
 
-func mapConjugations(grpcConj []*pbartrippos.Conjugations) []*model.ConjugationResponse {
+func mapConjugations(grpcConj []*pbkritias.Conjugations) []*model.ConjugationResponse {
 	if grpcConj == nil {
 		return nil
 	}
@@ -51,7 +51,7 @@ func mapConjugations(grpcConj []*pbartrippos.Conjugations) []*model.ConjugationR
 	return result
 }
 
-func mapAnalyzeResults(grpcResults []*pbartrippos.AnalyzeResult) []*model.AnalyzeResult {
+func mapAnalyzeResults(grpcResults []*pbkritias.AnalyzeResult) []*model.AnalyzeResult {
 	if grpcResults == nil {
 		return nil
 	}

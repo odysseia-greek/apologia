@@ -1,7 +1,5 @@
 [
-  {
-    "quizType": "authorbased",
-    "theme": "Plutarch - Solon",
+{    "theme": "Plutarch - Solon",
     "reference": "/texts?author=Ploutarchos&book=Solon&reference=3",
     "set": 1,
     "segment": "3.1",
@@ -238,9 +236,7 @@
       }
     ]
   },
-  {
-    "quizType": "authorbased",
-    "theme": "Plutarch - Solon",
+{    "theme": "Plutarch - Solon",
     "reference": "/texts?author=Ploutarchos&book=Solon&reference=32",
     "set": 1,
     "segment": "32.4",

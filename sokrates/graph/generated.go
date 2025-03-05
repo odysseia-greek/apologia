@@ -80,21 +80,33 @@ type ComplexityRoot struct {
 		Original   func(childComplexity int) int
 	}
 
-	Options struct {
+	MediaOptions struct {
 		AudioURL func(childComplexity int) int
 		ImageURL func(childComplexity int) int
 		Option   func(childComplexity int) int
 	}
 
-	Query struct {
-		MediaAnswer func(childComplexity int, input *model.MediaAnswerInput) int
-		MediaQuiz   func(childComplexity int, input *model.MediaQuizInput) int
-	}
-
-	QuizResponse struct {
+	MediaQuizResponse struct {
 		NumberOfItems func(childComplexity int) int
 		Options       func(childComplexity int) int
 		QuizItem      func(childComplexity int) int
+	}
+
+	MultipleChoiceResponse struct {
+		NumberOfItems func(childComplexity int) int
+		Options       func(childComplexity int) int
+		QuizItem      func(childComplexity int) int
+	}
+
+	Options struct {
+		Option func(childComplexity int) int
+	}
+
+	Query struct {
+		MediaAnswer          func(childComplexity int, input *model.MediaAnswerInput) int
+		MediaQuiz            func(childComplexity int, input *model.MediaQuizInput) int
+		MultipleChoiceAnswer func(childComplexity int, input *model.MultipleChoiceAnswerInput) int
+		MultipleChoiceQuiz   func(childComplexity int, input *model.MultipleQuizInput) int
 	}
 
 	Rhema struct {
@@ -106,7 +118,9 @@ type ComplexityRoot struct {
 
 type QueryResolver interface {
 	MediaAnswer(ctx context.Context, input *model.MediaAnswerInput) (*model.ComprehensiveResponse, error)
-	MediaQuiz(ctx context.Context, input *model.MediaQuizInput) (*model.QuizResponse, error)
+	MediaQuiz(ctx context.Context, input *model.MediaQuizInput) (*model.MediaQuizResponse, error)
+	MultipleChoiceAnswer(ctx context.Context, input *model.MultipleChoiceAnswerInput) (*model.ComprehensiveResponse, error)
+	MultipleChoiceQuiz(ctx context.Context, input *model.MultipleQuizInput) (*model.MultipleChoiceResponse, error)
 }
 
 type executableSchema struct {
@@ -261,19 +275,68 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Hit.Original(childComplexity), true
 
-	case "Options.audioUrl":
-		if e.complexity.Options.AudioURL == nil {
+	case "MediaOptions.audioUrl":
+		if e.complexity.MediaOptions.AudioURL == nil {
 			break
 		}
 
-		return e.complexity.Options.AudioURL(childComplexity), true
+		return e.complexity.MediaOptions.AudioURL(childComplexity), true
 
-	case "Options.imageUrl":
-		if e.complexity.Options.ImageURL == nil {
+	case "MediaOptions.imageUrl":
+		if e.complexity.MediaOptions.ImageURL == nil {
 			break
 		}
 
-		return e.complexity.Options.ImageURL(childComplexity), true
+		return e.complexity.MediaOptions.ImageURL(childComplexity), true
+
+	case "MediaOptions.option":
+		if e.complexity.MediaOptions.Option == nil {
+			break
+		}
+
+		return e.complexity.MediaOptions.Option(childComplexity), true
+
+	case "MediaQuizResponse.numberOfItems":
+		if e.complexity.MediaQuizResponse.NumberOfItems == nil {
+			break
+		}
+
+		return e.complexity.MediaQuizResponse.NumberOfItems(childComplexity), true
+
+	case "MediaQuizResponse.options":
+		if e.complexity.MediaQuizResponse.Options == nil {
+			break
+		}
+
+		return e.complexity.MediaQuizResponse.Options(childComplexity), true
+
+	case "MediaQuizResponse.quizItem":
+		if e.complexity.MediaQuizResponse.QuizItem == nil {
+			break
+		}
+
+		return e.complexity.MediaQuizResponse.QuizItem(childComplexity), true
+
+	case "MultipleChoiceResponse.numberOfItems":
+		if e.complexity.MultipleChoiceResponse.NumberOfItems == nil {
+			break
+		}
+
+		return e.complexity.MultipleChoiceResponse.NumberOfItems(childComplexity), true
+
+	case "MultipleChoiceResponse.options":
+		if e.complexity.MultipleChoiceResponse.Options == nil {
+			break
+		}
+
+		return e.complexity.MultipleChoiceResponse.Options(childComplexity), true
+
+	case "MultipleChoiceResponse.quizItem":
+		if e.complexity.MultipleChoiceResponse.QuizItem == nil {
+			break
+		}
+
+		return e.complexity.MultipleChoiceResponse.QuizItem(childComplexity), true
 
 	case "Options.option":
 		if e.complexity.Options.Option == nil {
@@ -306,26 +369,29 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.MediaQuiz(childComplexity, args["input"].(*model.MediaQuizInput)), true
 
-	case "QuizResponse.numberOfItems":
-		if e.complexity.QuizResponse.NumberOfItems == nil {
+	case "Query.multipleChoiceAnswer":
+		if e.complexity.Query.MultipleChoiceAnswer == nil {
 			break
 		}
 
-		return e.complexity.QuizResponse.NumberOfItems(childComplexity), true
+		args, err := ec.field_Query_multipleChoiceAnswer_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
 
-	case "QuizResponse.options":
-		if e.complexity.QuizResponse.Options == nil {
+		return e.complexity.Query.MultipleChoiceAnswer(childComplexity, args["input"].(*model.MultipleChoiceAnswerInput)), true
+
+	case "Query.multipleChoiceQuiz":
+		if e.complexity.Query.MultipleChoiceQuiz == nil {
 			break
 		}
 
-		return e.complexity.QuizResponse.Options(childComplexity), true
-
-	case "QuizResponse.quizItem":
-		if e.complexity.QuizResponse.QuizItem == nil {
-			break
+		args, err := ec.field_Query_multipleChoiceQuiz_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
 		}
 
-		return e.complexity.QuizResponse.QuizItem(childComplexity), true
+		return e.complexity.Query.MultipleChoiceQuiz(childComplexity, args["input"].(*model.MultipleQuizInput)), true
 
 	case "Rhema.greek":
 		if e.complexity.Rhema.Greek == nil {
@@ -358,6 +424,8 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 	inputUnmarshalMap := graphql.BuildUnmarshalerMap(
 		ec.unmarshalInputMediaAnswerInput,
 		ec.unmarshalInputMediaQuizInput,
+		ec.unmarshalInputMultipleChoiceAnswerInput,
+		ec.unmarshalInputMultipleQuizInput,
 	)
 	first := true
 
@@ -525,6 +593,52 @@ func (ec *executionContext) field_Query_mediaQuiz_argsInput(
 	}
 
 	var zeroVal *model.MediaQuizInput
+	return zeroVal, nil
+}
+
+func (ec *executionContext) field_Query_multipleChoiceAnswer_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := ec.field_Query_multipleChoiceAnswer_argsInput(ctx, rawArgs)
+	if err != nil {
+		return nil, err
+	}
+	args["input"] = arg0
+	return args, nil
+}
+func (ec *executionContext) field_Query_multipleChoiceAnswer_argsInput(
+	ctx context.Context,
+	rawArgs map[string]any,
+) (*model.MultipleChoiceAnswerInput, error) {
+	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+	if tmp, ok := rawArgs["input"]; ok {
+		return ec.unmarshalOMultipleChoiceAnswerInput2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐMultipleChoiceAnswerInput(ctx, tmp)
+	}
+
+	var zeroVal *model.MultipleChoiceAnswerInput
+	return zeroVal, nil
+}
+
+func (ec *executionContext) field_Query_multipleChoiceQuiz_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := ec.field_Query_multipleChoiceQuiz_argsInput(ctx, rawArgs)
+	if err != nil {
+		return nil, err
+	}
+	args["input"] = arg0
+	return args, nil
+}
+func (ec *executionContext) field_Query_multipleChoiceQuiz_argsInput(
+	ctx context.Context,
+	rawArgs map[string]any,
+) (*model.MultipleQuizInput, error) {
+	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+	if tmp, ok := rawArgs["input"]; ok {
+		return ec.unmarshalOMultipleQuizInput2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐMultipleQuizInput(ctx, tmp)
+	}
+
+	var zeroVal *model.MultipleQuizInput
 	return zeroVal, nil
 }
 
@@ -1453,8 +1567,8 @@ func (ec *executionContext) fieldContext_Hit_original(_ context.Context, field g
 	return fc, nil
 }
 
-func (ec *executionContext) _Options_audioUrl(ctx context.Context, field graphql.CollectedField, obj *model.Options) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Options_audioUrl(ctx, field)
+func (ec *executionContext) _MediaOptions_audioUrl(ctx context.Context, field graphql.CollectedField, obj *model.MediaOptions) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_MediaOptions_audioUrl(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -1481,9 +1595,9 @@ func (ec *executionContext) _Options_audioUrl(ctx context.Context, field graphql
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Options_audioUrl(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_MediaOptions_audioUrl(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "Options",
+		Object:     "MediaOptions",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -1494,8 +1608,8 @@ func (ec *executionContext) fieldContext_Options_audioUrl(_ context.Context, fie
 	return fc, nil
 }
 
-func (ec *executionContext) _Options_imageUrl(ctx context.Context, field graphql.CollectedField, obj *model.Options) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Options_imageUrl(ctx, field)
+func (ec *executionContext) _MediaOptions_imageUrl(ctx context.Context, field graphql.CollectedField, obj *model.MediaOptions) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_MediaOptions_imageUrl(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -1522,9 +1636,308 @@ func (ec *executionContext) _Options_imageUrl(ctx context.Context, field graphql
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Options_imageUrl(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_MediaOptions_imageUrl(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "Options",
+		Object:     "MediaOptions",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _MediaOptions_option(ctx context.Context, field graphql.CollectedField, obj *model.MediaOptions) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_MediaOptions_option(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Option, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_MediaOptions_option(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "MediaOptions",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _MediaQuizResponse_numberOfItems(ctx context.Context, field graphql.CollectedField, obj *model.MediaQuizResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_MediaQuizResponse_numberOfItems(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NumberOfItems, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int32)
+	fc.Result = res
+	return ec.marshalOInt2ᚖint32(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_MediaQuizResponse_numberOfItems(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "MediaQuizResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _MediaQuizResponse_options(ctx context.Context, field graphql.CollectedField, obj *model.MediaQuizResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_MediaQuizResponse_options(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Options, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.MediaOptions)
+	fc.Result = res
+	return ec.marshalOMediaOptions2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐMediaOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_MediaQuizResponse_options(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "MediaQuizResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "audioUrl":
+				return ec.fieldContext_MediaOptions_audioUrl(ctx, field)
+			case "imageUrl":
+				return ec.fieldContext_MediaOptions_imageUrl(ctx, field)
+			case "option":
+				return ec.fieldContext_MediaOptions_option(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type MediaOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _MediaQuizResponse_quizItem(ctx context.Context, field graphql.CollectedField, obj *model.MediaQuizResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_MediaQuizResponse_quizItem(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.QuizItem, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_MediaQuizResponse_quizItem(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "MediaQuizResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _MultipleChoiceResponse_numberOfItems(ctx context.Context, field graphql.CollectedField, obj *model.MultipleChoiceResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_MultipleChoiceResponse_numberOfItems(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NumberOfItems, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int32)
+	fc.Result = res
+	return ec.marshalOInt2ᚖint32(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_MultipleChoiceResponse_numberOfItems(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "MultipleChoiceResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _MultipleChoiceResponse_options(ctx context.Context, field graphql.CollectedField, obj *model.MultipleChoiceResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_MultipleChoiceResponse_options(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Options, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.Options)
+	fc.Result = res
+	return ec.marshalOOptions2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_MultipleChoiceResponse_options(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "MultipleChoiceResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "option":
+				return ec.fieldContext_Options_option(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Options", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _MultipleChoiceResponse_quizItem(ctx context.Context, field graphql.CollectedField, obj *model.MultipleChoiceResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_MultipleChoiceResponse_quizItem(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.QuizItem, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_MultipleChoiceResponse_quizItem(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "MultipleChoiceResponse",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -1661,9 +2074,9 @@ func (ec *executionContext) _Query_mediaQuiz(ctx context.Context, field graphql.
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*model.QuizResponse)
+	res := resTmp.(*model.MediaQuizResponse)
 	fc.Result = res
-	return ec.marshalOQuizResponse2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐQuizResponse(ctx, field.Selections, res)
+	return ec.marshalOMediaQuizResponse2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐMediaQuizResponse(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_mediaQuiz(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1675,13 +2088,13 @@ func (ec *executionContext) fieldContext_Query_mediaQuiz(ctx context.Context, fi
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "numberOfItems":
-				return ec.fieldContext_QuizResponse_numberOfItems(ctx, field)
+				return ec.fieldContext_MediaQuizResponse_numberOfItems(ctx, field)
 			case "options":
-				return ec.fieldContext_QuizResponse_options(ctx, field)
+				return ec.fieldContext_MediaQuizResponse_options(ctx, field)
 			case "quizItem":
-				return ec.fieldContext_QuizResponse_quizItem(ctx, field)
+				return ec.fieldContext_MediaQuizResponse_quizItem(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type QuizResponse", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type MediaQuizResponse", field.Name)
 		},
 	}
 	defer func() {
@@ -1692,6 +2105,128 @@ func (ec *executionContext) fieldContext_Query_mediaQuiz(ctx context.Context, fi
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Query_mediaQuiz_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_multipleChoiceAnswer(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_multipleChoiceAnswer(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().MultipleChoiceAnswer(rctx, fc.Args["input"].(*model.MultipleChoiceAnswerInput))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.ComprehensiveResponse)
+	fc.Result = res
+	return ec.marshalOComprehensiveResponse2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐComprehensiveResponse(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_multipleChoiceAnswer(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "correct":
+				return ec.fieldContext_ComprehensiveResponse_correct(ctx, field)
+			case "foundInText":
+				return ec.fieldContext_ComprehensiveResponse_foundInText(ctx, field)
+			case "quizWord":
+				return ec.fieldContext_ComprehensiveResponse_quizWord(ctx, field)
+			case "similarWords":
+				return ec.fieldContext_ComprehensiveResponse_similarWords(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ComprehensiveResponse", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_multipleChoiceAnswer_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_multipleChoiceQuiz(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_multipleChoiceQuiz(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().MultipleChoiceQuiz(rctx, fc.Args["input"].(*model.MultipleQuizInput))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.MultipleChoiceResponse)
+	fc.Result = res
+	return ec.marshalOMultipleChoiceResponse2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐMultipleChoiceResponse(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_multipleChoiceQuiz(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "numberOfItems":
+				return ec.fieldContext_MultipleChoiceResponse_numberOfItems(ctx, field)
+			case "options":
+				return ec.fieldContext_MultipleChoiceResponse_options(ctx, field)
+			case "quizItem":
+				return ec.fieldContext_MultipleChoiceResponse_quizItem(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type MultipleChoiceResponse", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_multipleChoiceQuiz_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -1824,137 +2359,6 @@ func (ec *executionContext) fieldContext_Query___schema(_ context.Context, field
 				return ec.fieldContext___Schema_directives(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type __Schema", field.Name)
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _QuizResponse_numberOfItems(ctx context.Context, field graphql.CollectedField, obj *model.QuizResponse) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_QuizResponse_numberOfItems(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.NumberOfItems, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*int32)
-	fc.Result = res
-	return ec.marshalOInt2ᚖint32(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_QuizResponse_numberOfItems(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "QuizResponse",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _QuizResponse_options(ctx context.Context, field graphql.CollectedField, obj *model.QuizResponse) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_QuizResponse_options(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Options, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.([]*model.Options)
-	fc.Result = res
-	return ec.marshalOOptions2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐOptions(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_QuizResponse_options(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "QuizResponse",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "audioUrl":
-				return ec.fieldContext_Options_audioUrl(ctx, field)
-			case "imageUrl":
-				return ec.fieldContext_Options_imageUrl(ctx, field)
-			case "option":
-				return ec.fieldContext_Options_option(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type Options", field.Name)
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _QuizResponse_quizItem(ctx context.Context, field graphql.CollectedField, obj *model.QuizResponse) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_QuizResponse_quizItem(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.QuizItem, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_QuizResponse_quizItem(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "QuizResponse",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -4151,6 +4555,109 @@ func (ec *executionContext) unmarshalInputMediaQuizInput(ctx context.Context, ob
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputMultipleChoiceAnswerInput(ctx context.Context, obj any) (model.MultipleChoiceAnswerInput, error) {
+	var it model.MultipleChoiceAnswerInput
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"theme", "set", "quizWord", "answer", "comprehensive"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "theme":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("theme"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Theme = data
+		case "set":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("set"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Set = data
+		case "quizWord":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("quizWord"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.QuizWord = data
+		case "answer":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("answer"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Answer = data
+		case "comprehensive":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("comprehensive"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Comprehensive = data
+		}
+	}
+
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputMultipleQuizInput(ctx context.Context, obj any) (model.MultipleQuizInput, error) {
+	var it model.MultipleQuizInput
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"excludeWords", "theme", "set", "order"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "excludeWords":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("excludeWords"))
+			data, err := ec.unmarshalOString2ᚕᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ExcludeWords = data
+		case "theme":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("theme"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Theme = data
+		case "set":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("set"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Set = data
+		case "order":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("order"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Order = data
+		}
+	}
+
+	return it, nil
+}
+
 // endregion **************************** input.gotpl *****************************
 
 // region    ************************** interface.gotpl ***************************
@@ -4367,6 +4874,126 @@ func (ec *executionContext) _Hit(ctx context.Context, sel ast.SelectionSet, obj 
 	return out
 }
 
+var mediaOptionsImplementors = []string{"MediaOptions"}
+
+func (ec *executionContext) _MediaOptions(ctx context.Context, sel ast.SelectionSet, obj *model.MediaOptions) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, mediaOptionsImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("MediaOptions")
+		case "audioUrl":
+			out.Values[i] = ec._MediaOptions_audioUrl(ctx, field, obj)
+		case "imageUrl":
+			out.Values[i] = ec._MediaOptions_imageUrl(ctx, field, obj)
+		case "option":
+			out.Values[i] = ec._MediaOptions_option(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var mediaQuizResponseImplementors = []string{"MediaQuizResponse"}
+
+func (ec *executionContext) _MediaQuizResponse(ctx context.Context, sel ast.SelectionSet, obj *model.MediaQuizResponse) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, mediaQuizResponseImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("MediaQuizResponse")
+		case "numberOfItems":
+			out.Values[i] = ec._MediaQuizResponse_numberOfItems(ctx, field, obj)
+		case "options":
+			out.Values[i] = ec._MediaQuizResponse_options(ctx, field, obj)
+		case "quizItem":
+			out.Values[i] = ec._MediaQuizResponse_quizItem(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var multipleChoiceResponseImplementors = []string{"MultipleChoiceResponse"}
+
+func (ec *executionContext) _MultipleChoiceResponse(ctx context.Context, sel ast.SelectionSet, obj *model.MultipleChoiceResponse) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, multipleChoiceResponseImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("MultipleChoiceResponse")
+		case "numberOfItems":
+			out.Values[i] = ec._MultipleChoiceResponse_numberOfItems(ctx, field, obj)
+		case "options":
+			out.Values[i] = ec._MultipleChoiceResponse_options(ctx, field, obj)
+		case "quizItem":
+			out.Values[i] = ec._MultipleChoiceResponse_quizItem(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
 var optionsImplementors = []string{"Options"}
 
 func (ec *executionContext) _Options(ctx context.Context, sel ast.SelectionSet, obj *model.Options) graphql.Marshaler {
@@ -4378,10 +5005,6 @@ func (ec *executionContext) _Options(ctx context.Context, sel ast.SelectionSet, 
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Options")
-		case "audioUrl":
-			out.Values[i] = ec._Options_audioUrl(ctx, field, obj)
-		case "imageUrl":
-			out.Values[i] = ec._Options_imageUrl(ctx, field, obj)
 		case "option":
 			out.Values[i] = ec._Options_option(ctx, field, obj)
 		default:
@@ -4464,6 +5087,44 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "multipleChoiceAnswer":
+			field := field
+
+			innerFunc := func(ctx context.Context, _ *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_multipleChoiceAnswer(ctx, field)
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "multipleChoiceQuiz":
+			field := field
+
+			innerFunc := func(ctx context.Context, _ *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_multipleChoiceQuiz(ctx, field)
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
 		case "__type":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Query___type(ctx, field)
@@ -4472,46 +5133,6 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Query___schema(ctx, field)
 			})
-		default:
-			panic("unknown field " + strconv.Quote(field.Name))
-		}
-	}
-	out.Dispatch(ctx)
-	if out.Invalids > 0 {
-		return graphql.Null
-	}
-
-	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
-
-	for label, dfs := range deferred {
-		ec.processDeferredGroup(graphql.DeferredGroup{
-			Label:    label,
-			Path:     graphql.GetPath(ctx),
-			FieldSet: dfs,
-			Context:  ctx,
-		})
-	}
-
-	return out
-}
-
-var quizResponseImplementors = []string{"QuizResponse"}
-
-func (ec *executionContext) _QuizResponse(ctx context.Context, sel ast.SelectionSet, obj *model.QuizResponse) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, quizResponseImplementors)
-
-	out := graphql.NewFieldSet(fields)
-	deferred := make(map[string]*graphql.FieldSet)
-	for i, field := range fields {
-		switch field.Name {
-		case "__typename":
-			out.Values[i] = graphql.MarshalString("QuizResponse")
-		case "numberOfItems":
-			out.Values[i] = ec._QuizResponse_numberOfItems(ctx, field, obj)
-		case "options":
-			out.Values[i] = ec._QuizResponse_options(ctx, field, obj)
-		case "quizItem":
-			out.Values[i] = ec._QuizResponse_quizItem(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -5401,11 +6022,89 @@ func (ec *executionContext) unmarshalOMediaAnswerInput2ᚖgithubᚗcomᚋodyssei
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
+func (ec *executionContext) marshalOMediaOptions2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐMediaOptions(ctx context.Context, sel ast.SelectionSet, v []*model.MediaOptions) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalOMediaOptions2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐMediaOptions(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	return ret
+}
+
+func (ec *executionContext) marshalOMediaOptions2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐMediaOptions(ctx context.Context, sel ast.SelectionSet, v *model.MediaOptions) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._MediaOptions(ctx, sel, v)
+}
+
 func (ec *executionContext) unmarshalOMediaQuizInput2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐMediaQuizInput(ctx context.Context, v any) (*model.MediaQuizInput, error) {
 	if v == nil {
 		return nil, nil
 	}
 	res, err := ec.unmarshalInputMediaQuizInput(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOMediaQuizResponse2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐMediaQuizResponse(ctx context.Context, sel ast.SelectionSet, v *model.MediaQuizResponse) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._MediaQuizResponse(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalOMultipleChoiceAnswerInput2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐMultipleChoiceAnswerInput(ctx context.Context, v any) (*model.MultipleChoiceAnswerInput, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputMultipleChoiceAnswerInput(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOMultipleChoiceResponse2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐMultipleChoiceResponse(ctx context.Context, sel ast.SelectionSet, v *model.MultipleChoiceResponse) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._MultipleChoiceResponse(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalOMultipleQuizInput2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐMultipleQuizInput(ctx context.Context, v any) (*model.MultipleQuizInput, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputMultipleQuizInput(ctx, v)
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
@@ -5455,13 +6154,6 @@ func (ec *executionContext) marshalOOptions2ᚖgithubᚗcomᚋodysseiaᚑgreek�
 		return graphql.Null
 	}
 	return ec._Options(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalOQuizResponse2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐQuizResponse(ctx context.Context, sel ast.SelectionSet, v *model.QuizResponse) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._QuizResponse(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalORhema2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐRhema(ctx context.Context, sel ast.SelectionSet, v *model.Rhema) graphql.Marshaler {

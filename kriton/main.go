@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-const standardPort = ":50050"
+const standardPort = ":50060"
 
 func main() {
 	port := os.Getenv("PORT")
@@ -23,6 +23,9 @@ func main() {
 |  .  ||  .  \ |  |   |  |  |     ||  |  |
 |__|\_||__|\_||____|  |__|   \___/ |__|__|
 `)
+	logging.System("\"ΣΩ. τί τηνικάδε ἀφῖξαι, ὦ Κρίτων; ἢ οὐ πρῲ ἔτι ἐστίν;\"")
+	logging.System("Socrates: Why have you come at this time, Crito? Or isn’t it still early?")
+
 	logging.System("starting up.....")
 	logging.System("starting up and getting env variables")
 

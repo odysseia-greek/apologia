@@ -36,13 +36,23 @@ type Hit {
   original: String
 }
 
-type Options {
+type MediaOptions {
   audioUrl: String
   imageUrl: String
   option: String
 }
 
-type QuizResponse {
+type Options {
+  option: String
+}
+
+type MediaQuizResponse {
+  numberOfItems: Int
+  options: [MediaOptions]
+  quizItem: String
+}
+
+type MultipleChoiceResponse {
   numberOfItems: Int
   options: [Options]
   quizItem: String
@@ -71,7 +81,24 @@ input MediaQuizInput {
   order: String = null 
 }
 
+input MultipleChoiceAnswerInput {
+  theme: String
+  set: String
+  quizWord: String
+  answer: String
+  comprehensive: Boolean
+}
+
+input MultipleQuizInput {
+  excludeWords: [String]
+  theme: String
+  set: String
+  order: String = null
+}
+
 type Query {
   mediaAnswer(input: MediaAnswerInput): ComprehensiveResponse
-  mediaQuiz(input: MediaQuizInput): QuizResponse
+  mediaQuiz(input: MediaQuizInput): MediaQuizResponse
+  multipleChoiceAnswer(input: MultipleChoiceAnswerInput): ComprehensiveResponse
+  multipleChoiceQuiz(input: MultipleQuizInput): MultipleChoiceResponse
 }

@@ -13,7 +13,7 @@ import (
 	"log"
 	"os"
 	"path"
-	"strconv"
+	"regexp"
 	"strings"
 	"sync"
 )
@@ -22,7 +22,6 @@ import (
 var sullego embed.FS
 
 func main() {
-	//https://patorjk.com/software/taag/#p=display&f=Crawford2&t=PARMENIDES
 	logging.System(`
  ____   ____  ____   ___ ___    ___  ____   ____  ___      ___  _____
 |    \ /    ||    \ |   |   |  /  _]|    \ |    ||   \    /  _]/ ___/
@@ -33,6 +32,7 @@ func main() {
 |__|  |__|__||__|\_||___|___||_____||__|__||____||_____||_____| \___|
                                                                      
 `)
+
 	logging.System(strings.Repeat("~", 37))
 	logging.System("\"τό γάρ αυτο νοειν έστιν τε καί ειναι\"")
 	logging.System("\"for it is the same thinking and being\"")
@@ -45,20 +45,35 @@ func main() {
 		logging.Error(err.Error())
 		log.Fatal("death has found me")
 	}
-
 	defer conn.Close()
 
 	root := "sullego"
+
+	// **Derive Directory Name from Index**
+	quizDirName := stripQuizSuffix(handler.Index)
+
+	// Check if the directory exists
 	rootDir, err := sullego.ReadDir(root)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	err = handler.DeleteIndexAtStartUp()
-	if err != nil {
-		log.Fatal(err)
+	var matchingDir string
+	for _, dir := range rootDir {
+		if dir.IsDir() && dir.Name() == quizDirName {
+			matchingDir = dir.Name()
+			break
+		}
 	}
-	err = handler.CreateIndexAtStartup()
+
+	if matchingDir == "" {
+		logging.Warn(fmt.Sprintf("No matching directory found for index: %s", handler.Index))
+		return
+	}
+
+	// Process only the matching directory
+	typePath := path.Join(root, matchingDir)
+	typeDir, err := sullego.ReadDir(typePath)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -66,115 +81,38 @@ func main() {
 	var wg sync.WaitGroup
 	documents := 0
 
-	for _, dir := range rootDir {
-		if dir.IsDir() {
-			typePath := path.Join(root, dir.Name())
-			typeDir, err := sullego.ReadDir(typePath)
-			if err != nil {
-				log.Fatal(err)
-			}
-
-			for _, quizType := range typeDir {
-				quizPath := path.Join(typePath, quizType.Name())
-				content, err := sullego.ReadFile(quizPath)
-				if err != nil {
-					logging.Error(err.Error())
-					continue
-				}
-
-				logging.Debug(fmt.Sprintf("working on file: %s in quiz: %s", quizPath, dir.Name()))
-
-				switch dir.Name() {
-				case models.MEDIA:
-					wg.Add(1)
-					go func(content []byte) {
-						defer wg.Done()
-						var quiz []models.MediaQuiz
-						if err := json.Unmarshal(content, &quiz); err != nil {
-							logging.Error(err.Error())
-							return
-						}
-
-						for _, q := range quiz {
-							asJson, err := json.Marshal(q)
-							if err != nil {
-								logging.Error(err.Error())
-								continue
-							}
-
-							if err := handler.AddWithoutQueue(asJson); err != nil {
-								logging.Error(err.Error())
-							}
-						}
-					}(content)
-				case models.DIALOGUE:
-					wg.Add(1)
-					go func(content []byte) {
-						defer wg.Done()
-						var quiz []models.DialogueQuiz
-						if err := json.Unmarshal(content, &quiz); err != nil {
-							logging.Error(err.Error())
-							return
-						}
-
-						for _, q := range quiz {
-							asJson, err := json.Marshal(q)
-							if err != nil {
-								logging.Error(err.Error())
-								continue
-							}
-
-							if err := handler.AddWithoutQueue(asJson); err != nil {
-								logging.Error(err.Error())
-							}
-						}
-					}(content)
-				case models.AUTHORBASED:
-					wg.Add(1)
-					go func(content []byte) {
-						defer wg.Done()
-						var quiz []models.AuthorbasedQuiz
-						if err := json.Unmarshal(content, &quiz); err != nil {
-							logging.Error(err.Error())
-							return
-						}
-						for _, q := range quiz {
-							asJson, err := json.Marshal(q)
-							if err != nil {
-								logging.Error(err.Error())
-								continue
-							}
-
-							if err := handler.AddWithoutQueue(asJson); err != nil {
-								logging.Error(err.Error())
-							}
-						}
-					}(content)
-				case models.MULTICHOICE:
-					wg.Add(1)
-					go func(content []byte) {
-						defer wg.Done()
-						var quiz []models.MultipleChoiceQuiz
-						if err := json.Unmarshal(content, &quiz); err != nil {
-							logging.Error(err.Error())
-							return
-						}
-
-						if err := handler.AddWithQueue(quiz); err != nil {
-							logging.Error(err.Error())
-						}
-					}(content)
-				}
-			}
+	for _, quizFile := range typeDir {
+		quizPath := path.Join(typePath, quizFile.Name())
+		content, err := sullego.ReadFile(quizPath)
+		if err != nil {
+			logging.Error(fmt.Sprintf("Failed to read file %s: %s", quizPath, err.Error()))
+			continue
 		}
+
+		logging.Debug(fmt.Sprintf("Processing file: %s for index: %s", quizPath, handler.Index))
+
+		wg.Add(1)
+		go func(content []byte) {
+			defer wg.Done()
+
+			switch handler.Index {
+			case "media-quiz":
+				processQuizFile[models.MediaQuiz](content, handler, true) // Queue this
+			case "dialogue-quiz":
+				processQuizFile[models.DialogueQuiz](content, handler, false) // No queue for dialogue
+			case "author-based-quiz":
+				processQuizFile[models.AuthorbasedQuiz](content, handler, true) // Queue this
+			case "multiple-choice-quiz":
+				processQuizFile[models.MultipleChoiceQuiz](content, handler, true) // Queue this
+			}
+		}(content)
 	}
 
 	wg.Wait()
-	logging.Info(fmt.Sprintf("created: %s", strconv.Itoa(handler.Created)))
-	logging.Info(fmt.Sprintf("words found in sullego: %s", strconv.Itoa(documents)))
+	logging.Info(fmt.Sprintf("Created: %d documents", handler.Created))
+	logging.Info(fmt.Sprintf("Words found in sullego: %d", documents))
 
-	logging.Debug("closing ptolemaios because job is done")
-	// just setting a code that could be used later to check is if it was sent from an actual service
+	logging.Debug("Closing ptolemaios because job is done")
 	uuidCode := uuid.New().String()
 	_, err = handler.Ambassador.ShutDown(context.Background(), &pb.ShutDownRequest{Code: uuidCode})
 	if err != nil {
@@ -182,4 +120,35 @@ func main() {
 	}
 
 	os.Exit(0)
+}
+
+// stripQuizSuffix removes '-quiz' and replaces hyphens with an empty string
+func stripQuizSuffix(indexName string) string {
+	indexName = strings.TrimSuffix(indexName, "-quiz") // Remove '-quiz'
+	re := regexp.MustCompile(`-`)                      // Match hyphens
+	return re.ReplaceAllString(indexName, "")          // Remove hyphens
+}
+
+func processQuizFile[T any](content []byte, handler *aletheia.ParmenidesHandler, useQueue bool) {
+	var quizzes []T
+	if err := json.Unmarshal(content, &quizzes); err != nil {
+		logging.Error("Failed to unmarshal JSON: " + err.Error())
+		return
+	}
+
+	quizInterfaces := make([]interface{}, len(quizzes))
+	for i, q := range quizzes {
+		quizInterfaces[i] = q
+	}
+
+	if useQueue {
+		// Batch all quizzes together using the queue
+		if err := handler.AddWithQueue(quizInterfaces); err != nil {
+			logging.Error(err.Error())
+		}
+	} else {
+		if err := handler.AddWithoutQueue(quizInterfaces); err != nil {
+			logging.Error(err.Error())
+		}
+	}
 }

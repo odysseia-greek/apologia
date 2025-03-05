@@ -1,7 +1,5 @@
 [
-  {
-    "quizType": "authorbased",
-    "theme": "Plutarch - Alexander",
+{    "theme": "Plutarch - Alexander",
     "reference": "/texts?author=Ploutarchos&book=Alexander&reference=6",
     "set": 1,
     "segment": "6.1",
@@ -252,9 +250,7 @@
       }
     ]
   },
-  {
-    "quizType": "authorbased",
-    "theme": "Plutarch - Alexander",
+{    "theme": "Plutarch - Alexander",
     "reference": "/texts?author=Ploutarchos&book=Alexander&reference=31",
     "set": 1,
     "segment": "31.7",

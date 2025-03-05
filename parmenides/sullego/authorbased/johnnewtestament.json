@@ -1,6 +1,5 @@
 [
   {
-    "quizType":"authorbased",
     "theme":"John - The New Testament",
     "reference":"/texts?author=John&book=New+Testament&reference=1",
     "set":1,
@@ -137,7 +136,6 @@
     ]
   },
   {
-    "quizType":"authorbased",
     "theme":"John - The New Testament",
     "reference":"/texts?author=John&book=New+Testament&reference=1",
     "set":1,
@@ -259,7 +257,6 @@
     ]
   },
   {
-    "quizType":"authorbased",
     "theme":"John - The New Testament",
     "reference":"/texts?author=John&book=New+Testament&reference=1",
     "set":1,

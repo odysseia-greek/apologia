@@ -9,6 +9,7 @@ import (
 
 	"github.com/odysseia-greek/agora/plato/config"
 	pbartrippos "github.com/odysseia-greek/apologia/aristippos/proto"
+	pbkritias "github.com/odysseia-greek/apologia/kritias/proto"
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
 )
 
@@ -29,7 +30,7 @@ func (r *queryResolver) MediaAnswer(ctx context.Context, input *model.MediaAnswe
 }
 
 // MediaQuiz is the resolver for the mediaQuiz field.
-func (r *queryResolver) MediaQuiz(ctx context.Context, input *model.MediaQuizInput) (*model.QuizResponse, error) {
+func (r *queryResolver) MediaQuiz(ctx context.Context, input *model.MediaQuizInput) (*model.MediaQuizResponse, error) {
 	requestID, _ := ctx.Value(config.HeaderKey).(string)
 
 	pb := &pbartrippos.CreationRequest{
@@ -47,6 +48,41 @@ func (r *queryResolver) MediaQuiz(ctx context.Context, input *model.MediaQuizInp
 	}
 
 	return r.Handler.CreateMediaQuiz(pb, requestID)
+}
+
+// MultipleChoiceAnswer is the resolver for the multipleChoiceAnswer field.
+func (r *queryResolver) MultipleChoiceAnswer(ctx context.Context, input *model.MultipleChoiceAnswerInput) (*model.ComprehensiveResponse, error) {
+	requestID, _ := ctx.Value(config.HeaderKey).(string)
+
+	pb := &pbkritias.AnswerRequest{
+		Theme:         *input.Theme,
+		Set:           *input.Set,
+		Comprehensive: *input.Comprehensive,
+		Answer:        *input.Answer,
+		QuizWord:      *input.QuizWord,
+	}
+
+	return r.Handler.CheckMultipleChoice(pb, requestID)
+}
+
+// MultipleChoiceQuiz is the resolver for the multipleChoiceQuiz field.
+func (r *queryResolver) MultipleChoiceQuiz(ctx context.Context, input *model.MultipleQuizInput) (*model.MultipleChoiceResponse, error) {
+	requestID, _ := ctx.Value(config.HeaderKey).(string)
+
+	pb := &pbkritias.CreationRequest{
+		Theme: *input.Theme,
+		Set:   *input.Set,
+	}
+
+	if input.Order != nil {
+		pb.Order = *input.Order
+	}
+
+	for _, word := range input.ExcludeWords {
+		pb.ExcludeWords = append(pb.ExcludeWords, *word)
+	}
+
+	return r.Handler.CreateMultipleChoiceQuiz(pb, requestID)
 }
 
 // Query returns QueryResolver implementation.

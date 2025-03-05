@@ -1,4 +1,4 @@
-package triakonta
+package anabasis
 
 import (
 	"context"
@@ -20,7 +20,7 @@ import (
 
 var streamer pbar.TraceService_ChorusClient
 
-func CreateNewConfig(ctx context.Context) (*MultipleChoiceServiceImpl, error) {
+func CreateNewConfig(ctx context.Context) (*AuthorBasedServiceImpl, error) {
 	tls := config.BoolFromEnv(config.EnvTlSKey)
 
 	tracer, err := aristophanes.NewClientTracer(aristophanes.DefaultAddress)
@@ -137,7 +137,7 @@ func CreateNewConfig(ctx context.Context) (*MultipleChoiceServiceImpl, error) {
 		return nil, err
 	}
 
-	return &MultipleChoiceServiceImpl{
+	return &AuthorBasedServiceImpl{
 		Index:      index,
 		Elastic:    elastic,
 		Randomizer: randomizer,

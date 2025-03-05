@@ -23,7 +23,6 @@ import (
 const (
 	THEME          string = "theme"
 	SET            string = "set"
-	SEGMENT        string = "segment"
 	MULTIPLECHOICE string = "multiplechoice"
 	QUIZTYPE       string = "quizType"
 	GREENGORDER    string = "gre-eng"
@@ -77,12 +76,6 @@ func (m *MultipleChoiceServiceImpl) Question(ctx context.Context, request *pb.Cr
 		},
 		{
 			SET: request.Set,
-		},
-		{
-			SEGMENT: request.Segment,
-		},
-		{
-			QUIZTYPE: MULTIPLECHOICE,
 		},
 	}
 
@@ -167,13 +160,7 @@ func (m *MultipleChoiceServiceImpl) Question(ctx context.Context, request *pb.Cr
 func (m *MultipleChoiceServiceImpl) Answer(ctx context.Context, request *pb.AnswerRequest) (*pb.ComprehensiveResponse, error) {
 	mustQuery := []map[string]string{
 		{
-			QUIZTYPE: MULTIPLECHOICE,
-		},
-		{
 			THEME: request.Theme,
-		},
-		{
-			SEGMENT: request.Segment,
 		},
 		{
 			SET: request.Set,
@@ -189,7 +176,7 @@ func (m *MultipleChoiceServiceImpl) Answer(ctx context.Context, request *pb.Answ
 		return nil, fmt.Errorf("no hits found in Elastic")
 	}
 
-	var option models.MediaQuiz
+	var option models.MultipleChoiceQuiz
 	source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
 	err = json.Unmarshal(source, &option)
 	if err != nil {

@@ -81,9 +81,6 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 		{
 			SEGMENT: request.Segment,
 		},
-		{
-			QUIZTYPE: MEDIA,
-		},
 	}
 
 	query := m.Elastic.Builder().MultipleMatch(mustQuery)
@@ -169,9 +166,6 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 
 func (m *MediaServiceImpl) Answer(ctx context.Context, request *pb.AnswerRequest) (*pb.ComprehensiveResponse, error) {
 	mustQuery := []map[string]string{
-		{
-			QUIZTYPE: MEDIA,
-		},
 		{
 			THEME: request.Theme,
 		},

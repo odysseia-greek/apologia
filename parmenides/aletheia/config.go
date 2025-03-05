@@ -12,14 +12,12 @@ import (
 	"github.com/odysseia-greek/agora/plato/service"
 	"github.com/odysseia-greek/delphi/ptolemaios/diplomat"
 	pbp "github.com/odysseia-greek/delphi/ptolemaios/proto"
+	aristarchos "github.com/odysseia-greek/olympia/aristarchos/scholar"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/metadata"
 	"os"
 	"time"
-)
-
-const (
-	defaultIndex string = "quiz"
 )
 
 type EupalinosClient interface {
@@ -66,7 +64,10 @@ func CreateNewConfig() (*ParmenidesHandler, *grpc.ClientConn, error) {
 	channel := config.StringFromEnv(config.EnvChannel, config.DefaultParmenidesChannel)
 	eupalinosAddress := config.StringFromEnv(config.EnvEupalinosService, config.DefaultEupalinosService)
 
-	index := config.StringFromEnv(config.EnvIndex, defaultIndex)
+	index := config.StringFromEnv(config.EnvIndex, "")
+	if index == "" {
+		return nil, nil, fmt.Errorf("no index found in environment please set %s", config.EnvIndex)
+	}
 
 	client, conn, err := createEupalinosClient(eupalinosAddress)
 	if err != nil {
@@ -75,22 +76,49 @@ func CreateNewConfig() (*ParmenidesHandler, *grpc.ClientConn, error) {
 
 	policyName := fmt.Sprintf("%s_policy", index)
 
-	return &ParmenidesHandler{
-		Index:        index,
-		Created:      0,
-		Elastic:      elastic,
-		Eupalinos:    client,
-		Channel:      channel,
-		DutchChannel: config.DefaultDutchChannel,
-		PolicyName:   policyName,
-		Ambassador:   ambassador,
-	}, conn, nil
+	handler := &ParmenidesHandler{
+		Index:            index,
+		Created:          0,
+		Elastic:          elastic,
+		Eupalinos:        client,
+		Channel:          channel,
+		DutchChannel:     config.DefaultDutchChannel,
+		PolicyName:       policyName,
+		Ambassador:       ambassador,
+		Aggregator:       nil,
+		AggregatorCancel: nil,
+	}
+
+	if index == "author-based-quiz" {
+		aggregatorAddress := config.StringFromEnv(config.EnvAggregatorAddress, config.DefaultAggregatorAddress)
+		aggregator, err := aristarchos.NewClientAggregator(aggregatorAddress)
+		if err != nil {
+			logging.Error(err.Error())
+			return nil, nil, err
+		}
+		aggregatorHealthy := aggregator.WaitForHealthyState()
+		if !aggregatorHealthy {
+			logging.Debug("aggregator service not ready - restarting seems the only option")
+			os.Exit(1)
+		}
+
+		// New context for aggregator streamer
+		aggrContext, aggregatorCancel := context.WithCancel(context.Background())
+		aristarchosStreamer, err := aggregator.CreateNewEntry(aggrContext)
+		if err != nil {
+			logging.Error(err.Error())
+			return nil, nil, err
+		}
+
+		handler.Aggregator = aristarchosStreamer
+		handler.AggregatorCancel = aggregatorCancel
+	}
+
+	return handler, conn, nil
 }
 
 func createEupalinosClient(serverAddress string) (pb.EupalinosClient, *grpc.ClientConn, error) {
-	logging.Debug("creating client config")
-	logging.Debug(serverAddress)
-	conn, err := grpc.Dial(serverAddress, grpc.WithInsecure())
+	conn, err := grpc.NewClient(serverAddress, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return nil, nil, err
 	}

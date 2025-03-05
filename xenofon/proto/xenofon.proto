@@ -1,0 +1,98 @@
+syntax = "proto3";
+option go_package = "github.com/odysseia-greek/apologia/xenofon/proto";
+
+package apologia_xenofon;
+
+service Xenofon {
+  rpc Health (HealthRequest) returns (HealthResponse) {};
+  rpc Options (OptionsRequest) returns (AggregatedOptions) {};
+  rpc Question (CreationRequest) returns (QuizResponse) {};
+  rpc Answer (AnswerRequest) returns (AnswerResponse) {};
+}
+
+// Empty request messages since these endpoints require no body
+message HealthRequest {}
+
+message OptionsRequest {
+}
+
+// Response message for health check
+message HealthResponse {
+  bool healthy = 1;
+  string time = 2;
+  string version = 3;
+  DatabaseHealth database_health = 4;
+}
+
+// Nested message for database health details
+message DatabaseHealth {
+  bool healthy = 1;
+  string cluster_name = 2;
+  string server_name = 3;
+  string server_version = 4;
+}
+
+// Response message for quiz options
+message AggregatedOptions {
+  repeated Theme themes = 1;
+}
+
+// Structure for quiz themes
+message Theme {
+  string name = 1;
+  repeated Segment segments = 2;
+}
+
+// Structure for segments within a theme
+message Segment {
+  string name = 1;
+  float max_set = 2;
+}
+
+// Request message for creating a quiz question
+message CreationRequest {
+  string theme = 1;
+  string set = 2;
+  string segment = 3; // Optional
+  repeated string exclude_words = 4;
+}
+
+// Request message for checking an answer
+message AnswerRequest {
+  string theme = 1;
+  string set = 2;
+  string segment = 4;
+  string answer = 5;
+  string quiz_word = 6;
+}
+
+message QuizResponse {
+  string fullSentence = 1;
+  string translation = 2;
+  string reference = 3;
+  Quiz quiz = 4;
+  repeated GrammarQuizAdded grammarQuiz = 5;
+}
+
+message Quiz {
+  string quizItem = 1;
+  int32 numberOfItems = 2;
+  repeated Options options = 3;
+}
+
+message Options {
+  string quizWord = 1;
+}
+
+message GrammarQuizAdded {
+  string correctAnswer = 1;
+  string wordInText = 2;
+  string extraInformation = 3;
+  repeated Options options = 4;
+}
+
+message AnswerResponse {
+  bool correct = 1;
+  string quizWord = 2;
+  repeated string wordsInText = 3;
+}
