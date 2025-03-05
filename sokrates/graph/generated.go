@@ -96,6 +96,45 @@ type ComplexityRoot struct {
 		Word func(childComplexity int) int
 	}
 
+	Dialogue struct {
+		Introduction  func(childComplexity int) int
+		LinkToPerseus func(childComplexity int) int
+		Section       func(childComplexity int) int
+		Speakers      func(childComplexity int) int
+	}
+
+	DialogueAnswer struct {
+		Answer        func(childComplexity int) int
+		Input         func(childComplexity int) int
+		Percentage    func(childComplexity int) int
+		WronglyPlaced func(childComplexity int) int
+	}
+
+	DialogueContent struct {
+		Greek       func(childComplexity int) int
+		Place       func(childComplexity int) int
+		Speaker     func(childComplexity int) int
+		Translation func(childComplexity int) int
+	}
+
+	DialogueCorrection struct {
+		CorrectPlace func(childComplexity int) int
+		Greek        func(childComplexity int) int
+		Place        func(childComplexity int) int
+		Speaker      func(childComplexity int) int
+		Translation  func(childComplexity int) int
+	}
+
+	DialogueQuizResponse struct {
+		Content      func(childComplexity int) int
+		Dialogue     func(childComplexity int) int
+		QuizMetadata func(childComplexity int) int
+		Reference    func(childComplexity int) int
+		Segment      func(childComplexity int) int
+		Set          func(childComplexity int) int
+		Theme        func(childComplexity int) int
+	}
+
 	GrammarQuizAdded struct {
 		CorrectAnswer    func(childComplexity int) int
 		ExtraInformation func(childComplexity int) int
@@ -136,16 +175,28 @@ type ComplexityRoot struct {
 	Query struct {
 		AuthorBasedAnswer    func(childComplexity int, input *model.AuthorBasedAnswerInput) int
 		AuthorBasedQuiz      func(childComplexity int, input *model.AuthorBasedInput) int
+		DialogueAnswer       func(childComplexity int, input *model.DialogueAnswerInput) int
+		DialogueQuiz         func(childComplexity int, input *model.DialogueQuizInput) int
 		MediaAnswer          func(childComplexity int, input *model.MediaAnswerInput) int
 		MediaQuiz            func(childComplexity int, input *model.MediaQuizInput) int
 		MultipleChoiceAnswer func(childComplexity int, input *model.MultipleChoiceAnswerInput) int
 		MultipleChoiceQuiz   func(childComplexity int, input *model.MultipleQuizInput) int
 	}
 
+	QuizMetadata struct {
+		Language func(childComplexity int) int
+	}
+
 	Rhema struct {
 		Greek        func(childComplexity int) int
 		Section      func(childComplexity int) int
 		Translations func(childComplexity int) int
+	}
+
+	Speaker struct {
+		Name        func(childComplexity int) int
+		Shorthand   func(childComplexity int) int
+		Translation func(childComplexity int) int
 	}
 }
 
@@ -156,6 +207,8 @@ type QueryResolver interface {
 	MultipleChoiceQuiz(ctx context.Context, input *model.MultipleQuizInput) (*model.MultipleChoiceResponse, error)
 	AuthorBasedAnswer(ctx context.Context, input *model.AuthorBasedAnswerInput) (*model.AuthorBasedAnswerResponse, error)
 	AuthorBasedQuiz(ctx context.Context, input *model.AuthorBasedInput) (*model.AuthorBasedResponse, error)
+	DialogueAnswer(ctx context.Context, input *model.DialogueAnswerInput) (*model.DialogueAnswer, error)
+	DialogueQuiz(ctx context.Context, input *model.DialogueQuizInput) (*model.DialogueQuizResponse, error)
 }
 
 type executableSchema struct {
@@ -359,6 +412,174 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ConjugationResponse.Word(childComplexity), true
 
+	case "Dialogue.introduction":
+		if e.complexity.Dialogue.Introduction == nil {
+			break
+		}
+
+		return e.complexity.Dialogue.Introduction(childComplexity), true
+
+	case "Dialogue.linkToPerseus":
+		if e.complexity.Dialogue.LinkToPerseus == nil {
+			break
+		}
+
+		return e.complexity.Dialogue.LinkToPerseus(childComplexity), true
+
+	case "Dialogue.section":
+		if e.complexity.Dialogue.Section == nil {
+			break
+		}
+
+		return e.complexity.Dialogue.Section(childComplexity), true
+
+	case "Dialogue.speakers":
+		if e.complexity.Dialogue.Speakers == nil {
+			break
+		}
+
+		return e.complexity.Dialogue.Speakers(childComplexity), true
+
+	case "DialogueAnswer.answer":
+		if e.complexity.DialogueAnswer.Answer == nil {
+			break
+		}
+
+		return e.complexity.DialogueAnswer.Answer(childComplexity), true
+
+	case "DialogueAnswer.input":
+		if e.complexity.DialogueAnswer.Input == nil {
+			break
+		}
+
+		return e.complexity.DialogueAnswer.Input(childComplexity), true
+
+	case "DialogueAnswer.percentage":
+		if e.complexity.DialogueAnswer.Percentage == nil {
+			break
+		}
+
+		return e.complexity.DialogueAnswer.Percentage(childComplexity), true
+
+	case "DialogueAnswer.wronglyPlaced":
+		if e.complexity.DialogueAnswer.WronglyPlaced == nil {
+			break
+		}
+
+		return e.complexity.DialogueAnswer.WronglyPlaced(childComplexity), true
+
+	case "DialogueContent.greek":
+		if e.complexity.DialogueContent.Greek == nil {
+			break
+		}
+
+		return e.complexity.DialogueContent.Greek(childComplexity), true
+
+	case "DialogueContent.place":
+		if e.complexity.DialogueContent.Place == nil {
+			break
+		}
+
+		return e.complexity.DialogueContent.Place(childComplexity), true
+
+	case "DialogueContent.speaker":
+		if e.complexity.DialogueContent.Speaker == nil {
+			break
+		}
+
+		return e.complexity.DialogueContent.Speaker(childComplexity), true
+
+	case "DialogueContent.translation":
+		if e.complexity.DialogueContent.Translation == nil {
+			break
+		}
+
+		return e.complexity.DialogueContent.Translation(childComplexity), true
+
+	case "DialogueCorrection.correctPlace":
+		if e.complexity.DialogueCorrection.CorrectPlace == nil {
+			break
+		}
+
+		return e.complexity.DialogueCorrection.CorrectPlace(childComplexity), true
+
+	case "DialogueCorrection.greek":
+		if e.complexity.DialogueCorrection.Greek == nil {
+			break
+		}
+
+		return e.complexity.DialogueCorrection.Greek(childComplexity), true
+
+	case "DialogueCorrection.place":
+		if e.complexity.DialogueCorrection.Place == nil {
+			break
+		}
+
+		return e.complexity.DialogueCorrection.Place(childComplexity), true
+
+	case "DialogueCorrection.speaker":
+		if e.complexity.DialogueCorrection.Speaker == nil {
+			break
+		}
+
+		return e.complexity.DialogueCorrection.Speaker(childComplexity), true
+
+	case "DialogueCorrection.translation":
+		if e.complexity.DialogueCorrection.Translation == nil {
+			break
+		}
+
+		return e.complexity.DialogueCorrection.Translation(childComplexity), true
+
+	case "DialogueQuizResponse.content":
+		if e.complexity.DialogueQuizResponse.Content == nil {
+			break
+		}
+
+		return e.complexity.DialogueQuizResponse.Content(childComplexity), true
+
+	case "DialogueQuizResponse.dialogue":
+		if e.complexity.DialogueQuizResponse.Dialogue == nil {
+			break
+		}
+
+		return e.complexity.DialogueQuizResponse.Dialogue(childComplexity), true
+
+	case "DialogueQuizResponse.quizMetadata":
+		if e.complexity.DialogueQuizResponse.QuizMetadata == nil {
+			break
+		}
+
+		return e.complexity.DialogueQuizResponse.QuizMetadata(childComplexity), true
+
+	case "DialogueQuizResponse.reference":
+		if e.complexity.DialogueQuizResponse.Reference == nil {
+			break
+		}
+
+		return e.complexity.DialogueQuizResponse.Reference(childComplexity), true
+
+	case "DialogueQuizResponse.segment":
+		if e.complexity.DialogueQuizResponse.Segment == nil {
+			break
+		}
+
+		return e.complexity.DialogueQuizResponse.Segment(childComplexity), true
+
+	case "DialogueQuizResponse.set":
+		if e.complexity.DialogueQuizResponse.Set == nil {
+			break
+		}
+
+		return e.complexity.DialogueQuizResponse.Set(childComplexity), true
+
+	case "DialogueQuizResponse.theme":
+		if e.complexity.DialogueQuizResponse.Theme == nil {
+			break
+		}
+
+		return e.complexity.DialogueQuizResponse.Theme(childComplexity), true
+
 	case "GrammarQuizAdded.correctAnswer":
 		if e.complexity.GrammarQuizAdded.CorrectAnswer == nil {
 			break
@@ -516,6 +737,30 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.AuthorBasedQuiz(childComplexity, args["input"].(*model.AuthorBasedInput)), true
 
+	case "Query.dialogueAnswer":
+		if e.complexity.Query.DialogueAnswer == nil {
+			break
+		}
+
+		args, err := ec.field_Query_dialogueAnswer_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.DialogueAnswer(childComplexity, args["input"].(*model.DialogueAnswerInput)), true
+
+	case "Query.dialogueQuiz":
+		if e.complexity.Query.DialogueQuiz == nil {
+			break
+		}
+
+		args, err := ec.field_Query_dialogueQuiz_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.DialogueQuiz(childComplexity, args["input"].(*model.DialogueQuizInput)), true
+
 	case "Query.mediaAnswer":
 		if e.complexity.Query.MediaAnswer == nil {
 			break
@@ -564,6 +809,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.MultipleChoiceQuiz(childComplexity, args["input"].(*model.MultipleQuizInput)), true
 
+	case "QuizMetadata.language":
+		if e.complexity.QuizMetadata.Language == nil {
+			break
+		}
+
+		return e.complexity.QuizMetadata.Language(childComplexity), true
+
 	case "Rhema.greek":
 		if e.complexity.Rhema.Greek == nil {
 			break
@@ -585,6 +837,27 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Rhema.Translations(childComplexity), true
 
+	case "Speaker.name":
+		if e.complexity.Speaker.Name == nil {
+			break
+		}
+
+		return e.complexity.Speaker.Name(childComplexity), true
+
+	case "Speaker.shorthand":
+		if e.complexity.Speaker.Shorthand == nil {
+			break
+		}
+
+		return e.complexity.Speaker.Shorthand(childComplexity), true
+
+	case "Speaker.translation":
+		if e.complexity.Speaker.Translation == nil {
+			break
+		}
+
+		return e.complexity.Speaker.Translation(childComplexity), true
+
 	}
 	return 0, false
 }
@@ -595,6 +868,9 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 	inputUnmarshalMap := graphql.BuildUnmarshalerMap(
 		ec.unmarshalInputAuthorBasedAnswerInput,
 		ec.unmarshalInputAuthorBasedInput,
+		ec.unmarshalInputDialogueAnswerInput,
+		ec.unmarshalInputDialogueInputContent,
+		ec.unmarshalInputDialogueQuizInput,
 		ec.unmarshalInputMediaAnswerInput,
 		ec.unmarshalInputMediaQuizInput,
 		ec.unmarshalInputMultipleChoiceAnswerInput,
@@ -766,6 +1042,52 @@ func (ec *executionContext) field_Query_authorBasedQuiz_argsInput(
 	}
 
 	var zeroVal *model.AuthorBasedInput
+	return zeroVal, nil
+}
+
+func (ec *executionContext) field_Query_dialogueAnswer_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := ec.field_Query_dialogueAnswer_argsInput(ctx, rawArgs)
+	if err != nil {
+		return nil, err
+	}
+	args["input"] = arg0
+	return args, nil
+}
+func (ec *executionContext) field_Query_dialogueAnswer_argsInput(
+	ctx context.Context,
+	rawArgs map[string]any,
+) (*model.DialogueAnswerInput, error) {
+	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+	if tmp, ok := rawArgs["input"]; ok {
+		return ec.unmarshalODialogueAnswerInput2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐDialogueAnswerInput(ctx, tmp)
+	}
+
+	var zeroVal *model.DialogueAnswerInput
+	return zeroVal, nil
+}
+
+func (ec *executionContext) field_Query_dialogueQuiz_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := ec.field_Query_dialogueQuiz_argsInput(ctx, rawArgs)
+	if err != nil {
+		return nil, err
+	}
+	args["input"] = arg0
+	return args, nil
+}
+func (ec *executionContext) field_Query_dialogueQuiz_argsInput(
+	ctx context.Context,
+	rawArgs map[string]any,
+) (*model.DialogueQuizInput, error) {
+	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+	if tmp, ok := rawArgs["input"]; ok {
+		return ec.unmarshalODialogueQuizInput2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐDialogueQuizInput(ctx, tmp)
+	}
+
+	var zeroVal *model.DialogueQuizInput
 	return zeroVal, nil
 }
 
@@ -2095,6 +2417,1054 @@ func (ec *executionContext) fieldContext_ConjugationResponse_word(_ context.Cont
 	return fc, nil
 }
 
+func (ec *executionContext) _Dialogue_introduction(ctx context.Context, field graphql.CollectedField, obj *model.Dialogue) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Dialogue_introduction(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Introduction, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Dialogue_introduction(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Dialogue",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Dialogue_speakers(ctx context.Context, field graphql.CollectedField, obj *model.Dialogue) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Dialogue_speakers(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Speakers, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.Speaker)
+	fc.Result = res
+	return ec.marshalOSpeaker2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐSpeaker(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Dialogue_speakers(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Dialogue",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "name":
+				return ec.fieldContext_Speaker_name(ctx, field)
+			case "shorthand":
+				return ec.fieldContext_Speaker_shorthand(ctx, field)
+			case "translation":
+				return ec.fieldContext_Speaker_translation(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Speaker", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Dialogue_section(ctx context.Context, field graphql.CollectedField, obj *model.Dialogue) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Dialogue_section(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Section, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Dialogue_section(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Dialogue",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Dialogue_linkToPerseus(ctx context.Context, field graphql.CollectedField, obj *model.Dialogue) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Dialogue_linkToPerseus(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.LinkToPerseus, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Dialogue_linkToPerseus(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Dialogue",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DialogueAnswer_percentage(ctx context.Context, field graphql.CollectedField, obj *model.DialogueAnswer) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DialogueAnswer_percentage(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Percentage, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*float64)
+	fc.Result = res
+	return ec.marshalOFloat2ᚖfloat64(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DialogueAnswer_percentage(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DialogueAnswer",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Float does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DialogueAnswer_input(ctx context.Context, field graphql.CollectedField, obj *model.DialogueAnswer) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DialogueAnswer_input(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Input, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.DialogueContent)
+	fc.Result = res
+	return ec.marshalODialogueContent2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐDialogueContent(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DialogueAnswer_input(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DialogueAnswer",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "translation":
+				return ec.fieldContext_DialogueContent_translation(ctx, field)
+			case "greek":
+				return ec.fieldContext_DialogueContent_greek(ctx, field)
+			case "place":
+				return ec.fieldContext_DialogueContent_place(ctx, field)
+			case "speaker":
+				return ec.fieldContext_DialogueContent_speaker(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type DialogueContent", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DialogueAnswer_answer(ctx context.Context, field graphql.CollectedField, obj *model.DialogueAnswer) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DialogueAnswer_answer(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Answer, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.DialogueContent)
+	fc.Result = res
+	return ec.marshalODialogueContent2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐDialogueContent(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DialogueAnswer_answer(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DialogueAnswer",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "translation":
+				return ec.fieldContext_DialogueContent_translation(ctx, field)
+			case "greek":
+				return ec.fieldContext_DialogueContent_greek(ctx, field)
+			case "place":
+				return ec.fieldContext_DialogueContent_place(ctx, field)
+			case "speaker":
+				return ec.fieldContext_DialogueContent_speaker(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type DialogueContent", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DialogueAnswer_wronglyPlaced(ctx context.Context, field graphql.CollectedField, obj *model.DialogueAnswer) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DialogueAnswer_wronglyPlaced(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.WronglyPlaced, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.DialogueCorrection)
+	fc.Result = res
+	return ec.marshalODialogueCorrection2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐDialogueCorrection(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DialogueAnswer_wronglyPlaced(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DialogueAnswer",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "translation":
+				return ec.fieldContext_DialogueCorrection_translation(ctx, field)
+			case "greek":
+				return ec.fieldContext_DialogueCorrection_greek(ctx, field)
+			case "place":
+				return ec.fieldContext_DialogueCorrection_place(ctx, field)
+			case "speaker":
+				return ec.fieldContext_DialogueCorrection_speaker(ctx, field)
+			case "correctPlace":
+				return ec.fieldContext_DialogueCorrection_correctPlace(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type DialogueCorrection", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DialogueContent_translation(ctx context.Context, field graphql.CollectedField, obj *model.DialogueContent) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DialogueContent_translation(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Translation, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DialogueContent_translation(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DialogueContent",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DialogueContent_greek(ctx context.Context, field graphql.CollectedField, obj *model.DialogueContent) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DialogueContent_greek(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Greek, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DialogueContent_greek(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DialogueContent",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DialogueContent_place(ctx context.Context, field graphql.CollectedField, obj *model.DialogueContent) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DialogueContent_place(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Place, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int32)
+	fc.Result = res
+	return ec.marshalOInt2ᚖint32(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DialogueContent_place(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DialogueContent",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DialogueContent_speaker(ctx context.Context, field graphql.CollectedField, obj *model.DialogueContent) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DialogueContent_speaker(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Speaker, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DialogueContent_speaker(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DialogueContent",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DialogueCorrection_translation(ctx context.Context, field graphql.CollectedField, obj *model.DialogueCorrection) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DialogueCorrection_translation(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Translation, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DialogueCorrection_translation(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DialogueCorrection",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DialogueCorrection_greek(ctx context.Context, field graphql.CollectedField, obj *model.DialogueCorrection) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DialogueCorrection_greek(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Greek, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DialogueCorrection_greek(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DialogueCorrection",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DialogueCorrection_place(ctx context.Context, field graphql.CollectedField, obj *model.DialogueCorrection) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DialogueCorrection_place(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Place, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int32)
+	fc.Result = res
+	return ec.marshalOInt2ᚖint32(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DialogueCorrection_place(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DialogueCorrection",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DialogueCorrection_speaker(ctx context.Context, field graphql.CollectedField, obj *model.DialogueCorrection) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DialogueCorrection_speaker(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Speaker, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DialogueCorrection_speaker(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DialogueCorrection",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DialogueCorrection_correctPlace(ctx context.Context, field graphql.CollectedField, obj *model.DialogueCorrection) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DialogueCorrection_correctPlace(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CorrectPlace, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int32)
+	fc.Result = res
+	return ec.marshalOInt2ᚖint32(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DialogueCorrection_correctPlace(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DialogueCorrection",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DialogueQuizResponse_quizMetadata(ctx context.Context, field graphql.CollectedField, obj *model.DialogueQuizResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DialogueQuizResponse_quizMetadata(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.QuizMetadata, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.QuizMetadata)
+	fc.Result = res
+	return ec.marshalOQuizMetadata2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐQuizMetadata(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DialogueQuizResponse_quizMetadata(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DialogueQuizResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "language":
+				return ec.fieldContext_QuizMetadata_language(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type QuizMetadata", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DialogueQuizResponse_theme(ctx context.Context, field graphql.CollectedField, obj *model.DialogueQuizResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DialogueQuizResponse_theme(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Theme, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DialogueQuizResponse_theme(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DialogueQuizResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DialogueQuizResponse_set(ctx context.Context, field graphql.CollectedField, obj *model.DialogueQuizResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DialogueQuizResponse_set(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Set, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DialogueQuizResponse_set(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DialogueQuizResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DialogueQuizResponse_segment(ctx context.Context, field graphql.CollectedField, obj *model.DialogueQuizResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DialogueQuizResponse_segment(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Segment, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DialogueQuizResponse_segment(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DialogueQuizResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DialogueQuizResponse_reference(ctx context.Context, field graphql.CollectedField, obj *model.DialogueQuizResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DialogueQuizResponse_reference(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Reference, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DialogueQuizResponse_reference(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DialogueQuizResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DialogueQuizResponse_dialogue(ctx context.Context, field graphql.CollectedField, obj *model.DialogueQuizResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DialogueQuizResponse_dialogue(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Dialogue, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.Dialogue)
+	fc.Result = res
+	return ec.marshalODialogue2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐDialogue(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DialogueQuizResponse_dialogue(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DialogueQuizResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "introduction":
+				return ec.fieldContext_Dialogue_introduction(ctx, field)
+			case "speakers":
+				return ec.fieldContext_Dialogue_speakers(ctx, field)
+			case "section":
+				return ec.fieldContext_Dialogue_section(ctx, field)
+			case "linkToPerseus":
+				return ec.fieldContext_Dialogue_linkToPerseus(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Dialogue", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DialogueQuizResponse_content(ctx context.Context, field graphql.CollectedField, obj *model.DialogueQuizResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DialogueQuizResponse_content(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Content, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.DialogueContent)
+	fc.Result = res
+	return ec.marshalODialogueContent2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐDialogueContent(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DialogueQuizResponse_content(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DialogueQuizResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "translation":
+				return ec.fieldContext_DialogueContent_translation(ctx, field)
+			case "greek":
+				return ec.fieldContext_DialogueContent_greek(ctx, field)
+			case "place":
+				return ec.fieldContext_DialogueContent_place(ctx, field)
+			case "speaker":
+				return ec.fieldContext_DialogueContent_speaker(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type DialogueContent", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _GrammarQuizAdded_correctAnswer(ctx context.Context, field graphql.CollectedField, obj *model.GrammarQuizAdded) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_GrammarQuizAdded_correctAnswer(ctx, field)
 	if err != nil {
@@ -3258,6 +4628,136 @@ func (ec *executionContext) fieldContext_Query_authorBasedQuiz(ctx context.Conte
 	return fc, nil
 }
 
+func (ec *executionContext) _Query_dialogueAnswer(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_dialogueAnswer(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().DialogueAnswer(rctx, fc.Args["input"].(*model.DialogueAnswerInput))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.DialogueAnswer)
+	fc.Result = res
+	return ec.marshalODialogueAnswer2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐDialogueAnswer(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_dialogueAnswer(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "percentage":
+				return ec.fieldContext_DialogueAnswer_percentage(ctx, field)
+			case "input":
+				return ec.fieldContext_DialogueAnswer_input(ctx, field)
+			case "answer":
+				return ec.fieldContext_DialogueAnswer_answer(ctx, field)
+			case "wronglyPlaced":
+				return ec.fieldContext_DialogueAnswer_wronglyPlaced(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type DialogueAnswer", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_dialogueAnswer_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_dialogueQuiz(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_dialogueQuiz(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().DialogueQuiz(rctx, fc.Args["input"].(*model.DialogueQuizInput))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.DialogueQuizResponse)
+	fc.Result = res
+	return ec.marshalODialogueQuizResponse2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐDialogueQuizResponse(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_dialogueQuiz(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "quizMetadata":
+				return ec.fieldContext_DialogueQuizResponse_quizMetadata(ctx, field)
+			case "theme":
+				return ec.fieldContext_DialogueQuizResponse_theme(ctx, field)
+			case "set":
+				return ec.fieldContext_DialogueQuizResponse_set(ctx, field)
+			case "segment":
+				return ec.fieldContext_DialogueQuizResponse_segment(ctx, field)
+			case "reference":
+				return ec.fieldContext_DialogueQuizResponse_reference(ctx, field)
+			case "dialogue":
+				return ec.fieldContext_DialogueQuizResponse_dialogue(ctx, field)
+			case "content":
+				return ec.fieldContext_DialogueQuizResponse_content(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type DialogueQuizResponse", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_dialogueQuiz_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query___type(ctx, field)
 	if err != nil {
@@ -3389,6 +4889,47 @@ func (ec *executionContext) fieldContext_Query___schema(_ context.Context, field
 	return fc, nil
 }
 
+func (ec *executionContext) _QuizMetadata_language(ctx context.Context, field graphql.CollectedField, obj *model.QuizMetadata) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_QuizMetadata_language(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Language, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_QuizMetadata_language(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "QuizMetadata",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Rhema_greek(ctx context.Context, field graphql.CollectedField, obj *model.Rhema) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Rhema_greek(ctx, field)
 	if err != nil {
@@ -3502,6 +5043,129 @@ func (ec *executionContext) _Rhema_translations(ctx context.Context, field graph
 func (ec *executionContext) fieldContext_Rhema_translations(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Rhema",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Speaker_name(ctx context.Context, field graphql.CollectedField, obj *model.Speaker) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Speaker_name(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Name, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Speaker_name(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Speaker",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Speaker_shorthand(ctx context.Context, field graphql.CollectedField, obj *model.Speaker) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Speaker_shorthand(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Shorthand, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Speaker_shorthand(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Speaker",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Speaker_translation(ctx context.Context, field graphql.CollectedField, obj *model.Speaker) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Speaker_translation(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Translation, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Speaker_translation(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Speaker",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -5566,6 +7230,129 @@ func (ec *executionContext) unmarshalInputAuthorBasedInput(ctx context.Context, 
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputDialogueAnswerInput(ctx context.Context, obj any) (model.DialogueAnswerInput, error) {
+	var it model.DialogueAnswerInput
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"theme", "set", "content"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "theme":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("theme"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Theme = data
+		case "set":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("set"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Set = data
+		case "content":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("content"))
+			data, err := ec.unmarshalODialogueInputContent2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐDialogueInputContent(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Content = data
+		}
+	}
+
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputDialogueInputContent(ctx context.Context, obj any) (model.DialogueInputContent, error) {
+	var it model.DialogueInputContent
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"translation", "greek", "place", "speaker"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "translation":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("translation"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Translation = data
+		case "greek":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("greek"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Greek = data
+		case "place":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("place"))
+			data, err := ec.unmarshalOInt2ᚖint32(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Place = data
+		case "speaker":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("speaker"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Speaker = data
+		}
+	}
+
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputDialogueQuizInput(ctx context.Context, obj any) (model.DialogueQuizInput, error) {
+	var it model.DialogueQuizInput
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"theme", "set"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "theme":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("theme"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Theme = data
+		case "set":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("set"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Set = data
+		}
+	}
+
+	return it, nil
+}
+
 func (ec *executionContext) unmarshalInputMediaAnswerInput(ctx context.Context, obj any) (model.MediaAnswerInput, error) {
 	var it model.MediaAnswerInput
 	asMap := map[string]any{}
@@ -6118,6 +7905,224 @@ func (ec *executionContext) _ConjugationResponse(ctx context.Context, sel ast.Se
 	return out
 }
 
+var dialogueImplementors = []string{"Dialogue"}
+
+func (ec *executionContext) _Dialogue(ctx context.Context, sel ast.SelectionSet, obj *model.Dialogue) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, dialogueImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("Dialogue")
+		case "introduction":
+			out.Values[i] = ec._Dialogue_introduction(ctx, field, obj)
+		case "speakers":
+			out.Values[i] = ec._Dialogue_speakers(ctx, field, obj)
+		case "section":
+			out.Values[i] = ec._Dialogue_section(ctx, field, obj)
+		case "linkToPerseus":
+			out.Values[i] = ec._Dialogue_linkToPerseus(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var dialogueAnswerImplementors = []string{"DialogueAnswer"}
+
+func (ec *executionContext) _DialogueAnswer(ctx context.Context, sel ast.SelectionSet, obj *model.DialogueAnswer) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, dialogueAnswerImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("DialogueAnswer")
+		case "percentage":
+			out.Values[i] = ec._DialogueAnswer_percentage(ctx, field, obj)
+		case "input":
+			out.Values[i] = ec._DialogueAnswer_input(ctx, field, obj)
+		case "answer":
+			out.Values[i] = ec._DialogueAnswer_answer(ctx, field, obj)
+		case "wronglyPlaced":
+			out.Values[i] = ec._DialogueAnswer_wronglyPlaced(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var dialogueContentImplementors = []string{"DialogueContent"}
+
+func (ec *executionContext) _DialogueContent(ctx context.Context, sel ast.SelectionSet, obj *model.DialogueContent) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, dialogueContentImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("DialogueContent")
+		case "translation":
+			out.Values[i] = ec._DialogueContent_translation(ctx, field, obj)
+		case "greek":
+			out.Values[i] = ec._DialogueContent_greek(ctx, field, obj)
+		case "place":
+			out.Values[i] = ec._DialogueContent_place(ctx, field, obj)
+		case "speaker":
+			out.Values[i] = ec._DialogueContent_speaker(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var dialogueCorrectionImplementors = []string{"DialogueCorrection"}
+
+func (ec *executionContext) _DialogueCorrection(ctx context.Context, sel ast.SelectionSet, obj *model.DialogueCorrection) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, dialogueCorrectionImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("DialogueCorrection")
+		case "translation":
+			out.Values[i] = ec._DialogueCorrection_translation(ctx, field, obj)
+		case "greek":
+			out.Values[i] = ec._DialogueCorrection_greek(ctx, field, obj)
+		case "place":
+			out.Values[i] = ec._DialogueCorrection_place(ctx, field, obj)
+		case "speaker":
+			out.Values[i] = ec._DialogueCorrection_speaker(ctx, field, obj)
+		case "correctPlace":
+			out.Values[i] = ec._DialogueCorrection_correctPlace(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var dialogueQuizResponseImplementors = []string{"DialogueQuizResponse"}
+
+func (ec *executionContext) _DialogueQuizResponse(ctx context.Context, sel ast.SelectionSet, obj *model.DialogueQuizResponse) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, dialogueQuizResponseImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("DialogueQuizResponse")
+		case "quizMetadata":
+			out.Values[i] = ec._DialogueQuizResponse_quizMetadata(ctx, field, obj)
+		case "theme":
+			out.Values[i] = ec._DialogueQuizResponse_theme(ctx, field, obj)
+		case "set":
+			out.Values[i] = ec._DialogueQuizResponse_set(ctx, field, obj)
+		case "segment":
+			out.Values[i] = ec._DialogueQuizResponse_segment(ctx, field, obj)
+		case "reference":
+			out.Values[i] = ec._DialogueQuizResponse_reference(ctx, field, obj)
+		case "dialogue":
+			out.Values[i] = ec._DialogueQuizResponse_dialogue(ctx, field, obj)
+		case "content":
+			out.Values[i] = ec._DialogueQuizResponse_content(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
 var grammarQuizAddedImplementors = []string{"GrammarQuizAdded"}
 
 func (ec *executionContext) _GrammarQuizAdded(ctx context.Context, sel ast.SelectionSet, obj *model.GrammarQuizAdded) graphql.Marshaler {
@@ -6493,6 +8498,44 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "dialogueAnswer":
+			field := field
+
+			innerFunc := func(ctx context.Context, _ *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_dialogueAnswer(ctx, field)
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "dialogueQuiz":
+			field := field
+
+			innerFunc := func(ctx context.Context, _ *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_dialogueQuiz(ctx, field)
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
 		case "__type":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Query___type(ctx, field)
@@ -6501,6 +8544,42 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Query___schema(ctx, field)
 			})
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var quizMetadataImplementors = []string{"QuizMetadata"}
+
+func (ec *executionContext) _QuizMetadata(ctx context.Context, sel ast.SelectionSet, obj *model.QuizMetadata) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, quizMetadataImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("QuizMetadata")
+		case "language":
+			out.Values[i] = ec._QuizMetadata_language(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -6541,6 +8620,46 @@ func (ec *executionContext) _Rhema(ctx context.Context, sel ast.SelectionSet, ob
 			out.Values[i] = ec._Rhema_section(ctx, field, obj)
 		case "translations":
 			out.Values[i] = ec._Rhema_translations(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var speakerImplementors = []string{"Speaker"}
+
+func (ec *executionContext) _Speaker(ctx context.Context, sel ast.SelectionSet, obj *model.Speaker) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, speakerImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("Speaker")
+		case "name":
+			out.Values[i] = ec._Speaker_name(ctx, field, obj)
+		case "shorthand":
+			out.Values[i] = ec._Speaker_shorthand(ctx, field, obj)
+		case "translation":
+			out.Values[i] = ec._Speaker_translation(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -7403,6 +9522,183 @@ func (ec *executionContext) marshalOConjugationResponse2ᚖgithubᚗcomᚋodysse
 	return ec._ConjugationResponse(ctx, sel, v)
 }
 
+func (ec *executionContext) marshalODialogue2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐDialogue(ctx context.Context, sel ast.SelectionSet, v *model.Dialogue) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._Dialogue(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalODialogueAnswer2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐDialogueAnswer(ctx context.Context, sel ast.SelectionSet, v *model.DialogueAnswer) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._DialogueAnswer(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalODialogueAnswerInput2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐDialogueAnswerInput(ctx context.Context, v any) (*model.DialogueAnswerInput, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputDialogueAnswerInput(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalODialogueContent2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐDialogueContent(ctx context.Context, sel ast.SelectionSet, v []*model.DialogueContent) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalODialogueContent2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐDialogueContent(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	return ret
+}
+
+func (ec *executionContext) marshalODialogueContent2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐDialogueContent(ctx context.Context, sel ast.SelectionSet, v *model.DialogueContent) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._DialogueContent(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalODialogueCorrection2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐDialogueCorrection(ctx context.Context, sel ast.SelectionSet, v []*model.DialogueCorrection) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalODialogueCorrection2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐDialogueCorrection(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	return ret
+}
+
+func (ec *executionContext) marshalODialogueCorrection2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐDialogueCorrection(ctx context.Context, sel ast.SelectionSet, v *model.DialogueCorrection) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._DialogueCorrection(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalODialogueInputContent2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐDialogueInputContent(ctx context.Context, v any) ([]*model.DialogueInputContent, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []any
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]*model.DialogueInputContent, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalODialogueInputContent2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐDialogueInputContent(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) unmarshalODialogueInputContent2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐDialogueInputContent(ctx context.Context, v any) (*model.DialogueInputContent, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputDialogueInputContent(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalODialogueQuizInput2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐDialogueQuizInput(ctx context.Context, v any) (*model.DialogueQuizInput, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputDialogueQuizInput(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalODialogueQuizResponse2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐDialogueQuizResponse(ctx context.Context, sel ast.SelectionSet, v *model.DialogueQuizResponse) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._DialogueQuizResponse(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalOFloat2ᚖfloat64(ctx context.Context, v any) (*float64, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := graphql.UnmarshalFloatContext(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOFloat2ᚖfloat64(ctx context.Context, sel ast.SelectionSet, v *float64) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalFloatContext(*v)
+	return graphql.WrapContextMarshaler(ctx, res)
+}
+
 func (ec *executionContext) marshalOGrammarQuizAdded2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐGrammarQuizAdded(ctx context.Context, sel ast.SelectionSet, v []*model.GrammarQuizAdded) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
@@ -7657,11 +9953,66 @@ func (ec *executionContext) marshalOOptions2ᚖgithubᚗcomᚋodysseiaᚑgreek�
 	return ec._Options(ctx, sel, v)
 }
 
+func (ec *executionContext) marshalOQuizMetadata2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐQuizMetadata(ctx context.Context, sel ast.SelectionSet, v *model.QuizMetadata) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._QuizMetadata(ctx, sel, v)
+}
+
 func (ec *executionContext) marshalORhema2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐRhema(ctx context.Context, sel ast.SelectionSet, v *model.Rhema) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._Rhema(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOSpeaker2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐSpeaker(ctx context.Context, sel ast.SelectionSet, v []*model.Speaker) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalOSpeaker2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐSpeaker(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	return ret
+}
+
+func (ec *executionContext) marshalOSpeaker2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐSpeaker(ctx context.Context, sel ast.SelectionSet, v *model.Speaker) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._Speaker(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOString2ᚕᚖstring(ctx context.Context, v any) ([]*string, error) {

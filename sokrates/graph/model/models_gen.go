@@ -67,6 +67,63 @@ type ConjugationResponse struct {
 	Word *string `json:"word,omitempty"`
 }
 
+type Dialogue struct {
+	Introduction  *string    `json:"introduction,omitempty"`
+	Speakers      []*Speaker `json:"speakers,omitempty"`
+	Section       *string    `json:"section,omitempty"`
+	LinkToPerseus *string    `json:"linkToPerseus,omitempty"`
+}
+
+type DialogueAnswer struct {
+	Percentage    *float64              `json:"percentage,omitempty"`
+	Input         []*DialogueContent    `json:"input,omitempty"`
+	Answer        []*DialogueContent    `json:"answer,omitempty"`
+	WronglyPlaced []*DialogueCorrection `json:"wronglyPlaced,omitempty"`
+}
+
+type DialogueAnswerInput struct {
+	Theme   *string                 `json:"theme,omitempty"`
+	Set     *string                 `json:"set,omitempty"`
+	Content []*DialogueInputContent `json:"content,omitempty"`
+}
+
+type DialogueContent struct {
+	Translation *string `json:"translation,omitempty"`
+	Greek       *string `json:"greek,omitempty"`
+	Place       *int32  `json:"place,omitempty"`
+	Speaker     *string `json:"speaker,omitempty"`
+}
+
+type DialogueCorrection struct {
+	Translation  *string `json:"translation,omitempty"`
+	Greek        *string `json:"greek,omitempty"`
+	Place        *int32  `json:"place,omitempty"`
+	Speaker      *string `json:"speaker,omitempty"`
+	CorrectPlace *int32  `json:"correctPlace,omitempty"`
+}
+
+type DialogueInputContent struct {
+	Translation *string `json:"translation,omitempty"`
+	Greek       *string `json:"greek,omitempty"`
+	Place       *int32  `json:"place,omitempty"`
+	Speaker     *string `json:"speaker,omitempty"`
+}
+
+type DialogueQuizInput struct {
+	Theme *string `json:"theme,omitempty"`
+	Set   *string `json:"set,omitempty"`
+}
+
+type DialogueQuizResponse struct {
+	QuizMetadata *QuizMetadata      `json:"quizMetadata,omitempty"`
+	Theme        *string            `json:"theme,omitempty"`
+	Set          *string            `json:"set,omitempty"`
+	Segment      *string            `json:"segment,omitempty"`
+	Reference    *string            `json:"reference,omitempty"`
+	Dialogue     *Dialogue          `json:"dialogue,omitempty"`
+	Content      []*DialogueContent `json:"content,omitempty"`
+}
+
 type GrammarQuizAdded struct {
 	CorrectAnswer    *string               `json:"correctAnswer,omitempty"`
 	WordInText       *string               `json:"wordInText,omitempty"`
@@ -139,8 +196,18 @@ type Options struct {
 type Query struct {
 }
 
+type QuizMetadata struct {
+	Language *string `json:"language,omitempty"`
+}
+
 type Rhema struct {
 	Greek        *string   `json:"greek,omitempty"`
 	Section      *string   `json:"section,omitempty"`
 	Translations []*string `json:"translations,omitempty"`
+}
+
+type Speaker struct {
+	Name        *string `json:"name,omitempty"`
+	Shorthand   *string `json:"shorthand,omitempty"`
+	Translation *string `json:"translation,omitempty"`
 }

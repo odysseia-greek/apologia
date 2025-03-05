@@ -1,7 +1,3 @@
-schema {
-  query: Query
-}
-
 type AnalyzeResult {
   author: String
   book: String
@@ -95,6 +91,54 @@ type GrammarQuizAdded {
   options: [AuthorBasedOptions]
 }
 
+type DialogueQuizResponse {
+  quizMetadata: QuizMetadata
+  theme: String
+  set: String
+  segment: String
+  reference: String
+  dialogue: Dialogue
+  content: [DialogueContent]
+}
+
+type QuizMetadata {
+  language: String
+}
+
+type Dialogue {
+  introduction: String
+  speakers: [Speaker]
+  section: String
+  linkToPerseus: String
+}
+
+type Speaker {
+  name: String
+  shorthand: String
+  translation: String
+}
+
+type DialogueAnswer {
+  percentage: Float
+  input: [DialogueContent]
+  answer: [DialogueContent]
+  wronglyPlaced: [DialogueCorrection]
+}
+
+type DialogueContent {
+  translation: String
+  greek: String
+  place: Int
+  speaker: String
+}
+
+type DialogueCorrection {
+  translation: String
+  greek: String
+  place: Int
+  speaker: String
+  correctPlace: Int
+}
 
 input MediaAnswerInput {
   theme: String
@@ -118,7 +162,7 @@ input MediaQuizInput {
   theme: String
   set: String
   segment: String
-  order: String = null 
+  order: String
 }
 
 input AuthorBasedInput {
@@ -140,7 +184,25 @@ input MultipleQuizInput {
   excludeWords: [String]
   theme: String
   set: String
-  order: String = null
+  order: String
+}
+
+input DialogueQuizInput {
+  theme: String
+  set: String
+}
+
+input DialogueAnswerInput {
+  theme: String
+  set: String
+  content: [DialogueInputContent]
+}
+
+input DialogueInputContent {
+  translation: String
+  greek: String
+  place: Int
+  speaker: String
 }
 
 type Query {
@@ -150,4 +212,6 @@ type Query {
   multipleChoiceQuiz(input: MultipleQuizInput): MultipleChoiceResponse
   authorBasedAnswer(input: AuthorBasedAnswerInput): AuthorBasedAnswerResponse
   authorBasedQuiz(input: AuthorBasedInput): AuthorBasedResponse
+  dialogueAnswer(input: DialogueAnswerInput): DialogueAnswer
+  dialogueQuiz(input: DialogueQuizInput): DialogueQuizResponse
 }

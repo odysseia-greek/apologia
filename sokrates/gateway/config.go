@@ -6,6 +6,7 @@ import (
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/apologia/aristippos/hedone"
 	"github.com/odysseia-greek/apologia/kritias/triakonta"
+	"github.com/odysseia-greek/apologia/kriton/philia"
 	"github.com/odysseia-greek/apologia/xenofon/anabasis"
 	aristophanes "github.com/odysseia-greek/attike/aristophanes/comedy"
 	"os"
@@ -71,11 +72,25 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 		os.Exit(1)
 	}
 
+	dialogueClientAddress := config.StringFromEnv(config.EnvDialogueClient, config.DefaultDialogueAddress)
+	dialogueClient, err := philia.NewKritonClient(dialogueClientAddress)
+	if err != nil {
+		logging.Error(err.Error())
+		return nil, err
+	}
+
+	dialogueClientHealthy := dialogueClient.WaitForHealthyState()
+	if !dialogueClientHealthy {
+		logging.Debug("dialogue client not ready - restarting seems the only option")
+		os.Exit(1)
+	}
+
 	return &SokratesHandler{
 		Streamer:          streamer,
 		Randomizer:        randomizer,
 		MediaClient:       mediaClient,
 		MultiChoiceClient: multipleChoiceClient,
 		AuthorBasedClient: authorBasedClient,
+		DialogueClient:    dialogueClient,
 	}, nil
 }

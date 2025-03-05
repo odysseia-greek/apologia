@@ -9,6 +9,7 @@ import (
 	"github.com/odysseia-greek/agora/plato/config"
 	pbartrippos "github.com/odysseia-greek/apologia/aristippos/proto"
 	pbkritias "github.com/odysseia-greek/apologia/kritias/proto"
+	pbkriton "github.com/odysseia-greek/apologia/kriton/proto"
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
 	pbxenofon "github.com/odysseia-greek/apologia/xenofon/proto"
 )
@@ -115,6 +116,39 @@ func (r *queryResolver) AuthorBasedQuiz(ctx context.Context, input *model.Author
 	}
 
 	return r.Handler.CreateAuthorBasedQuiz(pb, requestID)
+}
+
+// DialogueAnswer is the resolver for the dialogueAnswer field.
+func (r *queryResolver) DialogueAnswer(ctx context.Context, input *model.DialogueAnswerInput) (*model.DialogueAnswer, error) {
+	requestID, _ := ctx.Value(config.HeaderKey).(string)
+
+	pb := &pbkriton.AnswerRequest{
+		Theme: *input.Theme,
+		Set:   *input.Set,
+	}
+
+	for _, content := range input.Content {
+		pb.Content = append(pb.Content, &pbkriton.DialogueContent{
+			Translation: *content.Translation,
+			Greek:       *content.Greek,
+			Place:       *content.Place,
+			Speaker:     *content.Speaker,
+		})
+	}
+
+	return r.Handler.CheckDialogueQuiz(pb, requestID)
+}
+
+// DialogueQuiz is the resolver for the dialogueQuiz field.
+func (r *queryResolver) DialogueQuiz(ctx context.Context, input *model.DialogueQuizInput) (*model.DialogueQuizResponse, error) {
+	requestID, _ := ctx.Value(config.HeaderKey).(string)
+
+	pb := &pbkriton.CreationRequest{
+		Theme: *input.Theme,
+		Set:   *input.Set,
+	}
+
+	return r.Handler.CreateDialogueQuiz(pb, requestID)
 }
 
 // Query returns QueryResolver implementation.
