@@ -1,7 +1,14 @@
 package main
 
 import (
+	"context"
+	"fmt"
 	"github.com/odysseia-greek/agora/plato/logging"
+	"github.com/odysseia-greek/apologia/kriton/philia"
+	pb "github.com/odysseia-greek/apologia/kriton/proto"
+	"google.golang.org/grpc"
+	"log"
+	"net"
 	"os"
 )
 
@@ -29,4 +36,26 @@ func main() {
 	logging.System("starting up.....")
 	logging.System("starting up and getting env variables")
 
+	ctx := context.Background()
+	config, err := philia.CreateNewConfig(ctx)
+	if err != nil {
+		logging.Error(err.Error())
+		log.Fatal("death has found me")
+	}
+
+	listener, err := net.Listen("tcp", port)
+	if err != nil {
+		log.Fatalf("failed to listen: %v", err)
+	}
+
+	var server *grpc.Server
+
+	server = grpc.NewServer(grpc.UnaryInterceptor(philia.Interceptor))
+
+	pb.RegisterKritonServer(server, config)
+
+	logging.Info(fmt.Sprintf("Server listening on %s", port))
+	if err := server.Serve(listener); err != nil {
+		log.Fatalf("failed to serve: %v", err)
+	}
 }

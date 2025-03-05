@@ -6,11 +6,11 @@ package graph
 
 import (
 	"context"
-
 	"github.com/odysseia-greek/agora/plato/config"
 	pbartrippos "github.com/odysseia-greek/apologia/aristippos/proto"
 	pbkritias "github.com/odysseia-greek/apologia/kritias/proto"
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
+	pbxenofon "github.com/odysseia-greek/apologia/xenofon/proto"
 )
 
 // MediaAnswer is the resolver for the mediaAnswer field.
@@ -83,6 +83,38 @@ func (r *queryResolver) MultipleChoiceQuiz(ctx context.Context, input *model.Mul
 	}
 
 	return r.Handler.CreateMultipleChoiceQuiz(pb, requestID)
+}
+
+// AuthorBasedAnswer is the resolver for the authorBasedAnswer field.
+func (r *queryResolver) AuthorBasedAnswer(ctx context.Context, input *model.AuthorBasedAnswerInput) (*model.AuthorBasedAnswerResponse, error) {
+	requestID, _ := ctx.Value(config.HeaderKey).(string)
+
+	pb := &pbxenofon.AnswerRequest{
+		Theme:    *input.Theme,
+		Set:      *input.Set,
+		Segment:  *input.Segment,
+		Answer:   *input.Answer,
+		QuizWord: *input.QuizWord,
+	}
+
+	return r.Handler.CheckAuthorBased(pb, requestID)
+}
+
+// AuthorBasedQuiz is the resolver for the authorBasedQuiz field.
+func (r *queryResolver) AuthorBasedQuiz(ctx context.Context, input *model.AuthorBasedInput) (*model.AuthorBasedResponse, error) {
+	requestID, _ := ctx.Value(config.HeaderKey).(string)
+
+	pb := &pbxenofon.CreationRequest{
+		Theme:   *input.Theme,
+		Set:     *input.Set,
+		Segment: *input.Segment,
+	}
+
+	for _, word := range input.ExcludeWords {
+		pb.ExcludeWords = append(pb.ExcludeWords, *word)
+	}
+
+	return r.Handler.CreateAuthorBasedQuiz(pb, requestID)
 }
 
 // Query returns QueryResolver implementation.

@@ -64,6 +64,38 @@ type Rhema {
   translations: [String]
 }
 
+type AuthorBasedAnswerResponse {
+  correct: Boolean
+  quizWord: String
+  wordsInText: [String]
+}
+
+type AuthorBasedResponse {
+  fullSentence: String
+  translation: String
+  reference: String
+  quiz: AuthorBasedQuiz
+  grammarQuiz: [GrammarQuizAdded]
+}
+
+type AuthorBasedQuiz {
+  quizItem: String
+  numberOfItems: Int
+  options: [AuthorBasedOptions]
+}
+
+type AuthorBasedOptions {
+  quizWord: String
+}
+
+type GrammarQuizAdded {
+  correctAnswer: String
+  wordInText: String
+  extraInformation: String
+  options: [AuthorBasedOptions]
+}
+
+
 input MediaAnswerInput {
   theme: String
   set: String
@@ -73,12 +105,27 @@ input MediaAnswerInput {
   comprehensive: Boolean
 }
 
+input AuthorBasedAnswerInput {
+  theme: String
+  set: String
+  segment: String
+  quizWord: String
+  answer: String
+}
+
 input MediaQuizInput {
   excludeWords: [String]
   theme: String
   set: String
   segment: String
   order: String = null 
+}
+
+input AuthorBasedInput {
+  excludeWords: [String]
+  theme: String
+  set: String
+  segment: String
 }
 
 input MultipleChoiceAnswerInput {
@@ -101,4 +148,6 @@ type Query {
   mediaQuiz(input: MediaQuizInput): MediaQuizResponse
   multipleChoiceAnswer(input: MultipleChoiceAnswerInput): ComprehensiveResponse
   multipleChoiceQuiz(input: MultipleQuizInput): MultipleChoiceResponse
+  authorBasedAnswer(input: AuthorBasedAnswerInput): AuthorBasedAnswerResponse
+  authorBasedQuiz(input: AuthorBasedInput): AuthorBasedResponse
 }

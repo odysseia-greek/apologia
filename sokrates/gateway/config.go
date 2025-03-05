@@ -6,6 +6,7 @@ import (
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/apologia/aristippos/hedone"
 	"github.com/odysseia-greek/apologia/kritias/triakonta"
+	"github.com/odysseia-greek/apologia/xenofon/anabasis"
 	aristophanes "github.com/odysseia-greek/attike/aristophanes/comedy"
 	"os"
 )
@@ -45,7 +46,7 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 	}
 
 	multipleChoiceClientAddress := config.StringFromEnv(config.EnvMultiChoiceClient, config.DefaultMultiChoiceAddress)
-	multipleChoiceClient, err := triakonta.NewAristipposClient(multipleChoiceClientAddress)
+	multipleChoiceClient, err := triakonta.NewKritiasClient(multipleChoiceClientAddress)
 	if err != nil {
 		logging.Error(err.Error())
 		return nil, err
@@ -53,7 +54,20 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 
 	multipleChoiceClientHealthy := multipleChoiceClient.WaitForHealthyState()
 	if !multipleChoiceClientHealthy {
-		logging.Debug("media client not ready - restarting seems the only option")
+		logging.Debug("multiplechoice client not ready - restarting seems the only option")
+		os.Exit(1)
+	}
+
+	authorBasedClientAddress := config.StringFromEnv(config.EnvAuthorBasedClient, config.DefaultAuthorBasedAddress)
+	authorBasedClient, err := anabasis.NewXenofonClient(authorBasedClientAddress)
+	if err != nil {
+		logging.Error(err.Error())
+		return nil, err
+	}
+
+	authorBasedClientHealthy := authorBasedClient.WaitForHealthyState()
+	if !authorBasedClientHealthy {
+		logging.Debug("authorbased client not ready - restarting seems the only option")
 		os.Exit(1)
 	}
 
@@ -62,5 +76,6 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 		Randomizer:        randomizer,
 		MediaClient:       mediaClient,
 		MultiChoiceClient: multipleChoiceClient,
+		AuthorBasedClient: authorBasedClient,
 	}, nil
 }

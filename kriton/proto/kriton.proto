@@ -58,26 +58,26 @@ message AnswerResponse {
 
 message DialogueContent {
   string translation = 1;
-  optional string greek = 2;
-  optional int32 place = 3;
-  optional string speaker = 4;
+  string greek = 2;
+  int32 place = 3;
+  string speaker = 4;
 }
 
 message DialogueCorrection {
   string translation = 1;
-  optional string greek = 2;
-  optional int32 place = 3;
-  optional string speaker = 4;
-  optional int32 correctPlace = 5;
+  string greek = 2;
+  int32 place = 3;
+  string speaker = 4;
+  int32 correctPlace = 5;
 }
 
 message QuizResponse {
   QuizMetadata quizMetadata = 1;
-  optional string theme = 2;
-  optional int32 set = 3;
-  optional string segment = 4;
-  optional string reference = 5;
-  optional Dialogue dialogue = 6;
+  string theme = 2;
+  string set = 3;
+  string segment = 4;
+  string reference = 5;
+  Dialogue dialogue = 6;
   repeated DialogueContent content = 7;
 }
 
@@ -104,7 +104,7 @@ message CreationRequest {
 }
 
 message AnswerRequest {
-  optional string theme = 1;
-  optional int32 set = 2;
+  string theme = 1;
+  string set = 2;
   repeated DialogueContent content = 3;
 }

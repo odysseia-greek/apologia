@@ -16,6 +16,45 @@ type AnalyzeTextResponse struct {
 	Rootword     *string                `json:"rootword,omitempty"`
 }
 
+type AuthorBasedAnswerInput struct {
+	Theme    *string `json:"theme,omitempty"`
+	Set      *string `json:"set,omitempty"`
+	Segment  *string `json:"segment,omitempty"`
+	QuizWord *string `json:"quizWord,omitempty"`
+	Answer   *string `json:"answer,omitempty"`
+}
+
+type AuthorBasedAnswerResponse struct {
+	Correct     *bool     `json:"correct,omitempty"`
+	QuizWord    *string   `json:"quizWord,omitempty"`
+	WordsInText []*string `json:"wordsInText,omitempty"`
+}
+
+type AuthorBasedInput struct {
+	ExcludeWords []*string `json:"excludeWords,omitempty"`
+	Theme        *string   `json:"theme,omitempty"`
+	Set          *string   `json:"set,omitempty"`
+	Segment      *string   `json:"segment,omitempty"`
+}
+
+type AuthorBasedOptions struct {
+	QuizWord *string `json:"quizWord,omitempty"`
+}
+
+type AuthorBasedQuiz struct {
+	QuizItem      *string               `json:"quizItem,omitempty"`
+	NumberOfItems *int32                `json:"numberOfItems,omitempty"`
+	Options       []*AuthorBasedOptions `json:"options,omitempty"`
+}
+
+type AuthorBasedResponse struct {
+	FullSentence *string             `json:"fullSentence,omitempty"`
+	Translation  *string             `json:"translation,omitempty"`
+	Reference    *string             `json:"reference,omitempty"`
+	Quiz         *AuthorBasedQuiz    `json:"quiz,omitempty"`
+	GrammarQuiz  []*GrammarQuizAdded `json:"grammarQuiz,omitempty"`
+}
+
 type ComprehensiveResponse struct {
 	Correct      *bool                `json:"correct,omitempty"`
 	FoundInText  *AnalyzeTextResponse `json:"foundInText,omitempty"`
@@ -26,6 +65,13 @@ type ComprehensiveResponse struct {
 type ConjugationResponse struct {
 	Rule *string `json:"rule,omitempty"`
 	Word *string `json:"word,omitempty"`
+}
+
+type GrammarQuizAdded struct {
+	CorrectAnswer    *string               `json:"correctAnswer,omitempty"`
+	WordInText       *string               `json:"wordInText,omitempty"`
+	ExtraInformation *string               `json:"extraInformation,omitempty"`
+	Options          []*AuthorBasedOptions `json:"options,omitempty"`
 }
 
 type Hit struct {

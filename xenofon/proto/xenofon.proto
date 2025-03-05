@@ -61,9 +61,9 @@ message CreationRequest {
 message AnswerRequest {
   string theme = 1;
   string set = 2;
-  string segment = 4;
-  string answer = 5;
-  string quiz_word = 6;
+  string segment = 3;
+  string answer = 4;
+  string quiz_word = 5;
 }
 
 message QuizResponse {
