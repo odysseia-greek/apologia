@@ -56,8 +56,8 @@ type ComplexityRoot struct {
 
 	AnalyzeTextResponse struct {
 		Conjugations func(childComplexity int) int
-		Results      func(childComplexity int) int
 		Rootword     func(childComplexity int) int
+		Texts        func(childComplexity int) int
 	}
 
 	AuthorBasedAnswerResponse struct {
@@ -272,19 +272,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.AnalyzeTextResponse.Conjugations(childComplexity), true
 
-	case "AnalyzeTextResponse.results":
-		if e.complexity.AnalyzeTextResponse.Results == nil {
-			break
-		}
-
-		return e.complexity.AnalyzeTextResponse.Results(childComplexity), true
-
 	case "AnalyzeTextResponse.rootword":
 		if e.complexity.AnalyzeTextResponse.Rootword == nil {
 			break
 		}
 
 		return e.complexity.AnalyzeTextResponse.Rootword(childComplexity), true
+
+	case "AnalyzeTextResponse.texts":
+		if e.complexity.AnalyzeTextResponse.Texts == nil {
+			break
+		}
+
+		return e.complexity.AnalyzeTextResponse.Texts(childComplexity), true
 
 	case "AuthorBasedAnswerResponse.correct":
 		if e.complexity.AuthorBasedAnswerResponse.Correct == nil {
@@ -956,7 +956,7 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 	return introspection.WrapTypeFromDef(ec.Schema(), ec.Schema().Types[name]), nil
 }
 
-//go:embed "schema.graphqls"
+//go:embed "shared.graphqls" "sokrates.graphqls"
 var sourcesFS embed.FS
 
 func sourceData(filename string) string {
@@ -968,7 +968,8 @@ func sourceData(filename string) string {
 }
 
 var sources = []*ast.Source{
-	{Name: "schema.graphqls", Input: sourceData("schema.graphqls"), BuiltIn: false},
+	{Name: "shared.graphqls", Input: sourceData("shared.graphqls"), BuiltIn: false},
+	{Name: "sokrates.graphqls", Input: sourceData("sokrates.graphqls"), BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)
 
@@ -1543,8 +1544,8 @@ func (ec *executionContext) fieldContext_AnalyzeTextResponse_conjugations(_ cont
 	return fc, nil
 }
 
-func (ec *executionContext) _AnalyzeTextResponse_results(ctx context.Context, field graphql.CollectedField, obj *model.AnalyzeTextResponse) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_AnalyzeTextResponse_results(ctx, field)
+func (ec *executionContext) _AnalyzeTextResponse_texts(ctx context.Context, field graphql.CollectedField, obj *model.AnalyzeTextResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzeTextResponse_texts(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -1557,7 +1558,7 @@ func (ec *executionContext) _AnalyzeTextResponse_results(ctx context.Context, fi
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Results, nil
+		return obj.Texts, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1571,7 +1572,7 @@ func (ec *executionContext) _AnalyzeTextResponse_results(ctx context.Context, fi
 	return ec.marshalOAnalyzeResult2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐAnalyzeResult(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_AnalyzeTextResponse_results(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_AnalyzeTextResponse_texts(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "AnalyzeTextResponse",
 		Field:      field,
@@ -2230,8 +2231,8 @@ func (ec *executionContext) fieldContext_ComprehensiveResponse_foundInText(_ con
 			switch field.Name {
 			case "conjugations":
 				return ec.fieldContext_AnalyzeTextResponse_conjugations(ctx, field)
-			case "results":
-				return ec.fieldContext_AnalyzeTextResponse_results(ctx, field)
+			case "texts":
+				return ec.fieldContext_AnalyzeTextResponse_texts(ctx, field)
 			case "rootword":
 				return ec.fieldContext_AnalyzeTextResponse_rootword(ctx, field)
 			}
@@ -7638,8 +7639,8 @@ func (ec *executionContext) _AnalyzeTextResponse(ctx context.Context, sel ast.Se
 			out.Values[i] = graphql.MarshalString("AnalyzeTextResponse")
 		case "conjugations":
 			out.Values[i] = ec._AnalyzeTextResponse_conjugations(ctx, field, obj)
-		case "results":
-			out.Values[i] = ec._AnalyzeTextResponse_results(ctx, field, obj)
+		case "texts":
+			out.Values[i] = ec._AnalyzeTextResponse_texts(ctx, field, obj)
 		case "rootword":
 			out.Values[i] = ec._AnalyzeTextResponse_rootword(ctx, field, obj)
 		default:

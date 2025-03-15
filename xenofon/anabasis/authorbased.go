@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/models"
 	pb "github.com/odysseia-greek/apologia/xenofon/proto"
 	"math/rand/v2"
@@ -220,6 +221,7 @@ func (a *AuthorBasedServiceImpl) Answer(ctx context.Context, request *pb.AnswerR
 		return nil, err
 	}
 	if len(elasticResponse.Hits.Hits) == 0 {
+		logging.Error(fmt.Sprintf("no hits found in Elastic"))
 		return nil, fmt.Errorf("no hits found in Elastic")
 	}
 

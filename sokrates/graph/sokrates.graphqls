@@ -1,35 +1,8 @@
-type AnalyzeResult {
-  author: String
-  book: String
-  reference: String
-  referenceLink: String
-  text: Rhema
-}
-
-type AnalyzeTextResponse {
-  conjugations: [ConjugationResponse]
-  results: [AnalyzeResult]
-  rootword: String
-}
-
 type ComprehensiveResponse {
   correct: Boolean
   foundInText: AnalyzeTextResponse
   quizWord: String
   similarWords: [Hit]
-}
-
-type ConjugationResponse {
-  rule: String
-  word: String
-}
-
-type Hit {
-  dutch: String
-  english: String
-  greek: String
-  linkedWord: String
-  original: String
 }
 
 type MediaOptions {
@@ -52,12 +25,6 @@ type MultipleChoiceResponse {
   numberOfItems: Int
   options: [Options]
   quizItem: String
-}
-
-type Rhema {
-  greek: String
-  section: String
-  translations: [String]
 }
 
 type AuthorBasedAnswerResponse {

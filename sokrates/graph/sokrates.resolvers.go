@@ -6,6 +6,7 @@ package graph
 
 import (
 	"context"
+
 	"github.com/odysseia-greek/agora/plato/config"
 	pbartrippos "github.com/odysseia-greek/apologia/aristippos/proto"
 	pbkritias "github.com/odysseia-greek/apologia/kritias/proto"

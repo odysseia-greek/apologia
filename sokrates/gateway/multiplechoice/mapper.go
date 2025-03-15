@@ -19,7 +19,7 @@ func MapComprehensiveResponse(grpcResp *pbkritias.ComprehensiveResponse) *model.
 		mappedResponse.FoundInText = &model.AnalyzeTextResponse{
 			Rootword:     &grpcResp.FoundInText.Rootword,
 			Conjugations: mapConjugations(grpcResp.FoundInText.Conjugations),
-			Results:      mapAnalyzeResults(grpcResp.FoundInText.Texts),
+			Texts:        mapAnalyzeResults(grpcResp.FoundInText.Texts),
 		}
 	}
 

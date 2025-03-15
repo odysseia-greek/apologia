@@ -10,8 +10,8 @@ import (
 	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/service"
-	"github.com/odysseia-greek/delphi/ptolemaios/diplomat"
-	pbp "github.com/odysseia-greek/delphi/ptolemaios/proto"
+	"github.com/odysseia-greek/delphi/aristides/diplomat"
+	pbp "github.com/odysseia-greek/delphi/aristides/proto"
 	aristarchos "github.com/odysseia-greek/olympia/aristarchos/scholar"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -28,7 +28,10 @@ func CreateNewConfig() (*ParmenidesHandler, *grpc.ClientConn, error) {
 	tls := config.BoolFromEnv(config.EnvTlSKey)
 
 	var cfg models.Config
-	ambassador := diplomat.NewClientAmbassador()
+	ambassador, err := diplomat.NewClientAmbassador(diplomat.DEFAULTADDRESS)
+	if err != nil {
+		return nil, err
+	}
 
 	healthy := ambassador.WaitForHealthyState()
 	if !healthy {

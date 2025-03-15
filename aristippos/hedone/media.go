@@ -24,8 +24,6 @@ const (
 	THEME       string = "theme"
 	SET         string = "set"
 	SEGMENT     string = "segment"
-	MEDIA       string = "media"
-	QUIZTYPE    string = "quizType"
 	GREENGORDER string = "gre-eng"
 	ENGGREORDER string = "eng-gre"
 )
@@ -71,34 +69,55 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 		request.Order = GREENGORDER
 	}
 
-	mustQuery := []map[string]string{
-		{
-			THEME: request.Theme,
-		},
-		{
-			SET: request.Set,
-		},
-		{
-			SEGMENT: request.Segment,
-		},
-	}
-
-	query := m.Elastic.Builder().MultipleMatch(mustQuery)
-	elasticResponse, err := m.Elastic.Query().Match(m.Index, query)
+	requestSession := fmt.Sprintf("%s+%s+%s", request.Theme, request.Set, request.Segment)
+	cacheItem, err := m.Archytas.Read(requestSession)
 	if err != nil {
-		return nil, err
-	}
-
-	if elasticResponse.Hits.Hits == nil || len(elasticResponse.Hits.Hits) == 0 {
-		return nil, errors.New("no hits found in query")
+		logging.Error(fmt.Sprintf("error when reading cache: %s", err.Error()))
 	}
 
 	var option models.MediaQuiz
 
-	source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
-	err = json.Unmarshal(source, &option)
-	if err != nil {
-		return nil, err
+	if cacheItem != nil {
+		err = json.Unmarshal(cacheItem, &option)
+		if err != nil {
+			return nil, err
+		}
+
+		go cacheSpan(string(cacheItem), requestSession, ctx)
+	} else {
+		mustQuery := []map[string]string{
+			{
+				THEME: request.Theme,
+			},
+			{
+				SET: request.Set,
+			},
+			{
+				SEGMENT: request.Segment,
+			},
+		}
+
+		query := m.Elastic.Builder().MultipleMatch(mustQuery)
+		elasticResponse, err := m.Elastic.Query().Match(m.Index, query)
+		if err != nil {
+			return nil, err
+		}
+
+		if elasticResponse.Hits.Hits == nil || len(elasticResponse.Hits.Hits) == 0 {
+			return nil, errors.New("no hits found in query")
+		}
+
+		go databaseSpan(elasticResponse, query, ctx)
+		source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
+		err = json.Unmarshal(source, &option)
+		if err != nil {
+			return nil, err
+		}
+
+		err = m.Archytas.Set(requestSession, string(source))
+		if err != nil {
+			logging.Error(fmt.Sprintf("error when writing cache: %s", err.Error()))
+		}
 	}
 
 	quiz := &pb.QuizResponse{
@@ -185,6 +204,8 @@ func (m *MediaServiceImpl) Answer(ctx context.Context, request *pb.AnswerRequest
 	if len(elasticResponse.Hits.Hits) == 0 {
 		return nil, fmt.Errorf("no hits found in Elastic")
 	}
+
+	go databaseSpan(elasticResponse, query, ctx)
 
 	var option models.MediaQuiz
 	source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)

@@ -25,32 +25,6 @@ func Adapt(h http.Handler, adapters ...Adapter) http.Handler {
 	return h
 }
 
-func SetCorsHeaders() Adapter {
-	return func(f http.Handler) http.Handler {
-		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			origin := r.Header.Get("Origin")
-			// Allow any origin in the allowedOrigins slice
-			allowedOrigins := []string{"localhost"}
-
-			for _, o := range allowedOrigins {
-				if strings.Contains(origin, o) {
-					logging.Debug(fmt.Sprintf("setting CORS header for origin: %s", origin))
-					w.Header().Set("Access-Control-Allow-Origin", origin)
-					w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-					w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-					w.Header().Set("Access-Control-Allow-Credentials", "true")
-					if r.Method == "OPTIONS" {
-						w.WriteHeader(http.StatusOK)
-						return
-					}
-					break
-				}
-			}
-			f.ServeHTTP(w, r)
-		})
-	}
-}
-
 // LogRequestDetails is a middleware function that captures and logs details of incoming requests,
 // and initiates traces based on the configured trace probabilities for specific GraphQL operations.
 // It reads the incoming request body to extract the operation name and query from GraphQL requests.
@@ -91,8 +65,9 @@ func LogRequestDetails(tracer pb.TraceService_ChorusClient) Adapter {
 			if operationName == "" {
 				splitQuery := strings.Split(query, "{")
 				if len(splitQuery) != 0 {
-					if strings.Contains(splitQuery[0], " ") {
-						operationName = strings.Split(splitQuery[0], " ")[1]
+					if strings.Contains(splitQuery[1], "(") {
+						splitsStringPart := strings.Split(splitQuery[1], "(")[0]
+						operationName = strings.TrimSpace(splitsStringPart)
 						logging.Debug(fmt.Sprintf("extracted operationName from query: %s", operationName))
 					}
 				}
@@ -122,6 +97,17 @@ func LogRequestDetails(tracer pb.TraceService_ChorusClient) Adapter {
 
 			logging.Trace(fmt.Sprintf("trace with requestID: %s and parentSpan: %s and span: %s", trace.TraceId, trace.SpanId, spanID))
 
+			if operationName != "IntrospectionQuery" {
+				jsonPayload, err := json.MarshalIndent(payload, "", "  ")
+				if err != nil {
+					logging.Error(err.Error())
+				}
+
+				logLine := fmt.Sprintf("REQUEST | traceId: %s and params:\n%s", trace.TraceId, string(jsonPayload))
+				logging.Info(logLine)
+			}
+
+			w.Header().Set(config.HeaderKey, requestId)
 			ctx := context.WithValue(r.Context(), config.HeaderKey, requestId)
 			f.ServeHTTP(w, r.WithContext(ctx))
 		})

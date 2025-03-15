@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/google/uuid"
+	"github.com/odysseia-greek/agora/archytas"
 	"github.com/odysseia-greek/agora/aristoteles"
 	"github.com/odysseia-greek/agora/aristoteles/models"
 	"github.com/odysseia-greek/agora/plato/config"
@@ -11,8 +12,8 @@ import (
 	"github.com/odysseia-greek/agora/plato/service"
 	aristophanes "github.com/odysseia-greek/attike/aristophanes/comedy"
 	pbar "github.com/odysseia-greek/attike/aristophanes/proto"
-	"github.com/odysseia-greek/delphi/ptolemaios/diplomat"
-	pb "github.com/odysseia-greek/delphi/ptolemaios/proto"
+	"github.com/odysseia-greek/delphi/aristides/diplomat"
+	pb "github.com/odysseia-greek/delphi/aristides/proto"
 	"google.golang.org/grpc/metadata"
 	"os"
 	"time"
@@ -36,7 +37,10 @@ func CreateNewConfig(ctx context.Context) (*MediaServiceImpl, error) {
 	}
 
 	var cfg models.Config
-	ambassador := diplomat.NewClientAmbassador()
+	ambassador, err := diplomat.NewClientAmbassador(diplomat.DEFAULTADDRESS)
+	if err != nil {
+		return nil, err
+	}
 
 	healthy = ambassador.WaitForHealthyState()
 	if !healthy {
@@ -132,6 +136,11 @@ func CreateNewConfig(ctx context.Context) (*MediaServiceImpl, error) {
 		return nil, err
 	}
 
+	cache, err := archytas.CreateBadgerClient()
+	if err != nil {
+		return nil, err
+	}
+
 	client, err := config.CreateOdysseiaClient()
 	if err != nil {
 		return nil, err
@@ -143,5 +152,6 @@ func CreateNewConfig(ctx context.Context) (*MediaServiceImpl, error) {
 		Randomizer: randomizer,
 		Client:     client,
 		Streamer:   streamer,
+		Archytas:   cache,
 	}, nil
 }

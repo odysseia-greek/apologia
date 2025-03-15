@@ -12,7 +12,7 @@ type AnalyzeResult struct {
 
 type AnalyzeTextResponse struct {
 	Conjugations []*ConjugationResponse `json:"conjugations,omitempty"`
-	Results      []*AnalyzeResult       `json:"results,omitempty"`
+	Texts        []*AnalyzeResult       `json:"texts,omitempty"`
 	Rootword     *string                `json:"rootword,omitempty"`
 }
 

@@ -3,6 +3,7 @@ package hedone
 import (
 	"context"
 	"fmt"
+	"github.com/odysseia-greek/agora/archytas"
 	"github.com/odysseia-greek/agora/aristoteles"
 	"github.com/odysseia-greek/agora/plato/randomizer"
 	"github.com/odysseia-greek/agora/plato/service"
@@ -30,6 +31,7 @@ type MediaServiceImpl struct {
 	Randomizer randomizer.Random
 	Client     service.OdysseiaClient
 	Streamer   pbar.TraceService_ChorusClient
+	Archytas   archytas.Client
 	pb.UnimplementedAristipposServer
 }
 

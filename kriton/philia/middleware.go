@@ -74,6 +74,7 @@ func Interceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInf
 			}
 
 			logging.Trace(fmt.Sprintf("trace with requestID: %s and span: %s", requestId, newSpan))
+			logging.Info(fmt.Sprintf("received request: %s for method: %s", host, info.FullMethod))
 		}()
 		responseMd := metadata.New(map[string]string{config.HeaderKey: traceID})
 		grpc.SendHeader(newCtx, responseMd)
