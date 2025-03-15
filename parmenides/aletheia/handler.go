@@ -11,7 +11,7 @@ import (
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/models"
 	"github.com/odysseia-greek/agora/plato/service"
-	ptolemaios "github.com/odysseia-greek/delphi/ptolemaios/diplomat"
+	aristides "github.com/odysseia-greek/delphi/aristides/diplomat"
 	pba "github.com/odysseia-greek/olympia/aristarchos/proto"
 	"strings"
 	"sync"
@@ -26,7 +26,7 @@ type ParmenidesHandler struct {
 	DutchChannel     string
 	ExitCode         string
 	PolicyName       string
-	Ambassador       *ptolemaios.ClientAmbassador
+	Ambassador       *aristides.ClientAmbassador
 	Aggregator       pba.Aristarchos_CreateNewEntryClient
 	AggregatorCancel context.CancelFunc
 }

@@ -9,7 +9,7 @@ import (
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/models"
 	"github.com/odysseia-greek/apologia/parmenides/aletheia"
-	pb "github.com/odysseia-greek/delphi/ptolemaios/proto"
+	pb "github.com/odysseia-greek/delphi/aristides/proto"
 	"log"
 	"os"
 	"path"
@@ -112,7 +112,7 @@ func main() {
 	logging.Info(fmt.Sprintf("Created: %d documents", handler.Created))
 	logging.Info(fmt.Sprintf("Words found in sullego: %d", documents))
 
-	logging.Debug("Closing ptolemaios because job is done")
+	logging.Debug("Closing aristides because job is done")
 	uuidCode := uuid.New().String()
 	_, err = handler.Ambassador.ShutDown(context.Background(), &pb.ShutDownRequest{Code: uuidCode})
 	if err != nil {

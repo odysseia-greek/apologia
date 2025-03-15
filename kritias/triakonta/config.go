@@ -59,7 +59,7 @@ func CreateNewConfig(ctx context.Context) (*MultipleChoiceServiceImpl, error) {
 		Url:           diplomat.DEFAULTADDRESS,
 		Host:          "",
 		RemoteAddress: "",
-		Operation:     "/delphi_ptolemaios.Ptolemaios/GetSecret",
+		Operation:     "/delphi_aristides.Aristides/GetSecret",
 	}
 
 	go func() {
