@@ -55,7 +55,7 @@ message CreationRequest {
   string set = 2;
   string segment = 3; // Optional
   string order = 4;
-  repeated string exclude_words = 5;
+  int32 doneAfter = 5; // Number of times a word must be played before it's considered done
 }
 
 // Response message for quiz creation

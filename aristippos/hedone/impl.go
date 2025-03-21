@@ -32,6 +32,7 @@ type MediaServiceImpl struct {
 	Client     service.OdysseiaClient
 	Streamer   pbar.TraceService_ChorusClient
 	Archytas   archytas.Client
+	Progress   *ProgressTracker
 	pb.UnimplementedAristipposServer
 }
 

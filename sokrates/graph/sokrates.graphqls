@@ -125,7 +125,7 @@ input AuthorBasedAnswerInput {
 }
 
 input MediaQuizInput {
-  excludeWords: [String]
+  doneAfter: Int
   theme: String
   set: String
   segment: String

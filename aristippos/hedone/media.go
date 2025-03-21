@@ -69,8 +69,17 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 		request.Order = GREENGORDER
 	}
 
-	requestSession := fmt.Sprintf("%s+%s+%s", request.Theme, request.Set, request.Segment)
-	cacheItem, err := m.Archytas.Read(requestSession)
+	var sessionId string
+	md, ok := metadata.FromIncomingContext(ctx)
+	if ok {
+		headerValue := md.Get("session-id")
+		if len(headerValue) > 0 {
+			sessionId = headerValue[0]
+		}
+	}
+
+	segmentKey := fmt.Sprintf("%s+%s+%s", request.Theme, request.Set, request.Segment)
+	cacheItem, err := m.Archytas.Read(segmentKey)
 	if err != nil {
 		logging.Error(fmt.Sprintf("error when reading cache: %s", err.Error()))
 	}
@@ -83,7 +92,7 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 			return nil, err
 		}
 
-		go cacheSpan(string(cacheItem), requestSession, ctx)
+		go cacheSpan(string(cacheItem), segmentKey, ctx)
 	} else {
 		mustQuery := []map[string]string{
 			{
@@ -106,7 +115,7 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 		if elasticResponse.Hits.Hits == nil || len(elasticResponse.Hits.Hits) == 0 {
 			return nil, errors.New("no hits found in query")
 		}
-
+		
 		go databaseSpan(elasticResponse, query, ctx)
 		source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
 		err = json.Unmarshal(source, &option)
@@ -114,27 +123,40 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 			return nil, err
 		}
 
-		err = m.Archytas.Set(requestSession, string(source))
+		err = m.Archytas.Set(segmentKey, string(source))
 		if err != nil {
 			logging.Error(fmt.Sprintf("error when writing cache: %s", err.Error()))
 		}
+	}
+
+	// Ensure session progress is initialized for this segment
+	if !m.Progress.Exists(sessionId, segmentKey) {
+		allGreekWords := make([]string, len(option.Content))
+		for i, c := range option.Content {
+			allGreekWords[i] = c.Greek
+		}
+		m.Progress.InitWordsForSegment(sessionId, segmentKey, allGreekWords)
 	}
 
 	quiz := &pb.QuizResponse{
 		NumberOfItems: int32(len(option.Content)),
 	}
 
+	unplayed, playable := m.Progress.GetPlayableWords(sessionId, segmentKey, int(request.DoneAfter))
 	var filteredContent []models.MediaContent
+	wordPool := make(map[string]struct{})
+
+	for _, w := range unplayed {
+		wordPool[w] = struct{}{}
+	}
+	if len(wordPool) == 0 {
+		for _, w := range playable {
+			wordPool[w] = struct{}{}
+		}
+	}
 
 	for _, content := range option.Content {
-		addWord := true
-		for _, word := range request.ExcludeWords {
-			if content.Greek == word {
-				addWord = false
-			}
-		}
-
-		if addWord {
+		if _, ok := wordPool[content.Greek]; ok {
 			filteredContent = append(filteredContent, content)
 		}
 	}

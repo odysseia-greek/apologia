@@ -7423,20 +7423,20 @@ func (ec *executionContext) unmarshalInputMediaQuizInput(ctx context.Context, ob
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"excludeWords", "theme", "set", "segment", "order"}
+	fieldsInOrder := [...]string{"doneAfter", "theme", "set", "segment", "order"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
 			continue
 		}
 		switch k {
-		case "excludeWords":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("excludeWords"))
-			data, err := ec.unmarshalOString2ᚕᚖstring(ctx, v)
+		case "doneAfter":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("doneAfter"))
+			data, err := ec.unmarshalOInt2ᚖint32(ctx, v)
 			if err != nil {
 				return it, err
 			}
-			it.ExcludeWords = data
+			it.DoneAfter = data
 		case "theme":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("theme"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)

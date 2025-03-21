@@ -45,10 +45,6 @@ func (r *queryResolver) MediaQuiz(ctx context.Context, input *model.MediaQuizInp
 		pb.Order = *input.Order
 	}
 
-	for _, word := range input.ExcludeWords {
-		pb.ExcludeWords = append(pb.ExcludeWords, *word)
-	}
-
 	return r.Handler.CreateMediaQuiz(pb, requestID)
 }
 

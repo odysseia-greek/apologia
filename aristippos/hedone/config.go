@@ -153,5 +153,8 @@ func CreateNewConfig(ctx context.Context) (*MediaServiceImpl, error) {
 		Client:     client,
 		Streamer:   streamer,
 		Archytas:   cache,
+		Progress: &ProgressTracker{
+			Data: make(map[string]*SessionProgress),
+		},
 	}, nil
 }
