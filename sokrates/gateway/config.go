@@ -2,6 +2,7 @@ package gateway
 
 import (
 	"context"
+	"fmt"
 	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/apologia/aristippos/hedone"
@@ -9,7 +10,9 @@ import (
 	"github.com/odysseia-greek/apologia/kriton/philia"
 	"github.com/odysseia-greek/apologia/xenofon/anabasis"
 	aristophanes "github.com/odysseia-greek/attike/aristophanes/comedy"
+	pb "github.com/odysseia-greek/attike/aristophanes/proto"
 	"os"
+	"time"
 )
 
 func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
@@ -18,14 +21,40 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 		return nil, err
 	}
 
-	tracer, err := aristophanes.NewClientTracer(aristophanes.DefaultAddress)
-	if err != nil {
-		logging.Error(err.Error())
+	var tracer *aristophanes.ClientTracer
+	var streamer pb.TraceService_ChorusClient
+
+	maxRetries := 3
+	retryDelay := 10 * time.Second
+
+	for i := 1; i <= maxRetries; i++ {
+		tracer, err = aristophanes.NewClientTracer(aristophanes.DefaultAddress)
+		if err == nil {
+			break
+		}
+
+		logging.Error(fmt.Sprintf("failed to create tracer (attempt %d/%d): %s", i, maxRetries, err.Error()))
+
+		if i < maxRetries {
+			time.Sleep(retryDelay)
+		}
 	}
 
-	streamer, err := tracer.Chorus(ctx)
 	if err != nil {
-		logging.Error(err.Error())
+		logging.Error("giving up after 3 retries to connect to tracer")
+		os.Exit(1)
+	}
+
+	for i := 1; i <= maxRetries; i++ {
+		streamer, err = tracer.Chorus(ctx)
+		if err == nil {
+			break
+		}
+
+		logging.Error(fmt.Sprintf("failed to create chorus streamer (attempt %d/%d): %s", i, maxRetries, err.Error()))
+		if i < maxRetries {
+			time.Sleep(retryDelay)
+		}
 	}
 
 	healthy := tracer.WaitForHealthyState()

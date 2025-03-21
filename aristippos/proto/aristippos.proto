@@ -56,6 +56,8 @@ message CreationRequest {
   string segment = 3; // Optional
   string order = 4;
   int32 doneAfter = 5; // Number of times a word must be played before it's considered done
+  bool resetProgress = 6;   // Hard reset
+  bool archiveProgress = 7; // Soft reset (archive and start fresh)
 }
 
 // Response message for quiz creation

@@ -79,6 +79,14 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 	}
 
 	segmentKey := fmt.Sprintf("%s+%s+%s", request.Theme, request.Set, request.Segment)
+	if request.ResetProgress {
+		m.Progress.ClearSegment(sessionId, segmentKey)
+	}
+
+	if request.ArchiveProgress {
+		m.Progress.ResetSegment(sessionId, segmentKey)
+	}
+	
 	cacheItem, err := m.Archytas.Read(segmentKey)
 	if err != nil {
 		logging.Error(fmt.Sprintf("error when reading cache: %s", err.Error()))
@@ -115,7 +123,7 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 		if elasticResponse.Hits.Hits == nil || len(elasticResponse.Hits.Hits) == 0 {
 			return nil, errors.New("no hits found in query")
 		}
-		
+
 		go databaseSpan(elasticResponse, query, ctx)
 		source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
 		err = json.Unmarshal(source, &option)
@@ -125,7 +133,11 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 
 		err = m.Archytas.Set(segmentKey, string(source))
 		if err != nil {
-			logging.Error(fmt.Sprintf("error when writing cache: %s", err.Error()))
+			if err.Error() != "Key not found" {
+				logging.Error(fmt.Sprintf("error when writing cache: %s", err.Error()))
+			} else {
+				logging.Debug(fmt.Sprintf("cache hit: %s", segmentKey))
+			}
 		}
 	}
 
@@ -142,19 +154,20 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 		NumberOfItems: int32(len(option.Content)),
 	}
 
-	unplayed, playable := m.Progress.GetPlayableWords(sessionId, segmentKey, int(request.DoneAfter))
+	unplayed, unmastered := m.Progress.GetPlayableWords(sessionId, segmentKey, int(request.DoneAfter))
+	var wordPool map[string]struct{}
+
+	switch {
+	case len(unplayed) > 0:
+		wordPool = sliceToSet(unplayed)
+	case len(unmastered) > 0:
+		wordPool = sliceToSet(unmastered)
+	default:
+		retryable := m.Progress.GetRetryableWords(sessionId, segmentKey, int(request.DoneAfter))
+		wordPool = sliceToSet(retryable)
+	}
+
 	var filteredContent []models.MediaContent
-	wordPool := make(map[string]struct{})
-
-	for _, w := range unplayed {
-		wordPool[w] = struct{}{}
-	}
-	if len(wordPool) == 0 {
-		for _, w := range playable {
-			wordPool[w] = struct{}{}
-		}
-	}
-
 	for _, content := range option.Content {
 		if _, ok := wordPool[content.Greek]; ok {
 			filteredContent = append(filteredContent, content)
@@ -198,6 +211,8 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 		}
 	}
 
+	m.Progress.RecordWordPlay(sessionId, segmentKey, quiz.QuizItem)
+
 	rand.Shuffle(len(quiz.Options), func(i, j int) {
 		quiz.Options[i], quiz.Options[j] = quiz.Options[j], quiz.Options[i]
 	})
@@ -206,34 +221,58 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 }
 
 func (m *MediaServiceImpl) Answer(ctx context.Context, request *pb.AnswerRequest) (*pb.ComprehensiveResponse, error) {
-	mustQuery := []map[string]string{
-		{
-			THEME: request.Theme,
-		},
-		{
-			SEGMENT: request.Segment,
-		},
-		{
-			SET: request.Set,
-		},
+	var sessionId string
+	md, ok := metadata.FromIncomingContext(ctx)
+	if ok {
+		headerValue := md.Get("session-id")
+		if len(headerValue) > 0 {
+			sessionId = headerValue[0]
+		}
 	}
-
-	query := m.Elastic.Builder().MultipleMatch(mustQuery)
-	elasticResponse, err := m.Elastic.Query().Match(m.Index, query)
+	segmentKey := fmt.Sprintf("%s+%s+%s", request.Theme, request.Set, request.Segment)
+	cacheItem, err := m.Archytas.Read(segmentKey)
 	if err != nil {
-		return nil, err
+		logging.Error(fmt.Sprintf("error when reading cache: %s", err.Error()))
 	}
-	if len(elasticResponse.Hits.Hits) == 0 {
-		return nil, fmt.Errorf("no hits found in Elastic")
-	}
-
-	go databaseSpan(elasticResponse, query, ctx)
 
 	var option models.MediaQuiz
-	source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
-	err = json.Unmarshal(source, &option)
-	if err != nil {
-		return nil, err
+
+	if cacheItem != nil {
+		err = json.Unmarshal(cacheItem, &option)
+		if err != nil {
+			return nil, err
+		}
+
+		go cacheSpan(string(cacheItem), segmentKey, ctx)
+	} else {
+		mustQuery := []map[string]string{
+			{
+				THEME: request.Theme,
+			},
+			{
+				SEGMENT: request.Segment,
+			},
+			{
+				SET: request.Set,
+			},
+		}
+
+		query := m.Elastic.Builder().MultipleMatch(mustQuery)
+		elasticResponse, err := m.Elastic.Query().Match(m.Index, query)
+		if err != nil {
+			return nil, err
+		}
+		if len(elasticResponse.Hits.Hits) == 0 {
+			return nil, fmt.Errorf("no hits found in Elastic")
+		}
+
+		go databaseSpan(elasticResponse, query, ctx)
+
+		source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
+		err = json.Unmarshal(source, &option)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	answer := pb.ComprehensiveResponse{Correct: false, QuizWord: request.QuizWord}
@@ -255,8 +294,11 @@ func (m *MediaServiceImpl) Answer(ctx context.Context, request *pb.AnswerRequest
 			if content.Translation == request.Answer {
 				answer.Correct = true
 			}
+			break
 		}
 	}
+
+	m.Progress.RecordAnswerResult(sessionId, segmentKey, request.QuizWord, answer.Correct)
 
 	return &answer, nil
 }
@@ -419,4 +461,12 @@ func extractBaseWord(queryWord string) string {
 	}
 
 	return queryWord
+}
+
+func sliceToSet(words []string) map[string]struct{} {
+	set := make(map[string]struct{}, len(words))
+	for _, w := range words {
+		set[w] = struct{}{}
+	}
+	return set
 }

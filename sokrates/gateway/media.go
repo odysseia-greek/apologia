@@ -10,12 +10,13 @@ import (
 	"time"
 )
 
-func (s *SokratesHandler) CreateMediaQuiz(request *pbartrippos.CreationRequest, requestID string) (*model.MediaQuizResponse, error) {
+func (s *SokratesHandler) CreateMediaQuiz(request *pbartrippos.CreationRequest, requestID, sessionId string) (*model.MediaQuizResponse, error) {
 	mediaClientCtx, ctxCancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer ctxCancel()
-	md := metadata.New(map[string]string{service.HeaderKey: requestID})
-	mediaClientCtx = metadata.NewOutgoingContext(context.Background(), md)
-
+	md := metadata.New(map[string]string{service.HeaderKey: requestID,
+		"session-id": sessionId})
+	mediaClientCtx = metadata.NewOutgoingContext(mediaClientCtx, md)
+	
 	grpcResponse, err := s.MediaClient.Question(mediaClientCtx, request)
 	if err != nil {
 		return nil, err

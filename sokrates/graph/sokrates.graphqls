@@ -130,6 +130,8 @@ input MediaQuizInput {
   set: String
   segment: String
   order: String
+  resetProgress: Boolean
+  archiveProgress: Boolean
 }
 
 input AuthorBasedInput {

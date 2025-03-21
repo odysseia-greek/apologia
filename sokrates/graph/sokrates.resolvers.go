@@ -34,18 +34,20 @@ func (r *queryResolver) MediaAnswer(ctx context.Context, input *model.MediaAnswe
 // MediaQuiz is the resolver for the mediaQuiz field.
 func (r *queryResolver) MediaQuiz(ctx context.Context, input *model.MediaQuizInput) (*model.MediaQuizResponse, error) {
 	requestID, _ := ctx.Value(config.HeaderKey).(string)
+	sessionId, _ := ctx.Value("session-id").(string)
 
 	pb := &pbartrippos.CreationRequest{
-		Theme:   *input.Theme,
-		Set:     *input.Set,
-		Segment: *input.Segment,
+		Theme:     *input.Theme,
+		Set:       *input.Set,
+		Segment:   *input.Segment,
+		DoneAfter: *input.DoneAfter,
 	}
 
 	if input.Order != nil {
 		pb.Order = *input.Order
 	}
 
-	return r.Handler.CreateMediaQuiz(pb, requestID)
+	return r.Handler.CreateMediaQuiz(pb, requestID, sessionId)
 }
 
 // MultipleChoiceAnswer is the resolver for the multipleChoiceAnswer field.

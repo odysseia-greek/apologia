@@ -6,14 +6,17 @@ import (
 )
 
 type WordProgress struct {
-	PlayCount  int
-	LastPlayed time.Time
+	PlayCount      int
+	CorrectCount   int
+	IncorrectCount int
+	LastPlayed     time.Time
 }
 
 type SessionProgress struct {
 	// Key: "theme+set+segment"
 	// Value: map of Greek word -> WordProgress
-	Progress map[string]map[string]*WordProgress
+	Progress     map[string]map[string]*WordProgress
+	PreviousRuns map[string][]map[string]*WordProgress
 }
 
 type ProgressTracker struct {
@@ -21,7 +24,7 @@ type ProgressTracker struct {
 	Data map[string]*SessionProgress
 }
 
-func (p *ProgressTracker) GetPlayableWords(sessionId, segmentKey string, maxPlays int) (unplayed, playable []string) {
+func (p *ProgressTracker) GetPlayableWords(sessionId, segmentKey string, doneAfter int) (unplayed, unmastered []string) {
 	p.RLock()
 	defer p.RUnlock()
 
@@ -32,14 +35,18 @@ func (p *ProgressTracker) GetPlayableWords(sessionId, segmentKey string, maxPlay
 
 	wordMap := session.Progress[segmentKey]
 	for word, progress := range wordMap {
+		if progress.CorrectCount >= doneAfter {
+			continue // Skip mastered
+		}
+
 		if progress.PlayCount == 0 {
-			unplayed = append(unplayed, word)
-		} else if progress.PlayCount < maxPlays {
-			playable = append(playable, word)
+			unplayed = append(unplayed, word) // Phase 1
+		} else if progress.CorrectCount == 0 {
+			unmastered = append(unmastered, word) // Phase 2
 		}
 	}
 
-	return unplayed, playable
+	return unplayed, unmastered
 }
 
 func (p *ProgressTracker) RecordWordPlay(sessionId, segmentKey, greekWord string) {
@@ -47,7 +54,7 @@ func (p *ProgressTracker) RecordWordPlay(sessionId, segmentKey, greekWord string
 	defer p.Unlock()
 
 	if _, exists := p.Data[sessionId]; !exists {
-		p.Data[sessionId] = &SessionProgress{Progress: make(map[string]map[string]*WordProgress)}
+		p.Data[sessionId] = &SessionProgress{Progress: make(map[string]map[string]*WordProgress), PreviousRuns: make(map[string][]map[string]*WordProgress)}
 	}
 
 	if _, exists := p.Data[sessionId].Progress[segmentKey]; !exists {
@@ -63,12 +70,38 @@ func (p *ProgressTracker) RecordWordPlay(sessionId, segmentKey, greekWord string
 	}
 }
 
+func (p *ProgressTracker) RecordAnswerResult(sessionId, segmentKey, greekWord string, correct bool) {
+	p.Lock()
+	defer p.Unlock()
+
+	session, exists := p.Data[sessionId]
+	if !exists {
+		return
+	}
+
+	segmentProgress, exists := session.Progress[segmentKey]
+	if !exists {
+		return
+	}
+
+	entry, exists := segmentProgress[greekWord]
+	if !exists {
+		return
+	}
+
+	if correct {
+		entry.CorrectCount++
+	} else {
+		entry.IncorrectCount++
+	}
+}
+
 func (p *ProgressTracker) InitWordsForSegment(sessionId, segmentKey string, greekWords []string) {
 	p.Lock()
 	defer p.Unlock()
 
 	if _, exists := p.Data[sessionId]; !exists {
-		p.Data[sessionId] = &SessionProgress{Progress: make(map[string]map[string]*WordProgress)}
+		p.Data[sessionId] = &SessionProgress{Progress: make(map[string]map[string]*WordProgress), PreviousRuns: make(map[string][]map[string]*WordProgress)}
 	}
 
 	if _, exists := p.Data[sessionId].Progress[segmentKey]; !exists {
@@ -77,7 +110,7 @@ func (p *ProgressTracker) InitWordsForSegment(sessionId, segmentKey string, gree
 
 	for _, word := range greekWords {
 		if _, exists := p.Data[sessionId].Progress[segmentKey][word]; !exists {
-			p.Data[sessionId].Progress[segmentKey][word] = &WordProgress{PlayCount: 0}
+			p.Data[sessionId].Progress[segmentKey][word] = &WordProgress{PlayCount: 0, CorrectCount: 0, IncorrectCount: 0}
 		}
 	}
 }
@@ -93,4 +126,72 @@ func (p *ProgressTracker) Exists(sessionId, segmentKey string) bool {
 
 	_, exists := session.Progress[segmentKey]
 	return exists
+}
+
+func (p *ProgressTracker) GetRetryableWords(sessionId, segmentKey string, doneAfter int) []string {
+	p.RLock()
+	defer p.RUnlock()
+
+	var retryable []string
+	session, exists := p.Data[sessionId]
+	if !exists {
+		return retryable
+	}
+
+	wordMap := session.Progress[segmentKey]
+	for word, progress := range wordMap {
+		if progress.CorrectCount < doneAfter {
+			retryable = append(retryable, word)
+		}
+	}
+	return retryable
+}
+
+func (wp *WordProgress) Accuracy() float64 {
+	if wp.PlayCount == 0 {
+		return 0.0
+	}
+	return float64(wp.CorrectCount) / float64(wp.PlayCount)
+}
+
+func (p *ProgressTracker) ResetSegment(sessionId, segmentKey string) {
+	p.Lock()
+	defer p.Unlock()
+
+	session, exists := p.Data[sessionId]
+	if !exists {
+		return
+	}
+
+	current := session.Progress[segmentKey]
+	if len(current) == 0 {
+		return
+	}
+
+	// Create archive map (shallow copy)
+	archived := make(map[string]*WordProgress, len(current))
+	for k, v := range current {
+		copied := *v // deep copy to avoid mutation
+		archived[k] = &copied
+	}
+
+	if session.PreviousRuns == nil {
+		session.PreviousRuns = make(map[string][]map[string]*WordProgress)
+	}
+	session.PreviousRuns[segmentKey] = append(session.PreviousRuns[segmentKey], archived)
+
+	// Now reset
+	session.Progress[segmentKey] = make(map[string]*WordProgress)
+}
+
+func (p *ProgressTracker) ClearSegment(sessionId, segmentKey string) {
+	p.Lock()
+	defer p.Unlock()
+
+	session, exists := p.Data[sessionId]
+	if !exists {
+		return
+	}
+
+	session.Progress[segmentKey] = make(map[string]*WordProgress)
 }
