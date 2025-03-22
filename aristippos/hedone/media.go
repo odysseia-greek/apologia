@@ -86,7 +86,7 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 	if request.ArchiveProgress {
 		m.Progress.ResetSegment(sessionId, segmentKey)
 	}
-	
+
 	cacheItem, err := m.Archytas.Read(segmentKey)
 	if err != nil {
 		logging.Error(fmt.Sprintf("error when reading cache: %s", err.Error()))
@@ -217,6 +217,19 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 		quiz.Options[i], quiz.Options[j] = quiz.Options[j], quiz.Options[i]
 	})
 
+	if sessionId != "" {
+		progressList := m.Progress.GetProgressForSegment(sessionId, segmentKey)
+		for word, p := range progressList {
+			quiz.Progress = append(quiz.Progress, &pb.ProgressEntry{
+				Greek:          word,
+				PlayCount:      int32(p.PlayCount),
+				CorrectCount:   int32(p.CorrectCount),
+				IncorrectCount: int32(p.IncorrectCount),
+				LastPlayed:     p.LastPlayed.Format(time.RFC3339),
+			})
+		}
+	}
+
 	return quiz, nil
 }
 
@@ -299,6 +312,19 @@ func (m *MediaServiceImpl) Answer(ctx context.Context, request *pb.AnswerRequest
 	}
 
 	m.Progress.RecordAnswerResult(sessionId, segmentKey, request.QuizWord, answer.Correct)
+
+	if sessionId != "" {
+		progressList := m.Progress.GetProgressForSegment(sessionId, segmentKey)
+		for word, p := range progressList {
+			answer.Progress = append(answer.Progress, &pb.ProgressEntry{
+				Greek:          word,
+				PlayCount:      int32(p.PlayCount),
+				CorrectCount:   int32(p.CorrectCount),
+				IncorrectCount: int32(p.IncorrectCount),
+				LastPlayed:     p.LastPlayed.Format(time.RFC3339),
+			})
+		}
+	}
 
 	return &answer, nil
 }

@@ -65,6 +65,7 @@ message QuizResponse {
   string quiz_item = 1;
   int32 number_of_items = 2;
   repeated Options options = 3;
+  repeated ProgressEntry progress = 4; // Optional: only if sessionId is set
 }
 
 // Quiz options (word, audio, image)
@@ -90,6 +91,7 @@ message ComprehensiveResponse {
   string quiz_word = 2;
   AnalyzeTextResponse found_in_text = 3; // Optional
   repeated Meros similar_words = 4; // Optional
+  repeated ProgressEntry progress = 5; // Optional: only if sessionId is set
 }
 
 // Similar words structure
@@ -129,4 +131,13 @@ message Rhema {
   string greek = 1;
   repeated string translations = 2;
   string section = 3;
+}
+
+// Word progress entry
+message ProgressEntry {
+  string greek = 1;
+  int32 play_count = 2;
+  int32 correct_count = 3;
+  int32 incorrect_count = 4;
+  string last_played = 5; // ISO timestamp format
 }

@@ -195,3 +195,13 @@ func (p *ProgressTracker) ClearSegment(sessionId, segmentKey string) {
 
 	session.Progress[segmentKey] = make(map[string]*WordProgress)
 }
+
+func (p *ProgressTracker) GetProgressForSegment(sessionId, segmentKey string) map[string]*WordProgress {
+	p.RLock()
+	defer p.RUnlock()
+
+	if session, ok := p.Data[sessionId]; ok {
+		return session.Progress[segmentKey]
+	}
+	return nil
+}
