@@ -8,7 +8,7 @@ require (
 	github.com/odysseia-greek/agora/eupalinos v0.1.0
 	github.com/odysseia-greek/agora/plato v0.2.5
 	github.com/odysseia-greek/delphi/aristides v0.0.1
-	github.com/odysseia-greek/olympia/aristarchos v0.0.12
+	github.com/odysseia-greek/olympia/aristarchos v0.0.13
 	github.com/stretchr/testify v1.10.0
 	google.golang.org/grpc v1.71.0
 )
@@ -64,9 +64,8 @@ require (
 	github.com/mxk/go-flowrate v0.0.0-20140419014527-cca7078d478f // indirect
 	github.com/odysseia-greek/agora/diogenes v0.1.15 // indirect
 	github.com/odysseia-greek/agora/thales v0.1.9 // indirect
-	github.com/odysseia-greek/attike/aristophanes v0.6.2 // indirect
+	github.com/odysseia-greek/attike/aristophanes v0.6.3 // indirect
 	github.com/odysseia-greek/attike/sophokles v0.0.5 // indirect
-	github.com/odysseia-greek/delphi/ptolemaios v0.0.5 // indirect
 	github.com/peterbourgon/diskv v2.0.1+incompatible // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
