@@ -6,6 +6,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/odysseia-greek/agora/plato/config"
 	pbartrippos "github.com/odysseia-greek/apologia/aristippos/proto"
@@ -15,9 +16,39 @@ import (
 	pbxenofon "github.com/odysseia-greek/apologia/xenofon/proto"
 )
 
+// Health is the resolver for the health field.
+func (r *queryResolver) Health(ctx context.Context) (*model.AggregatedHealthResponse, error) {
+	requestID, _ := ctx.Value(config.HeaderKey).(string)
+	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
+	return r.Handler.Health(requestID, sessionId)
+}
+
+// MediaOptions is the resolver for the mediaOptions field.
+func (r *queryResolver) MediaOptions(ctx context.Context) (*model.AggregatedOptions, error) {
+	requestID, _ := ctx.Value(config.HeaderKey).(string)
+	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
+	return r.Handler.MediaOptions(requestID, sessionId)
+}
+
+// MultipleChoiceOptions is the resolver for the multipleChoiceOptions field.
+func (r *queryResolver) MultipleChoiceOptions(ctx context.Context) (*model.AggregatedOptions, error) {
+	panic(fmt.Errorf("not implemented: MultipleChoiceOptions - multipleChoiceOptions"))
+}
+
+// AuthorBasedOptions is the resolver for the authorBasedOptions field.
+func (r *queryResolver) AuthorBasedOptions(ctx context.Context) (*model.AggregatedOptions, error) {
+	panic(fmt.Errorf("not implemented: AuthorBasedOptions - authorBasedOptions"))
+}
+
+// DialogueOptions is the resolver for the dialogueOptions field.
+func (r *queryResolver) DialogueOptions(ctx context.Context) (*model.AggregatedOptions, error) {
+	panic(fmt.Errorf("not implemented: DialogueOptions - dialogueOptions"))
+}
+
 // MediaAnswer is the resolver for the mediaAnswer field.
 func (r *queryResolver) MediaAnswer(ctx context.Context, input *model.MediaAnswerInput) (*model.ComprehensiveResponse, error) {
 	requestID, _ := ctx.Value(config.HeaderKey).(string)
+	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
 
 	pb := &pbartrippos.AnswerRequest{
 		Theme:         *input.Theme,
@@ -28,13 +59,13 @@ func (r *queryResolver) MediaAnswer(ctx context.Context, input *model.MediaAnswe
 		QuizWord:      *input.QuizWord,
 	}
 
-	return r.Handler.CheckMedia(pb, requestID)
+	return r.Handler.CheckMedia(pb, requestID, sessionId)
 }
 
 // MediaQuiz is the resolver for the mediaQuiz field.
 func (r *queryResolver) MediaQuiz(ctx context.Context, input *model.MediaQuizInput) (*model.MediaQuizResponse, error) {
 	requestID, _ := ctx.Value(config.HeaderKey).(string)
-	sessionId, _ := ctx.Value("session-id").(string)
+	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
 
 	pb := &pbartrippos.CreationRequest{
 		Theme:           *input.Theme,
@@ -156,3 +187,15 @@ func (r *queryResolver) DialogueQuiz(ctx context.Context, input *model.DialogueQ
 func (r *Resolver) Query() QueryResolver { return &queryResolver{r} }
 
 type queryResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//    it when you're done.
+//  - You have helper methods in this file. Move them out to keep these resolver files clean.
+/*
+	func (r *queryResolver) Options(ctx context.Context) (*model.AggregatedOptions, error) {
+
+}
+*/

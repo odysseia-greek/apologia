@@ -2,6 +2,17 @@
 
 package model
 
+type AggregatedHealthResponse struct {
+	Healthy  *bool            `json:"healthy,omitempty"`
+	Time     *string          `json:"time,omitempty"`
+	Version  *string          `json:"version,omitempty"`
+	Services []*ServiceHealth `json:"services,omitempty"`
+}
+
+type AggregatedOptions struct {
+	Themes []*Theme `json:"themes,omitempty"`
+}
+
 type AnalyzeResult struct {
 	Author        *string `json:"author,omitempty"`
 	Book          *string `json:"book,omitempty"`
@@ -60,6 +71,7 @@ type ComprehensiveResponse struct {
 	FoundInText  *AnalyzeTextResponse `json:"foundInText,omitempty"`
 	QuizWord     *string              `json:"quizWord,omitempty"`
 	SimilarWords []*Hit               `json:"similarWords,omitempty"`
+	Progress     []*ProgressEntry     `json:"progress,omitempty"`
 }
 
 type ConjugationResponse struct {
@@ -165,9 +177,10 @@ type MediaQuizInput struct {
 }
 
 type MediaQuizResponse struct {
-	NumberOfItems *int32          `json:"numberOfItems,omitempty"`
-	Options       []*MediaOptions `json:"options,omitempty"`
-	QuizItem      *string         `json:"quizItem,omitempty"`
+	NumberOfItems *int32           `json:"numberOfItems,omitempty"`
+	Options       []*MediaOptions  `json:"options,omitempty"`
+	QuizItem      *string          `json:"quizItem,omitempty"`
+	Progress      []*ProgressEntry `json:"progress,omitempty"`
 }
 
 type MultipleChoiceAnswerInput struct {
@@ -195,6 +208,14 @@ type Options struct {
 	Option *string `json:"option,omitempty"`
 }
 
+type ProgressEntry struct {
+	Greek          *string `json:"greek,omitempty"`
+	PlayCount      *int32  `json:"playCount,omitempty"`
+	CorrectCount   *int32  `json:"correctCount,omitempty"`
+	IncorrectCount *int32  `json:"incorrectCount,omitempty"`
+	LastPlayed     *string `json:"lastPlayed,omitempty"`
+}
+
 type Query struct {
 }
 
@@ -208,8 +229,25 @@ type Rhema struct {
 	Translations []*string `json:"translations,omitempty"`
 }
 
+type Segment struct {
+	Name   *string  `json:"name,omitempty"`
+	MaxSet *float64 `json:"maxSet,omitempty"`
+}
+
+type ServiceHealth struct {
+	Name           *string `json:"name,omitempty"`
+	Healthy        *bool   `json:"healthy,omitempty"`
+	DatabaseHealth *bool   `json:"databaseHealth,omitempty"`
+	Version        *string `json:"version,omitempty"`
+}
+
 type Speaker struct {
 	Name        *string `json:"name,omitempty"`
 	Shorthand   *string `json:"shorthand,omitempty"`
 	Translation *string `json:"translation,omitempty"`
+}
+
+type Theme struct {
+	Name     *string    `json:"name,omitempty"`
+	Segments []*Segment `json:"segments,omitempty"`
 }

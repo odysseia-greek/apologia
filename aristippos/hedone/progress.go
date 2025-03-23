@@ -196,12 +196,33 @@ func (p *ProgressTracker) ClearSegment(sessionId, segmentKey string) {
 	session.Progress[segmentKey] = make(map[string]*WordProgress)
 }
 
-func (p *ProgressTracker) GetProgressForSegment(sessionId, segmentKey string) map[string]*WordProgress {
+func (p *ProgressTracker) GetProgressForSegment(sessionId, segmentKey string, doneAfter int) (map[string]*WordProgress, bool) {
 	p.RLock()
 	defer p.RUnlock()
 
 	if session, ok := p.Data[sessionId]; ok {
-		return session.Progress[segmentKey]
+		finished := p.isSegmentFinished(sessionId, segmentKey, doneAfter)
+		return session.Progress[segmentKey], finished
 	}
-	return nil
+	return nil, false
+}
+
+func (p *ProgressTracker) isSegmentFinished(sessionId, segmentKey string, doneAfter int) bool {
+	session, exists := p.Data[sessionId]
+	if !exists {
+		return false
+	}
+
+	wordMap := session.Progress[segmentKey]
+	if len(wordMap) == 0 {
+		return false
+	}
+
+	for _, progress := range wordMap {
+		if progress.CorrectCount < doneAfter {
+			return false
+		}
+	}
+
+	return true
 }

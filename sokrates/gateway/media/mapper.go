@@ -33,6 +33,16 @@ func MapComprehensiveResponse(grpcResp *pbartrippos.ComprehensiveResponse) *mode
 		})
 	}
 
+	for _, progress := range grpcResp.Progress {
+		mappedResponse.Progress = append(mappedResponse.Progress, &model.ProgressEntry{
+			Greek:          &progress.Greek,
+			PlayCount:      &progress.PlayCount,
+			CorrectCount:   &progress.CorrectCount,
+			IncorrectCount: &progress.IncorrectCount,
+			LastPlayed:     &progress.LastPlayed,
+		})
+	}
+
 	return mappedResponse
 }
 

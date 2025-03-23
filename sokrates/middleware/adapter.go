@@ -43,7 +43,7 @@ func LogRequestDetails(tracer pb.TraceService_ChorusClient) Adapter {
 	return func(f http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			requestId := r.Header.Get(config.HeaderKey)
-			sessionId := r.Header.Get("session-id")
+			sessionId := r.Header.Get(config.SessionIdKey)
 			trace := traceFromString(requestId)
 
 			bodyBytes, err := io.ReadAll(r.Body)
@@ -109,9 +109,9 @@ func LogRequestDetails(tracer pb.TraceService_ChorusClient) Adapter {
 			}
 
 			w.Header().Set(config.HeaderKey, requestId)
-			w.Header().Set("session-id", sessionId)
+			w.Header().Set(config.SessionIdKey, sessionId)
 			ctx := context.WithValue(r.Context(), config.HeaderKey, requestId)
-			ctx = context.WithValue(ctx, "session-id", sessionId)
+			ctx = context.WithValue(ctx, config.SessionIdKey, sessionId)
 			f.ServeHTTP(w, r.WithContext(ctx))
 		})
 	}

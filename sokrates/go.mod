@@ -5,8 +5,8 @@ go 1.24.0
 require (
 	github.com/99designs/gqlgen v0.17.68
 	github.com/gorilla/mux v1.8.1
-	github.com/odysseia-greek/agora/plato v0.2.5
-	github.com/odysseia-greek/apologia/aristippos v0.0.5
+	github.com/odysseia-greek/agora/plato v0.2.6
+	github.com/odysseia-greek/apologia/aristippos v0.0.6
 	github.com/odysseia-greek/apologia/kritias v0.0.2
 	github.com/odysseia-greek/apologia/kriton v0.0.1
 	github.com/odysseia-greek/apologia/xenofon v0.0.1

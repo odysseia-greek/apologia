@@ -3,6 +3,7 @@ type ComprehensiveResponse {
   foundInText: AnalyzeTextResponse
   quizWord: String
   similarWords: [Hit]
+  progress: [ProgressEntry]
 }
 
 type MediaOptions {
@@ -19,6 +20,7 @@ type MediaQuizResponse {
   numberOfItems: Int
   options: [MediaOptions]
   quizItem: String
+  progress: [ProgressEntry]
 }
 
 type MultipleChoiceResponse {
@@ -107,6 +109,43 @@ type DialogueCorrection {
   correctPlace: Int
 }
 
+type ProgressEntry {
+  greek: String
+  playCount: Int
+  correctCount: Int
+  incorrectCount: Int
+  lastPlayed: String
+}
+
+
+type AggregatedHealthResponse {
+  healthy: Boolean
+  time: String
+  version: String
+  services: [ServiceHealth]
+}
+
+type ServiceHealth {
+  name: String
+  healthy: Boolean
+  databaseHealth: Boolean
+  version: String
+}
+
+type AggregatedOptions {
+  themes: [Theme]
+}
+
+type Theme {
+  name: String
+  segments: [Segment]
+}
+
+type Segment {
+  name: String
+  maxSet: Float
+}
+
 input MediaAnswerInput {
   theme: String
   set: String
@@ -175,6 +214,12 @@ input DialogueInputContent {
 }
 
 type Query {
+  health: AggregatedHealthResponse
+  mediaOptions: AggregatedOptions
+  multipleChoiceOptions: AggregatedOptions
+  authorBasedOptions: AggregatedOptions
+  dialogueOptions: AggregatedOptions
+
   mediaAnswer(input: MediaAnswerInput): ComprehensiveResponse
   mediaQuiz(input: MediaQuizInput): MediaQuizResponse
   multipleChoiceAnswer(input: MultipleChoiceAnswerInput): ComprehensiveResponse

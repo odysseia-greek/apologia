@@ -46,6 +46,17 @@ type DirectiveRoot struct {
 }
 
 type ComplexityRoot struct {
+	AggregatedHealthResponse struct {
+		Healthy  func(childComplexity int) int
+		Services func(childComplexity int) int
+		Time     func(childComplexity int) int
+		Version  func(childComplexity int) int
+	}
+
+	AggregatedOptions struct {
+		Themes func(childComplexity int) int
+	}
+
 	AnalyzeResult struct {
 		Author        func(childComplexity int) int
 		Book          func(childComplexity int) int
@@ -87,6 +98,7 @@ type ComplexityRoot struct {
 	ComprehensiveResponse struct {
 		Correct      func(childComplexity int) int
 		FoundInText  func(childComplexity int) int
+		Progress     func(childComplexity int) int
 		QuizWord     func(childComplexity int) int
 		SimilarWords func(childComplexity int) int
 	}
@@ -159,6 +171,7 @@ type ComplexityRoot struct {
 	MediaQuizResponse struct {
 		NumberOfItems func(childComplexity int) int
 		Options       func(childComplexity int) int
+		Progress      func(childComplexity int) int
 		QuizItem      func(childComplexity int) int
 	}
 
@@ -172,15 +185,28 @@ type ComplexityRoot struct {
 		Option func(childComplexity int) int
 	}
 
+	ProgressEntry struct {
+		CorrectCount   func(childComplexity int) int
+		Greek          func(childComplexity int) int
+		IncorrectCount func(childComplexity int) int
+		LastPlayed     func(childComplexity int) int
+		PlayCount      func(childComplexity int) int
+	}
+
 	Query struct {
-		AuthorBasedAnswer    func(childComplexity int, input *model.AuthorBasedAnswerInput) int
-		AuthorBasedQuiz      func(childComplexity int, input *model.AuthorBasedInput) int
-		DialogueAnswer       func(childComplexity int, input *model.DialogueAnswerInput) int
-		DialogueQuiz         func(childComplexity int, input *model.DialogueQuizInput) int
-		MediaAnswer          func(childComplexity int, input *model.MediaAnswerInput) int
-		MediaQuiz            func(childComplexity int, input *model.MediaQuizInput) int
-		MultipleChoiceAnswer func(childComplexity int, input *model.MultipleChoiceAnswerInput) int
-		MultipleChoiceQuiz   func(childComplexity int, input *model.MultipleQuizInput) int
+		AuthorBasedAnswer     func(childComplexity int, input *model.AuthorBasedAnswerInput) int
+		AuthorBasedOptions    func(childComplexity int) int
+		AuthorBasedQuiz       func(childComplexity int, input *model.AuthorBasedInput) int
+		DialogueAnswer        func(childComplexity int, input *model.DialogueAnswerInput) int
+		DialogueOptions       func(childComplexity int) int
+		DialogueQuiz          func(childComplexity int, input *model.DialogueQuizInput) int
+		Health                func(childComplexity int) int
+		MediaAnswer           func(childComplexity int, input *model.MediaAnswerInput) int
+		MediaOptions          func(childComplexity int) int
+		MediaQuiz             func(childComplexity int, input *model.MediaQuizInput) int
+		MultipleChoiceAnswer  func(childComplexity int, input *model.MultipleChoiceAnswerInput) int
+		MultipleChoiceOptions func(childComplexity int) int
+		MultipleChoiceQuiz    func(childComplexity int, input *model.MultipleQuizInput) int
 	}
 
 	QuizMetadata struct {
@@ -193,14 +219,36 @@ type ComplexityRoot struct {
 		Translations func(childComplexity int) int
 	}
 
+	Segment struct {
+		MaxSet func(childComplexity int) int
+		Name   func(childComplexity int) int
+	}
+
+	ServiceHealth struct {
+		DatabaseHealth func(childComplexity int) int
+		Healthy        func(childComplexity int) int
+		Name           func(childComplexity int) int
+		Version        func(childComplexity int) int
+	}
+
 	Speaker struct {
 		Name        func(childComplexity int) int
 		Shorthand   func(childComplexity int) int
 		Translation func(childComplexity int) int
 	}
+
+	Theme struct {
+		Name     func(childComplexity int) int
+		Segments func(childComplexity int) int
+	}
 }
 
 type QueryResolver interface {
+	Health(ctx context.Context) (*model.AggregatedHealthResponse, error)
+	MediaOptions(ctx context.Context) (*model.AggregatedOptions, error)
+	MultipleChoiceOptions(ctx context.Context) (*model.AggregatedOptions, error)
+	AuthorBasedOptions(ctx context.Context) (*model.AggregatedOptions, error)
+	DialogueOptions(ctx context.Context) (*model.AggregatedOptions, error)
 	MediaAnswer(ctx context.Context, input *model.MediaAnswerInput) (*model.ComprehensiveResponse, error)
 	MediaQuiz(ctx context.Context, input *model.MediaQuizInput) (*model.MediaQuizResponse, error)
 	MultipleChoiceAnswer(ctx context.Context, input *model.MultipleChoiceAnswerInput) (*model.ComprehensiveResponse, error)
@@ -229,6 +277,41 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 	ec := executionContext{nil, e, 0, 0, nil}
 	_ = ec
 	switch typeName + "." + field {
+
+	case "AggregatedHealthResponse.healthy":
+		if e.complexity.AggregatedHealthResponse.Healthy == nil {
+			break
+		}
+
+		return e.complexity.AggregatedHealthResponse.Healthy(childComplexity), true
+
+	case "AggregatedHealthResponse.services":
+		if e.complexity.AggregatedHealthResponse.Services == nil {
+			break
+		}
+
+		return e.complexity.AggregatedHealthResponse.Services(childComplexity), true
+
+	case "AggregatedHealthResponse.time":
+		if e.complexity.AggregatedHealthResponse.Time == nil {
+			break
+		}
+
+		return e.complexity.AggregatedHealthResponse.Time(childComplexity), true
+
+	case "AggregatedHealthResponse.version":
+		if e.complexity.AggregatedHealthResponse.Version == nil {
+			break
+		}
+
+		return e.complexity.AggregatedHealthResponse.Version(childComplexity), true
+
+	case "AggregatedOptions.themes":
+		if e.complexity.AggregatedOptions.Themes == nil {
+			break
+		}
+
+		return e.complexity.AggregatedOptions.Themes(childComplexity), true
 
 	case "AnalyzeResult.author":
 		if e.complexity.AnalyzeResult.Author == nil {
@@ -383,6 +466,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.ComprehensiveResponse.FoundInText(childComplexity), true
+
+	case "ComprehensiveResponse.progress":
+		if e.complexity.ComprehensiveResponse.Progress == nil {
+			break
+		}
+
+		return e.complexity.ComprehensiveResponse.Progress(childComplexity), true
 
 	case "ComprehensiveResponse.quizWord":
 		if e.complexity.ComprehensiveResponse.QuizWord == nil {
@@ -678,6 +768,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.MediaQuizResponse.Options(childComplexity), true
 
+	case "MediaQuizResponse.progress":
+		if e.complexity.MediaQuizResponse.Progress == nil {
+			break
+		}
+
+		return e.complexity.MediaQuizResponse.Progress(childComplexity), true
+
 	case "MediaQuizResponse.quizItem":
 		if e.complexity.MediaQuizResponse.QuizItem == nil {
 			break
@@ -713,6 +810,41 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Options.Option(childComplexity), true
 
+	case "ProgressEntry.correctCount":
+		if e.complexity.ProgressEntry.CorrectCount == nil {
+			break
+		}
+
+		return e.complexity.ProgressEntry.CorrectCount(childComplexity), true
+
+	case "ProgressEntry.greek":
+		if e.complexity.ProgressEntry.Greek == nil {
+			break
+		}
+
+		return e.complexity.ProgressEntry.Greek(childComplexity), true
+
+	case "ProgressEntry.incorrectCount":
+		if e.complexity.ProgressEntry.IncorrectCount == nil {
+			break
+		}
+
+		return e.complexity.ProgressEntry.IncorrectCount(childComplexity), true
+
+	case "ProgressEntry.lastPlayed":
+		if e.complexity.ProgressEntry.LastPlayed == nil {
+			break
+		}
+
+		return e.complexity.ProgressEntry.LastPlayed(childComplexity), true
+
+	case "ProgressEntry.playCount":
+		if e.complexity.ProgressEntry.PlayCount == nil {
+			break
+		}
+
+		return e.complexity.ProgressEntry.PlayCount(childComplexity), true
+
 	case "Query.authorBasedAnswer":
 		if e.complexity.Query.AuthorBasedAnswer == nil {
 			break
@@ -724,6 +856,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.AuthorBasedAnswer(childComplexity, args["input"].(*model.AuthorBasedAnswerInput)), true
+
+	case "Query.authorBasedOptions":
+		if e.complexity.Query.AuthorBasedOptions == nil {
+			break
+		}
+
+		return e.complexity.Query.AuthorBasedOptions(childComplexity), true
 
 	case "Query.authorBasedQuiz":
 		if e.complexity.Query.AuthorBasedQuiz == nil {
@@ -749,6 +888,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.DialogueAnswer(childComplexity, args["input"].(*model.DialogueAnswerInput)), true
 
+	case "Query.dialogueOptions":
+		if e.complexity.Query.DialogueOptions == nil {
+			break
+		}
+
+		return e.complexity.Query.DialogueOptions(childComplexity), true
+
 	case "Query.dialogueQuiz":
 		if e.complexity.Query.DialogueQuiz == nil {
 			break
@@ -761,6 +907,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.DialogueQuiz(childComplexity, args["input"].(*model.DialogueQuizInput)), true
 
+	case "Query.health":
+		if e.complexity.Query.Health == nil {
+			break
+		}
+
+		return e.complexity.Query.Health(childComplexity), true
+
 	case "Query.mediaAnswer":
 		if e.complexity.Query.MediaAnswer == nil {
 			break
@@ -772,6 +925,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.MediaAnswer(childComplexity, args["input"].(*model.MediaAnswerInput)), true
+
+	case "Query.mediaOptions":
+		if e.complexity.Query.MediaOptions == nil {
+			break
+		}
+
+		return e.complexity.Query.MediaOptions(childComplexity), true
 
 	case "Query.mediaQuiz":
 		if e.complexity.Query.MediaQuiz == nil {
@@ -796,6 +956,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.MultipleChoiceAnswer(childComplexity, args["input"].(*model.MultipleChoiceAnswerInput)), true
+
+	case "Query.multipleChoiceOptions":
+		if e.complexity.Query.MultipleChoiceOptions == nil {
+			break
+		}
+
+		return e.complexity.Query.MultipleChoiceOptions(childComplexity), true
 
 	case "Query.multipleChoiceQuiz":
 		if e.complexity.Query.MultipleChoiceQuiz == nil {
@@ -837,6 +1004,48 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Rhema.Translations(childComplexity), true
 
+	case "Segment.maxSet":
+		if e.complexity.Segment.MaxSet == nil {
+			break
+		}
+
+		return e.complexity.Segment.MaxSet(childComplexity), true
+
+	case "Segment.name":
+		if e.complexity.Segment.Name == nil {
+			break
+		}
+
+		return e.complexity.Segment.Name(childComplexity), true
+
+	case "ServiceHealth.databaseHealth":
+		if e.complexity.ServiceHealth.DatabaseHealth == nil {
+			break
+		}
+
+		return e.complexity.ServiceHealth.DatabaseHealth(childComplexity), true
+
+	case "ServiceHealth.healthy":
+		if e.complexity.ServiceHealth.Healthy == nil {
+			break
+		}
+
+		return e.complexity.ServiceHealth.Healthy(childComplexity), true
+
+	case "ServiceHealth.name":
+		if e.complexity.ServiceHealth.Name == nil {
+			break
+		}
+
+		return e.complexity.ServiceHealth.Name(childComplexity), true
+
+	case "ServiceHealth.version":
+		if e.complexity.ServiceHealth.Version == nil {
+			break
+		}
+
+		return e.complexity.ServiceHealth.Version(childComplexity), true
+
 	case "Speaker.name":
 		if e.complexity.Speaker.Name == nil {
 			break
@@ -857,6 +1066,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Speaker.Translation(childComplexity), true
+
+	case "Theme.name":
+		if e.complexity.Theme.Name == nil {
+			break
+		}
+
+		return e.complexity.Theme.Name(childComplexity), true
+
+	case "Theme.segments":
+		if e.complexity.Theme.Segments == nil {
+			break
+		}
+
+		return e.complexity.Theme.Segments(childComplexity), true
 
 	}
 	return 0, false
@@ -1283,6 +1506,227 @@ func (ec *executionContext) field___Type_fields_argsIncludeDeprecated(
 // endregion ************************** directives.gotpl **************************
 
 // region    **************************** field.gotpl *****************************
+
+func (ec *executionContext) _AggregatedHealthResponse_healthy(ctx context.Context, field graphql.CollectedField, obj *model.AggregatedHealthResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AggregatedHealthResponse_healthy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Healthy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AggregatedHealthResponse_healthy(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AggregatedHealthResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AggregatedHealthResponse_time(ctx context.Context, field graphql.CollectedField, obj *model.AggregatedHealthResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AggregatedHealthResponse_time(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Time, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AggregatedHealthResponse_time(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AggregatedHealthResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AggregatedHealthResponse_version(ctx context.Context, field graphql.CollectedField, obj *model.AggregatedHealthResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AggregatedHealthResponse_version(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Version, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AggregatedHealthResponse_version(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AggregatedHealthResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AggregatedHealthResponse_services(ctx context.Context, field graphql.CollectedField, obj *model.AggregatedHealthResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AggregatedHealthResponse_services(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Services, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.ServiceHealth)
+	fc.Result = res
+	return ec.marshalOServiceHealth2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐServiceHealth(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AggregatedHealthResponse_services(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AggregatedHealthResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "name":
+				return ec.fieldContext_ServiceHealth_name(ctx, field)
+			case "healthy":
+				return ec.fieldContext_ServiceHealth_healthy(ctx, field)
+			case "databaseHealth":
+				return ec.fieldContext_ServiceHealth_databaseHealth(ctx, field)
+			case "version":
+				return ec.fieldContext_ServiceHealth_version(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ServiceHealth", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AggregatedOptions_themes(ctx context.Context, field graphql.CollectedField, obj *model.AggregatedOptions) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AggregatedOptions_themes(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Themes, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.Theme)
+	fc.Result = res
+	return ec.marshalOTheme2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐTheme(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AggregatedOptions_themes(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AggregatedOptions",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "name":
+				return ec.fieldContext_Theme_name(ctx, field)
+			case "segments":
+				return ec.fieldContext_Theme_segments(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Theme", field.Name)
+		},
+	}
+	return fc, nil
+}
 
 func (ec *executionContext) _AnalyzeResult_author(ctx context.Context, field graphql.CollectedField, obj *model.AnalyzeResult) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_AnalyzeResult_author(ctx, field)
@@ -2331,6 +2775,59 @@ func (ec *executionContext) fieldContext_ComprehensiveResponse_similarWords(_ co
 				return ec.fieldContext_Hit_original(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Hit", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ComprehensiveResponse_progress(ctx context.Context, field graphql.CollectedField, obj *model.ComprehensiveResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ComprehensiveResponse_progress(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Progress, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.ProgressEntry)
+	fc.Result = res
+	return ec.marshalOProgressEntry2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐProgressEntry(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ComprehensiveResponse_progress(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ComprehensiveResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "greek":
+				return ec.fieldContext_ProgressEntry_greek(ctx, field)
+			case "playCount":
+				return ec.fieldContext_ProgressEntry_playCount(ctx, field)
+			case "correctCount":
+				return ec.fieldContext_ProgressEntry_correctCount(ctx, field)
+			case "incorrectCount":
+				return ec.fieldContext_ProgressEntry_incorrectCount(ctx, field)
+			case "lastPlayed":
+				return ec.fieldContext_ProgressEntry_lastPlayed(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ProgressEntry", field.Name)
 		},
 	}
 	return fc, nil
@@ -4093,6 +4590,59 @@ func (ec *executionContext) fieldContext_MediaQuizResponse_quizItem(_ context.Co
 	return fc, nil
 }
 
+func (ec *executionContext) _MediaQuizResponse_progress(ctx context.Context, field graphql.CollectedField, obj *model.MediaQuizResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_MediaQuizResponse_progress(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Progress, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.ProgressEntry)
+	fc.Result = res
+	return ec.marshalOProgressEntry2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐProgressEntry(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_MediaQuizResponse_progress(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "MediaQuizResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "greek":
+				return ec.fieldContext_ProgressEntry_greek(ctx, field)
+			case "playCount":
+				return ec.fieldContext_ProgressEntry_playCount(ctx, field)
+			case "correctCount":
+				return ec.fieldContext_ProgressEntry_correctCount(ctx, field)
+			case "incorrectCount":
+				return ec.fieldContext_ProgressEntry_incorrectCount(ctx, field)
+			case "lastPlayed":
+				return ec.fieldContext_ProgressEntry_lastPlayed(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ProgressEntry", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _MultipleChoiceResponse_numberOfItems(ctx context.Context, field graphql.CollectedField, obj *model.MultipleChoiceResponse) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_MultipleChoiceResponse_numberOfItems(ctx, field)
 	if err != nil {
@@ -4261,6 +4811,442 @@ func (ec *executionContext) fieldContext_Options_option(_ context.Context, field
 	return fc, nil
 }
 
+func (ec *executionContext) _ProgressEntry_greek(ctx context.Context, field graphql.CollectedField, obj *model.ProgressEntry) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ProgressEntry_greek(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Greek, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ProgressEntry_greek(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ProgressEntry",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ProgressEntry_playCount(ctx context.Context, field graphql.CollectedField, obj *model.ProgressEntry) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ProgressEntry_playCount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PlayCount, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int32)
+	fc.Result = res
+	return ec.marshalOInt2ᚖint32(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ProgressEntry_playCount(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ProgressEntry",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ProgressEntry_correctCount(ctx context.Context, field graphql.CollectedField, obj *model.ProgressEntry) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ProgressEntry_correctCount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CorrectCount, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int32)
+	fc.Result = res
+	return ec.marshalOInt2ᚖint32(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ProgressEntry_correctCount(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ProgressEntry",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ProgressEntry_incorrectCount(ctx context.Context, field graphql.CollectedField, obj *model.ProgressEntry) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ProgressEntry_incorrectCount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IncorrectCount, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int32)
+	fc.Result = res
+	return ec.marshalOInt2ᚖint32(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ProgressEntry_incorrectCount(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ProgressEntry",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ProgressEntry_lastPlayed(ctx context.Context, field graphql.CollectedField, obj *model.ProgressEntry) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ProgressEntry_lastPlayed(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.LastPlayed, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ProgressEntry_lastPlayed(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ProgressEntry",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_health(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_health(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().Health(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.AggregatedHealthResponse)
+	fc.Result = res
+	return ec.marshalOAggregatedHealthResponse2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐAggregatedHealthResponse(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_health(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "healthy":
+				return ec.fieldContext_AggregatedHealthResponse_healthy(ctx, field)
+			case "time":
+				return ec.fieldContext_AggregatedHealthResponse_time(ctx, field)
+			case "version":
+				return ec.fieldContext_AggregatedHealthResponse_version(ctx, field)
+			case "services":
+				return ec.fieldContext_AggregatedHealthResponse_services(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type AggregatedHealthResponse", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_mediaOptions(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_mediaOptions(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().MediaOptions(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.AggregatedOptions)
+	fc.Result = res
+	return ec.marshalOAggregatedOptions2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐAggregatedOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_mediaOptions(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "themes":
+				return ec.fieldContext_AggregatedOptions_themes(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type AggregatedOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_multipleChoiceOptions(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_multipleChoiceOptions(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().MultipleChoiceOptions(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.AggregatedOptions)
+	fc.Result = res
+	return ec.marshalOAggregatedOptions2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐAggregatedOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_multipleChoiceOptions(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "themes":
+				return ec.fieldContext_AggregatedOptions_themes(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type AggregatedOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_authorBasedOptions(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_authorBasedOptions(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().AuthorBasedOptions(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.AggregatedOptions)
+	fc.Result = res
+	return ec.marshalOAggregatedOptions2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐAggregatedOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_authorBasedOptions(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "themes":
+				return ec.fieldContext_AggregatedOptions_themes(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type AggregatedOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_dialogueOptions(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_dialogueOptions(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().DialogueOptions(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.AggregatedOptions)
+	fc.Result = res
+	return ec.marshalOAggregatedOptions2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐAggregatedOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_dialogueOptions(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "themes":
+				return ec.fieldContext_AggregatedOptions_themes(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type AggregatedOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query_mediaAnswer(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query_mediaAnswer(ctx, field)
 	if err != nil {
@@ -4305,6 +5291,8 @@ func (ec *executionContext) fieldContext_Query_mediaAnswer(ctx context.Context, 
 				return ec.fieldContext_ComprehensiveResponse_quizWord(ctx, field)
 			case "similarWords":
 				return ec.fieldContext_ComprehensiveResponse_similarWords(ctx, field)
+			case "progress":
+				return ec.fieldContext_ComprehensiveResponse_progress(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ComprehensiveResponse", field.Name)
 		},
@@ -4365,6 +5353,8 @@ func (ec *executionContext) fieldContext_Query_mediaQuiz(ctx context.Context, fi
 				return ec.fieldContext_MediaQuizResponse_options(ctx, field)
 			case "quizItem":
 				return ec.fieldContext_MediaQuizResponse_quizItem(ctx, field)
+			case "progress":
+				return ec.fieldContext_MediaQuizResponse_progress(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type MediaQuizResponse", field.Name)
 		},
@@ -4427,6 +5417,8 @@ func (ec *executionContext) fieldContext_Query_multipleChoiceAnswer(ctx context.
 				return ec.fieldContext_ComprehensiveResponse_quizWord(ctx, field)
 			case "similarWords":
 				return ec.fieldContext_ComprehensiveResponse_similarWords(ctx, field)
+			case "progress":
+				return ec.fieldContext_ComprehensiveResponse_progress(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ComprehensiveResponse", field.Name)
 		},
@@ -5054,6 +6046,252 @@ func (ec *executionContext) fieldContext_Rhema_translations(_ context.Context, f
 	return fc, nil
 }
 
+func (ec *executionContext) _Segment_name(ctx context.Context, field graphql.CollectedField, obj *model.Segment) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Segment_name(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Name, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Segment_name(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Segment",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Segment_maxSet(ctx context.Context, field graphql.CollectedField, obj *model.Segment) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Segment_maxSet(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.MaxSet, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*float64)
+	fc.Result = res
+	return ec.marshalOFloat2ᚖfloat64(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Segment_maxSet(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Segment",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Float does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ServiceHealth_name(ctx context.Context, field graphql.CollectedField, obj *model.ServiceHealth) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ServiceHealth_name(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Name, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ServiceHealth_name(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ServiceHealth",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ServiceHealth_healthy(ctx context.Context, field graphql.CollectedField, obj *model.ServiceHealth) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ServiceHealth_healthy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Healthy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ServiceHealth_healthy(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ServiceHealth",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ServiceHealth_databaseHealth(ctx context.Context, field graphql.CollectedField, obj *model.ServiceHealth) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ServiceHealth_databaseHealth(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DatabaseHealth, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ServiceHealth_databaseHealth(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ServiceHealth",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ServiceHealth_version(ctx context.Context, field graphql.CollectedField, obj *model.ServiceHealth) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ServiceHealth_version(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Version, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ServiceHealth_version(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ServiceHealth",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Speaker_name(ctx context.Context, field graphql.CollectedField, obj *model.Speaker) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Speaker_name(ctx, field)
 	if err != nil {
@@ -5172,6 +6410,94 @@ func (ec *executionContext) fieldContext_Speaker_translation(_ context.Context, 
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Theme_name(ctx context.Context, field graphql.CollectedField, obj *model.Theme) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Theme_name(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Name, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Theme_name(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Theme",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Theme_segments(ctx context.Context, field graphql.CollectedField, obj *model.Theme) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Theme_segments(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Segments, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.Segment)
+	fc.Result = res
+	return ec.marshalOSegment2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐSegment(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Theme_segments(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Theme",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "name":
+				return ec.fieldContext_Segment_name(ctx, field)
+			case "maxSet":
+				return ec.fieldContext_Segment_maxSet(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Segment", field.Name)
 		},
 	}
 	return fc, nil
@@ -7596,6 +8922,84 @@ func (ec *executionContext) unmarshalInputMultipleQuizInput(ctx context.Context,
 
 // region    **************************** object.gotpl ****************************
 
+var aggregatedHealthResponseImplementors = []string{"AggregatedHealthResponse"}
+
+func (ec *executionContext) _AggregatedHealthResponse(ctx context.Context, sel ast.SelectionSet, obj *model.AggregatedHealthResponse) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, aggregatedHealthResponseImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("AggregatedHealthResponse")
+		case "healthy":
+			out.Values[i] = ec._AggregatedHealthResponse_healthy(ctx, field, obj)
+		case "time":
+			out.Values[i] = ec._AggregatedHealthResponse_time(ctx, field, obj)
+		case "version":
+			out.Values[i] = ec._AggregatedHealthResponse_version(ctx, field, obj)
+		case "services":
+			out.Values[i] = ec._AggregatedHealthResponse_services(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var aggregatedOptionsImplementors = []string{"AggregatedOptions"}
+
+func (ec *executionContext) _AggregatedOptions(ctx context.Context, sel ast.SelectionSet, obj *model.AggregatedOptions) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, aggregatedOptionsImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("AggregatedOptions")
+		case "themes":
+			out.Values[i] = ec._AggregatedOptions_themes(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
 var analyzeResultImplementors = []string{"AnalyzeResult"}
 
 func (ec *executionContext) _AnalyzeResult(ctx context.Context, sel ast.SelectionSet, obj *model.AnalyzeResult) graphql.Marshaler {
@@ -7859,6 +9263,8 @@ func (ec *executionContext) _ComprehensiveResponse(ctx context.Context, sel ast.
 			out.Values[i] = ec._ComprehensiveResponse_quizWord(ctx, field, obj)
 		case "similarWords":
 			out.Values[i] = ec._ComprehensiveResponse_similarWords(ctx, field, obj)
+		case "progress":
+			out.Values[i] = ec._ComprehensiveResponse_progress(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -8281,6 +9687,8 @@ func (ec *executionContext) _MediaQuizResponse(ctx context.Context, sel ast.Sele
 			out.Values[i] = ec._MediaQuizResponse_options(ctx, field, obj)
 		case "quizItem":
 			out.Values[i] = ec._MediaQuizResponse_quizItem(ctx, field, obj)
+		case "progress":
+			out.Values[i] = ec._MediaQuizResponse_progress(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -8380,6 +9788,50 @@ func (ec *executionContext) _Options(ctx context.Context, sel ast.SelectionSet, 
 	return out
 }
 
+var progressEntryImplementors = []string{"ProgressEntry"}
+
+func (ec *executionContext) _ProgressEntry(ctx context.Context, sel ast.SelectionSet, obj *model.ProgressEntry) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, progressEntryImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("ProgressEntry")
+		case "greek":
+			out.Values[i] = ec._ProgressEntry_greek(ctx, field, obj)
+		case "playCount":
+			out.Values[i] = ec._ProgressEntry_playCount(ctx, field, obj)
+		case "correctCount":
+			out.Values[i] = ec._ProgressEntry_correctCount(ctx, field, obj)
+		case "incorrectCount":
+			out.Values[i] = ec._ProgressEntry_incorrectCount(ctx, field, obj)
+		case "lastPlayed":
+			out.Values[i] = ec._ProgressEntry_lastPlayed(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
 var queryImplementors = []string{"Query"}
 
 func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) graphql.Marshaler {
@@ -8399,6 +9851,101 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Query")
+		case "health":
+			field := field
+
+			innerFunc := func(ctx context.Context, _ *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_health(ctx, field)
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "mediaOptions":
+			field := field
+
+			innerFunc := func(ctx context.Context, _ *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_mediaOptions(ctx, field)
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "multipleChoiceOptions":
+			field := field
+
+			innerFunc := func(ctx context.Context, _ *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_multipleChoiceOptions(ctx, field)
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "authorBasedOptions":
+			field := field
+
+			innerFunc := func(ctx context.Context, _ *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_authorBasedOptions(ctx, field)
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "dialogueOptions":
+			field := field
+
+			innerFunc := func(ctx context.Context, _ *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_dialogueOptions(ctx, field)
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
 		case "mediaAnswer":
 			field := field
 
@@ -8658,6 +10205,86 @@ func (ec *executionContext) _Rhema(ctx context.Context, sel ast.SelectionSet, ob
 	return out
 }
 
+var segmentImplementors = []string{"Segment"}
+
+func (ec *executionContext) _Segment(ctx context.Context, sel ast.SelectionSet, obj *model.Segment) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, segmentImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("Segment")
+		case "name":
+			out.Values[i] = ec._Segment_name(ctx, field, obj)
+		case "maxSet":
+			out.Values[i] = ec._Segment_maxSet(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var serviceHealthImplementors = []string{"ServiceHealth"}
+
+func (ec *executionContext) _ServiceHealth(ctx context.Context, sel ast.SelectionSet, obj *model.ServiceHealth) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, serviceHealthImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("ServiceHealth")
+		case "name":
+			out.Values[i] = ec._ServiceHealth_name(ctx, field, obj)
+		case "healthy":
+			out.Values[i] = ec._ServiceHealth_healthy(ctx, field, obj)
+		case "databaseHealth":
+			out.Values[i] = ec._ServiceHealth_databaseHealth(ctx, field, obj)
+		case "version":
+			out.Values[i] = ec._ServiceHealth_version(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
 var speakerImplementors = []string{"Speaker"}
 
 func (ec *executionContext) _Speaker(ctx context.Context, sel ast.SelectionSet, obj *model.Speaker) graphql.Marshaler {
@@ -8675,6 +10302,44 @@ func (ec *executionContext) _Speaker(ctx context.Context, sel ast.SelectionSet, 
 			out.Values[i] = ec._Speaker_shorthand(ctx, field, obj)
 		case "translation":
 			out.Values[i] = ec._Speaker_translation(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var themeImplementors = []string{"Theme"}
+
+func (ec *executionContext) _Theme(ctx context.Context, sel ast.SelectionSet, obj *model.Theme) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, themeImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("Theme")
+		case "name":
+			out.Values[i] = ec._Theme_name(ctx, field, obj)
+		case "segments":
+			out.Values[i] = ec._Theme_segments(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -9312,6 +10977,20 @@ func (ec *executionContext) marshalN__TypeKind2string(ctx context.Context, sel a
 		}
 	}
 	return res
+}
+
+func (ec *executionContext) marshalOAggregatedHealthResponse2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐAggregatedHealthResponse(ctx context.Context, sel ast.SelectionSet, v *model.AggregatedHealthResponse) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._AggregatedHealthResponse(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOAggregatedOptions2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐAggregatedOptions(ctx context.Context, sel ast.SelectionSet, v *model.AggregatedOptions) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._AggregatedOptions(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalOAnalyzeResult2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐAnalyzeResult(ctx context.Context, sel ast.SelectionSet, v []*model.AnalyzeResult) graphql.Marshaler {
@@ -9964,6 +11643,54 @@ func (ec *executionContext) marshalOOptions2ᚖgithubᚗcomᚋodysseiaᚑgreek�
 	return ec._Options(ctx, sel, v)
 }
 
+func (ec *executionContext) marshalOProgressEntry2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐProgressEntry(ctx context.Context, sel ast.SelectionSet, v []*model.ProgressEntry) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalOProgressEntry2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐProgressEntry(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	return ret
+}
+
+func (ec *executionContext) marshalOProgressEntry2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐProgressEntry(ctx context.Context, sel ast.SelectionSet, v *model.ProgressEntry) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._ProgressEntry(ctx, sel, v)
+}
+
 func (ec *executionContext) marshalOQuizMetadata2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐQuizMetadata(ctx context.Context, sel ast.SelectionSet, v *model.QuizMetadata) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
@@ -9976,6 +11703,102 @@ func (ec *executionContext) marshalORhema2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋa
 		return graphql.Null
 	}
 	return ec._Rhema(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOSegment2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐSegment(ctx context.Context, sel ast.SelectionSet, v []*model.Segment) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalOSegment2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐSegment(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	return ret
+}
+
+func (ec *executionContext) marshalOSegment2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐSegment(ctx context.Context, sel ast.SelectionSet, v *model.Segment) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._Segment(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOServiceHealth2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐServiceHealth(ctx context.Context, sel ast.SelectionSet, v []*model.ServiceHealth) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalOServiceHealth2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐServiceHealth(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	return ret
+}
+
+func (ec *executionContext) marshalOServiceHealth2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐServiceHealth(ctx context.Context, sel ast.SelectionSet, v *model.ServiceHealth) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._ServiceHealth(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalOSpeaker2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐSpeaker(ctx context.Context, sel ast.SelectionSet, v []*model.Speaker) graphql.Marshaler {
@@ -10070,6 +11893,54 @@ func (ec *executionContext) marshalOString2ᚖstring(ctx context.Context, sel as
 	}
 	res := graphql.MarshalString(*v)
 	return res
+}
+
+func (ec *executionContext) marshalOTheme2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐTheme(ctx context.Context, sel ast.SelectionSet, v []*model.Theme) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalOTheme2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐTheme(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	return ret
+}
+
+func (ec *executionContext) marshalOTheme2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐTheme(ctx context.Context, sel ast.SelectionSet, v *model.Theme) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._Theme(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalO__EnumValue2ᚕgithubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚋintrospectionᚐEnumValueᚄ(ctx context.Context, sel ast.SelectionSet, v []introspection.EnumValue) graphql.Marshaler {

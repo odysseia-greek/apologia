@@ -83,6 +83,7 @@ message AnswerRequest {
   bool comprehensive = 5; // Optional
   string answer = 6;
   string quiz_word = 7;
+  int32 doneAfter = 8;
 }
 
 // Response message for answer validation
@@ -92,6 +93,7 @@ message ComprehensiveResponse {
   AnalyzeTextResponse found_in_text = 3; // Optional
   repeated Meros similar_words = 4; // Optional
   repeated ProgressEntry progress = 5; // Optional: only if sessionId is set
+  bool finished = 6;
 }
 
 // Similar words structure

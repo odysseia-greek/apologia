@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/models"
 	"github.com/odysseia-greek/agora/plato/service"
@@ -15,17 +16,19 @@ import (
 	"google.golang.org/grpc/metadata"
 	"math/rand/v2"
 	"net/http"
+	"os"
 	"strings"
 	"sync"
 	"time"
 )
 
 const (
-	THEME       string = "theme"
-	SET         string = "set"
-	SEGMENT     string = "segment"
-	GREENGORDER string = "gre-eng"
-	ENGGREORDER string = "eng-gre"
+	THEME            string = "theme"
+	SET              string = "set"
+	SEGMENT          string = "segment"
+	GREENGORDER      string = "gre-eng"
+	ENGGREORDER      string = "eng-gre"
+	OPTIONSEGMENTKEY string = "archytassavedoptions"
 )
 
 func (m *MediaServiceImpl) Health(context.Context, *pb.HealthRequest) (*pb.HealthResponse, error) {
@@ -38,21 +41,34 @@ func (m *MediaServiceImpl) Health(context.Context, *pb.HealthRequest) (*pb.Healt
 	}
 
 	return &pb.HealthResponse{
-		Healthy:        dbHealth.Healthy,
+		Healthy:        true,
 		Time:           time.Now().String(),
 		DatabaseHealth: dbHealth,
+		Version:        os.Getenv("VERSION"),
 	}, nil
 }
 
 func (m *MediaServiceImpl) Options(ctx context.Context, request *pb.OptionsRequest) (*pb.AggregatedOptions, error) {
-	query := quizAggregationQuery()
+	var unparsedResponse []byte
+	cacheItem, _ := m.Archytas.Read(OPTIONSEGMENTKEY)
+	if cacheItem != nil {
+		unparsedResponse = cacheItem
+	} else {
+		query := quizAggregationQuery()
 
-	elasticResult, err := m.Elastic.Query().MatchRaw(m.Index, query)
-	if err != nil {
-		return nil, fmt.Errorf("error in elasticSearch: %s", err.Error())
+		elasticResponse, err := m.Elastic.Query().MatchRaw(m.Index, query)
+		if err != nil {
+			return nil, fmt.Errorf("error in elasticSearch: %s", err.Error())
+		}
+
+		unparsedResponse = elasticResponse
+		err = m.Archytas.Set(OPTIONSEGMENTKEY, string(elasticResponse))
+		if err != nil {
+			logging.Error(err.Error())
+		}
 	}
 
-	result, err := parseAggregationResult(elasticResult)
+	result, err := parseAggregationResult(unparsedResponse)
 	if err != nil {
 		return nil, fmt.Errorf("error in elasticSearch: %s", err.Error())
 	}
@@ -72,7 +88,7 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 	var sessionId string
 	md, ok := metadata.FromIncomingContext(ctx)
 	if ok {
-		headerValue := md.Get("session-id")
+		headerValue := md.Get(config.SessionIdKey)
 		if len(headerValue) > 0 {
 			sessionId = headerValue[0]
 		}
@@ -87,15 +103,12 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 		m.Progress.ResetSegment(sessionId, segmentKey)
 	}
 
-	cacheItem, err := m.Archytas.Read(segmentKey)
-	if err != nil {
-		logging.Error(fmt.Sprintf("error when reading cache: %s", err.Error()))
-	}
+	cacheItem, _ := m.Archytas.Read(segmentKey)
 
 	var option models.MediaQuiz
 
 	if cacheItem != nil {
-		err = json.Unmarshal(cacheItem, &option)
+		err := json.Unmarshal(cacheItem, &option)
 		if err != nil {
 			return nil, err
 		}
@@ -218,7 +231,7 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 	})
 
 	if sessionId != "" {
-		progressList := m.Progress.GetProgressForSegment(sessionId, segmentKey)
+		progressList, _ := m.Progress.GetProgressForSegment(sessionId, segmentKey, int(request.DoneAfter))
 		for word, p := range progressList {
 			quiz.Progress = append(quiz.Progress, &pb.ProgressEntry{
 				Greek:          word,
@@ -237,21 +250,18 @@ func (m *MediaServiceImpl) Answer(ctx context.Context, request *pb.AnswerRequest
 	var sessionId string
 	md, ok := metadata.FromIncomingContext(ctx)
 	if ok {
-		headerValue := md.Get("session-id")
+		headerValue := md.Get(config.SessionIdKey)
 		if len(headerValue) > 0 {
 			sessionId = headerValue[0]
 		}
 	}
 	segmentKey := fmt.Sprintf("%s+%s+%s", request.Theme, request.Set, request.Segment)
-	cacheItem, err := m.Archytas.Read(segmentKey)
-	if err != nil {
-		logging.Error(fmt.Sprintf("error when reading cache: %s", err.Error()))
-	}
+	cacheItem, _ := m.Archytas.Read(segmentKey)
 
 	var option models.MediaQuiz
 
 	if cacheItem != nil {
-		err = json.Unmarshal(cacheItem, &option)
+		err := json.Unmarshal(cacheItem, &option)
 		if err != nil {
 			return nil, err
 		}
@@ -314,7 +324,8 @@ func (m *MediaServiceImpl) Answer(ctx context.Context, request *pb.AnswerRequest
 	m.Progress.RecordAnswerResult(sessionId, segmentKey, request.QuizWord, answer.Correct)
 
 	if sessionId != "" {
-		progressList := m.Progress.GetProgressForSegment(sessionId, segmentKey)
+		progressList, finished := m.Progress.GetProgressForSegment(sessionId, segmentKey, int(request.DoneAfter))
+		answer.Finished = finished
 		for word, p := range progressList {
 			answer.Progress = append(answer.Progress, &pb.ProgressEntry{
 				Greek:          word,
