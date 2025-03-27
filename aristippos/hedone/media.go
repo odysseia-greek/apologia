@@ -187,9 +187,11 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 		}
 	}
 
+	var translation string
 	if len(filteredContent) == 1 {
 		question := filteredContent[0]
 		quiz.QuizItem = question.Greek
+		translation = question.Translation
 		quiz.Options = append(quiz.Options, &pb.Options{
 			Option:   question.Translation,
 			ImageUrl: question.ImageURL,
@@ -198,6 +200,7 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 		randNumber := m.Randomizer.RandomNumberBaseZero(len(filteredContent))
 		question := filteredContent[randNumber]
 		quiz.QuizItem = question.Greek
+		translation = question.Translation
 		quiz.Options = append(quiz.Options, &pb.Options{
 			Option:   question.Translation,
 			ImageUrl: question.ImageURL,
@@ -224,7 +227,7 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 		}
 	}
 
-	m.Progress.RecordWordPlay(sessionId, segmentKey, quiz.QuizItem)
+	m.Progress.RecordWordPlay(sessionId, segmentKey, quiz.QuizItem, translation)
 
 	rand.Shuffle(len(quiz.Options), func(i, j int) {
 		quiz.Options[i], quiz.Options[j] = quiz.Options[j], quiz.Options[i]
@@ -235,6 +238,7 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 		for word, p := range progressList {
 			quiz.Progress = append(quiz.Progress, &pb.ProgressEntry{
 				Greek:          word,
+				Translation:    p.Translation,
 				PlayCount:      int32(p.PlayCount),
 				CorrectCount:   int32(p.CorrectCount),
 				IncorrectCount: int32(p.IncorrectCount),
@@ -329,6 +333,7 @@ func (m *MediaServiceImpl) Answer(ctx context.Context, request *pb.AnswerRequest
 		for word, p := range progressList {
 			answer.Progress = append(answer.Progress, &pb.ProgressEntry{
 				Greek:          word,
+				Translation:    p.Translation,
 				PlayCount:      int32(p.PlayCount),
 				CorrectCount:   int32(p.CorrectCount),
 				IncorrectCount: int32(p.IncorrectCount),
@@ -448,10 +453,45 @@ func (m *MediaServiceImpl) gatherComprehensiveData(answer *pb.ComprehensiveRespo
 
 	for foundInText := range foundInTextChan {
 		defer foundInText.Body.Close()
-		err := json.NewDecoder(foundInText.Body).Decode(&answer.FoundInText)
+		var foundInTextModel models.AnalyzeTextResponse
+		err := json.NewDecoder(foundInText.Body).Decode(&foundInTextModel)
 		if err != nil {
 			logging.Error(fmt.Sprintf("error while decoding: %s", err.Error()))
 		}
+
+		grpcModel := &pb.AnalyzeTextResponse{
+			Rootword:     foundInTextModel.Rootword,
+			PartOfSpeech: foundInTextModel.PartOfSpeech,
+		}
+
+		var conj []*pb.Conjugations
+		for _, conjugation := range foundInTextModel.Conjugations {
+			conj = append(conj, &pb.Conjugations{
+				Word: conjugation.Word,
+				Rule: conjugation.Rule,
+			})
+		}
+
+		grpcModel.Conjugations = conj
+
+		var result []*pb.AnalyzeResult
+		for _, text := range foundInTextModel.Results {
+			result = append(result, &pb.AnalyzeResult{
+				ReferenceLink: text.ReferenceLink,
+				Author:        text.Author,
+				Book:          text.Book,
+				Reference:     text.Reference,
+				Text: &pb.Rhema{
+					Greek:        text.Text.Greek,
+					Translations: text.Text.Translations,
+					Section:      text.Text.Section,
+				},
+			})
+		}
+
+		grpcModel.Texts = result
+
+		answer.FoundInText = grpcModel
 	}
 
 	for similarWords := range similarWordsChan {

@@ -138,8 +138,9 @@ message Rhema {
 // Word progress entry
 message ProgressEntry {
   string greek = 1;
-  int32 play_count = 2;
-  int32 correct_count = 3;
-  int32 incorrect_count = 4;
-  string last_played = 5; // ISO timestamp format
+  string translation = 2;
+  int32 play_count = 3;
+  int32 correct_count = 4;
+  int32 incorrect_count = 5;
+  string last_played = 6; // ISO timestamp format
 }

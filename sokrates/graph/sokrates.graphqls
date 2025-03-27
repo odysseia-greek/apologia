@@ -4,6 +4,7 @@ type ComprehensiveResponse {
   quizWord: String
   similarWords: [Hit]
   progress: [ProgressEntry]
+  finished: Boolean
 }
 
 type MediaOptions {
@@ -153,6 +154,7 @@ input MediaAnswerInput {
   quizWord: String
   answer: String
   comprehensive: Boolean
+  doneAfter: Int
 }
 
 input AuthorBasedAnswerInput {

@@ -72,6 +72,7 @@ type ComprehensiveResponse struct {
 	QuizWord     *string              `json:"quizWord,omitempty"`
 	SimilarWords []*Hit               `json:"similarWords,omitempty"`
 	Progress     []*ProgressEntry     `json:"progress,omitempty"`
+	Finished     *bool                `json:"finished,omitempty"`
 }
 
 type ConjugationResponse struct {
@@ -158,6 +159,7 @@ type MediaAnswerInput struct {
 	QuizWord      *string `json:"quizWord,omitempty"`
 	Answer        *string `json:"answer,omitempty"`
 	Comprehensive *bool   `json:"comprehensive,omitempty"`
+	DoneAfter     *int32  `json:"doneAfter,omitempty"`
 }
 
 type MediaOptions struct {

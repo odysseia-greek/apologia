@@ -13,6 +13,7 @@ func MapComprehensiveResponse(grpcResp *pbartrippos.ComprehensiveResponse) *mode
 	mappedResponse := &model.ComprehensiveResponse{
 		Correct:  &grpcResp.Correct,
 		QuizWord: &grpcResp.QuizWord,
+		Finished: &grpcResp.Finished,
 	}
 
 	if grpcResp.FoundInText != nil {

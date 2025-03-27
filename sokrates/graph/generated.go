@@ -97,6 +97,7 @@ type ComplexityRoot struct {
 
 	ComprehensiveResponse struct {
 		Correct      func(childComplexity int) int
+		Finished     func(childComplexity int) int
 		FoundInText  func(childComplexity int) int
 		Progress     func(childComplexity int) int
 		QuizWord     func(childComplexity int) int
@@ -459,6 +460,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.ComprehensiveResponse.Correct(childComplexity), true
+
+	case "ComprehensiveResponse.finished":
+		if e.complexity.ComprehensiveResponse.Finished == nil {
+			break
+		}
+
+		return e.complexity.ComprehensiveResponse.Finished(childComplexity), true
 
 	case "ComprehensiveResponse.foundInText":
 		if e.complexity.ComprehensiveResponse.FoundInText == nil {
@@ -2828,6 +2836,47 @@ func (ec *executionContext) fieldContext_ComprehensiveResponse_progress(_ contex
 				return ec.fieldContext_ProgressEntry_lastPlayed(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ProgressEntry", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ComprehensiveResponse_finished(ctx context.Context, field graphql.CollectedField, obj *model.ComprehensiveResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ComprehensiveResponse_finished(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Finished, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ComprehensiveResponse_finished(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ComprehensiveResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
 		},
 	}
 	return fc, nil
@@ -5293,6 +5342,8 @@ func (ec *executionContext) fieldContext_Query_mediaAnswer(ctx context.Context, 
 				return ec.fieldContext_ComprehensiveResponse_similarWords(ctx, field)
 			case "progress":
 				return ec.fieldContext_ComprehensiveResponse_progress(ctx, field)
+			case "finished":
+				return ec.fieldContext_ComprehensiveResponse_finished(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ComprehensiveResponse", field.Name)
 		},
@@ -5419,6 +5470,8 @@ func (ec *executionContext) fieldContext_Query_multipleChoiceAnswer(ctx context.
 				return ec.fieldContext_ComprehensiveResponse_similarWords(ctx, field)
 			case "progress":
 				return ec.fieldContext_ComprehensiveResponse_progress(ctx, field)
+			case "finished":
+				return ec.fieldContext_ComprehensiveResponse_finished(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ComprehensiveResponse", field.Name)
 		},
@@ -8687,7 +8740,7 @@ func (ec *executionContext) unmarshalInputMediaAnswerInput(ctx context.Context, 
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"theme", "set", "segment", "quizWord", "answer", "comprehensive"}
+	fieldsInOrder := [...]string{"theme", "set", "segment", "quizWord", "answer", "comprehensive", "doneAfter"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -8736,6 +8789,13 @@ func (ec *executionContext) unmarshalInputMediaAnswerInput(ctx context.Context, 
 				return it, err
 			}
 			it.Comprehensive = data
+		case "doneAfter":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("doneAfter"))
+			data, err := ec.unmarshalOInt2ᚖint32(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.DoneAfter = data
 		}
 	}
 
@@ -9265,6 +9325,8 @@ func (ec *executionContext) _ComprehensiveResponse(ctx context.Context, sel ast.
 			out.Values[i] = ec._ComprehensiveResponse_similarWords(ctx, field, obj)
 		case "progress":
 			out.Values[i] = ec._ComprehensiveResponse_progress(ctx, field, obj)
+		case "finished":
+			out.Values[i] = ec._ComprehensiveResponse_finished(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}

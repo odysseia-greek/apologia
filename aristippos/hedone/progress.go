@@ -9,6 +9,7 @@ type WordProgress struct {
 	PlayCount      int
 	CorrectCount   int
 	IncorrectCount int
+	Translation    string
 	LastPlayed     time.Time
 }
 
@@ -49,7 +50,7 @@ func (p *ProgressTracker) GetPlayableWords(sessionId, segmentKey string, doneAft
 	return unplayed, unmastered
 }
 
-func (p *ProgressTracker) RecordWordPlay(sessionId, segmentKey, greekWord string) {
+func (p *ProgressTracker) RecordWordPlay(sessionId, segmentKey, greekWord, translation string) {
 	p.Lock()
 	defer p.Unlock()
 
@@ -67,6 +68,7 @@ func (p *ProgressTracker) RecordWordPlay(sessionId, segmentKey, greekWord string
 	} else {
 		entry.PlayCount++
 		entry.LastPlayed = time.Now()
+		entry.Translation = translation
 	}
 }
 
@@ -110,7 +112,7 @@ func (p *ProgressTracker) InitWordsForSegment(sessionId, segmentKey string, gree
 
 	for _, word := range greekWords {
 		if _, exists := p.Data[sessionId].Progress[segmentKey][word]; !exists {
-			p.Data[sessionId].Progress[segmentKey][word] = &WordProgress{PlayCount: 0, CorrectCount: 0, IncorrectCount: 0}
+			p.Data[sessionId].Progress[segmentKey][word] = &WordProgress{PlayCount: 0, CorrectCount: 0, IncorrectCount: 0, Translation: ""}
 		}
 	}
 }
