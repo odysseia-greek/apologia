@@ -193,10 +193,13 @@ input MultipleChoiceAnswerInput {
 }
 
 input MultipleQuizInput {
-  excludeWords: [String]
+  doneAfter: Int
   theme: String
   set: String
+  segment: String
   order: String
+  resetProgress: Boolean
+  archiveProgress: Boolean
 }
 
 input DialogueQuizInput {

@@ -201,10 +201,13 @@ type MultipleChoiceResponse struct {
 }
 
 type MultipleQuizInput struct {
-	ExcludeWords []*string `json:"excludeWords,omitempty"`
-	Theme        *string   `json:"theme,omitempty"`
-	Set          *string   `json:"set,omitempty"`
-	Order        *string   `json:"order,omitempty"`
+	DoneAfter       *int32  `json:"doneAfter,omitempty"`
+	Theme           *string `json:"theme,omitempty"`
+	Set             *string `json:"set,omitempty"`
+	Segment         *string `json:"segment,omitempty"`
+	Order           *string `json:"order,omitempty"`
+	ResetProgress   *bool   `json:"resetProgress,omitempty"`
+	ArchiveProgress *bool   `json:"archiveProgress,omitempty"`
 }
 
 type Options struct {

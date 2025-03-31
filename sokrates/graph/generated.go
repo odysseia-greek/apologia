@@ -9051,20 +9051,20 @@ func (ec *executionContext) unmarshalInputMultipleQuizInput(ctx context.Context,
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"excludeWords", "theme", "set", "order"}
+	fieldsInOrder := [...]string{"doneAfter", "theme", "set", "segment", "order", "resetProgress", "archiveProgress"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
 			continue
 		}
 		switch k {
-		case "excludeWords":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("excludeWords"))
-			data, err := ec.unmarshalOString2ᚕᚖstring(ctx, v)
+		case "doneAfter":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("doneAfter"))
+			data, err := ec.unmarshalOInt2ᚖint32(ctx, v)
 			if err != nil {
 				return it, err
 			}
-			it.ExcludeWords = data
+			it.DoneAfter = data
 		case "theme":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("theme"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
@@ -9079,6 +9079,13 @@ func (ec *executionContext) unmarshalInputMultipleQuizInput(ctx context.Context,
 				return it, err
 			}
 			it.Set = data
+		case "segment":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("segment"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Segment = data
 		case "order":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("order"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
@@ -9086,6 +9093,20 @@ func (ec *executionContext) unmarshalInputMultipleQuizInput(ctx context.Context,
 				return it, err
 			}
 			it.Order = data
+		case "resetProgress":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("resetProgress"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ResetProgress = data
+		case "archiveProgress":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("archiveProgress"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ArchiveProgress = data
 		}
 	}
 

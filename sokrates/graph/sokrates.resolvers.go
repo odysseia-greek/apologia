@@ -32,7 +32,9 @@ func (r *queryResolver) MediaOptions(ctx context.Context) (*model.AggregatedOpti
 
 // MultipleChoiceOptions is the resolver for the multipleChoiceOptions field.
 func (r *queryResolver) MultipleChoiceOptions(ctx context.Context) (*model.AggregatedOptions, error) {
-	panic(fmt.Errorf("not implemented: MultipleChoiceOptions - multipleChoiceOptions"))
+	requestID, _ := ctx.Value(config.HeaderKey).(string)
+	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
+	return r.Handler.MultipleChoiceOptions(requestID, sessionId)
 }
 
 // AuthorBasedOptions is the resolver for the authorBasedOptions field.
@@ -104,16 +106,16 @@ func (r *queryResolver) MultipleChoiceQuiz(ctx context.Context, input *model.Mul
 	requestID, _ := ctx.Value(config.HeaderKey).(string)
 
 	pb := &pbkritias.CreationRequest{
-		Theme: *input.Theme,
-		Set:   *input.Set,
+		Theme:           *input.Theme,
+		Set:             *input.Set,
+		Segment:         *input.Segment,
+		DoneAfter:       *input.DoneAfter,
+		ResetProgress:   *input.ResetProgress,
+		ArchiveProgress: *input.ArchiveProgress,
 	}
 
 	if input.Order != nil {
 		pb.Order = *input.Order
-	}
-
-	for _, word := range input.ExcludeWords {
-		pb.ExcludeWords = append(pb.ExcludeWords, *word)
 	}
 
 	return r.Handler.CreateMultipleChoiceQuiz(pb, requestID)

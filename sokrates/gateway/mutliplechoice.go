@@ -47,15 +47,46 @@ func (s *SokratesHandler) CreateMultipleChoiceQuiz(request *pbkritias.CreationRe
 }
 
 func (s *SokratesHandler) CheckMultipleChoice(request *pbkritias.AnswerRequest, requestID string) (*model.ComprehensiveResponse, error) {
-	mediaClientCtx, ctxCancel := context.WithTimeout(context.Background(), 30*time.Second)
+	multipleChoiceClientCtx, ctxCancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer ctxCancel()
 	md := metadata.New(map[string]string{service.HeaderKey: requestID})
-	mediaClientCtx = metadata.NewOutgoingContext(context.Background(), md)
+	multipleChoiceClientCtx = metadata.NewOutgoingContext(context.Background(), md)
 
-	grpcResponse, err := s.MultiChoiceClient.Answer(mediaClientCtx, request)
+	grpcResponse, err := s.MultiChoiceClient.Answer(multipleChoiceClientCtx, request)
 	if err != nil {
 		return nil, err
 	}
 
 	return multiplechoice.MapComprehensiveResponse(grpcResponse), nil
+}
+
+func (s *SokratesHandler) MultipleChoiceOptions(requestID, sessionId string) (*model.AggregatedOptions, error) {
+	optionsCtx, cancel := s.createRequestHeader(requestID, sessionId)
+	defer cancel()
+
+	grpcResponse, err := s.MultiChoiceClient.Options(optionsCtx, &pbkritias.OptionsRequest{})
+	if err != nil {
+		return nil, err
+	}
+
+	var themes []*model.Theme
+	for _, grpcTheme := range grpcResponse.Themes {
+		var segments []*model.Segment
+		for _, grpcSegment := range grpcTheme.Segments {
+			maxSet := float64(grpcSegment.MaxSet)
+			segments = append(segments, &model.Segment{
+				Name:   &grpcSegment.Name,
+				MaxSet: &maxSet,
+			})
+		}
+
+		themes = append(themes, &model.Theme{
+			Name:     &grpcTheme.Name,
+			Segments: segments,
+		})
+	}
+
+	return &model.AggregatedOptions{
+		Themes: themes,
+	}, nil
 }

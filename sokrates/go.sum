@@ -230,8 +230,8 @@ github.com/odysseia-greek/agora/thales v0.1.11 h1:UE54gcSt3QDeIZ3TLnN0l2ga63WBnO
 github.com/odysseia-greek/agora/thales v0.1.11/go.mod h1:Lrg/m4WBIGc9+omEJoqBZvLhlgm0Ke9hgQOMzkE4uWM=
 github.com/odysseia-greek/apologia/aristippos v0.0.8 h1:u6SVzI3PYkE05obIhyfkR3JON8n9n8k3d/xqVAO0LeQ=
 github.com/odysseia-greek/apologia/aristippos v0.0.8/go.mod h1:3XwBpVWSrhh21bz3NhsKVlDLZ2BtGIjelkP8jSf3OpY=
-github.com/odysseia-greek/apologia/kritias v0.0.2 h1:9WvyW6cTHEtQIXAW0aT4mQr2Y1C6YN8QLFbdOyLgUc4=
-github.com/odysseia-greek/apologia/kritias v0.0.2/go.mod h1:auOltVwWIyrdYD2gC2IglcK5ZSPeyPFlbd0YHevFoEo=
+github.com/odysseia-greek/apologia/kritias v0.0.3 h1:LpkIdiX030Si+Q+5MZfCP5cwCqJSRjECamMpvHpNWUk=
+github.com/odysseia-greek/apologia/kritias v0.0.3/go.mod h1:v2uzG9vknAXUyZV84L2k2wCh4Eko04PdJMeoVACHZGc=
 github.com/odysseia-greek/apologia/kriton v0.0.1 h1:XhAh4Ipl6abmkZS7ce4i8bk+etKar+ZMDd9tRe+T0oI=
 github.com/odysseia-greek/apologia/kriton v0.0.1/go.mod h1:yYgUusF18I/asFNKNSWLL8deBzdi9KrNxN1x04OsfTw=
 github.com/odysseia-greek/apologia/xenofon v0.0.1 h1:79UDbB9SvVxreJ0+f5XhuZuFvZtr1Td3AZmOqPs//+s=
@@ -412,8 +412,8 @@ google.golang.org/protobuf v1.22.0/go.mod h1:EGpADcykh3NcUnDUJcl1+ZksZNG86OlYog2
 google.golang.org/protobuf v1.23.0/go.mod h1:EGpADcykh3NcUnDUJcl1+ZksZNG86OlYog2l/sGQquU=
 google.golang.org/protobuf v1.23.1-0.20200526195155-81db48ad09cc/go.mod h1:EGpADcykh3NcUnDUJcl1+ZksZNG86OlYog2l/sGQquU=
 google.golang.org/protobuf v1.25.0/go.mod h1:9JNX74DMeImyA3h4bdi1ymwjUzf21/xIlbajtzgsN7c=
-google.golang.org/protobuf v1.36.5 h1:tPhr+woSbjfYvY6/GPufUoYizxw1cF/yFoxJ2fmpwlM=
-google.golang.org/protobuf v1.36.5/go.mod h1:9fA7Ob0pmnwhb644+1+CVWFRbNajQ6iRojtC/QF5bRE=
+google.golang.org/protobuf v1.36.6 h1:z1NpPI8ku2WgiWnf+t9wTPsn6eP1L7ksHUlkfLvd9xY=
+google.golang.org/protobuf v1.36.6/go.mod h1:jduwjTPXsFjZGTmRluh+L6NjiWu7pchiJ2/5YcXBHnY=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c h1:Hei/4ADfdWqJk1ZMxUNpqntNwaWcugrBjAiHlqqRiVk=

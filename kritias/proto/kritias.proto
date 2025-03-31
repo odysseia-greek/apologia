@@ -40,12 +40,6 @@ message AggregatedOptions {
 // Structure for quiz themes
 message Theme {
   string name = 1;
-  repeated Segment segments = 2;
-}
-
-// Structure for segments within a theme
-message Segment {
-  string name = 1;
   float max_set = 2;
 }
 
@@ -92,7 +86,7 @@ message ComprehensiveResponse {
   repeated Meros similar_words = 4; // Optional
   repeated ProgressEntry progress = 5; // Optional: only if sessionId is set
   bool finished = 6;
-} 
+}
 
 // Similar words structure
 message Meros {
