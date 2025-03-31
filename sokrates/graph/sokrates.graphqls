@@ -28,6 +28,7 @@ type MultipleChoiceResponse {
   numberOfItems: Int
   options: [Options]
   quizItem: String
+  progress: [ProgressEntry]
 }
 
 type AuthorBasedAnswerResponse {
@@ -112,6 +113,7 @@ type DialogueCorrection {
 
 type ProgressEntry {
   greek: String
+  translation: String
   playCount: Int
   correctCount: Int
   incorrectCount: Int

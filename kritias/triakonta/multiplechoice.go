@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/models"
 	"github.com/odysseia-greek/agora/plato/service"
@@ -21,12 +22,11 @@ import (
 )
 
 const (
-	THEME          string = "theme"
-	SET            string = "set"
-	MULTIPLECHOICE string = "multiplechoice"
-	QUIZTYPE       string = "quizType"
-	GREENGORDER    string = "gre-eng"
-	ENGGREORDER    string = "eng-gre"
+	THEME            string = "theme"
+	SET              string = "set"
+	GREENGORDER      string = "gre-eng"
+	ENGGREORDER      string = "eng-gre"
+	OPTIONSEGMENTKEY string = "archytassavedoptions"
 )
 
 func (m *MultipleChoiceServiceImpl) Health(context.Context, *pb.HealthRequest) (*pb.HealthResponse, error) {
@@ -39,21 +39,34 @@ func (m *MultipleChoiceServiceImpl) Health(context.Context, *pb.HealthRequest) (
 	}
 
 	return &pb.HealthResponse{
-		Healthy:        dbHealth.Healthy,
+		Healthy:        true,
 		Time:           time.Now().String(),
 		DatabaseHealth: dbHealth,
+		Version:        m.Version,
 	}, nil
 }
 
 func (m *MultipleChoiceServiceImpl) Options(ctx context.Context, request *pb.OptionsRequest) (*pb.AggregatedOptions, error) {
-	query := quizAggregationQuery()
+	var unparsedResponse []byte
+	cacheItem, _ := m.Archytas.Read(OPTIONSEGMENTKEY)
+	if cacheItem != nil {
+		unparsedResponse = cacheItem
+	} else {
+		query := quizAggregationQuery()
 
-	elasticResult, err := m.Elastic.Query().MatchRaw(m.Index, query)
-	if err != nil {
-		return nil, fmt.Errorf("error in elasticSearch: %s", err.Error())
+		elasticResponse, err := m.Elastic.Query().MatchRaw(m.Index, query)
+		if err != nil {
+			return nil, fmt.Errorf("error in elasticSearch: %s", err.Error())
+		}
+
+		unparsedResponse = elasticResponse
+		err = m.Archytas.Set(OPTIONSEGMENTKEY, string(elasticResponse))
+		if err != nil {
+			logging.Error(err.Error())
+		}
 	}
 
-	result, err := parseAggregationResult(elasticResult)
+	result, err := parseAggregationResult(unparsedResponse)
 	if err != nil {
 		return nil, fmt.Errorf("error in elasticSearch: %s", err.Error())
 	}
@@ -70,55 +83,110 @@ func (m *MultipleChoiceServiceImpl) Question(ctx context.Context, request *pb.Cr
 		request.Order = GREENGORDER
 	}
 
-	mustQuery := []map[string]string{
-		{
-			THEME: request.Theme,
-		},
-		{
-			SET: request.Set,
-		},
+	var sessionId string
+	md, ok := metadata.FromIncomingContext(ctx)
+	if ok {
+		headerValue := md.Get(config.SessionIdKey)
+		if len(headerValue) > 0 {
+			sessionId = headerValue[0]
+		}
 	}
 
-	query := m.Elastic.Builder().MultipleMatch(mustQuery)
-	elasticResponse, err := m.Elastic.Query().Match(m.Index, query)
-	if err != nil {
-		return nil, err
+	segmentKey := fmt.Sprintf("%s+%s+%s", request.Theme, request.Set, request.Segment)
+	if request.ResetProgress {
+		m.Progress.ClearSegment(sessionId, segmentKey)
 	}
 
-	if elasticResponse.Hits.Hits == nil || len(elasticResponse.Hits.Hits) == 0 {
-		return nil, errors.New("no hits found in query")
+	if request.ArchiveProgress {
+		m.Progress.ResetSegment(sessionId, segmentKey)
 	}
 
-	var option models.MultipleChoiceQuiz
+	cacheItem, _ := m.Archytas.Read(segmentKey)
 
-	source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
-	err = json.Unmarshal(source, &option)
-	if err != nil {
-		return nil, err
+	var option models.MediaQuiz
+
+	if cacheItem != nil {
+		err := json.Unmarshal(cacheItem, &option)
+		if err != nil {
+			return nil, err
+		}
+
+		go cacheSpan(string(cacheItem), segmentKey, ctx)
+	} else {
+		mustQuery := []map[string]string{
+			{
+				THEME: request.Theme,
+			},
+			{
+				SET: request.Set,
+			},
+		}
+
+		query := m.Elastic.Builder().MultipleMatch(mustQuery)
+		elasticResponse, err := m.Elastic.Query().Match(m.Index, query)
+		if err != nil {
+			return nil, err
+		}
+
+		if elasticResponse.Hits.Hits == nil || len(elasticResponse.Hits.Hits) == 0 {
+			return nil, errors.New("no hits found in query")
+		}
+
+		go databaseSpan(elasticResponse, query, ctx)
+		source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
+		err = json.Unmarshal(source, &option)
+		if err != nil {
+			return nil, err
+		}
+
+		err = m.Archytas.Set(segmentKey, string(source))
+		if err != nil {
+			if err.Error() != "Key not found" {
+				logging.Error(fmt.Sprintf("error when writing cache: %s", err.Error()))
+			} else {
+				logging.Debug(fmt.Sprintf("cache hit: %s", segmentKey))
+			}
+		}
+	}
+
+	// Ensure session progress is initialized for this segment
+	if !m.Progress.Exists(sessionId, segmentKey) {
+		allGreekWords := make([]string, len(option.Content))
+		for i, c := range option.Content {
+			allGreekWords[i] = c.Greek
+		}
+		m.Progress.InitWordsForSegment(sessionId, segmentKey, allGreekWords)
 	}
 
 	quiz := &pb.QuizResponse{
 		NumberOfItems: int32(len(option.Content)),
 	}
 
-	var filteredContent []models.MultipleChoiceContent
+	unplayed, unmastered := m.Progress.GetPlayableWords(sessionId, segmentKey, int(request.DoneAfter))
+	var wordPool map[string]struct{}
 
+	switch {
+	case len(unplayed) > 0:
+		wordPool = sliceToSet(unplayed)
+	case len(unmastered) > 0:
+		wordPool = sliceToSet(unmastered)
+	default:
+		retryable := m.Progress.GetRetryableWords(sessionId, segmentKey, int(request.DoneAfter))
+		wordPool = sliceToSet(retryable)
+	}
+
+	var filteredContent []models.MediaContent
 	for _, content := range option.Content {
-		addWord := true
-		for _, word := range request.ExcludeWords {
-			if content.Greek == word {
-				addWord = false
-			}
-		}
-
-		if addWord {
+		if _, ok := wordPool[content.Greek]; ok {
 			filteredContent = append(filteredContent, content)
 		}
 	}
 
+	var translation string
 	if len(filteredContent) == 1 {
 		question := filteredContent[0]
 		quiz.QuizItem = question.Greek
+		translation = question.Translation
 		quiz.Options = append(quiz.Options, &pb.Options{
 			Option: question.Translation,
 		})
@@ -126,6 +194,7 @@ func (m *MultipleChoiceServiceImpl) Question(ctx context.Context, request *pb.Cr
 		randNumber := m.Randomizer.RandomNumberBaseZero(len(filteredContent))
 		question := filteredContent[randNumber]
 		quiz.QuizItem = question.Greek
+		translation = question.Translation
 		quiz.Options = append(quiz.Options, &pb.Options{
 			Option: question.Translation,
 		})
@@ -150,37 +219,76 @@ func (m *MultipleChoiceServiceImpl) Question(ctx context.Context, request *pb.Cr
 		}
 	}
 
+	m.Progress.RecordWordPlay(sessionId, segmentKey, quiz.QuizItem, translation)
+
 	rand.Shuffle(len(quiz.Options), func(i, j int) {
 		quiz.Options[i], quiz.Options[j] = quiz.Options[j], quiz.Options[i]
 	})
+
+	if sessionId != "" {
+		progressList, _ := m.Progress.GetProgressForSegment(sessionId, segmentKey, int(request.DoneAfter))
+		for word, p := range progressList {
+			quiz.Progress = append(quiz.Progress, &pb.ProgressEntry{
+				Greek:          word,
+				Translation:    p.Translation,
+				PlayCount:      int32(p.PlayCount),
+				CorrectCount:   int32(p.CorrectCount),
+				IncorrectCount: int32(p.IncorrectCount),
+				LastPlayed:     p.LastPlayed.Format(time.RFC3339),
+			})
+		}
+	}
 
 	return quiz, nil
 }
 
 func (m *MultipleChoiceServiceImpl) Answer(ctx context.Context, request *pb.AnswerRequest) (*pb.ComprehensiveResponse, error) {
-	mustQuery := []map[string]string{
-		{
-			THEME: request.Theme,
-		},
-		{
-			SET: request.Set,
-		},
+	var sessionId string
+	md, ok := metadata.FromIncomingContext(ctx)
+	if ok {
+		headerValue := md.Get(config.SessionIdKey)
+		if len(headerValue) > 0 {
+			sessionId = headerValue[0]
+		}
 	}
+	segmentKey := fmt.Sprintf("%s+%s+%s", request.Theme, request.Set, request.Segment)
+	cacheItem, _ := m.Archytas.Read(segmentKey)
 
-	query := m.Elastic.Builder().MultipleMatch(mustQuery)
-	elasticResponse, err := m.Elastic.Query().Match(m.Index, query)
-	if err != nil {
-		return nil, err
-	}
-	if len(elasticResponse.Hits.Hits) == 0 {
-		return nil, fmt.Errorf("no hits found in Elastic")
-	}
+	var option models.MediaQuiz
 
-	var option models.MultipleChoiceQuiz
-	source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
-	err = json.Unmarshal(source, &option)
-	if err != nil {
-		return nil, err
+	if cacheItem != nil {
+		err := json.Unmarshal(cacheItem, &option)
+		if err != nil {
+			return nil, err
+		}
+
+		go cacheSpan(string(cacheItem), segmentKey, ctx)
+	} else {
+		mustQuery := []map[string]string{
+			{
+				THEME: request.Theme,
+			},
+			{
+				SET: request.Set,
+			},
+		}
+
+		query := m.Elastic.Builder().MultipleMatch(mustQuery)
+		elasticResponse, err := m.Elastic.Query().Match(m.Index, query)
+		if err != nil {
+			return nil, err
+		}
+		if len(elasticResponse.Hits.Hits) == 0 {
+			return nil, fmt.Errorf("no hits found in Elastic")
+		}
+
+		go databaseSpan(elasticResponse, query, ctx)
+
+		source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
+		err = json.Unmarshal(source, &option)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	answer := pb.ComprehensiveResponse{Correct: false, QuizWord: request.QuizWord}
@@ -202,20 +310,28 @@ func (m *MultipleChoiceServiceImpl) Answer(ctx context.Context, request *pb.Answ
 			if content.Translation == request.Answer {
 				answer.Correct = true
 			}
+			break
+		}
+	}
+
+	m.Progress.RecordAnswerResult(sessionId, segmentKey, request.QuizWord, answer.Correct)
+
+	if sessionId != "" {
+		progressList, finished := m.Progress.GetProgressForSegment(sessionId, segmentKey, int(request.DoneAfter))
+		answer.Finished = finished
+		for word, p := range progressList {
+			answer.Progress = append(answer.Progress, &pb.ProgressEntry{
+				Greek:          word,
+				Translation:    p.Translation,
+				PlayCount:      int32(p.PlayCount),
+				CorrectCount:   int32(p.CorrectCount),
+				IncorrectCount: int32(p.IncorrectCount),
+				LastPlayed:     p.LastPlayed.Format(time.RFC3339),
+			})
 		}
 	}
 
 	return &answer, nil
-}
-
-// findQuizWord takes a slice and looks for an element in it
-func findQuizWord(slice []*pb.Options, val string) bool {
-	for _, item := range slice {
-		if item.Option == val {
-			return true
-		}
-	}
-	return false
 }
 
 func (m *MultipleChoiceServiceImpl) gatherComprehensiveData(answer *pb.ComprehensiveResponse, requestID string) {
@@ -316,10 +432,45 @@ func (m *MultipleChoiceServiceImpl) gatherComprehensiveData(answer *pb.Comprehen
 
 	for foundInText := range foundInTextChan {
 		defer foundInText.Body.Close()
-		err := json.NewDecoder(foundInText.Body).Decode(&answer.FoundInText)
+		var foundInTextModel models.AnalyzeTextResponse
+		err := json.NewDecoder(foundInText.Body).Decode(&foundInTextModel)
 		if err != nil {
 			logging.Error(fmt.Sprintf("error while decoding: %s", err.Error()))
 		}
+
+		grpcModel := &pb.AnalyzeTextResponse{
+			Rootword:     foundInTextModel.Rootword,
+			PartOfSpeech: foundInTextModel.PartOfSpeech,
+		}
+
+		var conj []*pb.Conjugations
+		for _, conjugation := range foundInTextModel.Conjugations {
+			conj = append(conj, &pb.Conjugations{
+				Word: conjugation.Word,
+				Rule: conjugation.Rule,
+			})
+		}
+
+		grpcModel.Conjugations = conj
+
+		var result []*pb.AnalyzeResult
+		for _, text := range foundInTextModel.Results {
+			result = append(result, &pb.AnalyzeResult{
+				ReferenceLink: text.ReferenceLink,
+				Author:        text.Author,
+				Book:          text.Book,
+				Reference:     text.Reference,
+				Text: &pb.Rhema{
+					Greek:        text.Text.Greek,
+					Translations: text.Text.Translations,
+					Section:      text.Text.Section,
+				},
+			})
+		}
+
+		grpcModel.Texts = result
+
+		answer.FoundInText = grpcModel
 	}
 
 	for similarWords := range similarWordsChan {
@@ -366,4 +517,22 @@ func extractBaseWord(queryWord string) string {
 	}
 
 	return queryWord
+}
+
+func sliceToSet(words []string) map[string]struct{} {
+	set := make(map[string]struct{}, len(words))
+	for _, w := range words {
+		set[w] = struct{}{}
+	}
+	return set
+}
+
+// findQuizWord takes a slice and looks for an element in it
+func findQuizWord(slice []*pb.Options, val string) bool {
+	for _, item := range slice {
+		if item.Option == val {
+			return true
+		}
+	}
+	return false
 }

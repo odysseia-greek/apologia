@@ -194,9 +194,10 @@ type MultipleChoiceAnswerInput struct {
 }
 
 type MultipleChoiceResponse struct {
-	NumberOfItems *int32     `json:"numberOfItems,omitempty"`
-	Options       []*Options `json:"options,omitempty"`
-	QuizItem      *string    `json:"quizItem,omitempty"`
+	NumberOfItems *int32           `json:"numberOfItems,omitempty"`
+	Options       []*Options       `json:"options,omitempty"`
+	QuizItem      *string          `json:"quizItem,omitempty"`
+	Progress      []*ProgressEntry `json:"progress,omitempty"`
 }
 
 type MultipleQuizInput struct {
@@ -212,6 +213,7 @@ type Options struct {
 
 type ProgressEntry struct {
 	Greek          *string `json:"greek,omitempty"`
+	Translation    *string `json:"translation,omitempty"`
 	PlayCount      *int32  `json:"playCount,omitempty"`
 	CorrectCount   *int32  `json:"correctCount,omitempty"`
 	IncorrectCount *int32  `json:"incorrectCount,omitempty"`

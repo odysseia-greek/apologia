@@ -3,6 +3,7 @@ package triakonta
 import (
 	"context"
 	"fmt"
+	"github.com/odysseia-greek/agora/archytas"
 	"github.com/odysseia-greek/agora/aristoteles"
 	"github.com/odysseia-greek/agora/plato/randomizer"
 	"github.com/odysseia-greek/agora/plato/service"
@@ -27,9 +28,12 @@ const (
 type MultipleChoiceServiceImpl struct {
 	Elastic    aristoteles.Client
 	Index      string
+	Version    string
 	Randomizer randomizer.Random
 	Client     service.OdysseiaClient
 	Streamer   pbar.TraceService_ChorusClient
+	Archytas   archytas.Client
+	Progress   *ProgressTracker
 	pb.UnimplementedKritiasServer
 }
 

@@ -30,6 +30,7 @@ func (s *SokratesHandler) CreateMediaQuiz(request *pbartrippos.CreationRequest, 
 	for _, progress := range grpcResponse.Progress {
 		quizResponse.Progress = append(quizResponse.Progress, &model.ProgressEntry{
 			Greek:          &progress.Greek,
+			Translation:    &progress.Translation,
 			PlayCount:      &progress.PlayCount,
 			CorrectCount:   &progress.CorrectCount,
 			IncorrectCount: &progress.IncorrectCount,

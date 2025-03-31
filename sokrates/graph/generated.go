@@ -179,6 +179,7 @@ type ComplexityRoot struct {
 	MultipleChoiceResponse struct {
 		NumberOfItems func(childComplexity int) int
 		Options       func(childComplexity int) int
+		Progress      func(childComplexity int) int
 		QuizItem      func(childComplexity int) int
 	}
 
@@ -192,6 +193,7 @@ type ComplexityRoot struct {
 		IncorrectCount func(childComplexity int) int
 		LastPlayed     func(childComplexity int) int
 		PlayCount      func(childComplexity int) int
+		Translation    func(childComplexity int) int
 	}
 
 	Query struct {
@@ -804,6 +806,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.MultipleChoiceResponse.Options(childComplexity), true
 
+	case "MultipleChoiceResponse.progress":
+		if e.complexity.MultipleChoiceResponse.Progress == nil {
+			break
+		}
+
+		return e.complexity.MultipleChoiceResponse.Progress(childComplexity), true
+
 	case "MultipleChoiceResponse.quizItem":
 		if e.complexity.MultipleChoiceResponse.QuizItem == nil {
 			break
@@ -852,6 +861,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.ProgressEntry.PlayCount(childComplexity), true
+
+	case "ProgressEntry.translation":
+		if e.complexity.ProgressEntry.Translation == nil {
+			break
+		}
+
+		return e.complexity.ProgressEntry.Translation(childComplexity), true
 
 	case "Query.authorBasedAnswer":
 		if e.complexity.Query.AuthorBasedAnswer == nil {
@@ -2826,6 +2842,8 @@ func (ec *executionContext) fieldContext_ComprehensiveResponse_progress(_ contex
 			switch field.Name {
 			case "greek":
 				return ec.fieldContext_ProgressEntry_greek(ctx, field)
+			case "translation":
+				return ec.fieldContext_ProgressEntry_translation(ctx, field)
 			case "playCount":
 				return ec.fieldContext_ProgressEntry_playCount(ctx, field)
 			case "correctCount":
@@ -4677,6 +4695,8 @@ func (ec *executionContext) fieldContext_MediaQuizResponse_progress(_ context.Co
 			switch field.Name {
 			case "greek":
 				return ec.fieldContext_ProgressEntry_greek(ctx, field)
+			case "translation":
+				return ec.fieldContext_ProgressEntry_translation(ctx, field)
 			case "playCount":
 				return ec.fieldContext_ProgressEntry_playCount(ctx, field)
 			case "correctCount":
@@ -4819,6 +4839,61 @@ func (ec *executionContext) fieldContext_MultipleChoiceResponse_quizItem(_ conte
 	return fc, nil
 }
 
+func (ec *executionContext) _MultipleChoiceResponse_progress(ctx context.Context, field graphql.CollectedField, obj *model.MultipleChoiceResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_MultipleChoiceResponse_progress(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Progress, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.ProgressEntry)
+	fc.Result = res
+	return ec.marshalOProgressEntry2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐProgressEntry(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_MultipleChoiceResponse_progress(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "MultipleChoiceResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "greek":
+				return ec.fieldContext_ProgressEntry_greek(ctx, field)
+			case "translation":
+				return ec.fieldContext_ProgressEntry_translation(ctx, field)
+			case "playCount":
+				return ec.fieldContext_ProgressEntry_playCount(ctx, field)
+			case "correctCount":
+				return ec.fieldContext_ProgressEntry_correctCount(ctx, field)
+			case "incorrectCount":
+				return ec.fieldContext_ProgressEntry_incorrectCount(ctx, field)
+			case "lastPlayed":
+				return ec.fieldContext_ProgressEntry_lastPlayed(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ProgressEntry", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Options_option(ctx context.Context, field graphql.CollectedField, obj *model.Options) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Options_option(ctx, field)
 	if err != nil {
@@ -4889,6 +4964,47 @@ func (ec *executionContext) _ProgressEntry_greek(ctx context.Context, field grap
 }
 
 func (ec *executionContext) fieldContext_ProgressEntry_greek(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ProgressEntry",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ProgressEntry_translation(ctx context.Context, field graphql.CollectedField, obj *model.ProgressEntry) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ProgressEntry_translation(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Translation, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ProgressEntry_translation(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "ProgressEntry",
 		Field:      field,
@@ -5532,6 +5648,8 @@ func (ec *executionContext) fieldContext_Query_multipleChoiceQuiz(ctx context.Co
 				return ec.fieldContext_MultipleChoiceResponse_options(ctx, field)
 			case "quizItem":
 				return ec.fieldContext_MultipleChoiceResponse_quizItem(ctx, field)
+			case "progress":
+				return ec.fieldContext_MultipleChoiceResponse_progress(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type MultipleChoiceResponse", field.Name)
 		},
@@ -9791,6 +9909,8 @@ func (ec *executionContext) _MultipleChoiceResponse(ctx context.Context, sel ast
 			out.Values[i] = ec._MultipleChoiceResponse_options(ctx, field, obj)
 		case "quizItem":
 			out.Values[i] = ec._MultipleChoiceResponse_quizItem(ctx, field, obj)
+		case "progress":
+			out.Values[i] = ec._MultipleChoiceResponse_progress(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -9863,6 +9983,8 @@ func (ec *executionContext) _ProgressEntry(ctx context.Context, sel ast.Selectio
 			out.Values[i] = graphql.MarshalString("ProgressEntry")
 		case "greek":
 			out.Values[i] = ec._ProgressEntry_greek(ctx, field, obj)
+		case "translation":
+			out.Values[i] = ec._ProgressEntry_translation(ctx, field, obj)
 		case "playCount":
 			out.Values[i] = ec._ProgressEntry_playCount(ctx, field, obj)
 		case "correctCount":

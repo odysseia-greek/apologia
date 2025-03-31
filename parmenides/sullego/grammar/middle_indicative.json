@@ -1,0 +1,188 @@
+[
+  {
+    "theme": "Middle - Indicative",
+    "set": 1,
+    "segment": "Present",
+    "description": "Basic Middle Voice Formation",
+    "difficulty": "beginner",
+    "content": [
+      {
+        "greek": "λύομαι",
+        "dictionaryForm": "λύω",
+        "translation": "to release (oneself)",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "indicative",
+          "person": "1st",
+          "number": "sing",
+          "correctAnswer": "1st sing - pres - ind - mid"
+        }
+      },
+      {
+        "greek": "λύῃ",
+        "dictionaryForm": "λύω",
+        "translation": "to release (oneself)",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "indicative",
+          "person": "2nd",
+          "number": "sing",
+          "correctAnswer": "2nd sing - pres - ind - mid"
+        }
+      },
+      {
+        "greek": "λύεται",
+        "dictionaryForm": "λύω",
+        "translation": "to release (oneself)",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "indicative",
+          "person": "3rd",
+          "number": "sing",
+          "correctAnswer": "3rd sing - pres - ind - mid"
+        }
+      },
+      {
+        "greek": "λυόμεθα",
+        "dictionaryForm": "λύω",
+        "translation": "to release (oneself)",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "indicative",
+          "person": "1st",
+          "number": "plur",
+          "correctAnswer": "1st plur - pres - ind - mid"
+        }
+      },
+      {
+        "greek": "λύεσθε",
+        "dictionaryForm": "λύω",
+        "translation": "to release (oneself)",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "indicative",
+          "person": "2nd",
+          "number": "plur",
+          "correctAnswer": "2nd plur - pres - ind - mid"
+        }
+      },
+      {
+        "greek": "λύονται",
+        "dictionaryForm": "λύω",
+        "translation": "to release (oneself)",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "indicative",
+          "person": "3rd",
+          "number": "plur",
+          "correctAnswer": "3rd plur - pres - ind - mid"
+        }
+      }
+    ]
+  },
+  {
+    "theme": "Middle - Indicative",
+    "set": 1,
+    "segment": "Imperfect",
+    "description": "Middle Voice in the Past",
+    "difficulty": "beginner",
+    "content": [
+      {
+        "greek": "ἐλυόμην",
+        "dictionaryForm": "λύω",
+        "translation": "to release (oneself)",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "imperfect",
+          "voice": "middle",
+          "mood": "indicative",
+          "person": "1st",
+          "number": "sing",
+          "correctAnswer": "1st sing - impf - ind - mid"
+        }
+      },
+      {
+        "greek": "ἐλύου",
+        "dictionaryForm": "λύω",
+        "translation": "to release (oneself)",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "imperfect",
+          "voice": "middle",
+          "mood": "indicative",
+          "person": "2nd",
+          "number": "sing",
+          "correctAnswer": "2nd sing - impf - ind - mid"
+        }
+      },
+      {
+        "greek": "ἐλύετο",
+        "dictionaryForm": "λύω",
+        "translation": "to release (oneself)",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "imperfect",
+          "voice": "middle",
+          "mood": "indicative",
+          "person": "3rd",
+          "number": "sing",
+          "correctAnswer": "3rd sing - impf - ind - mid"
+        }
+      },
+      {
+        "greek": "ἐλυόμεθα",
+        "dictionaryForm": "λύω",
+        "translation": "to release (oneself)",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "imperfect",
+          "voice": "middle",
+          "mood": "indicative",
+          "person": "1st",
+          "number": "plur",
+          "correctAnswer": "1st plur - impf - ind - mid"
+        }
+      },
+      {
+        "greek": "ἐλύεσθε",
+        "dictionaryForm": "λύω",
+        "translation": "to release (oneself)",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "imperfect",
+          "voice": "middle",
+          "mood": "indicative",
+          "person": "2nd",
+          "number": "plur",
+          "correctAnswer": "2nd plur - impf - ind - mid"
+        }
+      },
+      {
+        "greek": "ἐλύοντο",
+        "dictionaryForm": "λύω",
+        "translation": "to release (oneself)",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "imperfect",
+          "voice": "middle",
+          "mood": "indicative",
+          "person": "3rd",
+          "number": "plur",
+          "correctAnswer": "3rd plur - impf - ind - mid"
+        }
+      }
+    ]
+  }
+]

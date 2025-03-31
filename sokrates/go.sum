@@ -1,6 +1,6 @@
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
-github.com/99designs/gqlgen v0.17.68 h1:vH6jTShCv7sgz1ejXEDNqho7KWlA4ZwSWzVsxyhypAM=
-github.com/99designs/gqlgen v0.17.68/go.mod h1:fvCiqQAu2VLhKXez2xFvLmE47QgAPf/KTPN5XQ4rsHQ=
+github.com/99designs/gqlgen v0.17.70 h1:xgLIgQuG+Q2L/AE9cW595CT7xCWCe/bpPIFGSfsGSGs=
+github.com/99designs/gqlgen v0.17.70/go.mod h1:fvCiqQAu2VLhKXez2xFvLmE47QgAPf/KTPN5XQ4rsHQ=
 github.com/Azure/go-ansiterm v0.0.0-20250102033503-faa5f7b0171c h1:udKWzYgxTojEKWjV8V+WSxDXJ4NFATAsZjh8iIbsQIg=
 github.com/Azure/go-ansiterm v0.0.0-20250102033503-faa5f7b0171c/go.mod h1:xomTg63KZ2rFqZQzSB4Vz2SUXa1BpHTVz9L5PTmPC4E=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
@@ -228,8 +228,8 @@ github.com/odysseia-greek/agora/plato v0.2.6 h1:PaUGNrI9VfYNdXqqn7YgJk2AVmPf41o2
 github.com/odysseia-greek/agora/plato v0.2.6/go.mod h1:AilaS8d/ctTxWXHT1LFOI/urbAUEnVJMpqyNms96oAs=
 github.com/odysseia-greek/agora/thales v0.1.11 h1:UE54gcSt3QDeIZ3TLnN0l2ga63WBnO9sRAy0Uq/VA3M=
 github.com/odysseia-greek/agora/thales v0.1.11/go.mod h1:Lrg/m4WBIGc9+omEJoqBZvLhlgm0Ke9hgQOMzkE4uWM=
-github.com/odysseia-greek/apologia/aristippos v0.0.7 h1:U6UJ5kEoJB1lXcCtkdRaOqEEkYFhcVK8mNkiBgItLRQ=
-github.com/odysseia-greek/apologia/aristippos v0.0.7/go.mod h1:3XwBpVWSrhh21bz3NhsKVlDLZ2BtGIjelkP8jSf3OpY=
+github.com/odysseia-greek/apologia/aristippos v0.0.8 h1:u6SVzI3PYkE05obIhyfkR3JON8n9n8k3d/xqVAO0LeQ=
+github.com/odysseia-greek/apologia/aristippos v0.0.8/go.mod h1:3XwBpVWSrhh21bz3NhsKVlDLZ2BtGIjelkP8jSf3OpY=
 github.com/odysseia-greek/apologia/kritias v0.0.2 h1:9WvyW6cTHEtQIXAW0aT4mQr2Y1C6YN8QLFbdOyLgUc4=
 github.com/odysseia-greek/apologia/kritias v0.0.2/go.mod h1:auOltVwWIyrdYD2gC2IglcK5ZSPeyPFlbd0YHevFoEo=
 github.com/odysseia-greek/apologia/kriton v0.0.1 h1:XhAh4Ipl6abmkZS7ce4i8bk+etKar+ZMDd9tRe+T0oI=

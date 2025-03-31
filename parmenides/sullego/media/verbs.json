@@ -1,0 +1,130 @@
+{
+  "quizMetadata": {
+    "language": "English"
+  },
+  "theme": "Basic",
+  "segment": "Common Verbs 5",
+  "set": 1,
+  "content": [
+    {
+      "greek": "ἐλαύνω",
+      "translation": "to drive, drive on, set in motion",
+      "imageURL": "drive.webp",
+      "audioFile": ""
+    },
+    {
+      "greek": "καθίημι",
+      "translation": "to send down, let fall",
+      "imageURL": "senddown.webp",
+      "audioFile": ""
+    },
+    {
+      "greek":"καλέω",
+      "translation":"to call, summon",
+      "imageURL": "call.webp",
+      "audioFile": ""
+    },
+    {
+      "greek": "ἀποδείκνυμι",
+      "translation": "display, appoint, demonstrate",
+      "imageURL": "demonstrate.webp",
+      "audioFile": ""
+    },
+    {
+      "greek": "πολεμέω",
+      "translation": "to make war, to be at war",
+      "imageURL": "makewar.webp",
+      "audioFile": ""
+    },
+    {
+      "greek": "πολεμέω",
+      "translation": "to make war, to be at war",
+      "imageURL": "makewar.webp",
+      "audioFile": ""
+    },
+    {
+      "greek": "πυνθάνομαι",
+      "translation": "to learn by hearsay",
+      "imageURL": "learnbyhearsay.webp",
+      "audioFile": ""
+    },
+    {
+      "greek": "ἐκπέμπω",
+      "translation": "to send out",
+      "imageURL": "sendout.webp",
+      "audioFile": ""
+    },
+    {
+      "greek": "συμπλέω",
+      "translation": "to sail in company with",
+      "imageURL": "sailincompany.webp",
+      "audioFile": ""
+    },
+    {
+      "greek": "στρατεύω",
+      "translation": "to serve in war, serve as a soldier, do military service, take the field, march",
+      "imageURL": "serveinwar.webp",
+      "audioFile": ""
+    },
+    {
+      "greek": "καταστρέφω",
+      "translation": "to turn down, trample on",
+      "imageURL": "trample.webp",
+      "audioFile": ""
+    },
+    {
+      "greek": "ἀνακρίνω",
+      "translation": "to examine closely, to question, interrogate",
+      "imageURL": "interrogate.webp",
+      "audioFile": ""
+    },
+    {
+      "greek": "κατηγορέω",
+      "translation": "to speak against, to accuse",
+      "imageURL": "accuse.webp",
+      "audioFile": ""
+    },
+    {
+      "greek":"προτιμάω",
+      "translation":"to honour",
+      "imageURL": "honour.webp",
+      "audioFile": ""
+    },
+    {
+      "greek":"κωλύω",
+      "translation":"to let, hinder, check, prevent",
+      "imageURL": "hinder.webp",
+      "audioFile": ""
+    },
+    {
+      "greek":"δράω",
+      "translation":"to do",
+      "imageURL":"do.webp",
+      "audioFile": ""
+    },
+    {
+      "greek":"χαίρω",
+      "translation":"to be happy",
+      "imageURL":"behappy.webp",
+      "audioFile": ""
+    },
+    {
+      "greek":"βάλλω",
+      "translation":"throw, hurl",
+      "imageURL":"throw.webp",
+      "audioFile": ""
+    },
+    {
+      "greek":"τέμνω",
+      "translation":"cut, cut down, cut to pieces",
+      "imageURL":"cut.webp",
+      "audioFile": ""
+    },
+    {
+      "greek":"μανθάνω",
+      "translation":"learn, ascertain",
+      "imageURL":"learn.webp",
+      "audioFile": ""
+    }
+  ]
+}

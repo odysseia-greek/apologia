@@ -32,6 +32,17 @@ func (s *SokratesHandler) CreateMultipleChoiceQuiz(request *pbkritias.CreationRe
 		})
 	}
 
+	for _, progress := range grpcResponse.Progress {
+		quizResponse.Progress = append(quizResponse.Progress, &model.ProgressEntry{
+			Greek:          &progress.Greek,
+			Translation:    &progress.Translation,
+			PlayCount:      &progress.PlayCount,
+			CorrectCount:   &progress.CorrectCount,
+			IncorrectCount: &progress.IncorrectCount,
+			LastPlayed:     &progress.LastPlayed,
+		})
+	}
+
 	return quizResponse, nil
 }
 

@@ -146,6 +146,8 @@ func CreateNewConfig(ctx context.Context) (*MediaServiceImpl, error) {
 		return nil, err
 	}
 
+	version := os.Getenv("VERSION")
+	
 	return &MediaServiceImpl{
 		Index:      index,
 		Elastic:    elastic,
@@ -153,6 +155,7 @@ func CreateNewConfig(ctx context.Context) (*MediaServiceImpl, error) {
 		Client:     client,
 		Streamer:   streamer,
 		Archytas:   cache,
+		Version:    version,
 		Progress: &ProgressTracker{
 			Data: make(map[string]*SessionProgress),
 		},

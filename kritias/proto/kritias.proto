@@ -55,7 +55,9 @@ message CreationRequest {
   string set = 2;
   string segment = 3; // Optional
   string order = 4;
-  repeated string exclude_words = 5;
+  int32 doneAfter = 5; // Number of times a word must be played before it's considered done
+  bool resetProgress = 6;   // Hard reset
+  bool archiveProgress = 7; // Soft reset (archive and start fresh)
 }
 
 // Response message for quiz creation
@@ -63,6 +65,7 @@ message QuizResponse {
   string quiz_item = 1;
   int32 number_of_items = 2;
   repeated Options options = 3;
+  repeated ProgressEntry progress = 4; // Optional: only if sessionId is set
 }
 
 // Quiz options (word, audio, image)
@@ -78,6 +81,7 @@ message AnswerRequest {
   bool comprehensive = 5; // Optional
   string answer = 6;
   string quiz_word = 7;
+  int32 doneAfter = 8;
 }
 
 // Response message for answer validation
@@ -86,7 +90,9 @@ message ComprehensiveResponse {
   string quiz_word = 2;
   AnalyzeTextResponse found_in_text = 3; // Optional
   repeated Meros similar_words = 4; // Optional
-}
+  repeated ProgressEntry progress = 5; // Optional: only if sessionId is set
+  bool finished = 6;
+} 
 
 // Similar words structure
 message Meros {
@@ -125,4 +131,14 @@ message Rhema {
   string greek = 1;
   repeated string translations = 2;
   string section = 3;
+}
+
+// Word progress entry
+message ProgressEntry {
+  string greek = 1;
+  string translation = 2;
+  int32 play_count = 3;
+  int32 correct_count = 4;
+  int32 incorrect_count = 5;
+  string last_played = 6; // ISO timestamp format
 }

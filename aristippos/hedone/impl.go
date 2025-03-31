@@ -28,6 +28,7 @@ const (
 type MediaServiceImpl struct {
 	Elastic    aristoteles.Client
 	Index      string
+	Version    string
 	Randomizer randomizer.Random
 	Client     service.OdysseiaClient
 	Streamer   pbar.TraceService_ChorusClient
