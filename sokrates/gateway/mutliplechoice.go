@@ -1,20 +1,14 @@
 package gateway
 
 import (
-	"context"
-	"github.com/odysseia-greek/agora/plato/service"
 	pbkritias "github.com/odysseia-greek/apologia/kritias/proto"
 	"github.com/odysseia-greek/apologia/sokrates/gateway/multiplechoice"
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
-	"google.golang.org/grpc/metadata"
-	"time"
 )
 
-func (s *SokratesHandler) CreateMultipleChoiceQuiz(request *pbkritias.CreationRequest, requestID string) (*model.MultipleChoiceResponse, error) {
-	mediaClientCtx, ctxCancel := context.WithTimeout(context.Background(), 30*time.Second)
-	defer ctxCancel()
-	md := metadata.New(map[string]string{service.HeaderKey: requestID})
-	mediaClientCtx = metadata.NewOutgoingContext(context.Background(), md)
+func (s *SokratesHandler) CreateMultipleChoiceQuiz(request *pbkritias.CreationRequest, requestID, sessionId string) (*model.MultipleChoiceResponse, error) {
+	mediaClientCtx, cancel := s.createRequestHeader(requestID, sessionId)
+	defer cancel()
 
 	grpcResponse, err := s.MultiChoiceClient.Question(mediaClientCtx, request)
 	if err != nil {
@@ -46,11 +40,9 @@ func (s *SokratesHandler) CreateMultipleChoiceQuiz(request *pbkritias.CreationRe
 	return quizResponse, nil
 }
 
-func (s *SokratesHandler) CheckMultipleChoice(request *pbkritias.AnswerRequest, requestID string) (*model.ComprehensiveResponse, error) {
-	multipleChoiceClientCtx, ctxCancel := context.WithTimeout(context.Background(), 30*time.Second)
-	defer ctxCancel()
-	md := metadata.New(map[string]string{service.HeaderKey: requestID})
-	multipleChoiceClientCtx = metadata.NewOutgoingContext(context.Background(), md)
+func (s *SokratesHandler) CheckMultipleChoice(request *pbkritias.AnswerRequest, requestID, sessionId string) (*model.ComprehensiveResponse, error) {
+	multipleChoiceClientCtx, cancel := s.createRequestHeader(requestID, sessionId)
+	defer cancel()
 
 	grpcResponse, err := s.MultiChoiceClient.Answer(multipleChoiceClientCtx, request)
 	if err != nil {
@@ -60,7 +52,7 @@ func (s *SokratesHandler) CheckMultipleChoice(request *pbkritias.AnswerRequest, 
 	return multiplechoice.MapComprehensiveResponse(grpcResponse), nil
 }
 
-func (s *SokratesHandler) MultipleChoiceOptions(requestID, sessionId string) (*model.AggregatedOptions, error) {
+func (s *SokratesHandler) MultipleChoiceOptions(requestID, sessionId string) (*model.MultipleChoiceOptions, error) {
 	optionsCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
@@ -69,24 +61,16 @@ func (s *SokratesHandler) MultipleChoiceOptions(requestID, sessionId string) (*m
 		return nil, err
 	}
 
-	var themes []*model.Theme
+	var themes []*model.MultipleTheme
 	for _, grpcTheme := range grpcResponse.Themes {
-		var segments []*model.Segment
-		for _, grpcSegment := range grpcTheme.Segments {
-			maxSet := float64(grpcSegment.MaxSet)
-			segments = append(segments, &model.Segment{
-				Name:   &grpcSegment.Name,
-				MaxSet: &maxSet,
-			})
-		}
-
-		themes = append(themes, &model.Theme{
-			Name:     &grpcTheme.Name,
-			Segments: segments,
+		maxSet := float64(grpcTheme.MaxSet)
+		themes = append(themes, &model.MultipleTheme{
+			Name:   &grpcTheme.Name,
+			MaxSet: &maxSet,
 		})
 	}
 
-	return &model.AggregatedOptions{
+	return &model.MultipleChoiceOptions{
 		Themes: themes,
 	}, nil
 }

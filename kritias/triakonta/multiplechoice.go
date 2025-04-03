@@ -92,7 +92,7 @@ func (m *MultipleChoiceServiceImpl) Question(ctx context.Context, request *pb.Cr
 		}
 	}
 
-	segmentKey := fmt.Sprintf("%s+%s+%s", request.Theme, request.Set, request.Segment)
+	segmentKey := fmt.Sprintf("%s+%s", request.Theme, request.Set)
 	if request.ResetProgress {
 		m.Progress.ClearSegment(sessionId, segmentKey)
 	}

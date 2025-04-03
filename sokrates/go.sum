@@ -230,8 +230,8 @@ github.com/odysseia-greek/agora/thales v0.1.11 h1:UE54gcSt3QDeIZ3TLnN0l2ga63WBnO
 github.com/odysseia-greek/agora/thales v0.1.11/go.mod h1:Lrg/m4WBIGc9+omEJoqBZvLhlgm0Ke9hgQOMzkE4uWM=
 github.com/odysseia-greek/apologia/aristippos v0.0.8 h1:u6SVzI3PYkE05obIhyfkR3JON8n9n8k3d/xqVAO0LeQ=
 github.com/odysseia-greek/apologia/aristippos v0.0.8/go.mod h1:3XwBpVWSrhh21bz3NhsKVlDLZ2BtGIjelkP8jSf3OpY=
-github.com/odysseia-greek/apologia/kritias v0.0.3 h1:LpkIdiX030Si+Q+5MZfCP5cwCqJSRjECamMpvHpNWUk=
-github.com/odysseia-greek/apologia/kritias v0.0.3/go.mod h1:v2uzG9vknAXUyZV84L2k2wCh4Eko04PdJMeoVACHZGc=
+github.com/odysseia-greek/apologia/kritias v0.0.4 h1:5gFEVs7+HPBEJFxN6NSIr2z7bbJaGrCRcc1QwyhTsmc=
+github.com/odysseia-greek/apologia/kritias v0.0.4/go.mod h1:v2uzG9vknAXUyZV84L2k2wCh4Eko04PdJMeoVACHZGc=
 github.com/odysseia-greek/apologia/kriton v0.0.1 h1:XhAh4Ipl6abmkZS7ce4i8bk+etKar+ZMDd9tRe+T0oI=
 github.com/odysseia-greek/apologia/kriton v0.0.1/go.mod h1:yYgUusF18I/asFNKNSWLL8deBzdi9KrNxN1x04OsfTw=
 github.com/odysseia-greek/apologia/xenofon v0.0.1 h1:79UDbB9SvVxreJ0+f5XhuZuFvZtr1Td3AZmOqPs//+s=

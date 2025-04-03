@@ -176,11 +176,20 @@ type ComplexityRoot struct {
 		QuizItem      func(childComplexity int) int
 	}
 
+	MultipleChoiceOptions struct {
+		Themes func(childComplexity int) int
+	}
+
 	MultipleChoiceResponse struct {
 		NumberOfItems func(childComplexity int) int
 		Options       func(childComplexity int) int
 		Progress      func(childComplexity int) int
 		QuizItem      func(childComplexity int) int
+	}
+
+	MultipleTheme struct {
+		MaxSet func(childComplexity int) int
+		Name   func(childComplexity int) int
 	}
 
 	Options struct {
@@ -249,7 +258,7 @@ type ComplexityRoot struct {
 type QueryResolver interface {
 	Health(ctx context.Context) (*model.AggregatedHealthResponse, error)
 	MediaOptions(ctx context.Context) (*model.AggregatedOptions, error)
-	MultipleChoiceOptions(ctx context.Context) (*model.AggregatedOptions, error)
+	MultipleChoiceOptions(ctx context.Context) (*model.MultipleChoiceOptions, error)
 	AuthorBasedOptions(ctx context.Context) (*model.AggregatedOptions, error)
 	DialogueOptions(ctx context.Context) (*model.AggregatedOptions, error)
 	MediaAnswer(ctx context.Context, input *model.MediaAnswerInput) (*model.ComprehensiveResponse, error)
@@ -792,6 +801,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.MediaQuizResponse.QuizItem(childComplexity), true
 
+	case "MultipleChoiceOptions.themes":
+		if e.complexity.MultipleChoiceOptions.Themes == nil {
+			break
+		}
+
+		return e.complexity.MultipleChoiceOptions.Themes(childComplexity), true
+
 	case "MultipleChoiceResponse.numberOfItems":
 		if e.complexity.MultipleChoiceResponse.NumberOfItems == nil {
 			break
@@ -819,6 +835,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.MultipleChoiceResponse.QuizItem(childComplexity), true
+
+	case "MultipleTheme.maxSet":
+		if e.complexity.MultipleTheme.MaxSet == nil {
+			break
+		}
+
+		return e.complexity.MultipleTheme.MaxSet(childComplexity), true
+
+	case "MultipleTheme.name":
+		if e.complexity.MultipleTheme.Name == nil {
+			break
+		}
+
+		return e.complexity.MultipleTheme.Name(childComplexity), true
 
 	case "Options.option":
 		if e.complexity.Options.Option == nil {
@@ -4712,6 +4742,53 @@ func (ec *executionContext) fieldContext_MediaQuizResponse_progress(_ context.Co
 	return fc, nil
 }
 
+func (ec *executionContext) _MultipleChoiceOptions_themes(ctx context.Context, field graphql.CollectedField, obj *model.MultipleChoiceOptions) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_MultipleChoiceOptions_themes(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Themes, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.MultipleTheme)
+	fc.Result = res
+	return ec.marshalOMultipleTheme2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐMultipleTheme(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_MultipleChoiceOptions_themes(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "MultipleChoiceOptions",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "name":
+				return ec.fieldContext_MultipleTheme_name(ctx, field)
+			case "maxSet":
+				return ec.fieldContext_MultipleTheme_maxSet(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type MultipleTheme", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _MultipleChoiceResponse_numberOfItems(ctx context.Context, field graphql.CollectedField, obj *model.MultipleChoiceResponse) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_MultipleChoiceResponse_numberOfItems(ctx, field)
 	if err != nil {
@@ -4889,6 +4966,88 @@ func (ec *executionContext) fieldContext_MultipleChoiceResponse_progress(_ conte
 				return ec.fieldContext_ProgressEntry_lastPlayed(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ProgressEntry", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _MultipleTheme_name(ctx context.Context, field graphql.CollectedField, obj *model.MultipleTheme) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_MultipleTheme_name(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Name, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_MultipleTheme_name(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "MultipleTheme",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _MultipleTheme_maxSet(ctx context.Context, field graphql.CollectedField, obj *model.MultipleTheme) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_MultipleTheme_maxSet(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.MaxSet, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*float64)
+	fc.Result = res
+	return ec.marshalOFloat2ᚖfloat64(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_MultipleTheme_maxSet(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "MultipleTheme",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Float does not have child fields")
 		},
 	}
 	return fc, nil
@@ -5300,9 +5459,9 @@ func (ec *executionContext) _Query_multipleChoiceOptions(ctx context.Context, fi
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*model.AggregatedOptions)
+	res := resTmp.(*model.MultipleChoiceOptions)
 	fc.Result = res
-	return ec.marshalOAggregatedOptions2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐAggregatedOptions(ctx, field.Selections, res)
+	return ec.marshalOMultipleChoiceOptions2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐMultipleChoiceOptions(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_multipleChoiceOptions(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5314,9 +5473,9 @@ func (ec *executionContext) fieldContext_Query_multipleChoiceOptions(_ context.C
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "themes":
-				return ec.fieldContext_AggregatedOptions_themes(ctx, field)
+				return ec.fieldContext_MultipleChoiceOptions_themes(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type AggregatedOptions", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type MultipleChoiceOptions", field.Name)
 		},
 	}
 	return fc, nil
@@ -9051,7 +9210,7 @@ func (ec *executionContext) unmarshalInputMultipleQuizInput(ctx context.Context,
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"doneAfter", "theme", "set", "segment", "order", "resetProgress", "archiveProgress"}
+	fieldsInOrder := [...]string{"doneAfter", "theme", "set", "order", "resetProgress", "archiveProgress"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -9079,13 +9238,6 @@ func (ec *executionContext) unmarshalInputMultipleQuizInput(ctx context.Context,
 				return it, err
 			}
 			it.Set = data
-		case "segment":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("segment"))
-			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Segment = data
 		case "order":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("order"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
@@ -9913,6 +10065,42 @@ func (ec *executionContext) _MediaQuizResponse(ctx context.Context, sel ast.Sele
 	return out
 }
 
+var multipleChoiceOptionsImplementors = []string{"MultipleChoiceOptions"}
+
+func (ec *executionContext) _MultipleChoiceOptions(ctx context.Context, sel ast.SelectionSet, obj *model.MultipleChoiceOptions) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, multipleChoiceOptionsImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("MultipleChoiceOptions")
+		case "themes":
+			out.Values[i] = ec._MultipleChoiceOptions_themes(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
 var multipleChoiceResponseImplementors = []string{"MultipleChoiceResponse"}
 
 func (ec *executionContext) _MultipleChoiceResponse(ctx context.Context, sel ast.SelectionSet, obj *model.MultipleChoiceResponse) graphql.Marshaler {
@@ -9932,6 +10120,44 @@ func (ec *executionContext) _MultipleChoiceResponse(ctx context.Context, sel ast
 			out.Values[i] = ec._MultipleChoiceResponse_quizItem(ctx, field, obj)
 		case "progress":
 			out.Values[i] = ec._MultipleChoiceResponse_progress(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var multipleThemeImplementors = []string{"MultipleTheme"}
+
+func (ec *executionContext) _MultipleTheme(ctx context.Context, sel ast.SelectionSet, obj *model.MultipleTheme) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, multipleThemeImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("MultipleTheme")
+		case "name":
+			out.Values[i] = ec._MultipleTheme_name(ctx, field, obj)
+		case "maxSet":
+			out.Values[i] = ec._MultipleTheme_maxSet(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -11785,6 +12011,13 @@ func (ec *executionContext) unmarshalOMultipleChoiceAnswerInput2ᚖgithubᚗcom�
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
+func (ec *executionContext) marshalOMultipleChoiceOptions2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐMultipleChoiceOptions(ctx context.Context, sel ast.SelectionSet, v *model.MultipleChoiceOptions) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._MultipleChoiceOptions(ctx, sel, v)
+}
+
 func (ec *executionContext) marshalOMultipleChoiceResponse2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐMultipleChoiceResponse(ctx context.Context, sel ast.SelectionSet, v *model.MultipleChoiceResponse) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
@@ -11798,6 +12031,54 @@ func (ec *executionContext) unmarshalOMultipleQuizInput2ᚖgithubᚗcomᚋodysse
 	}
 	res, err := ec.unmarshalInputMultipleQuizInput(ctx, v)
 	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOMultipleTheme2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐMultipleTheme(ctx context.Context, sel ast.SelectionSet, v []*model.MultipleTheme) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalOMultipleTheme2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐMultipleTheme(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	return ret
+}
+
+func (ec *executionContext) marshalOMultipleTheme2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐMultipleTheme(ctx context.Context, sel ast.SelectionSet, v *model.MultipleTheme) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._MultipleTheme(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalOOptions2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐOptions(ctx context.Context, sel ast.SelectionSet, v []*model.Options) graphql.Marshaler {

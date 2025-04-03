@@ -31,7 +31,7 @@ func (r *queryResolver) MediaOptions(ctx context.Context) (*model.AggregatedOpti
 }
 
 // MultipleChoiceOptions is the resolver for the multipleChoiceOptions field.
-func (r *queryResolver) MultipleChoiceOptions(ctx context.Context) (*model.AggregatedOptions, error) {
+func (r *queryResolver) MultipleChoiceOptions(ctx context.Context) (*model.MultipleChoiceOptions, error) {
 	requestID, _ := ctx.Value(config.HeaderKey).(string)
 	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
 	return r.Handler.MultipleChoiceOptions(requestID, sessionId)
@@ -89,6 +89,7 @@ func (r *queryResolver) MediaQuiz(ctx context.Context, input *model.MediaQuizInp
 // MultipleChoiceAnswer is the resolver for the multipleChoiceAnswer field.
 func (r *queryResolver) MultipleChoiceAnswer(ctx context.Context, input *model.MultipleChoiceAnswerInput) (*model.ComprehensiveResponse, error) {
 	requestID, _ := ctx.Value(config.HeaderKey).(string)
+	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
 
 	pb := &pbkritias.AnswerRequest{
 		Theme:         *input.Theme,
@@ -98,17 +99,17 @@ func (r *queryResolver) MultipleChoiceAnswer(ctx context.Context, input *model.M
 		QuizWord:      *input.QuizWord,
 	}
 
-	return r.Handler.CheckMultipleChoice(pb, requestID)
+	return r.Handler.CheckMultipleChoice(pb, requestID, sessionId)
 }
 
 // MultipleChoiceQuiz is the resolver for the multipleChoiceQuiz field.
 func (r *queryResolver) MultipleChoiceQuiz(ctx context.Context, input *model.MultipleQuizInput) (*model.MultipleChoiceResponse, error) {
 	requestID, _ := ctx.Value(config.HeaderKey).(string)
+	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
 
 	pb := &pbkritias.CreationRequest{
 		Theme:           *input.Theme,
 		Set:             *input.Set,
-		Segment:         *input.Segment,
 		DoneAfter:       *input.DoneAfter,
 		ResetProgress:   *input.ResetProgress,
 		ArchiveProgress: *input.ArchiveProgress,
@@ -118,12 +119,13 @@ func (r *queryResolver) MultipleChoiceQuiz(ctx context.Context, input *model.Mul
 		pb.Order = *input.Order
 	}
 
-	return r.Handler.CreateMultipleChoiceQuiz(pb, requestID)
+	return r.Handler.CreateMultipleChoiceQuiz(pb, requestID, sessionId)
 }
 
 // AuthorBasedAnswer is the resolver for the authorBasedAnswer field.
 func (r *queryResolver) AuthorBasedAnswer(ctx context.Context, input *model.AuthorBasedAnswerInput) (*model.AuthorBasedAnswerResponse, error) {
 	requestID, _ := ctx.Value(config.HeaderKey).(string)
+	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
 
 	pb := &pbxenofon.AnswerRequest{
 		Theme:    *input.Theme,
@@ -133,12 +135,13 @@ func (r *queryResolver) AuthorBasedAnswer(ctx context.Context, input *model.Auth
 		QuizWord: *input.QuizWord,
 	}
 
-	return r.Handler.CheckAuthorBased(pb, requestID)
+	return r.Handler.CheckAuthorBased(pb, requestID, sessionId)
 }
 
 // AuthorBasedQuiz is the resolver for the authorBasedQuiz field.
 func (r *queryResolver) AuthorBasedQuiz(ctx context.Context, input *model.AuthorBasedInput) (*model.AuthorBasedResponse, error) {
 	requestID, _ := ctx.Value(config.HeaderKey).(string)
+	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
 
 	pb := &pbxenofon.CreationRequest{
 		Theme:   *input.Theme,
@@ -150,12 +153,13 @@ func (r *queryResolver) AuthorBasedQuiz(ctx context.Context, input *model.Author
 		pb.ExcludeWords = append(pb.ExcludeWords, *word)
 	}
 
-	return r.Handler.CreateAuthorBasedQuiz(pb, requestID)
+	return r.Handler.CreateAuthorBasedQuiz(pb, requestID, sessionId)
 }
 
 // DialogueAnswer is the resolver for the dialogueAnswer field.
 func (r *queryResolver) DialogueAnswer(ctx context.Context, input *model.DialogueAnswerInput) (*model.DialogueAnswer, error) {
 	requestID, _ := ctx.Value(config.HeaderKey).(string)
+	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
 
 	pb := &pbkriton.AnswerRequest{
 		Theme: *input.Theme,
@@ -171,19 +175,20 @@ func (r *queryResolver) DialogueAnswer(ctx context.Context, input *model.Dialogu
 		})
 	}
 
-	return r.Handler.CheckDialogueQuiz(pb, requestID)
+	return r.Handler.CheckDialogueQuiz(pb, requestID, sessionId)
 }
 
 // DialogueQuiz is the resolver for the dialogueQuiz field.
 func (r *queryResolver) DialogueQuiz(ctx context.Context, input *model.DialogueQuizInput) (*model.DialogueQuizResponse, error) {
 	requestID, _ := ctx.Value(config.HeaderKey).(string)
+	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
 
 	pb := &pbkriton.CreationRequest{
 		Theme: *input.Theme,
 		Set:   *input.Set,
 	}
 
-	return r.Handler.CreateDialogueQuiz(pb, requestID)
+	return r.Handler.CreateDialogueQuiz(pb, requestID, sessionId)
 }
 
 // Query returns QueryResolver implementation.

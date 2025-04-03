@@ -3,8 +3,8 @@ package philia
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
+	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/models"
 	pb "github.com/odysseia-greek/apologia/kriton/proto"
 	"strconv"
@@ -12,8 +12,9 @@ import (
 )
 
 const (
-	THEME string = "theme"
-	SET   string = "set"
+	THEME            string = "theme"
+	SET              string = "set"
+	OPTIONSEGMENTKEY string = "archytassavedoptions"
 )
 
 func (d *DialogueServiceImpl) Health(context.Context, *pb.HealthRequest) (*pb.HealthResponse, error) {
@@ -26,21 +27,34 @@ func (d *DialogueServiceImpl) Health(context.Context, *pb.HealthRequest) (*pb.He
 	}
 
 	return &pb.HealthResponse{
-		Healthy:        dbHealth.Healthy,
+		Healthy:        true,
 		Time:           time.Now().String(),
 		DatabaseHealth: dbHealth,
+		Version:        d.Version,
 	}, nil
 }
 
 func (d *DialogueServiceImpl) Options(ctx context.Context, request *pb.OptionsRequest) (*pb.AggregatedOptions, error) {
-	query := quizAggregationQuery()
+	var unparsedResponse []byte
+	cacheItem, _ := d.Archytas.Read(OPTIONSEGMENTKEY)
+	if cacheItem != nil {
+		unparsedResponse = cacheItem
+	} else {
+		query := quizAggregationQuery()
 
-	elasticResult, err := d.Elastic.Query().MatchRaw(d.Index, query)
-	if err != nil {
-		return nil, fmt.Errorf("error in elasticSearch: %s", err.Error())
+		elasticResponse, err := d.Elastic.Query().MatchRaw(d.Index, query)
+		if err != nil {
+			return nil, fmt.Errorf("error in elasticSearch: %s", err.Error())
+		}
+
+		unparsedResponse = elasticResponse
+		err = d.Archytas.Set(OPTIONSEGMENTKEY, string(elasticResponse))
+		if err != nil {
+			logging.Error(err.Error())
+		}
 	}
 
-	result, err := parseAggregationResult(elasticResult)
+	result, err := parseAggregationResult(unparsedResponse)
 	if err != nil {
 		return nil, fmt.Errorf("error in elasticSearch: %s", err.Error())
 	}
@@ -49,30 +63,44 @@ func (d *DialogueServiceImpl) Options(ctx context.Context, request *pb.OptionsRe
 }
 
 func (d *DialogueServiceImpl) Question(ctx context.Context, request *pb.CreationRequest) (*pb.QuizResponse, error) {
-	mustQuery := []map[string]string{
-		{
-			THEME: request.Theme,
-		},
-		{
-			SET: request.Set,
-		},
-	}
-	query := d.Elastic.Builder().MultipleMatch(mustQuery)
-	elasticResponse, err := d.Elastic.Query().Match(d.Index, query)
-	if err != nil {
-		return nil, err
-	}
-
-	if elasticResponse.Hits.Hits == nil || len(elasticResponse.Hits.Hits) == 0 {
-		return nil, errors.New("no hits found in query")
-	}
+	segmentKey := fmt.Sprintf("%s+%s", request.Theme, request.Set)
+	cacheItem, _ := d.Archytas.Read(segmentKey)
 
 	var quiz models.DialogueQuiz
 
-	source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
-	err = json.Unmarshal(source, &quiz)
-	if err != nil {
-		return nil, err
+	if cacheItem != nil {
+		err := json.Unmarshal(cacheItem, &quiz)
+		if err != nil {
+			return nil, err
+		}
+
+		go cacheSpan(string(cacheItem), segmentKey, ctx)
+	} else {
+		mustQuery := []map[string]string{
+			{
+				THEME: request.Theme,
+			},
+			{
+				SET: request.Set,
+			},
+		}
+
+		query := d.Elastic.Builder().MultipleMatch(mustQuery)
+		elasticResponse, err := d.Elastic.Query().Match(d.Index, query)
+		if err != nil {
+			return nil, err
+		}
+		if len(elasticResponse.Hits.Hits) == 0 {
+			return nil, fmt.Errorf("no hits found in Elastic")
+		}
+
+		go databaseSpan(elasticResponse, query, ctx)
+
+		source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
+		err = json.Unmarshal(source, &quiz)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	result := &pb.QuizResponse{
@@ -116,30 +144,44 @@ func (d *DialogueServiceImpl) Question(ctx context.Context, request *pb.Creation
 }
 
 func (d *DialogueServiceImpl) Answer(ctx context.Context, request *pb.AnswerRequest) (*pb.AnswerResponse, error) {
-	mustQuery := []map[string]string{
-		{
-			THEME: request.Theme,
-		},
-		{
-			SET: request.Set,
-		},
-	}
-
-	query := d.Elastic.Builder().MultipleMatch(mustQuery)
-	elasticResponse, err := d.Elastic.Query().Match(d.Index, query)
-	if err != nil {
-		return nil, err
-	}
-
-	if len(elasticResponse.Hits.Hits) == 0 {
-		return nil, fmt.Errorf("no hits found in Elastic")
-	}
+	segmentKey := fmt.Sprintf("%s+%s", request.Theme, request.Set)
+	cacheItem, _ := d.Archytas.Read(segmentKey)
 
 	var option models.DialogueQuiz
-	source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
-	err = json.Unmarshal(source, &option)
-	if err != nil {
-		return nil, err
+
+	if cacheItem != nil {
+		err := json.Unmarshal(cacheItem, &option)
+		if err != nil {
+			return nil, err
+		}
+
+		go cacheSpan(string(cacheItem), segmentKey, ctx)
+	} else {
+		mustQuery := []map[string]string{
+			{
+				THEME: request.Theme,
+			},
+			{
+				SET: request.Set,
+			},
+		}
+
+		query := d.Elastic.Builder().MultipleMatch(mustQuery)
+		elasticResponse, err := d.Elastic.Query().Match(d.Index, query)
+		if err != nil {
+			return nil, err
+		}
+		if len(elasticResponse.Hits.Hits) == 0 {
+			return nil, fmt.Errorf("no hits found in Elastic")
+		}
+
+		go databaseSpan(elasticResponse, query, ctx)
+
+		source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
+		err = json.Unmarshal(source, &option)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	answer := &pb.AnswerResponse{

@@ -193,6 +193,10 @@ type MultipleChoiceAnswerInput struct {
 	Comprehensive *bool   `json:"comprehensive,omitempty"`
 }
 
+type MultipleChoiceOptions struct {
+	Themes []*MultipleTheme `json:"themes,omitempty"`
+}
+
 type MultipleChoiceResponse struct {
 	NumberOfItems *int32           `json:"numberOfItems,omitempty"`
 	Options       []*Options       `json:"options,omitempty"`
@@ -204,10 +208,14 @@ type MultipleQuizInput struct {
 	DoneAfter       *int32  `json:"doneAfter,omitempty"`
 	Theme           *string `json:"theme,omitempty"`
 	Set             *string `json:"set,omitempty"`
-	Segment         *string `json:"segment,omitempty"`
 	Order           *string `json:"order,omitempty"`
 	ResetProgress   *bool   `json:"resetProgress,omitempty"`
 	ArchiveProgress *bool   `json:"archiveProgress,omitempty"`
+}
+
+type MultipleTheme struct {
+	Name   *string  `json:"name,omitempty"`
+	MaxSet *float64 `json:"maxSet,omitempty"`
 }
 
 type Options struct {

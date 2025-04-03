@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/google/uuid"
+	"github.com/odysseia-greek/agora/archytas"
 	"github.com/odysseia-greek/agora/aristoteles"
 	"github.com/odysseia-greek/agora/aristoteles/models"
 	"github.com/odysseia-greek/agora/plato/config"
@@ -130,6 +131,11 @@ func CreateNewConfig(ctx context.Context) (*AuthorBasedServiceImpl, error) {
 		return nil, fmt.Errorf("no index found in environment please set %s", config.EnvIndex)
 	}
 
+	cache, err := archytas.CreateBadgerClient()
+	if err != nil {
+		return nil, err
+	}
+
 	randomizer, err := config.CreateNewRandomizer()
 	if err != nil {
 		return nil, err
@@ -140,11 +146,18 @@ func CreateNewConfig(ctx context.Context) (*AuthorBasedServiceImpl, error) {
 		return nil, err
 	}
 
+	version := os.Getenv("VERSION")
+
 	return &AuthorBasedServiceImpl{
 		Index:      index,
 		Elastic:    elastic,
 		Randomizer: randomizer,
 		Client:     client,
 		Streamer:   streamer,
+		Archytas:   cache,
+		Version:    version,
+		Progress: &ProgressTracker{
+			Data: make(map[string]*SessionProgress),
+		},
 	}, nil
 }

@@ -149,6 +149,15 @@ type Segment {
   maxSet: Float
 }
 
+type MultipleChoiceOptions {
+  themes: [MultipleTheme]
+}
+
+type MultipleTheme {
+  name: String
+  maxSet: Float
+}
+
 input MediaAnswerInput {
   theme: String
   set: String
@@ -196,7 +205,6 @@ input MultipleQuizInput {
   doneAfter: Int
   theme: String
   set: String
-  segment: String
   order: String
   resetProgress: Boolean
   archiveProgress: Boolean
@@ -223,7 +231,7 @@ input DialogueInputContent {
 type Query {
   health: AggregatedHealthResponse
   mediaOptions: AggregatedOptions
-  multipleChoiceOptions: AggregatedOptions
+  multipleChoiceOptions: MultipleChoiceOptions
   authorBasedOptions: AggregatedOptions
   dialogueOptions: AggregatedOptions
 

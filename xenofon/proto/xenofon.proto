@@ -54,7 +54,9 @@ message CreationRequest {
   string theme = 1;
   string set = 2;
   string segment = 3; // Optional
-  repeated string exclude_words = 4;
+  int32 doneAfter = 4; // Number of times a word must be played before it's considered done
+  bool resetProgress = 5;   // Hard reset
+  bool archiveProgress = 6; // Soft reset (archive and start fresh)
 }
 
 // Request message for checking an answer
@@ -64,6 +66,7 @@ message AnswerRequest {
   string segment = 3;
   string answer = 4;
   string quiz_word = 5;
+  int32 doneAfter = 6;
 }
 
 message QuizResponse {
@@ -72,6 +75,8 @@ message QuizResponse {
   string reference = 3;
   Quiz quiz = 4;
   repeated GrammarQuizAdded grammarQuiz = 5;
+  repeated ProgressEntry progress = 6; // Optional: only if sessionId is set
+
 }
 
 message Quiz {
@@ -95,4 +100,17 @@ message AnswerResponse {
   bool correct = 1;
   string quizWord = 2;
   repeated string wordsInText = 3;
+  repeated ProgressEntry progress = 4; // Optional: only if sessionId is set
+  bool finished = 5;
+
+}
+
+// Word progress entry
+message ProgressEntry {
+  string greek = 1;
+  string translation = 2;
+  int32 play_count = 3;
+  int32 correct_count = 4;
+  int32 incorrect_count = 5;
+  string last_played = 6; // ISO timestamp format
 }

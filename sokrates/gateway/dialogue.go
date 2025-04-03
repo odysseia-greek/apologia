@@ -1,21 +1,15 @@
 package gateway
 
 import (
-	"context"
-	"github.com/odysseia-greek/agora/plato/service"
 	pbkriotn "github.com/odysseia-greek/apologia/kriton/proto"
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
-	"google.golang.org/grpc/metadata"
-	"time"
 )
 
-func (s *SokratesHandler) CreateDialogueQuiz(request *pbkriotn.CreationRequest, requestID string) (*model.DialogueQuizResponse, error) {
-	mediaClientCtx, ctxCancel := context.WithTimeout(context.Background(), 30*time.Second)
-	defer ctxCancel()
-	md := metadata.New(map[string]string{service.HeaderKey: requestID})
-	mediaClientCtx = metadata.NewOutgoingContext(context.Background(), md)
+func (s *SokratesHandler) CreateDialogueQuiz(request *pbkriotn.CreationRequest, requestID, sessionId string) (*model.DialogueQuizResponse, error) {
+	dialogueClientCtx, cancel := s.createRequestHeader(requestID, sessionId)
+	defer cancel()
 
-	grpcResponse, err := s.DialogueClient.Question(mediaClientCtx, request)
+	grpcResponse, err := s.DialogueClient.Question(dialogueClientCtx, request)
 	if err != nil {
 		return nil, err
 	}
@@ -55,13 +49,11 @@ func (s *SokratesHandler) CreateDialogueQuiz(request *pbkriotn.CreationRequest, 
 	return quizResponse, nil
 }
 
-func (s *SokratesHandler) CheckDialogueQuiz(request *pbkriotn.AnswerRequest, requestID string) (*model.DialogueAnswer, error) {
-	mediaClientCtx, ctxCancel := context.WithTimeout(context.Background(), 30*time.Second)
-	defer ctxCancel()
-	md := metadata.New(map[string]string{service.HeaderKey: requestID})
-	mediaClientCtx = metadata.NewOutgoingContext(context.Background(), md)
+func (s *SokratesHandler) CheckDialogueQuiz(request *pbkriotn.AnswerRequest, requestID, sessionId string) (*model.DialogueAnswer, error) {
+	dialogueClientCtx, cancel := s.createRequestHeader(requestID, sessionId)
+	defer cancel()
 
-	grpcResponse, err := s.DialogueClient.Answer(mediaClientCtx, request)
+	grpcResponse, err := s.DialogueClient.Answer(dialogueClientCtx, request)
 	if err != nil {
 		return nil, err
 	}

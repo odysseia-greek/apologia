@@ -5,17 +5,20 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/models"
 	pb "github.com/odysseia-greek/apologia/xenofon/proto"
+	"google.golang.org/grpc/metadata"
 	"math/rand/v2"
 	"time"
 )
 
 const (
-	THEME   string = "theme"
-	SET     string = "set"
-	SEGMENT string = "segment"
+	THEME            string = "theme"
+	SET              string = "set"
+	SEGMENT          string = "segment"
+	OPTIONSEGMENTKEY string = "archytassavedoptions"
 )
 
 func (a *AuthorBasedServiceImpl) Health(context.Context, *pb.HealthRequest) (*pb.HealthResponse, error) {
@@ -28,21 +31,34 @@ func (a *AuthorBasedServiceImpl) Health(context.Context, *pb.HealthRequest) (*pb
 	}
 
 	return &pb.HealthResponse{
-		Healthy:        dbHealth.Healthy,
+		Healthy:        true,
 		Time:           time.Now().String(),
 		DatabaseHealth: dbHealth,
+		Version:        a.Version,
 	}, nil
 }
 
 func (a *AuthorBasedServiceImpl) Options(ctx context.Context, request *pb.OptionsRequest) (*pb.AggregatedOptions, error) {
-	query := quizAggregationQuery()
+	var unparsedResponse []byte
+	cacheItem, _ := a.Archytas.Read(OPTIONSEGMENTKEY)
+	if cacheItem != nil {
+		unparsedResponse = cacheItem
+	} else {
+		query := quizAggregationQuery()
 
-	elasticResult, err := a.Elastic.Query().MatchRaw(a.Index, query)
-	if err != nil {
-		return nil, fmt.Errorf("error in elasticSearch: %s", err.Error())
+		elasticResponse, err := a.Elastic.Query().MatchRaw(a.Index, query)
+		if err != nil {
+			return nil, fmt.Errorf("error in elasticSearch: %s", err.Error())
+		}
+
+		unparsedResponse = elasticResponse
+		err = a.Archytas.Set(OPTIONSEGMENTKEY, string(elasticResponse))
+		if err != nil {
+			logging.Error(err.Error())
+		}
 	}
 
-	result, err := parseAggregationResult(elasticResult)
+	result, err := parseAggregationResult(unparsedResponse)
 	if err != nil {
 		return nil, fmt.Errorf("error in elasticSearch: %s", err.Error())
 	}
@@ -51,55 +67,106 @@ func (a *AuthorBasedServiceImpl) Options(ctx context.Context, request *pb.Option
 }
 
 func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *pb.CreationRequest) (*pb.QuizResponse, error) {
-	mustQuery := []map[string]string{
-		{
-			THEME: request.Theme,
-		},
-		{
-			SET: request.Set,
-		},
-		{
-			SEGMENT: request.Segment,
-		},
-	}
-	query := a.Elastic.Builder().MultipleMatch(mustQuery)
-	elasticResponse, err := a.Elastic.Query().Match(a.Index, query)
-	if err != nil {
-		return nil, err
+	var sessionId string
+	md, ok := metadata.FromIncomingContext(ctx)
+	if ok {
+		headerValue := md.Get(config.SessionIdKey)
+		if len(headerValue) > 0 {
+			sessionId = headerValue[0]
+		}
 	}
 
-	if elasticResponse.Hits.Hits == nil || len(elasticResponse.Hits.Hits) == 0 {
-		return nil, errors.New("no hits found in query")
+	segmentKey := fmt.Sprintf("%s+%s+%s", request.Theme, request.Set, request.Segment)
+	if request.ResetProgress {
+		a.Progress.ClearSegment(sessionId, segmentKey)
 	}
+
+	if request.ArchiveProgress {
+		a.Progress.ResetSegment(sessionId, segmentKey)
+	}
+
+	cacheItem, _ := a.Archytas.Read(segmentKey)
 
 	var option models.AuthorbasedQuiz
 
-	source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
-	err = json.Unmarshal(source, &option)
-	if err != nil {
-		return nil, err
+	if cacheItem != nil {
+		err := json.Unmarshal(cacheItem, &option)
+		if err != nil {
+			return nil, err
+		}
+
+		go cacheSpan(string(cacheItem), segmentKey, ctx)
+	} else {
+		mustQuery := []map[string]string{
+			{
+				THEME: request.Theme,
+			},
+			{
+				SET: request.Set,
+			},
+			{
+				SEGMENT: request.Segment,
+			},
+		}
+
+		query := a.Elastic.Builder().MultipleMatch(mustQuery)
+		elasticResponse, err := a.Elastic.Query().Match(a.Index, query)
+		if err != nil {
+			return nil, err
+		}
+
+		if elasticResponse.Hits.Hits == nil || len(elasticResponse.Hits.Hits) == 0 {
+			return nil, errors.New("no hits found in query")
+		}
+
+		source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
+		err = json.Unmarshal(source, &option)
+		if err != nil {
+			return nil, err
+		}
+
+		go databaseSpan(elasticResponse, query, ctx)
+
+		err = a.Archytas.Set(segmentKey, string(source))
+		if err != nil {
+			if err.Error() != "Key not found" {
+				logging.Error(fmt.Sprintf("error when writing cache: %s", err.Error()))
+			} else {
+				logging.Debug(fmt.Sprintf("cache hit: %s", segmentKey))
+			}
+		}
 	}
 
-	//if traceCall {
-	//	go a.databaseSpan(elasticResponse, query, traceID, spanID)
-	//}
+	if !a.Progress.Exists(sessionId, segmentKey) {
+		allGreekWords := make([]string, len(option.Content))
+		for i, c := range option.Content {
+			allGreekWords[i] = c.Greek
+		}
+		a.Progress.InitWordsForSegment(sessionId, segmentKey, allGreekWords)
+	}
 
 	quiz := &pb.Quiz{
 		NumberOfItems: int32(len(option.Content)),
+	}
+
+	unplayed, unmastered := a.Progress.GetPlayableWords(sessionId, segmentKey, int(request.DoneAfter))
+	var wordPool map[string]struct{}
+
+	switch {
+	case len(unplayed) > 0:
+		wordPool = sliceToSet(unplayed)
+	case len(unmastered) > 0:
+		wordPool = sliceToSet(unmastered)
+	default:
+		retryable := a.Progress.GetRetryableWords(sessionId, segmentKey, int(request.DoneAfter))
+		wordPool = sliceToSet(retryable)
 	}
 
 	var grammarQuiz []*pb.GrammarQuizAdded
 	var filteredContent []models.AuthorBasedContent
 
 	for _, content := range option.Content {
-		addWord := true
-		for _, word := range request.ExcludeWords {
-			if content.Greek == word {
-				addWord = false
-			}
-		}
-
-		if addWord {
+		if _, ok := wordPool[content.Greek]; ok {
 			filteredContent = append(filteredContent, content)
 		}
 	}
@@ -203,33 +270,55 @@ func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *pb.Creat
 }
 
 func (a *AuthorBasedServiceImpl) Answer(ctx context.Context, request *pb.AnswerRequest) (*pb.AnswerResponse, error) {
-	mustQuery := []map[string]string{
-		{
-			THEME: request.Theme,
-		},
-		{
-			SEGMENT: request.Segment,
-		},
-		{
-			SET: request.Set,
-		},
+	var sessionId string
+	md, ok := metadata.FromIncomingContext(ctx)
+	if ok {
+		headerValue := md.Get(config.SessionIdKey)
+		if len(headerValue) > 0 {
+			sessionId = headerValue[0]
+		}
 	}
-
-	query := a.Elastic.Builder().MultipleMatch(mustQuery)
-	elasticResponse, err := a.Elastic.Query().Match(a.Index, query)
-	if err != nil {
-		return nil, err
-	}
-	if len(elasticResponse.Hits.Hits) == 0 {
-		logging.Error(fmt.Sprintf("no hits found in Elastic"))
-		return nil, fmt.Errorf("no hits found in Elastic")
-	}
+	segmentKey := fmt.Sprintf("%s+%s+%s", request.Theme, request.Set, request.Segment)
+	cacheItem, _ := a.Archytas.Read(segmentKey)
 
 	var option models.AuthorbasedQuiz
-	source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
-	err = json.Unmarshal(source, &option)
-	if err != nil {
-		return nil, err
+
+	if cacheItem != nil {
+		err := json.Unmarshal(cacheItem, &option)
+		if err != nil {
+			return nil, err
+		}
+
+		go cacheSpan(string(cacheItem), segmentKey, ctx)
+	} else {
+		mustQuery := []map[string]string{
+			{
+				THEME: request.Theme,
+			},
+			{
+				SEGMENT: request.Segment,
+			},
+			{
+				SET: request.Set,
+			},
+		}
+
+		query := a.Elastic.Builder().MultipleMatch(mustQuery)
+		elasticResponse, err := a.Elastic.Query().Match(a.Index, query)
+		if err != nil {
+			return nil, err
+		}
+		if len(elasticResponse.Hits.Hits) == 0 {
+			return nil, fmt.Errorf("no hits found in Elastic")
+		}
+
+		go databaseSpan(elasticResponse, query, ctx)
+
+		source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
+		err = json.Unmarshal(source, &option)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	answer := &pb.AnswerResponse{
@@ -246,6 +335,23 @@ func (a *AuthorBasedServiceImpl) Answer(ctx context.Context, request *pb.AnswerR
 		}
 	}
 
+	a.Progress.RecordAnswerResult(sessionId, segmentKey, request.QuizWord, answer.Correct)
+
+	if sessionId != "" {
+		progressList, finished := a.Progress.GetProgressForSegment(sessionId, segmentKey, int(request.DoneAfter))
+		answer.Finished = finished
+		for word, p := range progressList {
+			answer.Progress = append(answer.Progress, &pb.ProgressEntry{
+				Greek:          word,
+				Translation:    p.Translation,
+				PlayCount:      int32(p.PlayCount),
+				CorrectCount:   int32(p.CorrectCount),
+				IncorrectCount: int32(p.IncorrectCount),
+				LastPlayed:     p.LastPlayed.Format(time.RFC3339),
+			})
+		}
+	}
+
 	return answer, nil
 }
 
@@ -257,4 +363,12 @@ func findQuizWord(slice []*pb.Options, val string) bool {
 		}
 	}
 	return false
+}
+
+func sliceToSet(words []string) map[string]struct{} {
+	set := make(map[string]struct{}, len(words))
+	for _, w := range words {
+		set[w] = struct{}{}
+	}
+	return set
 }

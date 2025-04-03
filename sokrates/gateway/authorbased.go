@@ -1,21 +1,15 @@
 package gateway
 
 import (
-	"context"
-	"github.com/odysseia-greek/agora/plato/service"
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
 	pbxenofon "github.com/odysseia-greek/apologia/xenofon/proto"
-	"google.golang.org/grpc/metadata"
-	"time"
 )
 
-func (s *SokratesHandler) CreateAuthorBasedQuiz(request *pbxenofon.CreationRequest, requestID string) (*model.AuthorBasedResponse, error) {
-	mediaClientCtx, ctxCancel := context.WithTimeout(context.Background(), 30*time.Second)
-	defer ctxCancel()
-	md := metadata.New(map[string]string{service.HeaderKey: requestID})
-	mediaClientCtx = metadata.NewOutgoingContext(context.Background(), md)
+func (s *SokratesHandler) CreateAuthorBasedQuiz(request *pbxenofon.CreationRequest, requestID, sessionId string) (*model.AuthorBasedResponse, error) {
+	authorBasedCtx, cancel := s.createRequestHeader(requestID, sessionId)
+	defer cancel()
 
-	grpcResponse, err := s.AuthorBasedClient.Question(mediaClientCtx, request)
+	grpcResponse, err := s.AuthorBasedClient.Question(authorBasedCtx, request)
 	if err != nil {
 		return nil, err
 	}
@@ -51,13 +45,11 @@ func (s *SokratesHandler) CreateAuthorBasedQuiz(request *pbxenofon.CreationReque
 	return quizResponse, nil
 }
 
-func (s *SokratesHandler) CheckAuthorBased(request *pbxenofon.AnswerRequest, requestID string) (*model.AuthorBasedAnswerResponse, error) {
-	mediaClientCtx, ctxCancel := context.WithTimeout(context.Background(), 30*time.Second)
-	defer ctxCancel()
-	md := metadata.New(map[string]string{service.HeaderKey: requestID})
-	mediaClientCtx = metadata.NewOutgoingContext(context.Background(), md)
+func (s *SokratesHandler) CheckAuthorBased(request *pbxenofon.AnswerRequest, requestID, sessionId string) (*model.AuthorBasedAnswerResponse, error) {
+	authorBasedCtx, cancel := s.createRequestHeader(requestID, sessionId)
+	defer cancel()
 
-	grpcResponse, err := s.AuthorBasedClient.Answer(mediaClientCtx, request)
+	grpcResponse, err := s.AuthorBasedClient.Answer(authorBasedCtx, request)
 	if err != nil {
 		return nil, err
 	}

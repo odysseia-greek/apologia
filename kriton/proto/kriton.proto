@@ -40,12 +40,6 @@ message AggregatedOptions {
 // Structure for quiz themes
 message Theme {
   string name = 1;
-  repeated Segment segments = 2;
-}
-
-// Structure for segments within a theme
-message Segment {
-  string name = 1;
   float max_set = 2;
 }
 

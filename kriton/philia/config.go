@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/google/uuid"
+	"github.com/odysseia-greek/agora/archytas"
 	"github.com/odysseia-greek/agora/aristoteles"
 	"github.com/odysseia-greek/agora/aristoteles/models"
 	"github.com/odysseia-greek/agora/plato/config"
@@ -140,11 +141,20 @@ func CreateNewConfig(ctx context.Context) (*DialogueServiceImpl, error) {
 		return nil, err
 	}
 
+	cache, err := archytas.CreateBadgerClient()
+	if err != nil {
+		return nil, err
+	}
+
+	version := os.Getenv("VERSION")
+
 	return &DialogueServiceImpl{
 		Index:      index,
 		Elastic:    elastic,
 		Randomizer: randomizer,
 		Client:     client,
 		Streamer:   streamer,
+		Archytas:   cache,
+		Version:    version,
 	}, nil
 }
