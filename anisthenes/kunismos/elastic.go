@@ -1,9 +1,9 @@
-package hedone
+package kunismos
 
 import (
 	"encoding/json"
 	"fmt"
-	pb "github.com/odysseia-greek/apologia/aristippos/proto"
+	pb "github.com/odysseia-greek/apologia/anisthenes/proto"
 )
 
 func quizAggregationQuery() map[string]interface{} {
@@ -30,6 +30,14 @@ func quizAggregationQuery() map[string]interface{} {
 									"field": "set",
 								},
 							},
+							"difficulty": map[string]interface{}{
+								"top_hits": map[string]interface{}{
+									"size": 1,
+									"_source": map[string]interface{}{
+										"includes": []string{"difficulty"},
+									},
+								},
+							},
 						},
 					},
 				},
@@ -53,6 +61,15 @@ func parseAggregationResult(rawESOutput []byte) (*pb.AggregatedOptions, error) {
 							MaxSet   struct {
 								Value float64 `json:"value"`
 							} `json:"max_set"`
+							Difficulty struct {
+								Hits struct {
+									Hits []struct {
+										Source struct {
+											Difficulty string `json:"difficulty"`
+										} `json:"_source"`
+									} `json:"hits"`
+								} `json:"hits"`
+							} `json:"difficulty"`
 						} `json:"buckets"`
 					} `json:"unique_segments"`
 				} `json:"buckets"`
@@ -73,9 +90,16 @@ func parseAggregationResult(rawESOutput []byte) (*pb.AggregatedOptions, error) {
 			Name: themeBucket.Key,
 		}
 		for _, segmentBucket := range themeBucket.UniqueSegments.Buckets {
+			// Safely pull difficulty if available
+			difficulty := ""
+			if len(segmentBucket.Difficulty.Hits.Hits) > 0 {
+				difficulty = segmentBucket.Difficulty.Hits.Hits[0].Source.Difficulty
+			}
+
 			segment := &pb.Segment{
-				Name:   segmentBucket.Key,
-				MaxSet: float32(segmentBucket.MaxSet.Value),
+				Name:       segmentBucket.Key,
+				Difficulty: difficulty,
+				MaxSet:     float32(segmentBucket.MaxSet.Value),
 			}
 			theme.Segments = append(theme.Segments, segment)
 		}

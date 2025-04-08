@@ -803,7 +803,7 @@
         "greek":"ἐδόκησα",
         "dictionaryForm":"δοκέω",
         "translation":"to seem",
-        "stem":"δοκη-",
+        "stem":"δοκ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -817,7 +817,7 @@
         "greek":"ἐδόκησας",
         "dictionaryForm":"δοκέω",
         "translation":"to seem",
-        "stem":"δοκη-",
+        "stem":"δοκ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -831,7 +831,7 @@
         "greek":"ἐδόκησε(ν)",
         "dictionaryForm":"δοκέω",
         "translation":"to seem",
-        "stem":"δοκη-",
+        "stem":"δοκ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -845,7 +845,7 @@
         "greek":"ἐδοκήσαμεν",
         "dictionaryForm":"δοκέω",
         "translation":"to seem",
-        "stem":"δοκη-",
+        "stem":"δοκ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -859,7 +859,7 @@
         "greek":"ἐδοκήσατε",
         "dictionaryForm":"δοκέω",
         "translation":"to seem",
-        "stem":"δοκη-",
+        "stem":"δοκ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -873,7 +873,7 @@
         "greek":"ἐδόκησαν",
         "dictionaryForm":"δοκέω",
         "translation":"to seem",
-        "stem":"δοκη-",
+        "stem":"δοκ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -887,7 +887,7 @@
         "greek":"ἐποίησα",
         "dictionaryForm":"ποιέω",
         "translation":"to make",
-        "stem":"ποιη-",
+        "stem":"ποιέ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -901,7 +901,7 @@
         "greek":"ἐποίησας",
         "dictionaryForm":"ποιέω",
         "translation":"to make",
-        "stem":"ποιη-",
+        "stem":"ποιέ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -915,7 +915,7 @@
         "greek":"ἐποίησε(ν)",
         "dictionaryForm":"ποιέω",
         "translation":"to make",
-        "stem":"ποιη-",
+        "stem":"ποιέ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -929,7 +929,7 @@
         "greek":"ἐποιήσαμεν",
         "dictionaryForm":"ποιέω",
         "translation":"to make",
-        "stem":"ποιη-",
+        "stem":"ποιέ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -943,7 +943,7 @@
         "greek":"ἐποιήσατε",
         "dictionaryForm":"ποιέω",
         "translation":"to make",
-        "stem":"ποιη-",
+        "stem":"ποιέ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -957,7 +957,7 @@
         "greek":"ἐποίησαν",
         "dictionaryForm":"ποιέω",
         "translation":"to make",
-        "stem":"ποιη-",
+        "stem":"ποιέ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -971,7 +971,7 @@
         "greek":"ἐτίμησα",
         "dictionaryForm":"τιμάω",
         "translation":"to honor",
-        "stem":"τιμη-",
+        "stem":"τιμά-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -985,7 +985,7 @@
         "greek":"ἐτίμησας",
         "dictionaryForm":"τιμάω",
         "translation":"to honor",
-        "stem":"τιμη-",
+        "stem":"τιμά-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -999,7 +999,7 @@
         "greek":"ἐτίμησε(ν)",
         "dictionaryForm":"τιμάω",
         "translation":"to honor",
-        "stem":"τιμη-",
+        "stem":"τιμά-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1013,7 +1013,7 @@
         "greek":"ἐτιμήσαμεν",
         "dictionaryForm":"τιμάω",
         "translation":"to honor",
-        "stem":"τιμη-",
+        "stem":"τιμά-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1027,7 +1027,7 @@
         "greek":"ἐτιμήσατε",
         "dictionaryForm":"τιμάω",
         "translation":"to honor",
-        "stem":"τιμη-",
+        "stem":"τιμά-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1041,7 +1041,7 @@
         "greek":"ἐτίμησαν",
         "dictionaryForm":"τιμάω",
         "translation":"to honor",
-        "stem":"τιμη-",
+        "stem":"τιμά-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1055,7 +1055,7 @@
         "greek":"ἐδήλωσα",
         "dictionaryForm":"δηλόω",
         "translation":"to show",
-        "stem":"δηλω-",
+        "stem":"δηλό-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1069,7 +1069,7 @@
         "greek":"ἐδήλωσας",
         "dictionaryForm":"δηλόω",
         "translation":"to show",
-        "stem":"δηλω-",
+        "stem":"δηλό-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1083,7 +1083,7 @@
         "greek":"ἐδήλωσε(ν)",
         "dictionaryForm":"δηλόω",
         "translation":"to show",
-        "stem":"δηλω-",
+        "stem":"δηλό-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1097,7 +1097,7 @@
         "greek":"ἐδηλώσαμεν",
         "dictionaryForm":"δηλόω",
         "translation":"to show",
-        "stem":"δηλω-",
+        "stem":"δηλό-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1111,7 +1111,7 @@
         "greek":"ἐδηλώσατε",
         "dictionaryForm":"δηλόω",
         "translation":"to show",
-        "stem":"δηλω-",
+        "stem":"δηλό-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1125,7 +1125,7 @@
         "greek":"ἐδήλωσαν",
         "dictionaryForm":"δηλόω",
         "translation":"to show",
-        "stem":"δηλω-",
+        "stem":"δηλό-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1149,7 +1149,7 @@
         "greek":"ἐγραψα",
         "dictionaryForm":"γράφω",
         "translation":"to write",
-        "stem":"γραψ",
+        "stem":"γράφ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1163,7 +1163,7 @@
         "greek":"ἐγραψας",
         "dictionaryForm":"γράφω",
         "translation":"to write",
-        "stem":"γραψ",
+        "stem":"γράφ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1177,7 +1177,7 @@
         "greek":"ἐγραψε(ν)",
         "dictionaryForm":"γράφω",
         "translation":"to write",
-        "stem":"γραψ",
+        "stem":"γράφ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1191,7 +1191,7 @@
         "greek":"ἐγραψαμεν",
         "dictionaryForm":"γράφω",
         "translation":"to write",
-        "stem":"γραψ",
+        "stem":"γράφ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1205,7 +1205,7 @@
         "greek":"ἐγραψατε",
         "dictionaryForm":"γράφω",
         "translation":"to write",
-        "stem":"γραψ",
+        "stem":"γράφ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1219,7 +1219,7 @@
         "greek":"ἐγραψαν",
         "dictionaryForm":"γράφω",
         "translation":"to write",
-        "stem":"γραψ",
+        "stem":"γράφ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1233,7 +1233,7 @@
         "greek":"ἐπεμψα",
         "dictionaryForm":"πέμπω",
         "translation":"to send",
-        "stem":"πεμψ",
+        "stem":"πέμπ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1247,7 +1247,7 @@
         "greek":"ἐπεμψας",
         "dictionaryForm":"πέμπω",
         "translation":"to send",
-        "stem":"πεμψ",
+        "stem":"πέμπ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1261,7 +1261,7 @@
         "greek":"ἐπεμψε(ν)",
         "dictionaryForm":"πέμπω",
         "translation":"to send",
-        "stem":"πεμψ",
+        "stem":"πέμπ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1275,7 +1275,7 @@
         "greek":"ἐπεμψαμεν",
         "dictionaryForm":"πέμπω",
         "translation":"to send",
-        "stem":"πεμψ",
+        "stem":"πέμπ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1289,7 +1289,7 @@
         "greek":"ἐπεμψατε",
         "dictionaryForm":"πέμπω",
         "translation":"to send",
-        "stem":"πεμψ",
+        "stem":"πέμπ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1303,7 +1303,7 @@
         "greek":"ἐπεμψαν",
         "dictionaryForm":"πέμπω",
         "translation":"to send",
-        "stem":"πεμψ",
+        "stem":"πέμπ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1317,7 +1317,7 @@
         "greek":"ἐκρυψα",
         "dictionaryForm":"κρύπτω",
         "translation":"to hide",
-        "stem":"κρυψ",
+        "stem":"κρύπτ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1331,7 +1331,7 @@
         "greek":"ἐκρυψας",
         "dictionaryForm":"κρύπτω",
         "translation":"to hide",
-        "stem":"κρυψ",
+        "stem":"κρύπτ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1345,7 +1345,7 @@
         "greek":"ἐκρυψε(ν)",
         "dictionaryForm":"κρύπτω",
         "translation":"to hide",
-        "stem":"κρυψ",
+        "stem":"κρύπτ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1359,7 +1359,7 @@
         "greek":"ἐκρυψαμεν",
         "dictionaryForm":"κρύπτω",
         "translation":"to hide",
-        "stem":"κρυψ",
+        "stem":"κρύπτ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1373,7 +1373,7 @@
         "greek":"ἐκρυψατε",
         "dictionaryForm":"κρύπτω",
         "translation":"to hide",
-        "stem":"κρυψ",
+        "stem":"κρύπτ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1387,7 +1387,7 @@
         "greek":"ἐκρυψαν",
         "dictionaryForm":"κρύπτω",
         "translation":"to hide",
-        "stem":"κρυψ",
+        "stem":"κρύπτ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1401,7 +1401,7 @@
         "greek":"ἐφυλαξα",
         "dictionaryForm":"φυλάσσω",
         "translation":"to guard",
-        "stem":"φυλαξ",
+        "stem":"φυλάσσ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1415,7 +1415,7 @@
         "greek":"ἐφυλαξας",
         "dictionaryForm":"φυλάσσω",
         "translation":"to guard",
-        "stem":"φυλαξ",
+        "stem":"φυλάσσ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1429,7 +1429,7 @@
         "greek":"ἐφυλαξε(ν)",
         "dictionaryForm":"φυλάσσω",
         "translation":"to guard",
-        "stem":"φυλαξ",
+        "stem":"φυλάσσ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1443,7 +1443,7 @@
         "greek":"ἐφυλαξαμεν",
         "dictionaryForm":"φυλάσσω",
         "translation":"to guard",
-        "stem":"φυλαξ",
+        "stem":"φυλάσσ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1457,7 +1457,7 @@
         "greek":"ἐφυλαξατε",
         "dictionaryForm":"φυλάσσω",
         "translation":"to guard",
-        "stem":"φυλαξ",
+        "stem":"φυλάσσ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1471,7 +1471,7 @@
         "greek":"ἐφυλαξαν",
         "dictionaryForm":"φυλάσσω",
         "translation":"to guard",
-        "stem":"φυλαξ",
+        "stem":"φυλάσσ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1485,7 +1485,7 @@
         "greek":"ἐδιωξα",
         "dictionaryForm":"διώκω",
         "translation":"to pursue",
-        "stem":"διωξ",
+        "stem":"διώκ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1499,7 +1499,7 @@
         "greek":"ἐδιωξας",
         "dictionaryForm":"διώκω",
         "translation":"to pursue",
-        "stem":"διωξ",
+        "stem":"διώκ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1513,7 +1513,7 @@
         "greek":"ἐδιωξε(ν)",
         "dictionaryForm":"διώκω",
         "translation":"to pursue",
-        "stem":"διωξ",
+        "stem":"διώκ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1527,7 +1527,7 @@
         "greek":"ἐδιωξαμεν",
         "dictionaryForm":"διώκω",
         "translation":"to pursue",
-        "stem":"διωξ",
+        "stem":"διώκ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1541,7 +1541,7 @@
         "greek":"ἐδιωξατε",
         "dictionaryForm":"διώκω",
         "translation":"to pursue",
-        "stem":"διωξ",
+        "stem":"διώκ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1555,7 +1555,7 @@
         "greek":"ἐδιωξαν",
         "dictionaryForm":"διώκω",
         "translation":"to pursue",
-        "stem":"διωξ",
+        "stem":"διώκ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1569,7 +1569,7 @@
         "greek":"ἐκοψα",
         "dictionaryForm":"κόπτω",
         "translation":"to cut",
-        "stem":"κοψ",
+        "stem":"κόπτ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1583,7 +1583,7 @@
         "greek":"ἐκοψας",
         "dictionaryForm":"κόπτω",
         "translation":"to cut",
-        "stem":"κοψ",
+        "stem":"κόπτ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1597,7 +1597,7 @@
         "greek":"ἐκοψε(ν)",
         "dictionaryForm":"κόπτω",
         "translation":"to cut",
-        "stem":"κοψ",
+        "stem":"κόπτ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1611,7 +1611,7 @@
         "greek":"ἐκοψαμεν",
         "dictionaryForm":"κόπτω",
         "translation":"to cut",
-        "stem":"κοψ",
+        "stem":"κόπτ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1625,7 +1625,7 @@
         "greek":"ἐκοψατε",
         "dictionaryForm":"κόπτω",
         "translation":"to cut",
-        "stem":"κοψ",
+        "stem":"κόπτ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1639,7 +1639,7 @@
         "greek":"ἐκοψαν",
         "dictionaryForm":"κόπτω",
         "translation":"to cut",
-        "stem":"κοψ",
+        "stem":"κόπτ-",
         "grammarQuestion":{
           "tense":"aorist",
           "voice":"active",
@@ -1647,6 +1647,127 @@
           "person":"3rd",
           "number":"plur",
           "correctAnswer":"3rd plur - aor - ind - act"
+        }
+      }
+    ]
+  },
+  {
+    "theme": "Active - Participle",
+    "set": 1,
+    "segment": "Present Participle (Masculine)",
+    "description": "Present Active Participle Forms (Masculine)",
+    "difficulty": "intermediate",
+    "content": [
+      {
+        "greek": "λύων",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "sing",
+          "option": "nom sing - pres - act - part"
+        }
+      },
+      {
+        "greek": "λύοντος",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "sing",
+          "option": "gen sing - pres - act - part"
+        }
+      },
+      {
+        "greek": "λύοντι",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "sing",
+          "option": "dat sing - pres - act - part"
+        }
+      },
+      {
+        "greek": "λύοντα",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "sing",
+          "option": "acc sing - pres - act - part"
+        }
+      },
+      {
+        "greek": "λύοντες",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "plur",
+          "option": "nom plur - pres - act - part"
+        }
+      },
+      {
+        "greek": "λυόντων",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "plur",
+          "option": "gen plur - pres - act - part"
+        }
+      },
+      {
+        "greek": "λύουσι(ν)",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "plur",
+          "option": "dat plur - pres - act - part"
+        }
+      },
+      {
+        "greek": "λύοντας",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "plur",
+          "option": "acc plur - pres - act - part"
         }
       }
     ]

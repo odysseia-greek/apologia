@@ -1,11 +1,11 @@
 package gateway
 
 import (
-	pbkriotn "github.com/odysseia-greek/apologia/kriton/proto"
+	pbkriton "github.com/odysseia-greek/apologia/kriton/proto"
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
 )
 
-func (s *SokratesHandler) CreateDialogueQuiz(request *pbkriotn.CreationRequest, requestID, sessionId string) (*model.DialogueQuizResponse, error) {
+func (s *SokratesHandler) CreateDialogueQuiz(request *pbkriton.CreationRequest, requestID, sessionId string) (*model.DialogueQuizResponse, error) {
 	dialogueClientCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
@@ -49,7 +49,7 @@ func (s *SokratesHandler) CreateDialogueQuiz(request *pbkriotn.CreationRequest, 
 	return quizResponse, nil
 }
 
-func (s *SokratesHandler) CheckDialogueQuiz(request *pbkriotn.AnswerRequest, requestID, sessionId string) (*model.DialogueAnswer, error) {
+func (s *SokratesHandler) CheckDialogueQuiz(request *pbkriton.AnswerRequest, requestID, sessionId string) (*model.DialogueAnswer, error) {
 	dialogueClientCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
@@ -94,4 +94,27 @@ func (s *SokratesHandler) CheckDialogueQuiz(request *pbkriotn.AnswerRequest, req
 	}
 
 	return answer, nil
+}
+
+func (s *SokratesHandler) DialogueOptions(requestID, sessionId string) (*model.ThemedOptions, error) {
+	optionsCtx, cancel := s.createRequestHeader(requestID, sessionId)
+	defer cancel()
+
+	grpcResponse, err := s.DialogueClient.Options(optionsCtx, &pbkriton.OptionsRequest{})
+	if err != nil {
+		return nil, err
+	}
+
+	var themes []*model.MultipleTheme
+	for _, grpcTheme := range grpcResponse.Themes {
+		maxSet := float64(grpcTheme.MaxSet)
+		themes = append(themes, &model.MultipleTheme{
+			Name:   &grpcTheme.Name,
+			MaxSet: &maxSet,
+		})
+	}
+
+	return &model.ThemedOptions{
+		Themes: themes,
+	}, nil
 }

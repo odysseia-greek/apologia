@@ -1,4 +1,4 @@
-PROTO_DIRS := aristippos kritias kriton xenofon
+PROTO_DIRS := anisthenes aristippos kritias kriton xenofon
 
 .PHONY: all
 all: generate docs

@@ -171,9 +171,11 @@ func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *pb.Creat
 		}
 	}
 
+	var translation string
 	if len(filteredContent) == 1 {
 		question := filteredContent[0]
 		quiz.QuizItem = question.Greek
+		translation = question.Translation
 		quiz.Options = append(quiz.Options, &pb.Options{
 			QuizWord: question.Translation,
 		})
@@ -230,6 +232,7 @@ func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *pb.Creat
 			}
 		}
 		quiz.QuizItem = question.Greek
+		translation = question.Translation
 		quiz.Options = append(quiz.Options, &pb.Options{
 			QuizWord: question.Translation,
 		})
@@ -254,6 +257,8 @@ func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *pb.Creat
 		}
 	}
 
+	a.Progress.RecordWordPlay(sessionId, segmentKey, quiz.QuizItem, translation)
+
 	rand.Shuffle(len(quiz.Options), func(i, j int) {
 		quiz.Options[i], quiz.Options[j] = quiz.Options[j], quiz.Options[i]
 	})
@@ -264,6 +269,20 @@ func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *pb.Creat
 		Reference:    option.Reference,
 		Quiz:         quiz,
 		GrammarQuiz:  grammarQuiz,
+	}
+
+	if sessionId != "" {
+		progressList, _ := a.Progress.GetProgressForSegment(sessionId, segmentKey, int(request.DoneAfter))
+		for word, p := range progressList {
+			authorQuiz.Progress = append(authorQuiz.Progress, &pb.ProgressEntry{
+				Greek:          word,
+				Translation:    p.Translation,
+				PlayCount:      int32(p.PlayCount),
+				CorrectCount:   int32(p.CorrectCount),
+				IncorrectCount: int32(p.IncorrectCount),
+				LastPlayed:     p.LastPlayed.Format(time.RFC3339),
+			})
+		}
 	}
 
 	return &authorQuiz, nil

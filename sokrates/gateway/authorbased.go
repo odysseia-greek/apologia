@@ -42,6 +42,17 @@ func (s *SokratesHandler) CreateAuthorBasedQuiz(request *pbxenofon.CreationReque
 		quizResponse.GrammarQuiz = append(quizResponse.GrammarQuiz, grammarQuiz)
 	}
 
+	for _, progress := range grpcResponse.Progress {
+		quizResponse.Progress = append(quizResponse.Progress, &model.ProgressEntry{
+			Greek:          &progress.Greek,
+			Translation:    &progress.Translation,
+			PlayCount:      &progress.PlayCount,
+			CorrectCount:   &progress.CorrectCount,
+			IncorrectCount: &progress.IncorrectCount,
+			LastPlayed:     &progress.LastPlayed,
+		})
+	}
+
 	return quizResponse, nil
 }
 
@@ -54,12 +65,56 @@ func (s *SokratesHandler) CheckAuthorBased(request *pbxenofon.AnswerRequest, req
 		return nil, err
 	}
 
-	return &model.AuthorBasedAnswerResponse{
+	answerResponse := &model.AuthorBasedAnswerResponse{
 		Correct:     &grpcResponse.Correct,
 		QuizWord:    &grpcResponse.QuizWord,
+		Finished:    &grpcResponse.Finished,
 		WordsInText: convertStringSliceToPointer(grpcResponse.WordsInText),
-	}, nil
+	}
 
+	for _, progress := range grpcResponse.Progress {
+		answerResponse.Progress = append(answerResponse.Progress, &model.ProgressEntry{
+			Greek:          &progress.Greek,
+			Translation:    &progress.Translation,
+			PlayCount:      &progress.PlayCount,
+			CorrectCount:   &progress.CorrectCount,
+			IncorrectCount: &progress.IncorrectCount,
+			LastPlayed:     &progress.LastPlayed,
+		})
+	}
+
+	return answerResponse, nil
+}
+
+func (s *SokratesHandler) AuthorBasedOptions(requestID, sessionId string) (*model.AggregatedOptions, error) {
+	optionsCtx, cancel := s.createRequestHeader(requestID, sessionId)
+	defer cancel()
+
+	grpcResponse, err := s.AuthorBasedClient.Options(optionsCtx, &pbxenofon.OptionsRequest{})
+	if err != nil {
+		return nil, err
+	}
+
+	var themes []*model.Theme
+	for _, grpcTheme := range grpcResponse.Themes {
+		var segments []*model.Segment
+		for _, grpcSegment := range grpcTheme.Segments {
+			maxSet := float64(grpcSegment.MaxSet)
+			segments = append(segments, &model.Segment{
+				Name:   &grpcSegment.Name,
+				MaxSet: &maxSet,
+			})
+		}
+
+		themes = append(themes, &model.Theme{
+			Name:     &grpcTheme.Name,
+			Segments: segments,
+		})
+	}
+
+	return &model.AggregatedOptions{
+		Themes: themes,
+	}, nil
 }
 
 func convertStringSliceToPointer(strings []string) []*string {

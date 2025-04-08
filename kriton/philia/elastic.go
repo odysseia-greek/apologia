@@ -15,7 +15,7 @@ func quizAggregationQuery() map[string]interface{} {
 		"aggs": map[string]interface{}{
 			"unique_themes": map[string]interface{}{
 				"terms": map[string]interface{}{
-					"field": "theme.keyword",
+					"field": "theme",
 					"size":  1000,
 				},
 				"aggs": map[string]interface{}{

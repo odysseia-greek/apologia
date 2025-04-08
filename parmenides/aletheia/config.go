@@ -92,7 +92,7 @@ func CreateNewConfig() (*ParmenidesHandler, *grpc.ClientConn, error) {
 		AggregatorCancel: nil,
 	}
 
-	if index == "author-based-quiz" {
+	if index == "author-based-quiz" || index == "grammar-quiz" {
 		aggregatorAddress := config.StringFromEnv(config.EnvAggregatorAddress, config.DefaultAggregatorAddress)
 		aggregator, err := aristarchos.NewClientAggregator(aggregatorAddress)
 		if err != nil {

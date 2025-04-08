@@ -408,5 +408,25 @@
       { "greek": "διά", "translation": "through", "imageURL": "through.webp", "audioFile": "" },
       { "greek": "παρά", "translation": "beside", "imageURL": "beside.webp", "audioFile": "" }
     ]
+  },
+  {
+    "quizMetadata": {
+      "language": "English"
+    },
+    "theme": "Basic",
+    "set": 1,
+    "segment": "Conjunctions",
+    "content": [
+      { "greek": "καί", "translation": "and, also", "imageURL": "and.webp", "audioFile": "&&" },
+      { "greek": "ἤ", "translation": "or", "imageURL": "or.webp", "audioFile": "||" },
+      { "greek": "οὐ", "translation": "not", "imageURL": "not.webp", "audioFile": "!" },
+      { "greek": "ἀλλά", "translation": "but", "imageURL": "but.webp", "audioFile": "" },
+      { "greek": "γάρ", "translation": "for, because", "imageURL": "because.webp", "audioFile": "=>" },
+      { "greek": "δέ", "translation": "and, but", "imageURL": "andbut.webp", "audioFile": "" },
+      { "greek": "ὡς", "translation": "as, how", "imageURL": "as.webp", "audioFile": "==" },
+      { "greek": "μετά", "translation": "with, after", "imageURL": "after.webp", "audioFile": "<" },
+      { "greek": "πρίν", "translation": "before", "imageURL": "before.webp", "audioFile": ">" },
+      { "greek": "οὐδὲ", "translation": "and not", "imageURL": "andnot.webp", "audioFile": "&!" }
+    ]
   }
 ]

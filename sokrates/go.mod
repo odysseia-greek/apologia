@@ -8,8 +8,8 @@ require (
 	github.com/odysseia-greek/agora/plato v0.2.6
 	github.com/odysseia-greek/apologia/aristippos v0.0.8
 	github.com/odysseia-greek/apologia/kritias v0.0.4
-	github.com/odysseia-greek/apologia/kriton v0.0.1
-	github.com/odysseia-greek/apologia/xenofon v0.0.1
+	github.com/odysseia-greek/apologia/kriton v0.0.2
+	github.com/odysseia-greek/apologia/xenofon v0.0.2
 	github.com/odysseia-greek/attike/aristophanes v0.6.3
 	github.com/vektah/gqlparser/v2 v2.5.23
 	google.golang.org/grpc v1.71.0
@@ -84,7 +84,6 @@ require (
 	github.com/odysseia-greek/agora/thales v0.1.11 // indirect
 	github.com/odysseia-greek/attike/sophokles v0.0.5 // indirect
 	github.com/odysseia-greek/delphi/aristides v0.0.1 // indirect
-	github.com/odysseia-greek/delphi/ptolemaios v0.0.5 // indirect
 	github.com/peterbourgon/diskv v2.0.1+incompatible // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect

@@ -28,24 +28,29 @@ type AnalyzeTextResponse struct {
 }
 
 type AuthorBasedAnswerInput struct {
-	Theme    *string `json:"theme,omitempty"`
-	Set      *string `json:"set,omitempty"`
-	Segment  *string `json:"segment,omitempty"`
-	QuizWord *string `json:"quizWord,omitempty"`
-	Answer   *string `json:"answer,omitempty"`
+	DoneAfter *int32  `json:"doneAfter,omitempty"`
+	Theme     *string `json:"theme,omitempty"`
+	Set       *string `json:"set,omitempty"`
+	Segment   *string `json:"segment,omitempty"`
+	QuizWord  *string `json:"quizWord,omitempty"`
+	Answer    *string `json:"answer,omitempty"`
 }
 
 type AuthorBasedAnswerResponse struct {
-	Correct     *bool     `json:"correct,omitempty"`
-	QuizWord    *string   `json:"quizWord,omitempty"`
-	WordsInText []*string `json:"wordsInText,omitempty"`
+	Correct     *bool            `json:"correct,omitempty"`
+	QuizWord    *string          `json:"quizWord,omitempty"`
+	WordsInText []*string        `json:"wordsInText,omitempty"`
+	Progress    []*ProgressEntry `json:"progress,omitempty"`
+	Finished    *bool            `json:"finished,omitempty"`
 }
 
 type AuthorBasedInput struct {
-	ExcludeWords []*string `json:"excludeWords,omitempty"`
-	Theme        *string   `json:"theme,omitempty"`
-	Set          *string   `json:"set,omitempty"`
-	Segment      *string   `json:"segment,omitempty"`
+	Theme           *string `json:"theme,omitempty"`
+	Set             *string `json:"set,omitempty"`
+	Segment         *string `json:"segment,omitempty"`
+	DoneAfter       *int32  `json:"doneAfter,omitempty"`
+	ResetProgress   *bool   `json:"resetProgress,omitempty"`
+	ArchiveProgress *bool   `json:"archiveProgress,omitempty"`
 }
 
 type AuthorBasedOptions struct {
@@ -64,6 +69,7 @@ type AuthorBasedResponse struct {
 	Reference    *string             `json:"reference,omitempty"`
 	Quiz         *AuthorBasedQuiz    `json:"quiz,omitempty"`
 	GrammarQuiz  []*GrammarQuizAdded `json:"grammarQuiz,omitempty"`
+	Progress     []*ProgressEntry    `json:"progress,omitempty"`
 }
 
 type ComprehensiveResponse struct {
@@ -193,10 +199,6 @@ type MultipleChoiceAnswerInput struct {
 	Comprehensive *bool   `json:"comprehensive,omitempty"`
 }
 
-type MultipleChoiceOptions struct {
-	Themes []*MultipleTheme `json:"themes,omitempty"`
-}
-
 type MultipleChoiceResponse struct {
 	NumberOfItems *int32           `json:"numberOfItems,omitempty"`
 	Options       []*Options       `json:"options,omitempty"`
@@ -265,4 +267,8 @@ type Speaker struct {
 type Theme struct {
 	Name     *string    `json:"name,omitempty"`
 	Segments []*Segment `json:"segments,omitempty"`
+}
+
+type ThemedOptions struct {
+	Themes []*MultipleTheme `json:"themes,omitempty"`
 }

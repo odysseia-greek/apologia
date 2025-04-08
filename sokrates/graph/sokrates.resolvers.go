@@ -6,7 +6,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/odysseia-greek/agora/plato/config"
 	pbartrippos "github.com/odysseia-greek/apologia/aristippos/proto"
@@ -31,7 +30,7 @@ func (r *queryResolver) MediaOptions(ctx context.Context) (*model.AggregatedOpti
 }
 
 // MultipleChoiceOptions is the resolver for the multipleChoiceOptions field.
-func (r *queryResolver) MultipleChoiceOptions(ctx context.Context) (*model.MultipleChoiceOptions, error) {
+func (r *queryResolver) MultipleChoiceOptions(ctx context.Context) (*model.ThemedOptions, error) {
 	requestID, _ := ctx.Value(config.HeaderKey).(string)
 	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
 	return r.Handler.MultipleChoiceOptions(requestID, sessionId)
@@ -39,12 +38,16 @@ func (r *queryResolver) MultipleChoiceOptions(ctx context.Context) (*model.Multi
 
 // AuthorBasedOptions is the resolver for the authorBasedOptions field.
 func (r *queryResolver) AuthorBasedOptions(ctx context.Context) (*model.AggregatedOptions, error) {
-	panic(fmt.Errorf("not implemented: AuthorBasedOptions - authorBasedOptions"))
+	requestID, _ := ctx.Value(config.HeaderKey).(string)
+	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
+	return r.Handler.AuthorBasedOptions(requestID, sessionId)
 }
 
 // DialogueOptions is the resolver for the dialogueOptions field.
-func (r *queryResolver) DialogueOptions(ctx context.Context) (*model.AggregatedOptions, error) {
-	panic(fmt.Errorf("not implemented: DialogueOptions - dialogueOptions"))
+func (r *queryResolver) DialogueOptions(ctx context.Context) (*model.ThemedOptions, error) {
+	requestID, _ := ctx.Value(config.HeaderKey).(string)
+	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
+	return r.Handler.DialogueOptions(requestID, sessionId)
 }
 
 // MediaAnswer is the resolver for the mediaAnswer field.
@@ -128,11 +131,12 @@ func (r *queryResolver) AuthorBasedAnswer(ctx context.Context, input *model.Auth
 	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
 
 	pb := &pbxenofon.AnswerRequest{
-		Theme:    *input.Theme,
-		Set:      *input.Set,
-		Segment:  *input.Segment,
-		Answer:   *input.Answer,
-		QuizWord: *input.QuizWord,
+		Theme:     *input.Theme,
+		Set:       *input.Set,
+		Segment:   *input.Segment,
+		Answer:    *input.Answer,
+		QuizWord:  *input.QuizWord,
+		DoneAfter: *input.DoneAfter,
 	}
 
 	return r.Handler.CheckAuthorBased(pb, requestID, sessionId)
@@ -144,13 +148,12 @@ func (r *queryResolver) AuthorBasedQuiz(ctx context.Context, input *model.Author
 	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
 
 	pb := &pbxenofon.CreationRequest{
-		Theme:   *input.Theme,
-		Set:     *input.Set,
-		Segment: *input.Segment,
-	}
-
-	for _, word := range input.ExcludeWords {
-		pb.ExcludeWords = append(pb.ExcludeWords, *word)
+		Theme:           *input.Theme,
+		Set:             *input.Set,
+		Segment:         *input.Segment,
+		DoneAfter:       *input.DoneAfter,
+		ResetProgress:   *input.ResetProgress,
+		ArchiveProgress: *input.ArchiveProgress,
 	}
 
 	return r.Handler.CreateAuthorBasedQuiz(pb, requestID, sessionId)

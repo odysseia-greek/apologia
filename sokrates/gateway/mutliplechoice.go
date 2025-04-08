@@ -52,7 +52,7 @@ func (s *SokratesHandler) CheckMultipleChoice(request *pbkritias.AnswerRequest, 
 	return multiplechoice.MapComprehensiveResponse(grpcResponse), nil
 }
 
-func (s *SokratesHandler) MultipleChoiceOptions(requestID, sessionId string) (*model.MultipleChoiceOptions, error) {
+func (s *SokratesHandler) MultipleChoiceOptions(requestID, sessionId string) (*model.ThemedOptions, error) {
 	optionsCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
@@ -70,7 +70,7 @@ func (s *SokratesHandler) MultipleChoiceOptions(requestID, sessionId string) (*m
 		})
 	}
 
-	return &model.MultipleChoiceOptions{
+	return &model.ThemedOptions{
 		Themes: themes,
 	}, nil
 }

@@ -47,6 +47,15 @@ func main() {
 	}
 	defer conn.Close()
 
+	err = handler.DeleteIndexAtStartUp()
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = handler.CreateIndexAtStartup()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	root := "sullego"
 
 	// **Derive Directory Name from Index**
@@ -104,7 +113,10 @@ func main() {
 				processQuizFile[models.AuthorbasedQuiz](content, handler, true) // Queue this
 			case "multiple-choice-quiz":
 				processQuizFile[models.MultipleChoiceQuiz](content, handler, true) // Queue this
+			case "grammar-quiz":
+				processQuizFile[aletheia.GrammarBasedQuiz](content, handler, true)
 			}
+
 		}(content)
 	}
 

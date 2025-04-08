@@ -65,7 +65,6 @@ func (p *ParmenidesHandler) CreateIndexAtStartup() error {
 	err := p.createPolicyAtStartup()
 	if err != nil {
 		return err
-
 	}
 	indexMapping := quizIndex(p.PolicyName, 1, 0)
 	created, err := p.Elastic.Index().Create(p.Index, indexMapping)
@@ -104,6 +103,13 @@ func (p *ParmenidesHandler) AddWithQueue(quizDocs []interface{}) error {
 			go func(q models.MultipleChoiceQuiz) {
 				defer wg.Done()
 				p.processMultipleChoiceQuiz(q)
+			}(q)
+
+		case GrammarBasedQuiz:
+			wg.Add(1)
+			go func(q GrammarBasedQuiz) {
+				defer wg.Done()
+				p.processGrammarQuiz(q)
 			}(q)
 		}
 	}
@@ -210,6 +216,7 @@ func (p *ParmenidesHandler) processAuthorBasedQuiz(q models.AuthorbasedQuiz) {
 				err = p.sendToAggregator(context.Background(), grammarQuestion, word.Greek, word.Translation)
 				if err != nil {
 					logging.Error(err.Error())
+					break
 				}
 			}
 		}
@@ -249,7 +256,31 @@ func (p *ParmenidesHandler) processMultipleChoiceQuiz(q models.MultipleChoiceQui
 	}
 }
 
+func (p *ParmenidesHandler) processGrammarQuiz(q GrammarBasedQuiz) {
+	for _, word := range q.Content {
+		grammarQuestion := models.GrammarQuestion{
+			CorrectAnswer:    word.GrammarQuestion.CorrectAnswer,
+			TypeOfWord:       "verb",
+			WordInText:       word.Greek,
+			ExtraInformation: "",
+		}
+
+		if strings.Contains(q.Theme, "Participle") {
+			grammarQuestion.TypeOfWord = "participle"
+		}
+
+		err := p.sendToAggregator(context.Background(), grammarQuestion, word.DictionaryForm, word.Translation)
+		if err != nil {
+			logging.Error(err.Error())
+		}
+	}
+}
+
 func (p *ParmenidesHandler) sendToAggregator(ctx context.Context, grammarQuestion models.GrammarQuestion, greekWord, translation string) error {
+	if p.Aggregator == nil {
+		return fmt.Errorf("aggregator is empty")
+	}
+
 	traceID, err := uuid.NewUUID()
 	ctx = context.WithValue(ctx, service.HeaderKey, traceID.String())
 	if err != nil {
@@ -277,10 +308,11 @@ func (p *ParmenidesHandler) sendToAggregator(ctx context.Context, grammarQuestio
 		TraceId:      traceID.String(),
 	}
 
-	logging.Debug(fmt.Sprintf("sending to aggregator: %s", request.String()))
 	if err = p.Aggregator.Send(request); err != nil {
+		logging.Error(err.Error())
 		return err
 	}
+
 	return nil
 }
 

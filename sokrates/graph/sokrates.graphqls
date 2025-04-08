@@ -35,6 +35,8 @@ type AuthorBasedAnswerResponse {
   correct: Boolean
   quizWord: String
   wordsInText: [String]
+  progress: [ProgressEntry]
+  finished: Boolean
 }
 
 type AuthorBasedResponse {
@@ -43,6 +45,7 @@ type AuthorBasedResponse {
   reference: String
   quiz: AuthorBasedQuiz
   grammarQuiz: [GrammarQuizAdded]
+  progress: [ProgressEntry]
 }
 
 type AuthorBasedQuiz {
@@ -149,7 +152,7 @@ type Segment {
   maxSet: Float
 }
 
-type MultipleChoiceOptions {
+type ThemedOptions {
   themes: [MultipleTheme]
 }
 
@@ -169,6 +172,7 @@ input MediaAnswerInput {
 }
 
 input AuthorBasedAnswerInput {
+  doneAfter: Int
   theme: String
   set: String
   segment: String
@@ -187,10 +191,12 @@ input MediaQuizInput {
 }
 
 input AuthorBasedInput {
-  excludeWords: [String]
   theme: String
   set: String
   segment: String
+  doneAfter: Int
+  resetProgress: Boolean
+  archiveProgress: Boolean
 }
 
 input MultipleChoiceAnswerInput {
@@ -231,9 +237,9 @@ input DialogueInputContent {
 type Query {
   health: AggregatedHealthResponse
   mediaOptions: AggregatedOptions
-  multipleChoiceOptions: MultipleChoiceOptions
+  multipleChoiceOptions: ThemedOptions
   authorBasedOptions: AggregatedOptions
-  dialogueOptions: AggregatedOptions
+  dialogueOptions: ThemedOptions
 
   mediaAnswer(input: MediaAnswerInput): ComprehensiveResponse
   mediaQuiz(input: MediaQuizInput): MediaQuizResponse
