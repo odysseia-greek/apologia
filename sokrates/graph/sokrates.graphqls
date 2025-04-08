@@ -54,6 +54,23 @@ type AuthorBasedQuiz {
   options: [AuthorBasedOptions]
 }
 
+type GrammarQuizResponse {
+  quizItem: String
+  dictionaryForm: String
+  stem: String
+  translation: String
+  numberOfItems: Int
+  description: String
+  difficulty: String
+  contractionRule: String
+  options: [GrammarOption]
+  progress: [ProgressEntry]
+}
+
+type GrammarOption {
+  option: String
+}
+
 type AuthorBasedOptions {
   quizWord: String
 }
@@ -97,6 +114,15 @@ type DialogueAnswer {
   input: [DialogueContent]
   answer: [DialogueContent]
   wronglyPlaced: [DialogueCorrection]
+}
+
+type GrammarAnswer {
+  correct: Boolean
+  quizWord: String
+  progress: [ProgressEntry]
+  similarWords: [Hit]
+  foundInText: AnalyzeTextResponse
+  finished: Boolean
 }
 
 type DialogueContent {
@@ -152,6 +178,21 @@ type Segment {
   maxSet: Float
 }
 
+type GrammarOptions {
+  themes: [GrammarThemes]
+}
+
+type GrammarThemes {
+  name: String
+  segments: [GrammarSegment]
+}
+
+type GrammarSegment {
+  name: String
+  difficulty: String
+  maxSet: Int
+}
+
 type ThemedOptions {
   themes: [MultipleTheme]
 }
@@ -180,6 +221,17 @@ input AuthorBasedAnswerInput {
   answer: String
 }
 
+input GrammarAnswerInput {
+  theme: String
+  set: String
+  segment: String
+  quizWord: String
+  answer: String
+  comprehensive: Boolean
+  doneAfter: Int
+  dictionaryForm: String
+}
+
 input MediaQuizInput {
   doneAfter: Int
   theme: String
@@ -191,6 +243,15 @@ input MediaQuizInput {
 }
 
 input AuthorBasedInput {
+  theme: String
+  set: String
+  segment: String
+  doneAfter: Int
+  resetProgress: Boolean
+  archiveProgress: Boolean
+}
+
+input GrammarQuizInput {
   theme: String
   set: String
   segment: String
@@ -240,6 +301,7 @@ type Query {
   multipleChoiceOptions: ThemedOptions
   authorBasedOptions: AggregatedOptions
   dialogueOptions: ThemedOptions
+  grammarOptions: GrammarOptions
 
   mediaAnswer(input: MediaAnswerInput): ComprehensiveResponse
   mediaQuiz(input: MediaQuizInput): MediaQuizResponse
@@ -249,4 +311,6 @@ type Query {
   authorBasedQuiz(input: AuthorBasedInput): AuthorBasedResponse
   dialogueAnswer(input: DialogueAnswerInput): DialogueAnswer
   dialogueQuiz(input: DialogueQuizInput): DialogueQuizResponse
+  grammarQuiz(input: GrammarQuizInput): GrammarQuizResponse
+  grammarAnswer(input: GrammarAnswerInput): GrammarAnswer
 }

@@ -6,8 +6,8 @@ package graph
 
 import (
 	"context"
-
 	"github.com/odysseia-greek/agora/plato/config"
+	pbanisthenes "github.com/odysseia-greek/apologia/anisthenes/proto"
 	pbartrippos "github.com/odysseia-greek/apologia/aristippos/proto"
 	pbkritias "github.com/odysseia-greek/apologia/kritias/proto"
 	pbkriton "github.com/odysseia-greek/apologia/kriton/proto"
@@ -48,6 +48,13 @@ func (r *queryResolver) DialogueOptions(ctx context.Context) (*model.ThemedOptio
 	requestID, _ := ctx.Value(config.HeaderKey).(string)
 	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
 	return r.Handler.DialogueOptions(requestID, sessionId)
+}
+
+// GrammarOptions is the resolver for the grammarOptions field.
+func (r *queryResolver) GrammarOptions(ctx context.Context) (*model.GrammarOptions, error) {
+	requestID, _ := ctx.Value(config.HeaderKey).(string)
+	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
+	return r.Handler.GrammarOptions(requestID, sessionId)
 }
 
 // MediaAnswer is the resolver for the mediaAnswer field.
@@ -192,6 +199,42 @@ func (r *queryResolver) DialogueQuiz(ctx context.Context, input *model.DialogueQ
 	}
 
 	return r.Handler.CreateDialogueQuiz(pb, requestID, sessionId)
+}
+
+// GrammarQuiz is the resolver for the grammarQuiz field.
+func (r *queryResolver) GrammarQuiz(ctx context.Context, input *model.GrammarQuizInput) (*model.GrammarQuizResponse, error) {
+	requestID, _ := ctx.Value(config.HeaderKey).(string)
+	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
+
+	pb := &pbanisthenes.CreationRequest{
+		Theme:           *input.Theme,
+		Set:             *input.Set,
+		Segment:         *input.Segment,
+		DoneAfter:       *input.DoneAfter,
+		ResetProgress:   *input.ResetProgress,
+		ArchiveProgress: *input.ArchiveProgress,
+	}
+
+	return r.Handler.CreateGrammarQuiz(pb, requestID, sessionId)
+}
+
+// GrammarAnswer is the resolver for the grammarAnswer field.
+func (r *queryResolver) GrammarAnswer(ctx context.Context, input *model.GrammarAnswerInput) (*model.GrammarAnswer, error) {
+	requestID, _ := ctx.Value(config.HeaderKey).(string)
+	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
+
+	pb := &pbanisthenes.AnswerRequest{
+		Theme:          *input.Theme,
+		Set:            *input.Set,
+		Segment:        *input.Segment,
+		Answer:         *input.Answer,
+		QuizWord:       *input.QuizWord,
+		DoneAfter:      *input.DoneAfter,
+		DictionaryForm: *input.DictionaryForm,
+		Comprehensive:  *input.Comprehensive,
+	}
+
+	return r.Handler.CheckGrammar(pb, requestID, sessionId)
 }
 
 // Query returns QueryResolver implementation.

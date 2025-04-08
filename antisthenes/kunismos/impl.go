@@ -7,7 +7,7 @@ import (
 	"github.com/odysseia-greek/agora/aristoteles"
 	"github.com/odysseia-greek/agora/plato/randomizer"
 	"github.com/odysseia-greek/agora/plato/service"
-	pb "github.com/odysseia-greek/apologia/anisthenes/proto"
+	pb "github.com/odysseia-greek/apologia/antisthenes/proto"
 	pbar "github.com/odysseia-greek/attike/aristophanes/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -34,7 +34,7 @@ type GrammarServiceImpl struct {
 	Streamer   pbar.TraceService_ChorusClient
 	Archytas   archytas.Client
 	Progress   *ProgressTracker
-	pb.UnimplementedAnisthenesServer
+	pb.UnimplementedAntisthenesServer
 }
 
 type GrammarServiceClient struct {
@@ -42,10 +42,10 @@ type GrammarServiceClient struct {
 }
 
 type GrammarClient struct {
-	grammar pb.AnisthenesClient
+	grammar pb.AntisthenesClient
 }
 
-func NewAnisthenesClient(address string) (*GrammarClient, error) {
+func NewAntisthenesClient(address string) (*GrammarClient, error) {
 	if address == "" {
 		address = DEFAULTADDRESS
 	}
@@ -53,7 +53,7 @@ func NewAnisthenesClient(address string) (*GrammarClient, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to connect to tracing service: %w", err)
 	}
-	client := pb.NewAnisthenesClient(conn)
+	client := pb.NewAntisthenesClient(conn)
 	return &GrammarClient{grammar: client}, nil
 }
 

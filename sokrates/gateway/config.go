@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
+	"github.com/odysseia-greek/apologia/anisthenes/kunismos"
 	"github.com/odysseia-greek/apologia/aristippos/hedone"
 	"github.com/odysseia-greek/apologia/kritias/triakonta"
 	"github.com/odysseia-greek/apologia/kriton/philia"
@@ -114,6 +115,19 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 		os.Exit(1)
 	}
 
+	grammarClientAddress := config.StringFromEnv(config.EnvGrammarBasedClient, config.DefaultGrammarBasedAddress)
+	grammarClient, err := kunismos.NewAnisthenesClient(grammarClientAddress)
+	if err != nil {
+		logging.Error(err.Error())
+		return nil, err
+	}
+
+	grammarClientHealthy := grammarClient.WaitForHealthyState()
+	if !grammarClientHealthy {
+		logging.Debug("grammar client not ready - restarting seems the only option")
+		os.Exit(1)
+	}
+
 	return &SokratesHandler{
 		Streamer:          streamer,
 		Randomizer:        randomizer,
@@ -121,5 +135,6 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 		MultiChoiceClient: multipleChoiceClient,
 		AuthorBasedClient: authorBasedClient,
 		DialogueClient:    dialogueClient,
+		GrammarClient:     grammarClient,
 	}, nil
 }

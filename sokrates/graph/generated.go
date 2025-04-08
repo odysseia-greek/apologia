@@ -151,11 +151,52 @@ type ComplexityRoot struct {
 		Theme        func(childComplexity int) int
 	}
 
+	GrammarAnswer struct {
+		Correct      func(childComplexity int) int
+		Finished     func(childComplexity int) int
+		FoundInText  func(childComplexity int) int
+		Progress     func(childComplexity int) int
+		QuizWord     func(childComplexity int) int
+		SimilarWords func(childComplexity int) int
+	}
+
+	GrammarOption struct {
+		Option func(childComplexity int) int
+	}
+
+	GrammarOptions struct {
+		Themes func(childComplexity int) int
+	}
+
 	GrammarQuizAdded struct {
 		CorrectAnswer    func(childComplexity int) int
 		ExtraInformation func(childComplexity int) int
 		Options          func(childComplexity int) int
 		WordInText       func(childComplexity int) int
+	}
+
+	GrammarQuizResponse struct {
+		ContractionRule func(childComplexity int) int
+		Description     func(childComplexity int) int
+		DictionaryForm  func(childComplexity int) int
+		Difficulty      func(childComplexity int) int
+		NumberOfItems   func(childComplexity int) int
+		Options         func(childComplexity int) int
+		Progress        func(childComplexity int) int
+		QuizItem        func(childComplexity int) int
+		Stem            func(childComplexity int) int
+		Translation     func(childComplexity int) int
+	}
+
+	GrammarSegment struct {
+		Difficulty func(childComplexity int) int
+		MaxSet     func(childComplexity int) int
+		Name       func(childComplexity int) int
+	}
+
+	GrammarThemes struct {
+		Name     func(childComplexity int) int
+		Segments func(childComplexity int) int
 	}
 
 	Hit struct {
@@ -211,6 +252,9 @@ type ComplexityRoot struct {
 		DialogueAnswer        func(childComplexity int, input *model.DialogueAnswerInput) int
 		DialogueOptions       func(childComplexity int) int
 		DialogueQuiz          func(childComplexity int, input *model.DialogueQuizInput) int
+		GrammarAnswer         func(childComplexity int, input *model.GrammarAnswerInput) int
+		GrammarOptions        func(childComplexity int) int
+		GrammarQuiz           func(childComplexity int, input *model.GrammarQuizInput) int
 		Health                func(childComplexity int) int
 		MediaAnswer           func(childComplexity int, input *model.MediaAnswerInput) int
 		MediaOptions          func(childComplexity int) int
@@ -264,6 +308,7 @@ type QueryResolver interface {
 	MultipleChoiceOptions(ctx context.Context) (*model.ThemedOptions, error)
 	AuthorBasedOptions(ctx context.Context) (*model.AggregatedOptions, error)
 	DialogueOptions(ctx context.Context) (*model.ThemedOptions, error)
+	GrammarOptions(ctx context.Context) (*model.GrammarOptions, error)
 	MediaAnswer(ctx context.Context, input *model.MediaAnswerInput) (*model.ComprehensiveResponse, error)
 	MediaQuiz(ctx context.Context, input *model.MediaQuizInput) (*model.MediaQuizResponse, error)
 	MultipleChoiceAnswer(ctx context.Context, input *model.MultipleChoiceAnswerInput) (*model.ComprehensiveResponse, error)
@@ -272,6 +317,8 @@ type QueryResolver interface {
 	AuthorBasedQuiz(ctx context.Context, input *model.AuthorBasedInput) (*model.AuthorBasedResponse, error)
 	DialogueAnswer(ctx context.Context, input *model.DialogueAnswerInput) (*model.DialogueAnswer, error)
 	DialogueQuiz(ctx context.Context, input *model.DialogueQuizInput) (*model.DialogueQuizResponse, error)
+	GrammarQuiz(ctx context.Context, input *model.GrammarQuizInput) (*model.GrammarQuizResponse, error)
+	GrammarAnswer(ctx context.Context, input *model.GrammarAnswerInput) (*model.GrammarAnswer, error)
 }
 
 type executableSchema struct {
@@ -713,6 +760,62 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.DialogueQuizResponse.Theme(childComplexity), true
 
+	case "GrammarAnswer.correct":
+		if e.complexity.GrammarAnswer.Correct == nil {
+			break
+		}
+
+		return e.complexity.GrammarAnswer.Correct(childComplexity), true
+
+	case "GrammarAnswer.finished":
+		if e.complexity.GrammarAnswer.Finished == nil {
+			break
+		}
+
+		return e.complexity.GrammarAnswer.Finished(childComplexity), true
+
+	case "GrammarAnswer.foundInText":
+		if e.complexity.GrammarAnswer.FoundInText == nil {
+			break
+		}
+
+		return e.complexity.GrammarAnswer.FoundInText(childComplexity), true
+
+	case "GrammarAnswer.progress":
+		if e.complexity.GrammarAnswer.Progress == nil {
+			break
+		}
+
+		return e.complexity.GrammarAnswer.Progress(childComplexity), true
+
+	case "GrammarAnswer.quizWord":
+		if e.complexity.GrammarAnswer.QuizWord == nil {
+			break
+		}
+
+		return e.complexity.GrammarAnswer.QuizWord(childComplexity), true
+
+	case "GrammarAnswer.similarWords":
+		if e.complexity.GrammarAnswer.SimilarWords == nil {
+			break
+		}
+
+		return e.complexity.GrammarAnswer.SimilarWords(childComplexity), true
+
+	case "GrammarOption.option":
+		if e.complexity.GrammarOption.Option == nil {
+			break
+		}
+
+		return e.complexity.GrammarOption.Option(childComplexity), true
+
+	case "GrammarOptions.themes":
+		if e.complexity.GrammarOptions.Themes == nil {
+			break
+		}
+
+		return e.complexity.GrammarOptions.Themes(childComplexity), true
+
 	case "GrammarQuizAdded.correctAnswer":
 		if e.complexity.GrammarQuizAdded.CorrectAnswer == nil {
 			break
@@ -740,6 +843,111 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.GrammarQuizAdded.WordInText(childComplexity), true
+
+	case "GrammarQuizResponse.contractionRule":
+		if e.complexity.GrammarQuizResponse.ContractionRule == nil {
+			break
+		}
+
+		return e.complexity.GrammarQuizResponse.ContractionRule(childComplexity), true
+
+	case "GrammarQuizResponse.description":
+		if e.complexity.GrammarQuizResponse.Description == nil {
+			break
+		}
+
+		return e.complexity.GrammarQuizResponse.Description(childComplexity), true
+
+	case "GrammarQuizResponse.dictionaryForm":
+		if e.complexity.GrammarQuizResponse.DictionaryForm == nil {
+			break
+		}
+
+		return e.complexity.GrammarQuizResponse.DictionaryForm(childComplexity), true
+
+	case "GrammarQuizResponse.difficulty":
+		if e.complexity.GrammarQuizResponse.Difficulty == nil {
+			break
+		}
+
+		return e.complexity.GrammarQuizResponse.Difficulty(childComplexity), true
+
+	case "GrammarQuizResponse.numberOfItems":
+		if e.complexity.GrammarQuizResponse.NumberOfItems == nil {
+			break
+		}
+
+		return e.complexity.GrammarQuizResponse.NumberOfItems(childComplexity), true
+
+	case "GrammarQuizResponse.options":
+		if e.complexity.GrammarQuizResponse.Options == nil {
+			break
+		}
+
+		return e.complexity.GrammarQuizResponse.Options(childComplexity), true
+
+	case "GrammarQuizResponse.progress":
+		if e.complexity.GrammarQuizResponse.Progress == nil {
+			break
+		}
+
+		return e.complexity.GrammarQuizResponse.Progress(childComplexity), true
+
+	case "GrammarQuizResponse.quizItem":
+		if e.complexity.GrammarQuizResponse.QuizItem == nil {
+			break
+		}
+
+		return e.complexity.GrammarQuizResponse.QuizItem(childComplexity), true
+
+	case "GrammarQuizResponse.stem":
+		if e.complexity.GrammarQuizResponse.Stem == nil {
+			break
+		}
+
+		return e.complexity.GrammarQuizResponse.Stem(childComplexity), true
+
+	case "GrammarQuizResponse.translation":
+		if e.complexity.GrammarQuizResponse.Translation == nil {
+			break
+		}
+
+		return e.complexity.GrammarQuizResponse.Translation(childComplexity), true
+
+	case "GrammarSegment.difficulty":
+		if e.complexity.GrammarSegment.Difficulty == nil {
+			break
+		}
+
+		return e.complexity.GrammarSegment.Difficulty(childComplexity), true
+
+	case "GrammarSegment.maxSet":
+		if e.complexity.GrammarSegment.MaxSet == nil {
+			break
+		}
+
+		return e.complexity.GrammarSegment.MaxSet(childComplexity), true
+
+	case "GrammarSegment.name":
+		if e.complexity.GrammarSegment.Name == nil {
+			break
+		}
+
+		return e.complexity.GrammarSegment.Name(childComplexity), true
+
+	case "GrammarThemes.name":
+		if e.complexity.GrammarThemes.Name == nil {
+			break
+		}
+
+		return e.complexity.GrammarThemes.Name(childComplexity), true
+
+	case "GrammarThemes.segments":
+		if e.complexity.GrammarThemes.Segments == nil {
+			break
+		}
+
+		return e.complexity.GrammarThemes.Segments(childComplexity), true
 
 	case "Hit.dutch":
 		if e.complexity.Hit.Dutch == nil {
@@ -978,6 +1186,37 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.DialogueQuiz(childComplexity, args["input"].(*model.DialogueQuizInput)), true
 
+	case "Query.grammarAnswer":
+		if e.complexity.Query.GrammarAnswer == nil {
+			break
+		}
+
+		args, err := ec.field_Query_grammarAnswer_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.GrammarAnswer(childComplexity, args["input"].(*model.GrammarAnswerInput)), true
+
+	case "Query.grammarOptions":
+		if e.complexity.Query.GrammarOptions == nil {
+			break
+		}
+
+		return e.complexity.Query.GrammarOptions(childComplexity), true
+
+	case "Query.grammarQuiz":
+		if e.complexity.Query.GrammarQuiz == nil {
+			break
+		}
+
+		args, err := ec.field_Query_grammarQuiz_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.GrammarQuiz(childComplexity, args["input"].(*model.GrammarQuizInput)), true
+
 	case "Query.health":
 		if e.complexity.Query.Health == nil {
 			break
@@ -1172,6 +1411,8 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputDialogueAnswerInput,
 		ec.unmarshalInputDialogueInputContent,
 		ec.unmarshalInputDialogueQuizInput,
+		ec.unmarshalInputGrammarAnswerInput,
+		ec.unmarshalInputGrammarQuizInput,
 		ec.unmarshalInputMediaAnswerInput,
 		ec.unmarshalInputMediaQuizInput,
 		ec.unmarshalInputMultipleChoiceAnswerInput,
@@ -1390,6 +1631,52 @@ func (ec *executionContext) field_Query_dialogueQuiz_argsInput(
 	}
 
 	var zeroVal *model.DialogueQuizInput
+	return zeroVal, nil
+}
+
+func (ec *executionContext) field_Query_grammarAnswer_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := ec.field_Query_grammarAnswer_argsInput(ctx, rawArgs)
+	if err != nil {
+		return nil, err
+	}
+	args["input"] = arg0
+	return args, nil
+}
+func (ec *executionContext) field_Query_grammarAnswer_argsInput(
+	ctx context.Context,
+	rawArgs map[string]any,
+) (*model.GrammarAnswerInput, error) {
+	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+	if tmp, ok := rawArgs["input"]; ok {
+		return ec.unmarshalOGrammarAnswerInput2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐGrammarAnswerInput(ctx, tmp)
+	}
+
+	var zeroVal *model.GrammarAnswerInput
+	return zeroVal, nil
+}
+
+func (ec *executionContext) field_Query_grammarQuiz_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := ec.field_Query_grammarQuiz_argsInput(ctx, rawArgs)
+	if err != nil {
+		return nil, err
+	}
+	args["input"] = arg0
+	return args, nil
+}
+func (ec *executionContext) field_Query_grammarQuiz_argsInput(
+	ctx context.Context,
+	rawArgs map[string]any,
+) (*model.GrammarQuizInput, error) {
+	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+	if tmp, ok := rawArgs["input"]; ok {
+		return ec.unmarshalOGrammarQuizInput2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐGrammarQuizInput(ctx, tmp)
+	}
+
+	var zeroVal *model.GrammarQuizInput
 	return zeroVal, nil
 }
 
@@ -4235,6 +4522,374 @@ func (ec *executionContext) fieldContext_DialogueQuizResponse_content(_ context.
 	return fc, nil
 }
 
+func (ec *executionContext) _GrammarAnswer_correct(ctx context.Context, field graphql.CollectedField, obj *model.GrammarAnswer) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_GrammarAnswer_correct(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Correct, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_GrammarAnswer_correct(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "GrammarAnswer",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _GrammarAnswer_quizWord(ctx context.Context, field graphql.CollectedField, obj *model.GrammarAnswer) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_GrammarAnswer_quizWord(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.QuizWord, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_GrammarAnswer_quizWord(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "GrammarAnswer",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _GrammarAnswer_progress(ctx context.Context, field graphql.CollectedField, obj *model.GrammarAnswer) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_GrammarAnswer_progress(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Progress, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.ProgressEntry)
+	fc.Result = res
+	return ec.marshalOProgressEntry2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐProgressEntry(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_GrammarAnswer_progress(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "GrammarAnswer",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "greek":
+				return ec.fieldContext_ProgressEntry_greek(ctx, field)
+			case "translation":
+				return ec.fieldContext_ProgressEntry_translation(ctx, field)
+			case "playCount":
+				return ec.fieldContext_ProgressEntry_playCount(ctx, field)
+			case "correctCount":
+				return ec.fieldContext_ProgressEntry_correctCount(ctx, field)
+			case "incorrectCount":
+				return ec.fieldContext_ProgressEntry_incorrectCount(ctx, field)
+			case "lastPlayed":
+				return ec.fieldContext_ProgressEntry_lastPlayed(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ProgressEntry", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _GrammarAnswer_similarWords(ctx context.Context, field graphql.CollectedField, obj *model.GrammarAnswer) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_GrammarAnswer_similarWords(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.SimilarWords, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.Hit)
+	fc.Result = res
+	return ec.marshalOHit2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐHit(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_GrammarAnswer_similarWords(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "GrammarAnswer",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "dutch":
+				return ec.fieldContext_Hit_dutch(ctx, field)
+			case "english":
+				return ec.fieldContext_Hit_english(ctx, field)
+			case "greek":
+				return ec.fieldContext_Hit_greek(ctx, field)
+			case "linkedWord":
+				return ec.fieldContext_Hit_linkedWord(ctx, field)
+			case "original":
+				return ec.fieldContext_Hit_original(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Hit", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _GrammarAnswer_foundInText(ctx context.Context, field graphql.CollectedField, obj *model.GrammarAnswer) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_GrammarAnswer_foundInText(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.FoundInText, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.AnalyzeTextResponse)
+	fc.Result = res
+	return ec.marshalOAnalyzeTextResponse2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐAnalyzeTextResponse(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_GrammarAnswer_foundInText(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "GrammarAnswer",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "conjugations":
+				return ec.fieldContext_AnalyzeTextResponse_conjugations(ctx, field)
+			case "texts":
+				return ec.fieldContext_AnalyzeTextResponse_texts(ctx, field)
+			case "rootword":
+				return ec.fieldContext_AnalyzeTextResponse_rootword(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type AnalyzeTextResponse", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _GrammarAnswer_finished(ctx context.Context, field graphql.CollectedField, obj *model.GrammarAnswer) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_GrammarAnswer_finished(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Finished, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_GrammarAnswer_finished(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "GrammarAnswer",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _GrammarOption_option(ctx context.Context, field graphql.CollectedField, obj *model.GrammarOption) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_GrammarOption_option(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Option, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_GrammarOption_option(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "GrammarOption",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _GrammarOptions_themes(ctx context.Context, field graphql.CollectedField, obj *model.GrammarOptions) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_GrammarOptions_themes(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Themes, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.GrammarThemes)
+	fc.Result = res
+	return ec.marshalOGrammarThemes2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐGrammarThemes(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_GrammarOptions_themes(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "GrammarOptions",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "name":
+				return ec.fieldContext_GrammarThemes_name(ctx, field)
+			case "segments":
+				return ec.fieldContext_GrammarThemes_segments(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type GrammarThemes", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _GrammarQuizAdded_correctAnswer(ctx context.Context, field graphql.CollectedField, obj *model.GrammarQuizAdded) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_GrammarQuizAdded_correctAnswer(ctx, field)
 	if err != nil {
@@ -4398,6 +5053,647 @@ func (ec *executionContext) fieldContext_GrammarQuizAdded_options(_ context.Cont
 				return ec.fieldContext_AuthorBasedOptions_quizWord(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type AuthorBasedOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _GrammarQuizResponse_quizItem(ctx context.Context, field graphql.CollectedField, obj *model.GrammarQuizResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_GrammarQuizResponse_quizItem(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.QuizItem, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_GrammarQuizResponse_quizItem(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "GrammarQuizResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _GrammarQuizResponse_dictionaryForm(ctx context.Context, field graphql.CollectedField, obj *model.GrammarQuizResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_GrammarQuizResponse_dictionaryForm(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DictionaryForm, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_GrammarQuizResponse_dictionaryForm(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "GrammarQuizResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _GrammarQuizResponse_stem(ctx context.Context, field graphql.CollectedField, obj *model.GrammarQuizResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_GrammarQuizResponse_stem(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Stem, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_GrammarQuizResponse_stem(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "GrammarQuizResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _GrammarQuizResponse_translation(ctx context.Context, field graphql.CollectedField, obj *model.GrammarQuizResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_GrammarQuizResponse_translation(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Translation, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_GrammarQuizResponse_translation(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "GrammarQuizResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _GrammarQuizResponse_numberOfItems(ctx context.Context, field graphql.CollectedField, obj *model.GrammarQuizResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_GrammarQuizResponse_numberOfItems(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NumberOfItems, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int32)
+	fc.Result = res
+	return ec.marshalOInt2ᚖint32(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_GrammarQuizResponse_numberOfItems(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "GrammarQuizResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _GrammarQuizResponse_description(ctx context.Context, field graphql.CollectedField, obj *model.GrammarQuizResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_GrammarQuizResponse_description(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Description, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_GrammarQuizResponse_description(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "GrammarQuizResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _GrammarQuizResponse_difficulty(ctx context.Context, field graphql.CollectedField, obj *model.GrammarQuizResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_GrammarQuizResponse_difficulty(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Difficulty, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_GrammarQuizResponse_difficulty(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "GrammarQuizResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _GrammarQuizResponse_contractionRule(ctx context.Context, field graphql.CollectedField, obj *model.GrammarQuizResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_GrammarQuizResponse_contractionRule(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ContractionRule, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_GrammarQuizResponse_contractionRule(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "GrammarQuizResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _GrammarQuizResponse_options(ctx context.Context, field graphql.CollectedField, obj *model.GrammarQuizResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_GrammarQuizResponse_options(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Options, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.GrammarOption)
+	fc.Result = res
+	return ec.marshalOGrammarOption2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐGrammarOption(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_GrammarQuizResponse_options(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "GrammarQuizResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "option":
+				return ec.fieldContext_GrammarOption_option(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type GrammarOption", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _GrammarQuizResponse_progress(ctx context.Context, field graphql.CollectedField, obj *model.GrammarQuizResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_GrammarQuizResponse_progress(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Progress, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.ProgressEntry)
+	fc.Result = res
+	return ec.marshalOProgressEntry2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐProgressEntry(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_GrammarQuizResponse_progress(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "GrammarQuizResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "greek":
+				return ec.fieldContext_ProgressEntry_greek(ctx, field)
+			case "translation":
+				return ec.fieldContext_ProgressEntry_translation(ctx, field)
+			case "playCount":
+				return ec.fieldContext_ProgressEntry_playCount(ctx, field)
+			case "correctCount":
+				return ec.fieldContext_ProgressEntry_correctCount(ctx, field)
+			case "incorrectCount":
+				return ec.fieldContext_ProgressEntry_incorrectCount(ctx, field)
+			case "lastPlayed":
+				return ec.fieldContext_ProgressEntry_lastPlayed(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ProgressEntry", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _GrammarSegment_name(ctx context.Context, field graphql.CollectedField, obj *model.GrammarSegment) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_GrammarSegment_name(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Name, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_GrammarSegment_name(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "GrammarSegment",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _GrammarSegment_difficulty(ctx context.Context, field graphql.CollectedField, obj *model.GrammarSegment) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_GrammarSegment_difficulty(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Difficulty, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_GrammarSegment_difficulty(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "GrammarSegment",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _GrammarSegment_maxSet(ctx context.Context, field graphql.CollectedField, obj *model.GrammarSegment) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_GrammarSegment_maxSet(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.MaxSet, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int32)
+	fc.Result = res
+	return ec.marshalOInt2ᚖint32(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_GrammarSegment_maxSet(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "GrammarSegment",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _GrammarThemes_name(ctx context.Context, field graphql.CollectedField, obj *model.GrammarThemes) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_GrammarThemes_name(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Name, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_GrammarThemes_name(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "GrammarThemes",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _GrammarThemes_segments(ctx context.Context, field graphql.CollectedField, obj *model.GrammarThemes) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_GrammarThemes_segments(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Segments, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.GrammarSegment)
+	fc.Result = res
+	return ec.marshalOGrammarSegment2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐGrammarSegment(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_GrammarThemes_segments(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "GrammarThemes",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "name":
+				return ec.fieldContext_GrammarSegment_name(ctx, field)
+			case "difficulty":
+				return ec.fieldContext_GrammarSegment_difficulty(ctx, field)
+			case "maxSet":
+				return ec.fieldContext_GrammarSegment_maxSet(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type GrammarSegment", field.Name)
 		},
 	}
 	return fc, nil
@@ -5699,6 +6995,51 @@ func (ec *executionContext) fieldContext_Query_dialogueOptions(_ context.Context
 	return fc, nil
 }
 
+func (ec *executionContext) _Query_grammarOptions(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_grammarOptions(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().GrammarOptions(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.GrammarOptions)
+	fc.Result = res
+	return ec.marshalOGrammarOptions2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐGrammarOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_grammarOptions(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "themes":
+				return ec.fieldContext_GrammarOptions_themes(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type GrammarOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query_mediaAnswer(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query_mediaAnswer(ctx, field)
 	if err != nil {
@@ -6209,6 +7550,146 @@ func (ec *executionContext) fieldContext_Query_dialogueQuiz(ctx context.Context,
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Query_dialogueQuiz_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_grammarQuiz(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_grammarQuiz(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().GrammarQuiz(rctx, fc.Args["input"].(*model.GrammarQuizInput))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.GrammarQuizResponse)
+	fc.Result = res
+	return ec.marshalOGrammarQuizResponse2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐGrammarQuizResponse(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_grammarQuiz(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "quizItem":
+				return ec.fieldContext_GrammarQuizResponse_quizItem(ctx, field)
+			case "dictionaryForm":
+				return ec.fieldContext_GrammarQuizResponse_dictionaryForm(ctx, field)
+			case "stem":
+				return ec.fieldContext_GrammarQuizResponse_stem(ctx, field)
+			case "translation":
+				return ec.fieldContext_GrammarQuizResponse_translation(ctx, field)
+			case "numberOfItems":
+				return ec.fieldContext_GrammarQuizResponse_numberOfItems(ctx, field)
+			case "description":
+				return ec.fieldContext_GrammarQuizResponse_description(ctx, field)
+			case "difficulty":
+				return ec.fieldContext_GrammarQuizResponse_difficulty(ctx, field)
+			case "contractionRule":
+				return ec.fieldContext_GrammarQuizResponse_contractionRule(ctx, field)
+			case "options":
+				return ec.fieldContext_GrammarQuizResponse_options(ctx, field)
+			case "progress":
+				return ec.fieldContext_GrammarQuizResponse_progress(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type GrammarQuizResponse", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_grammarQuiz_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_grammarAnswer(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_grammarAnswer(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().GrammarAnswer(rctx, fc.Args["input"].(*model.GrammarAnswerInput))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.GrammarAnswer)
+	fc.Result = res
+	return ec.marshalOGrammarAnswer2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐGrammarAnswer(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_grammarAnswer(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "correct":
+				return ec.fieldContext_GrammarAnswer_correct(ctx, field)
+			case "quizWord":
+				return ec.fieldContext_GrammarAnswer_quizWord(ctx, field)
+			case "progress":
+				return ec.fieldContext_GrammarAnswer_progress(ctx, field)
+			case "similarWords":
+				return ec.fieldContext_GrammarAnswer_similarWords(ctx, field)
+			case "foundInText":
+				return ec.fieldContext_GrammarAnswer_foundInText(ctx, field)
+			case "finished":
+				return ec.fieldContext_GrammarAnswer_finished(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type GrammarAnswer", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_grammarAnswer_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -9212,6 +10693,144 @@ func (ec *executionContext) unmarshalInputDialogueQuizInput(ctx context.Context,
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputGrammarAnswerInput(ctx context.Context, obj any) (model.GrammarAnswerInput, error) {
+	var it model.GrammarAnswerInput
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"theme", "set", "segment", "quizWord", "answer", "comprehensive", "doneAfter", "dictionaryForm"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "theme":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("theme"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Theme = data
+		case "set":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("set"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Set = data
+		case "segment":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("segment"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Segment = data
+		case "quizWord":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("quizWord"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.QuizWord = data
+		case "answer":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("answer"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Answer = data
+		case "comprehensive":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("comprehensive"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Comprehensive = data
+		case "doneAfter":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("doneAfter"))
+			data, err := ec.unmarshalOInt2ᚖint32(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.DoneAfter = data
+		case "dictionaryForm":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("dictionaryForm"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.DictionaryForm = data
+		}
+	}
+
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputGrammarQuizInput(ctx context.Context, obj any) (model.GrammarQuizInput, error) {
+	var it model.GrammarQuizInput
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"theme", "set", "segment", "doneAfter", "resetProgress", "archiveProgress"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "theme":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("theme"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Theme = data
+		case "set":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("set"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Set = data
+		case "segment":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("segment"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Segment = data
+		case "doneAfter":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("doneAfter"))
+			data, err := ec.unmarshalOInt2ᚖint32(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.DoneAfter = data
+		case "resetProgress":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("resetProgress"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ResetProgress = data
+		case "archiveProgress":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("archiveProgress"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ArchiveProgress = data
+		}
+	}
+
+	return it, nil
+}
+
 func (ec *executionContext) unmarshalInputMediaAnswerInput(ctx context.Context, obj any) (model.MediaAnswerInput, error) {
 	var it model.MediaAnswerInput
 	asMap := map[string]any{}
@@ -10105,6 +11724,124 @@ func (ec *executionContext) _DialogueQuizResponse(ctx context.Context, sel ast.S
 	return out
 }
 
+var grammarAnswerImplementors = []string{"GrammarAnswer"}
+
+func (ec *executionContext) _GrammarAnswer(ctx context.Context, sel ast.SelectionSet, obj *model.GrammarAnswer) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, grammarAnswerImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("GrammarAnswer")
+		case "correct":
+			out.Values[i] = ec._GrammarAnswer_correct(ctx, field, obj)
+		case "quizWord":
+			out.Values[i] = ec._GrammarAnswer_quizWord(ctx, field, obj)
+		case "progress":
+			out.Values[i] = ec._GrammarAnswer_progress(ctx, field, obj)
+		case "similarWords":
+			out.Values[i] = ec._GrammarAnswer_similarWords(ctx, field, obj)
+		case "foundInText":
+			out.Values[i] = ec._GrammarAnswer_foundInText(ctx, field, obj)
+		case "finished":
+			out.Values[i] = ec._GrammarAnswer_finished(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var grammarOptionImplementors = []string{"GrammarOption"}
+
+func (ec *executionContext) _GrammarOption(ctx context.Context, sel ast.SelectionSet, obj *model.GrammarOption) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, grammarOptionImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("GrammarOption")
+		case "option":
+			out.Values[i] = ec._GrammarOption_option(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var grammarOptionsImplementors = []string{"GrammarOptions"}
+
+func (ec *executionContext) _GrammarOptions(ctx context.Context, sel ast.SelectionSet, obj *model.GrammarOptions) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, grammarOptionsImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("GrammarOptions")
+		case "themes":
+			out.Values[i] = ec._GrammarOptions_themes(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
 var grammarQuizAddedImplementors = []string{"GrammarQuizAdded"}
 
 func (ec *executionContext) _GrammarQuizAdded(ctx context.Context, sel ast.SelectionSet, obj *model.GrammarQuizAdded) graphql.Marshaler {
@@ -10124,6 +11861,138 @@ func (ec *executionContext) _GrammarQuizAdded(ctx context.Context, sel ast.Selec
 			out.Values[i] = ec._GrammarQuizAdded_extraInformation(ctx, field, obj)
 		case "options":
 			out.Values[i] = ec._GrammarQuizAdded_options(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var grammarQuizResponseImplementors = []string{"GrammarQuizResponse"}
+
+func (ec *executionContext) _GrammarQuizResponse(ctx context.Context, sel ast.SelectionSet, obj *model.GrammarQuizResponse) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, grammarQuizResponseImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("GrammarQuizResponse")
+		case "quizItem":
+			out.Values[i] = ec._GrammarQuizResponse_quizItem(ctx, field, obj)
+		case "dictionaryForm":
+			out.Values[i] = ec._GrammarQuizResponse_dictionaryForm(ctx, field, obj)
+		case "stem":
+			out.Values[i] = ec._GrammarQuizResponse_stem(ctx, field, obj)
+		case "translation":
+			out.Values[i] = ec._GrammarQuizResponse_translation(ctx, field, obj)
+		case "numberOfItems":
+			out.Values[i] = ec._GrammarQuizResponse_numberOfItems(ctx, field, obj)
+		case "description":
+			out.Values[i] = ec._GrammarQuizResponse_description(ctx, field, obj)
+		case "difficulty":
+			out.Values[i] = ec._GrammarQuizResponse_difficulty(ctx, field, obj)
+		case "contractionRule":
+			out.Values[i] = ec._GrammarQuizResponse_contractionRule(ctx, field, obj)
+		case "options":
+			out.Values[i] = ec._GrammarQuizResponse_options(ctx, field, obj)
+		case "progress":
+			out.Values[i] = ec._GrammarQuizResponse_progress(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var grammarSegmentImplementors = []string{"GrammarSegment"}
+
+func (ec *executionContext) _GrammarSegment(ctx context.Context, sel ast.SelectionSet, obj *model.GrammarSegment) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, grammarSegmentImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("GrammarSegment")
+		case "name":
+			out.Values[i] = ec._GrammarSegment_name(ctx, field, obj)
+		case "difficulty":
+			out.Values[i] = ec._GrammarSegment_difficulty(ctx, field, obj)
+		case "maxSet":
+			out.Values[i] = ec._GrammarSegment_maxSet(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var grammarThemesImplementors = []string{"GrammarThemes"}
+
+func (ec *executionContext) _GrammarThemes(ctx context.Context, sel ast.SelectionSet, obj *model.GrammarThemes) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, grammarThemesImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("GrammarThemes")
+		case "name":
+			out.Values[i] = ec._GrammarThemes_name(ctx, field, obj)
+		case "segments":
+			out.Values[i] = ec._GrammarThemes_segments(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -10549,6 +12418,25 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "grammarOptions":
+			field := field
+
+			innerFunc := func(ctx context.Context, _ *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_grammarOptions(ctx, field)
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
 		case "mediaAnswer":
 			field := field
 
@@ -10692,6 +12580,44 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_dialogueQuiz(ctx, field)
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "grammarQuiz":
+			field := field
+
+			innerFunc := func(ctx context.Context, _ *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_grammarQuiz(ctx, field)
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "grammarAnswer":
+			field := field
+
+			innerFunc := func(ctx context.Context, _ *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_grammarAnswer(ctx, field)
 				return res
 			}
 
@@ -12028,6 +13954,76 @@ func (ec *executionContext) marshalOFloat2ᚖfloat64(ctx context.Context, sel as
 	return graphql.WrapContextMarshaler(ctx, res)
 }
 
+func (ec *executionContext) marshalOGrammarAnswer2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐGrammarAnswer(ctx context.Context, sel ast.SelectionSet, v *model.GrammarAnswer) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._GrammarAnswer(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalOGrammarAnswerInput2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐGrammarAnswerInput(ctx context.Context, v any) (*model.GrammarAnswerInput, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputGrammarAnswerInput(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOGrammarOption2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐGrammarOption(ctx context.Context, sel ast.SelectionSet, v []*model.GrammarOption) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalOGrammarOption2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐGrammarOption(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	return ret
+}
+
+func (ec *executionContext) marshalOGrammarOption2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐGrammarOption(ctx context.Context, sel ast.SelectionSet, v *model.GrammarOption) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._GrammarOption(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOGrammarOptions2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐGrammarOptions(ctx context.Context, sel ast.SelectionSet, v *model.GrammarOptions) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._GrammarOptions(ctx, sel, v)
+}
+
 func (ec *executionContext) marshalOGrammarQuizAdded2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐGrammarQuizAdded(ctx context.Context, sel ast.SelectionSet, v []*model.GrammarQuizAdded) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
@@ -12074,6 +14070,117 @@ func (ec *executionContext) marshalOGrammarQuizAdded2ᚖgithubᚗcomᚋodysseia�
 		return graphql.Null
 	}
 	return ec._GrammarQuizAdded(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalOGrammarQuizInput2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐGrammarQuizInput(ctx context.Context, v any) (*model.GrammarQuizInput, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputGrammarQuizInput(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOGrammarQuizResponse2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐGrammarQuizResponse(ctx context.Context, sel ast.SelectionSet, v *model.GrammarQuizResponse) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._GrammarQuizResponse(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOGrammarSegment2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐGrammarSegment(ctx context.Context, sel ast.SelectionSet, v []*model.GrammarSegment) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalOGrammarSegment2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐGrammarSegment(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	return ret
+}
+
+func (ec *executionContext) marshalOGrammarSegment2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐGrammarSegment(ctx context.Context, sel ast.SelectionSet, v *model.GrammarSegment) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._GrammarSegment(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOGrammarThemes2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐGrammarThemes(ctx context.Context, sel ast.SelectionSet, v []*model.GrammarThemes) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalOGrammarThemes2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐGrammarThemes(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	return ret
+}
+
+func (ec *executionContext) marshalOGrammarThemes2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐGrammarThemes(ctx context.Context, sel ast.SelectionSet, v *model.GrammarThemes) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._GrammarThemes(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalOHit2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐHit(ctx context.Context, sel ast.SelectionSet, v []*model.Hit) graphql.Marshaler {

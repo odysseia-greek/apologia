@@ -1,4 +1,4 @@
-module github.com/odysseia-greek/apologia/anisthenes
+module github.com/odysseia-greek/apologia/antisthenes
 
 go 1.24.0
 

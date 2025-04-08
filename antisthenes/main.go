@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 	"github.com/odysseia-greek/agora/plato/logging"
-	"github.com/odysseia-greek/apologia/anisthenes/kunismos"
-	pb "github.com/odysseia-greek/apologia/anisthenes/proto"
+	"github.com/odysseia-greek/apologia/antisthenes/kunismos"
+	pb "github.com/odysseia-greek/apologia/antisthenes/proto"
 	"google.golang.org/grpc"
 	"log"
 	"net"
@@ -52,7 +52,7 @@ func main() {
 
 	server = grpc.NewServer(grpc.UnaryInterceptor(kunismos.GrammarInterceptor))
 
-	pb.RegisterAnisthenesServer(server, config)
+	pb.RegisterAntisthenesServer(server, config)
 
 	logging.Info(fmt.Sprintf("Server listening on %s", port))
 	if err := server.Serve(listener); err != nil {

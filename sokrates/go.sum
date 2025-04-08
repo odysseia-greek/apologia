@@ -228,6 +228,8 @@ github.com/odysseia-greek/agora/plato v0.2.6 h1:PaUGNrI9VfYNdXqqn7YgJk2AVmPf41o2
 github.com/odysseia-greek/agora/plato v0.2.6/go.mod h1:AilaS8d/ctTxWXHT1LFOI/urbAUEnVJMpqyNms96oAs=
 github.com/odysseia-greek/agora/thales v0.1.11 h1:UE54gcSt3QDeIZ3TLnN0l2ga63WBnO9sRAy0Uq/VA3M=
 github.com/odysseia-greek/agora/thales v0.1.11/go.mod h1:Lrg/m4WBIGc9+omEJoqBZvLhlgm0Ke9hgQOMzkE4uWM=
+github.com/odysseia-greek/apologia/anisthenes v0.0.1 h1:nHRV/dg4XDqKnUSWSpNrrqY7N7nIiI2L2ZoDY2LiKAE=
+github.com/odysseia-greek/apologia/anisthenes v0.0.1/go.mod h1:4uAzfp9wHYDON12Yp578CV8jaotr3YNqqDNnMACpcpk=
 github.com/odysseia-greek/apologia/aristippos v0.0.8 h1:u6SVzI3PYkE05obIhyfkR3JON8n9n8k3d/xqVAO0LeQ=
 github.com/odysseia-greek/apologia/aristippos v0.0.8/go.mod h1:3XwBpVWSrhh21bz3NhsKVlDLZ2BtGIjelkP8jSf3OpY=
 github.com/odysseia-greek/apologia/kritias v0.0.4 h1:5gFEVs7+HPBEJFxN6NSIr2z7bbJaGrCRcc1QwyhTsmc=
@@ -399,8 +401,8 @@ google.golang.org/grpc v1.23.0/go.mod h1:Y5yQAOtifL1yxbo5wqy6BxZv8vAUGQwXBOALyac
 google.golang.org/grpc v1.25.1/go.mod h1:c3i+UQWmh7LiEpx4sFZnkU36qjEYZ0imhYfXVyQciAY=
 google.golang.org/grpc v1.27.0/go.mod h1:qbnxyOmOxrQa7FizSgH+ReBfzJrCY1pSN7KXBS8abTk=
 google.golang.org/grpc v1.33.2/go.mod h1:JMHMWHQWaTccqQQlmk3MJZS+GWXOdAesneDmEnv2fbc=
-google.golang.org/grpc v1.71.0 h1:kF77BGdPTQ4/JZWMlb9VpJ5pa25aqvVqogsxNHHdeBg=
-google.golang.org/grpc v1.71.0/go.mod h1:H0GRtasmQOh9LkFoCPDu3ZrwUtD1YGE+b2vYBYd/8Ec=
+google.golang.org/grpc v1.71.1 h1:ffsFWr7ygTUscGPI0KKK6TLrGz0476KUvvsbqWK0rPI=
+google.golang.org/grpc v1.71.1/go.mod h1:H0GRtasmQOh9LkFoCPDu3ZrwUtD1YGE+b2vYBYd/8Ec=
 google.golang.org/protobuf v0.0.0-20200109180630-ec00e32a8dfd/go.mod h1:DFci5gLYBciE7Vtevhsrf46CRTquxDuWsQurQQe4oz8=
 google.golang.org/protobuf v0.0.0-20200221191635-4d8936d0db64/go.mod h1:kwYJMbMJ01Woi6D6+Kah6886xMZcty6N08ah7+eCXa0=
 google.golang.org/protobuf v0.0.0-20200228230310-ab0ca4ff8a60/go.mod h1:cfTl7dwQJ+fmap5saPgwCLgHXTUD7jkjRqWcaiX5VyM=

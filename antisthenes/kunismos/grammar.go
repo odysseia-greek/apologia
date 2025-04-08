@@ -10,7 +10,7 @@ import (
 	"github.com/odysseia-greek/agora/plato/models"
 	"github.com/odysseia-greek/agora/plato/service"
 	"github.com/odysseia-greek/agora/plato/transform"
-	pb "github.com/odysseia-greek/apologia/anisthenes/proto"
+	pb "github.com/odysseia-greek/apologia/antisthenes/proto"
 	"github.com/odysseia-greek/attike/aristophanes/comedy"
 	pbar "github.com/odysseia-greek/attike/aristophanes/proto"
 	"google.golang.org/grpc/metadata"

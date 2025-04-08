@@ -1,9 +1,9 @@
 syntax = "proto3";
-option go_package = "github.com/odysseia-greek/apologia/anisthenes/proto";
+option go_package = "github.com/odysseia-greek/apologia/antisthenes/proto";
 
-package apologia_anisthenes;
+package apologia_antisthenes;
 
-service Anisthenes {
+service Antisthenes {
   rpc Health (HealthRequest) returns (HealthResponse) {};
   rpc Options (OptionsRequest) returns (AggregatedOptions) {};
   rpc Question (CreationRequest) returns (QuizResponse) {};

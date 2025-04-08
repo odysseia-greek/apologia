@@ -3,7 +3,7 @@ package kunismos
 import (
 	"encoding/json"
 	"fmt"
-	pb "github.com/odysseia-greek/apologia/anisthenes/proto"
+	pb "github.com/odysseia-greek/apologia/antisthenes/proto"
 )
 
 func quizAggregationQuery() map[string]interface{} {

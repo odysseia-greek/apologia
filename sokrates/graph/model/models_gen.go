@@ -143,11 +143,72 @@ type DialogueQuizResponse struct {
 	Content      []*DialogueContent `json:"content,omitempty"`
 }
 
+type GrammarAnswer struct {
+	Correct      *bool                `json:"correct,omitempty"`
+	QuizWord     *string              `json:"quizWord,omitempty"`
+	Progress     []*ProgressEntry     `json:"progress,omitempty"`
+	SimilarWords []*Hit               `json:"similarWords,omitempty"`
+	FoundInText  *AnalyzeTextResponse `json:"foundInText,omitempty"`
+	Finished     *bool                `json:"finished,omitempty"`
+}
+
+type GrammarAnswerInput struct {
+	Theme          *string `json:"theme,omitempty"`
+	Set            *string `json:"set,omitempty"`
+	Segment        *string `json:"segment,omitempty"`
+	QuizWord       *string `json:"quizWord,omitempty"`
+	Answer         *string `json:"answer,omitempty"`
+	Comprehensive  *bool   `json:"comprehensive,omitempty"`
+	DoneAfter      *int32  `json:"doneAfter,omitempty"`
+	DictionaryForm *string `json:"dictionaryForm,omitempty"`
+}
+
+type GrammarOption struct {
+	Option *string `json:"option,omitempty"`
+}
+
+type GrammarOptions struct {
+	Themes []*GrammarThemes `json:"themes,omitempty"`
+}
+
 type GrammarQuizAdded struct {
 	CorrectAnswer    *string               `json:"correctAnswer,omitempty"`
 	WordInText       *string               `json:"wordInText,omitempty"`
 	ExtraInformation *string               `json:"extraInformation,omitempty"`
 	Options          []*AuthorBasedOptions `json:"options,omitempty"`
+}
+
+type GrammarQuizInput struct {
+	Theme           *string `json:"theme,omitempty"`
+	Set             *string `json:"set,omitempty"`
+	Segment         *string `json:"segment,omitempty"`
+	DoneAfter       *int32  `json:"doneAfter,omitempty"`
+	ResetProgress   *bool   `json:"resetProgress,omitempty"`
+	ArchiveProgress *bool   `json:"archiveProgress,omitempty"`
+}
+
+type GrammarQuizResponse struct {
+	QuizItem        *string          `json:"quizItem,omitempty"`
+	DictionaryForm  *string          `json:"dictionaryForm,omitempty"`
+	Stem            *string          `json:"stem,omitempty"`
+	Translation     *string          `json:"translation,omitempty"`
+	NumberOfItems   *int32           `json:"numberOfItems,omitempty"`
+	Description     *string          `json:"description,omitempty"`
+	Difficulty      *string          `json:"difficulty,omitempty"`
+	ContractionRule *string          `json:"contractionRule,omitempty"`
+	Options         []*GrammarOption `json:"options,omitempty"`
+	Progress        []*ProgressEntry `json:"progress,omitempty"`
+}
+
+type GrammarSegment struct {
+	Name       *string `json:"name,omitempty"`
+	Difficulty *string `json:"difficulty,omitempty"`
+	MaxSet     *int32  `json:"maxSet,omitempty"`
+}
+
+type GrammarThemes struct {
+	Name     *string           `json:"name,omitempty"`
+	Segments []*GrammarSegment `json:"segments,omitempty"`
 }
 
 type Hit struct {
