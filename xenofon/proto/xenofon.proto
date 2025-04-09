@@ -8,12 +8,28 @@ service Xenofon {
   rpc Options (OptionsRequest) returns (AggregatedOptions) {};
   rpc Question (CreationRequest) returns (QuizResponse) {};
   rpc Answer (AnswerRequest) returns (AnswerResponse) {};
+  rpc WordForms (WordFormRequest) returns (WordFormResponse);
 }
 
 // Empty request messages since these endpoints require no body
 message HealthRequest {}
 
 message OptionsRequest {
+}
+
+message WordFormRequest {
+  string theme = 1;
+  string segment = 2;
+  string set = 3;
+}
+
+message WordFormResponse {
+  repeated WordFormList forms = 1;
+}
+
+message WordFormList {
+  string dictionary_form = 1;
+  repeated string words_in_text = 2;
 }
 
 // Response message for health check

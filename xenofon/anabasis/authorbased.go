@@ -374,6 +374,66 @@ func (a *AuthorBasedServiceImpl) Answer(ctx context.Context, request *pb.AnswerR
 	return answer, nil
 }
 
+func (a *AuthorBasedServiceImpl) WordForms(ctx context.Context, request *pb.WordFormRequest) (*pb.WordFormResponse, error) {
+	segmentKey := fmt.Sprintf("%s+%s+%s", request.Theme, request.Set, request.Segment)
+	cacheItem, _ := a.Archytas.Read(segmentKey)
+
+	var option models.AuthorbasedQuiz
+
+	if cacheItem != nil {
+		err := json.Unmarshal(cacheItem, &option)
+		if err != nil {
+			return nil, err
+		}
+
+		go cacheSpan(string(cacheItem), segmentKey, ctx)
+	} else {
+		mustQuery := []map[string]string{
+			{
+				THEME: request.Theme,
+			},
+			{
+				SEGMENT: request.Segment,
+			},
+			{
+				SET: request.Set,
+			},
+		}
+
+		query := a.Elastic.Builder().MultipleMatch(mustQuery)
+		elasticResponse, err := a.Elastic.Query().Match(a.Index, query)
+		if err != nil {
+			return nil, err
+		}
+		if len(elasticResponse.Hits.Hits) == 0 {
+			return nil, fmt.Errorf("no hits found in Elastic")
+		}
+
+		go databaseSpan(elasticResponse, query, ctx)
+
+		source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
+		err = json.Unmarshal(source, &option)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	forms := &pb.WordFormResponse{
+		Forms: []*pb.WordFormList{},
+	}
+
+	for _, content := range option.Content {
+		wordFromList := &pb.WordFormList{
+			DictionaryForm: content.Greek,
+			WordsInText:    content.WordsInText,
+		}
+
+		forms.Forms = append(forms.Forms, wordFromList)
+	}
+
+	return forms, nil
+}
+
 // findQuizWord takes a slice and looks for an element in it
 func findQuizWord(slice []*pb.Options, val string) bool {
 	for _, item := range slice {

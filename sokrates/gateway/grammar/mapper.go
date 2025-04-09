@@ -1,11 +1,11 @@
 package grammar
 
 import (
-	pbanisthenes "github.com/odysseia-greek/apologia/anisthenes/proto"
+	pbantisthenes "github.com/odysseia-greek/apologia/antisthenes/proto"
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
 )
 
-func MapComprehensiveResponse(grpcResp *pbanisthenes.ComprehensiveResponse) *model.GrammarAnswer {
+func MapComprehensiveResponse(grpcResp *pbantisthenes.ComprehensiveResponse) *model.GrammarAnswer {
 	if grpcResp == nil {
 		return nil
 	}
@@ -48,7 +48,7 @@ func MapComprehensiveResponse(grpcResp *pbanisthenes.ComprehensiveResponse) *mod
 	return mappedResponse
 }
 
-func mapConjugations(grpcConj []*pbanisthenes.Conjugations) []*model.ConjugationResponse {
+func mapConjugations(grpcConj []*pbantisthenes.Conjugations) []*model.ConjugationResponse {
 	if grpcConj == nil {
 		return nil
 	}
@@ -63,7 +63,7 @@ func mapConjugations(grpcConj []*pbanisthenes.Conjugations) []*model.Conjugation
 	return result
 }
 
-func mapAnalyzeResults(grpcResults []*pbanisthenes.AnalyzeResult) []*model.AnalyzeResult {
+func mapAnalyzeResults(grpcResults []*pbantisthenes.AnalyzeResult) []*model.AnalyzeResult {
 	if grpcResults == nil {
 		return nil
 	}

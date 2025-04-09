@@ -26,6 +26,7 @@ type XenofonClient interface {
 	Options(ctx context.Context, in *OptionsRequest, opts ...grpc.CallOption) (*AggregatedOptions, error)
 	Question(ctx context.Context, in *CreationRequest, opts ...grpc.CallOption) (*QuizResponse, error)
 	Answer(ctx context.Context, in *AnswerRequest, opts ...grpc.CallOption) (*AnswerResponse, error)
+	WordForms(ctx context.Context, in *WordFormRequest, opts ...grpc.CallOption) (*WordFormResponse, error)
 }
 
 type xenofonClient struct {
@@ -72,6 +73,15 @@ func (c *xenofonClient) Answer(ctx context.Context, in *AnswerRequest, opts ...g
 	return out, nil
 }
 
+func (c *xenofonClient) WordForms(ctx context.Context, in *WordFormRequest, opts ...grpc.CallOption) (*WordFormResponse, error) {
+	out := new(WordFormResponse)
+	err := c.cc.Invoke(ctx, "/apologia_xenofon.Xenofon/WordForms", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // XenofonServer is the server API for Xenofon service.
 // All implementations must embed UnimplementedXenofonServer
 // for forward compatibility
@@ -80,6 +90,7 @@ type XenofonServer interface {
 	Options(context.Context, *OptionsRequest) (*AggregatedOptions, error)
 	Question(context.Context, *CreationRequest) (*QuizResponse, error)
 	Answer(context.Context, *AnswerRequest) (*AnswerResponse, error)
+	WordForms(context.Context, *WordFormRequest) (*WordFormResponse, error)
 	mustEmbedUnimplementedXenofonServer()
 }
 
@@ -98,6 +109,9 @@ func (UnimplementedXenofonServer) Question(context.Context, *CreationRequest) (*
 }
 func (UnimplementedXenofonServer) Answer(context.Context, *AnswerRequest) (*AnswerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Answer not implemented")
+}
+func (UnimplementedXenofonServer) WordForms(context.Context, *WordFormRequest) (*WordFormResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WordForms not implemented")
 }
 func (UnimplementedXenofonServer) mustEmbedUnimplementedXenofonServer() {}
 
@@ -184,6 +198,24 @@ func _Xenofon_Answer_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Xenofon_WordForms_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WordFormRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(XenofonServer).WordForms(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/apologia_xenofon.Xenofon/WordForms",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(XenofonServer).WordForms(ctx, req.(*WordFormRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Xenofon_ServiceDesc is the grpc.ServiceDesc for Xenofon service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -206,6 +238,10 @@ var Xenofon_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Answer",
 			Handler:    _Xenofon_Answer_Handler,
+		},
+		{
+			MethodName: "WordForms",
+			Handler:    _Xenofon_WordForms_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/randomizer"
-	"github.com/odysseia-greek/apologia/anisthenes/kunismos"
+	"github.com/odysseia-greek/apologia/antisthenes/kunismos"
 	"github.com/odysseia-greek/apologia/aristippos/hedone"
 	pbartrippos "github.com/odysseia-greek/apologia/aristippos/proto"
 	"github.com/odysseia-greek/apologia/kritias/triakonta"

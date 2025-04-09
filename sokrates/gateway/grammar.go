@@ -1,12 +1,12 @@
 package gateway
 
 import (
-	pbanisthenes "github.com/odysseia-greek/apologia/anisthenes/proto"
+	pbantisthenes "github.com/odysseia-greek/apologia/antisthenes/proto"
 	"github.com/odysseia-greek/apologia/sokrates/gateway/grammar"
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
 )
 
-func (s *SokratesHandler) CreateGrammarQuiz(request *pbanisthenes.CreationRequest, requestID, sessionId string) (*model.GrammarQuizResponse, error) {
+func (s *SokratesHandler) CreateGrammarQuiz(request *pbantisthenes.CreationRequest, requestID, sessionId string) (*model.GrammarQuizResponse, error) {
 	grammarClientCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 	grpcResponse, err := s.GrammarClient.Question(grammarClientCtx, request)
@@ -45,7 +45,7 @@ func (s *SokratesHandler) CreateGrammarQuiz(request *pbanisthenes.CreationReques
 	return quizResponse, nil
 }
 
-func (s *SokratesHandler) CheckGrammar(request *pbanisthenes.AnswerRequest, requestID, sessionId string) (*model.GrammarAnswer, error) {
+func (s *SokratesHandler) CheckGrammar(request *pbantisthenes.AnswerRequest, requestID, sessionId string) (*model.GrammarAnswer, error) {
 	grammarClientCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
@@ -61,7 +61,7 @@ func (s *SokratesHandler) GrammarOptions(requestID, sessionId string) (*model.Gr
 	optionsCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
-	grpcResponse, err := s.GrammarClient.Options(optionsCtx, &pbanisthenes.OptionsRequest{})
+	grpcResponse, err := s.GrammarClient.Options(optionsCtx, &pbantisthenes.OptionsRequest{})
 	if err != nil {
 		return nil, err
 	}

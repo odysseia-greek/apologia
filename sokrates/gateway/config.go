@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
-	"github.com/odysseia-greek/apologia/anisthenes/kunismos"
+	"github.com/odysseia-greek/apologia/antisthenes/kunismos"
 	"github.com/odysseia-greek/apologia/aristippos/hedone"
 	"github.com/odysseia-greek/apologia/kritias/triakonta"
 	"github.com/odysseia-greek/apologia/kriton/philia"
@@ -115,8 +115,8 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 		os.Exit(1)
 	}
 
-	grammarClientAddress := config.StringFromEnv(config.EnvGrammarBasedClient, config.DefaultGrammarBasedAddress)
-	grammarClient, err := kunismos.NewAnisthenesClient(grammarClientAddress)
+	grammarClientAddress := config.StringFromEnv("ANTISTHENES_SERVICE", config.DefaultGrammarBasedAddress)
+	grammarClient, err := kunismos.NewAntisthenesClient(grammarClientAddress)
 	if err != nil {
 		logging.Error(err.Error())
 		return nil, err

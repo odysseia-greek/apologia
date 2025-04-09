@@ -19,6 +19,7 @@ type AuthorBasedService interface {
 	Options(ctx context.Context, request *pb.OptionsRequest) (*pb.AggregatedOptions, error)
 	Question(ctx context.Context, request *pb.CreationRequest) (*pb.QuizResponse, error)
 	Answer(ctx context.Context, request *pb.AnswerRequest) (*pb.AnswerResponse, error)
+	WordForms(ctx context.Context, request *pb.WordFormRequest) (*pb.WordFormRequest, error)
 }
 
 const (
@@ -86,4 +87,8 @@ func (m *AuthorBasedClient) Question(ctx context.Context, request *pb.CreationRe
 
 func (m *AuthorBasedClient) Answer(ctx context.Context, request *pb.AnswerRequest) (*pb.AnswerResponse, error) {
 	return m.authorbased.Answer(ctx, request)
+}
+
+func (m *AuthorBasedClient) WordForms(ctx context.Context, request *pb.WordFormRequest) (*pb.WordFormRequest, error) {
+	return m.authorbased.WordForms(ctx, request)
 }

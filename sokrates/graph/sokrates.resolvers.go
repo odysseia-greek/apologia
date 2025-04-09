@@ -6,8 +6,9 @@ package graph
 
 import (
 	"context"
+
 	"github.com/odysseia-greek/agora/plato/config"
-	pbanisthenes "github.com/odysseia-greek/apologia/anisthenes/proto"
+	pbantisthenes "github.com/odysseia-greek/apologia/antisthenes/proto"
 	pbartrippos "github.com/odysseia-greek/apologia/aristippos/proto"
 	pbkritias "github.com/odysseia-greek/apologia/kritias/proto"
 	pbkriton "github.com/odysseia-greek/apologia/kriton/proto"
@@ -206,7 +207,7 @@ func (r *queryResolver) GrammarQuiz(ctx context.Context, input *model.GrammarQui
 	requestID, _ := ctx.Value(config.HeaderKey).(string)
 	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
 
-	pb := &pbanisthenes.CreationRequest{
+	pb := &pbantisthenes.CreationRequest{
 		Theme:           *input.Theme,
 		Set:             *input.Set,
 		Segment:         *input.Segment,
@@ -223,7 +224,7 @@ func (r *queryResolver) GrammarAnswer(ctx context.Context, input *model.GrammarA
 	requestID, _ := ctx.Value(config.HeaderKey).(string)
 	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
 
-	pb := &pbanisthenes.AnswerRequest{
+	pb := &pbantisthenes.AnswerRequest{
 		Theme:          *input.Theme,
 		Set:            *input.Set,
 		Segment:        *input.Segment,

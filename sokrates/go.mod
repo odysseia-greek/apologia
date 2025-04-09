@@ -6,7 +6,7 @@ require (
 	github.com/99designs/gqlgen v0.17.70
 	github.com/gorilla/mux v1.8.1
 	github.com/odysseia-greek/agora/plato v0.2.6
-	github.com/odysseia-greek/apologia/anisthenes v0.0.1
+	github.com/odysseia-greek/apologia/antisthenes v0.0.1
 	github.com/odysseia-greek/apologia/aristippos v0.0.8
 	github.com/odysseia-greek/apologia/kritias v0.0.4
 	github.com/odysseia-greek/apologia/kriton v0.0.2
