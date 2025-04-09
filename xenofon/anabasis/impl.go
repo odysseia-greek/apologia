@@ -89,6 +89,6 @@ func (m *AuthorBasedClient) Answer(ctx context.Context, request *pb.AnswerReques
 	return m.authorbased.Answer(ctx, request)
 }
 
-func (m *AuthorBasedClient) WordForms(ctx context.Context, request *pb.WordFormRequest) (*pb.WordFormRequest, error) {
+func (m *AuthorBasedClient) WordForms(ctx context.Context, request *pb.WordFormRequest) (*pb.WordFormResponse, error) {
 	return m.authorbased.WordForms(ctx, request)
 }
