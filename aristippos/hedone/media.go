@@ -13,7 +13,9 @@ import (
 	pb "github.com/odysseia-greek/apologia/aristippos/proto"
 	"github.com/odysseia-greek/attike/aristophanes/comedy"
 	pbar "github.com/odysseia-greek/attike/aristophanes/proto"
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/status"
 	"math/rand/v2"
 	"net/http"
 	"os"
@@ -187,25 +189,34 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 		}
 	}
 
+	if len(filteredContent) == 0 {
+		m.Progress.ResetSegment(sessionId, segmentKey)
+
+		for _, content := range option.Content {
+			filteredContent = append(filteredContent, content)
+		}
+	}
+
+	if len(filteredContent) == 0 {
+		return nil, status.Errorf(codes.NotFound, "no content available after progress reset")
+	}
+
 	var translation string
+	var question models.MediaContent
 	if len(filteredContent) == 1 {
-		question := filteredContent[0]
-		quiz.QuizItem = question.Greek
-		translation = question.Translation
-		quiz.Options = append(quiz.Options, &pb.Options{
-			Option:   question.Translation,
-			ImageUrl: question.ImageURL,
-		})
+		question = filteredContent[0]
+
 	} else {
 		randNumber := m.Randomizer.RandomNumberBaseZero(len(filteredContent))
-		question := filteredContent[randNumber]
-		quiz.QuizItem = question.Greek
-		translation = question.Translation
-		quiz.Options = append(quiz.Options, &pb.Options{
-			Option:   question.Translation,
-			ImageUrl: question.ImageURL,
-		})
+		question = filteredContent[randNumber]
 	}
+
+	quiz.QuizItem = question.Greek
+	translation = question.Translation
+	quiz.Options = append(quiz.Options, &pb.Options{
+		Option:   question.Translation,
+		ImageUrl: question.ImageURL,
+	})
 
 	numberOfNeededAnswers := 4
 

@@ -9,7 +9,9 @@ import (
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/models"
 	pb "github.com/odysseia-greek/apologia/xenofon/proto"
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/status"
 	"math/rand/v2"
 	"time"
 )
@@ -171,71 +173,81 @@ func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *pb.Creat
 		}
 	}
 
+	if len(filteredContent) == 0 {
+		a.Progress.ResetSegment(sessionId, segmentKey)
+
+		for _, content := range option.Content {
+			filteredContent = append(filteredContent, content)
+		}
+	}
+
+	if len(filteredContent) == 0 {
+		return nil, status.Errorf(codes.NotFound, "no content available after progress reset")
+	}
+
+	var question models.AuthorBasedContent
 	var translation string
 	if len(filteredContent) == 1 {
-		question := filteredContent[0]
-		quiz.QuizItem = question.Greek
-		translation = question.Translation
-		quiz.Options = append(quiz.Options, &pb.Options{
-			QuizWord: question.Translation,
-		})
+		question = filteredContent[0]
 	} else {
 		randNumber := a.Randomizer.RandomNumberBaseZero(len(filteredContent))
-		question := filteredContent[randNumber]
-		if question.HasGrammarQuestions {
-			//add grammar question
-			for _, grammarQuestion := range question.GrammarQuestions {
-				grammarQuizOption := &pb.GrammarQuizAdded{
-					CorrectAnswer:    grammarQuestion.CorrectAnswer,
-					WordInText:       grammarQuestion.WordInText,
-					ExtraInformation: grammarQuestion.ExtraInformation,
-					Options:          nil,
-				}
+		question = filteredContent[randNumber]
+	}
 
-				var setToQuery []string
-				switch grammarQuestion.TypeOfWord {
-				case "noun":
-					setToQuery = option.GrammarQuestionOptions.Nouns
-				case "verb":
-					setToQuery = option.GrammarQuestionOptions.Verbs
-				case "misc":
-					setToQuery = option.GrammarQuestionOptions.Misc
-				default:
-					setToQuery = option.GrammarQuestionOptions.Nouns
-				}
+	quiz.QuizItem = question.Greek
+	translation = question.Translation
+	quiz.Options = append(quiz.Options, &pb.Options{
+		QuizWord: question.Translation,
+	})
 
-				var grammarOptions []*pb.Options
-
-				grammarOptions = append(grammarOptions, &pb.Options{
-					QuizWord: grammarQuizOption.CorrectAnswer,
-				})
-
-				numberOfNeededAnswers := 4
-				for len(grammarOptions) != numberOfNeededAnswers {
-					randNumber := a.Randomizer.RandomNumberBaseZero(len(setToQuery))
-					randEntry := setToQuery[randNumber]
-
-					exists := findQuizWord(grammarOptions, randEntry)
-					if !exists {
-						grammarOption := &pb.Options{
-							QuizWord: randEntry,
-						}
-						grammarOptions = append(grammarOptions, grammarOption)
-					}
-				}
-
-				grammarQuizOption.Options = grammarOptions
-				rand.Shuffle(len(grammarQuizOption.Options), func(i, j int) {
-					grammarQuizOption.Options[i], grammarQuizOption.Options[j] = grammarQuizOption.Options[j], grammarQuizOption.Options[i]
-				})
-				grammarQuiz = append(grammarQuiz, grammarQuizOption)
+	if question.HasGrammarQuestions {
+		//add grammar question
+		for _, grammarQuestion := range question.GrammarQuestions {
+			grammarQuizOption := &pb.GrammarQuizAdded{
+				CorrectAnswer:    grammarQuestion.CorrectAnswer,
+				WordInText:       grammarQuestion.WordInText,
+				ExtraInformation: grammarQuestion.ExtraInformation,
+				Options:          nil,
 			}
+
+			var setToQuery []string
+			switch grammarQuestion.TypeOfWord {
+			case "noun":
+				setToQuery = option.GrammarQuestionOptions.Nouns
+			case "verb":
+				setToQuery = option.GrammarQuestionOptions.Verbs
+			case "misc":
+				setToQuery = option.GrammarQuestionOptions.Misc
+			default:
+				setToQuery = option.GrammarQuestionOptions.Nouns
+			}
+
+			var grammarOptions []*pb.Options
+
+			grammarOptions = append(grammarOptions, &pb.Options{
+				QuizWord: grammarQuizOption.CorrectAnswer,
+			})
+
+			numberOfNeededAnswers := 4
+			for len(grammarOptions) != numberOfNeededAnswers {
+				randNumber := a.Randomizer.RandomNumberBaseZero(len(setToQuery))
+				randEntry := setToQuery[randNumber]
+
+				exists := findQuizWord(grammarOptions, randEntry)
+				if !exists {
+					grammarOption := &pb.Options{
+						QuizWord: randEntry,
+					}
+					grammarOptions = append(grammarOptions, grammarOption)
+				}
+			}
+
+			grammarQuizOption.Options = grammarOptions
+			rand.Shuffle(len(grammarQuizOption.Options), func(i, j int) {
+				grammarQuizOption.Options[i], grammarQuizOption.Options[j] = grammarQuizOption.Options[j], grammarQuizOption.Options[i]
+			})
+			grammarQuiz = append(grammarQuiz, grammarQuizOption)
 		}
-		quiz.QuizItem = question.Greek
-		translation = question.Translation
-		quiz.Options = append(quiz.Options, &pb.Options{
-			QuizWord: question.Translation,
-		})
 	}
 
 	numberOfNeededAnswers := 4
@@ -359,6 +371,9 @@ func (a *AuthorBasedServiceImpl) Answer(ctx context.Context, request *pb.AnswerR
 	if sessionId != "" {
 		progressList, finished := a.Progress.GetProgressForSegment(sessionId, segmentKey, int(request.DoneAfter))
 		answer.Finished = finished
+		if finished {
+			a.Progress.ResetSegment(sessionId, segmentKey)
+		}
 		for word, p := range progressList {
 			answer.Progress = append(answer.Progress, &pb.ProgressEntry{
 				Greek:          word,

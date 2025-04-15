@@ -167,6 +167,20 @@ func (r *queryResolver) AuthorBasedQuiz(ctx context.Context, input *model.Author
 	return r.Handler.CreateAuthorBasedQuiz(pb, requestID, sessionId)
 }
 
+// AuthorBasedWordForms is the resolver for the authorBasedWordForms field.
+func (r *queryResolver) AuthorBasedWordForms(ctx context.Context, input *model.AuthorBasedWordFormsInput) (*model.AuthorBasedWordFormsResponse, error) {
+	requestID, _ := ctx.Value(config.HeaderKey).(string)
+	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
+
+	pb := &pbxenofon.WordFormRequest{
+		Theme:   *input.Theme,
+		Set:     *input.Set,
+		Segment: *input.Segment,
+	}
+
+	return r.Handler.AuthorBasedWordForms(pb, requestID, sessionId)
+}
+
 // DialogueAnswer is the resolver for the dialogueAnswer field.
 func (r *queryResolver) DialogueAnswer(ctx context.Context, input *model.DialogueAnswerInput) (*model.DialogueAnswer, error) {
 	requestID, _ := ctx.Value(config.HeaderKey).(string)

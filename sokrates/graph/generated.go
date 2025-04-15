@@ -98,6 +98,15 @@ type ComplexityRoot struct {
 		Translation  func(childComplexity int) int
 	}
 
+	AuthorBasedWordForm struct {
+		DictionaryForm func(childComplexity int) int
+		WordsInText    func(childComplexity int) int
+	}
+
+	AuthorBasedWordFormsResponse struct {
+		Forms func(childComplexity int) int
+	}
+
 	ComprehensiveResponse struct {
 		Correct      func(childComplexity int) int
 		Finished     func(childComplexity int) int
@@ -249,6 +258,7 @@ type ComplexityRoot struct {
 		AuthorBasedAnswer     func(childComplexity int, input *model.AuthorBasedAnswerInput) int
 		AuthorBasedOptions    func(childComplexity int) int
 		AuthorBasedQuiz       func(childComplexity int, input *model.AuthorBasedInput) int
+		AuthorBasedWordForms  func(childComplexity int, input *model.AuthorBasedWordFormsInput) int
 		DialogueAnswer        func(childComplexity int, input *model.DialogueAnswerInput) int
 		DialogueOptions       func(childComplexity int) int
 		DialogueQuiz          func(childComplexity int, input *model.DialogueQuizInput) int
@@ -315,6 +325,7 @@ type QueryResolver interface {
 	MultipleChoiceQuiz(ctx context.Context, input *model.MultipleQuizInput) (*model.MultipleChoiceResponse, error)
 	AuthorBasedAnswer(ctx context.Context, input *model.AuthorBasedAnswerInput) (*model.AuthorBasedAnswerResponse, error)
 	AuthorBasedQuiz(ctx context.Context, input *model.AuthorBasedInput) (*model.AuthorBasedResponse, error)
+	AuthorBasedWordForms(ctx context.Context, input *model.AuthorBasedWordFormsInput) (*model.AuthorBasedWordFormsResponse, error)
 	DialogueAnswer(ctx context.Context, input *model.DialogueAnswerInput) (*model.DialogueAnswer, error)
 	DialogueQuiz(ctx context.Context, input *model.DialogueQuizInput) (*model.DialogueQuizResponse, error)
 	GrammarQuiz(ctx context.Context, input *model.GrammarQuizInput) (*model.GrammarQuizResponse, error)
@@ -535,6 +546,27 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.AuthorBasedResponse.Translation(childComplexity), true
+
+	case "AuthorBasedWordForm.dictionaryForm":
+		if e.complexity.AuthorBasedWordForm.DictionaryForm == nil {
+			break
+		}
+
+		return e.complexity.AuthorBasedWordForm.DictionaryForm(childComplexity), true
+
+	case "AuthorBasedWordForm.wordsInText":
+		if e.complexity.AuthorBasedWordForm.WordsInText == nil {
+			break
+		}
+
+		return e.complexity.AuthorBasedWordForm.WordsInText(childComplexity), true
+
+	case "AuthorBasedWordFormsResponse.forms":
+		if e.complexity.AuthorBasedWordFormsResponse.Forms == nil {
+			break
+		}
+
+		return e.complexity.AuthorBasedWordFormsResponse.Forms(childComplexity), true
 
 	case "ComprehensiveResponse.correct":
 		if e.complexity.ComprehensiveResponse.Correct == nil {
@@ -1155,6 +1187,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.AuthorBasedQuiz(childComplexity, args["input"].(*model.AuthorBasedInput)), true
 
+	case "Query.authorBasedWordForms":
+		if e.complexity.Query.AuthorBasedWordForms == nil {
+			break
+		}
+
+		args, err := ec.field_Query_authorBasedWordForms_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.AuthorBasedWordForms(childComplexity, args["input"].(*model.AuthorBasedWordFormsInput)), true
+
 	case "Query.dialogueAnswer":
 		if e.complexity.Query.DialogueAnswer == nil {
 			break
@@ -1408,6 +1452,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 	inputUnmarshalMap := graphql.BuildUnmarshalerMap(
 		ec.unmarshalInputAuthorBasedAnswerInput,
 		ec.unmarshalInputAuthorBasedInput,
+		ec.unmarshalInputAuthorBasedWordFormsInput,
 		ec.unmarshalInputDialogueAnswerInput,
 		ec.unmarshalInputDialogueInputContent,
 		ec.unmarshalInputDialogueQuizInput,
@@ -1585,6 +1630,29 @@ func (ec *executionContext) field_Query_authorBasedQuiz_argsInput(
 	}
 
 	var zeroVal *model.AuthorBasedInput
+	return zeroVal, nil
+}
+
+func (ec *executionContext) field_Query_authorBasedWordForms_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := ec.field_Query_authorBasedWordForms_argsInput(ctx, rawArgs)
+	if err != nil {
+		return nil, err
+	}
+	args["input"] = arg0
+	return args, nil
+}
+func (ec *executionContext) field_Query_authorBasedWordForms_argsInput(
+	ctx context.Context,
+	rawArgs map[string]any,
+) (*model.AuthorBasedWordFormsInput, error) {
+	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+	if tmp, ok := rawArgs["input"]; ok {
+		return ec.unmarshalOAuthorBasedWordFormsInput2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐAuthorBasedWordFormsInput(ctx, tmp)
+	}
+
+	var zeroVal *model.AuthorBasedWordFormsInput
 	return zeroVal, nil
 }
 
@@ -3107,6 +3175,135 @@ func (ec *executionContext) fieldContext_AuthorBasedResponse_progress(_ context.
 				return ec.fieldContext_ProgressEntry_lastPlayed(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ProgressEntry", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AuthorBasedWordForm_dictionaryForm(ctx context.Context, field graphql.CollectedField, obj *model.AuthorBasedWordForm) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AuthorBasedWordForm_dictionaryForm(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DictionaryForm, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AuthorBasedWordForm_dictionaryForm(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AuthorBasedWordForm",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AuthorBasedWordForm_wordsInText(ctx context.Context, field graphql.CollectedField, obj *model.AuthorBasedWordForm) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AuthorBasedWordForm_wordsInText(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.WordsInText, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*string)
+	fc.Result = res
+	return ec.marshalOString2ᚕᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AuthorBasedWordForm_wordsInText(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AuthorBasedWordForm",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AuthorBasedWordFormsResponse_forms(ctx context.Context, field graphql.CollectedField, obj *model.AuthorBasedWordFormsResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AuthorBasedWordFormsResponse_forms(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Forms, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.AuthorBasedWordForm)
+	fc.Result = res
+	return ec.marshalOAuthorBasedWordForm2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐAuthorBasedWordForm(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AuthorBasedWordFormsResponse_forms(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AuthorBasedWordFormsResponse",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "dictionaryForm":
+				return ec.fieldContext_AuthorBasedWordForm_dictionaryForm(ctx, field)
+			case "wordsInText":
+				return ec.fieldContext_AuthorBasedWordForm_wordsInText(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type AuthorBasedWordForm", field.Name)
 		},
 	}
 	return fc, nil
@@ -7426,6 +7623,62 @@ func (ec *executionContext) fieldContext_Query_authorBasedQuiz(ctx context.Conte
 	return fc, nil
 }
 
+func (ec *executionContext) _Query_authorBasedWordForms(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_authorBasedWordForms(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().AuthorBasedWordForms(rctx, fc.Args["input"].(*model.AuthorBasedWordFormsInput))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.AuthorBasedWordFormsResponse)
+	fc.Result = res
+	return ec.marshalOAuthorBasedWordFormsResponse2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐAuthorBasedWordFormsResponse(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_authorBasedWordForms(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "forms":
+				return ec.fieldContext_AuthorBasedWordFormsResponse_forms(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type AuthorBasedWordFormsResponse", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_authorBasedWordForms_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query_dialogueAnswer(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query_dialogueAnswer(ctx, field)
 	if err != nil {
@@ -10570,6 +10823,47 @@ func (ec *executionContext) unmarshalInputAuthorBasedInput(ctx context.Context, 
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputAuthorBasedWordFormsInput(ctx context.Context, obj any) (model.AuthorBasedWordFormsInput, error) {
+	var it model.AuthorBasedWordFormsInput
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"theme", "segment", "set"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "theme":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("theme"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Theme = data
+		case "segment":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("segment"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Segment = data
+		case "set":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("set"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Set = data
+		}
+	}
+
+	return it, nil
+}
+
 func (ec *executionContext) unmarshalInputDialogueAnswerInput(ctx context.Context, obj any) (model.DialogueAnswerInput, error) {
 	var it model.DialogueAnswerInput
 	asMap := map[string]any{}
@@ -11399,6 +11693,80 @@ func (ec *executionContext) _AuthorBasedResponse(ctx context.Context, sel ast.Se
 			out.Values[i] = ec._AuthorBasedResponse_grammarQuiz(ctx, field, obj)
 		case "progress":
 			out.Values[i] = ec._AuthorBasedResponse_progress(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var authorBasedWordFormImplementors = []string{"AuthorBasedWordForm"}
+
+func (ec *executionContext) _AuthorBasedWordForm(ctx context.Context, sel ast.SelectionSet, obj *model.AuthorBasedWordForm) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, authorBasedWordFormImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("AuthorBasedWordForm")
+		case "dictionaryForm":
+			out.Values[i] = ec._AuthorBasedWordForm_dictionaryForm(ctx, field, obj)
+		case "wordsInText":
+			out.Values[i] = ec._AuthorBasedWordForm_wordsInText(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var authorBasedWordFormsResponseImplementors = []string{"AuthorBasedWordFormsResponse"}
+
+func (ec *executionContext) _AuthorBasedWordFormsResponse(ctx context.Context, sel ast.SelectionSet, obj *model.AuthorBasedWordFormsResponse) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, authorBasedWordFormsResponseImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("AuthorBasedWordFormsResponse")
+		case "forms":
+			out.Values[i] = ec._AuthorBasedWordFormsResponse_forms(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -12542,6 +12910,25 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_authorBasedQuiz(ctx, field)
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "authorBasedWordForms":
+			field := field
+
+			innerFunc := func(ctx context.Context, _ *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_authorBasedWordForms(ctx, field)
 				return res
 			}
 
@@ -13696,6 +14083,69 @@ func (ec *executionContext) marshalOAuthorBasedResponse2ᚖgithubᚗcomᚋodysse
 		return graphql.Null
 	}
 	return ec._AuthorBasedResponse(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOAuthorBasedWordForm2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐAuthorBasedWordForm(ctx context.Context, sel ast.SelectionSet, v []*model.AuthorBasedWordForm) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalOAuthorBasedWordForm2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐAuthorBasedWordForm(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	return ret
+}
+
+func (ec *executionContext) marshalOAuthorBasedWordForm2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐAuthorBasedWordForm(ctx context.Context, sel ast.SelectionSet, v *model.AuthorBasedWordForm) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._AuthorBasedWordForm(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalOAuthorBasedWordFormsInput2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐAuthorBasedWordFormsInput(ctx context.Context, v any) (*model.AuthorBasedWordFormsInput, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputAuthorBasedWordFormsInput(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOAuthorBasedWordFormsResponse2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐAuthorBasedWordFormsResponse(ctx context.Context, sel ast.SelectionSet, v *model.AuthorBasedWordFormsResponse) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._AuthorBasedWordFormsResponse(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOBoolean2bool(ctx context.Context, v any) (bool, error) {

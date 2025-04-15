@@ -72,6 +72,21 @@ type AuthorBasedResponse struct {
 	Progress     []*ProgressEntry    `json:"progress,omitempty"`
 }
 
+type AuthorBasedWordForm struct {
+	DictionaryForm *string   `json:"dictionaryForm,omitempty"`
+	WordsInText    []*string `json:"wordsInText,omitempty"`
+}
+
+type AuthorBasedWordFormsInput struct {
+	Theme   *string `json:"theme,omitempty"`
+	Segment *string `json:"segment,omitempty"`
+	Set     *string `json:"set,omitempty"`
+}
+
+type AuthorBasedWordFormsResponse struct {
+	Forms []*AuthorBasedWordForm `json:"forms,omitempty"`
+}
+
 type ComprehensiveResponse struct {
 	Correct      *bool                `json:"correct,omitempty"`
 	FoundInText  *AnalyzeTextResponse `json:"foundInText,omitempty"`

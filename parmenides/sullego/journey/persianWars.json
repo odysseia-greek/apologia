@@ -1,0 +1,301 @@
+[
+  {
+    "theme": "The Persian Wars",
+    "segment": "Herodotos",
+    "number": 1,
+    "location": "Halikarnassos",
+    "coordinates": { "x": 0.74, "y": 0.66 },
+    "fullSentence": "Ἡροδότου Ἁλικαρνησσέος ἱστορίης ἀπόδεξις ἥδε, ὡς μήτε τὰ γενόμενα ἐξ ἀνθρώπων τῷ χρόνῳ ἐξίτηλα γένηται, μήτε ἔργα μεγάλα τε καὶ θωμαστά, τὰ μὲν Ἕλλησι τὰ δὲ βαρβάροισι ἀποδεχθέντα, ἀκλεᾶ γένηται, τά τε ἄλλα καὶ διʼ ἣν αἰτίην ἐπολέμησαν ἀλλήλοισι.",
+    "translation": "This is the display of the inquiry of Herodotos of Halikarnassos, so that the deeds of men not be forgotten with time, and that great and marvelous deeds, some by the Hellenes and some by the barbarians, not lose their glory, including the reason why they waged war on each other.",
+    "fixedSteps": [
+      {
+        "step": "intro",
+        "type": "intro",
+        "content": {
+          "author": "Herodotos",
+          "work": "Histories 1.1",
+          "background": "Herodotos introduces himself and what he sets out to do. The word ἱστορίης has lived on in most modern European languages as 'history', and for many, his work stands as the first known historical text. On a personal note, much of what he wrote remains among my favorite texts in Ancient Greek."
+        }
+      }
+    ],
+    "randomSteps": [
+      {
+        "type": "match",
+        "instruction": "Match the names with who or what they refer to.",
+        "pairs": [
+          { "greek": "Ἡρόδοτος", "english": "Historian from Herodotos" },
+          { "greek": "Ἕλληνες", "english": "Greeks" },
+          { "greek": "βαρβάροι", "english": "Non-Greeks (Barbarians)" },
+          { "greek": "Ἁλικαρνησσέος", "english": "Halikarnassos" }
+        ]
+      },
+      {
+        "type": "trivia",
+        "question": "What was Herodotos’ main purpose in writing his Histories?",
+        "options": [
+          "To entertain readers with stories",
+          "To document the laws of Athens",
+          "To preserve great deeds and explain the causes of war",
+          "To glorify the Persian Empire"
+        ],
+        "answer": "To preserve great deeds and explain the causes of war"
+      },
+      {
+        "type": "media",
+        "instruction": "Drop the Greek words on the correct images.",
+        "mediaFiles": [
+          { "word": "ἔργον", "answer": "work.webp" },
+          { "word": "γενόμενα", "answer": "born.webp" },
+          { "word": "χρόνῳ", "answer": "time.webp" },
+          { "word": "καὶ", "answer": "and.webp" }
+        ]
+      },
+      {
+        "type": "match",
+        "instruction": "Match each verb to its grammatical form.",
+        "verbs": [
+          { "word": "γενόμενα", "answer": "aorist mid part - plural - nom/acc" },
+          { "word": "ἀποδεχθέντα", "answer": "aorist psv part - plural - neut" },
+          { "word": "γένηται", "answer": "3rd sing - aorist - mid - subj" },
+          { "word": "ἐπολέμησαν", "answer": "3rd plural - aorist - ind - act" }
+        ]
+      },
+      {
+        "type": "structure",
+        "title": "μὲν ... δὲ — A Structural Balancer",
+        "text": "The sentence uses the classic Greek balancing structure μὲν ... δὲ, often left untranslated in English but serving to contrast or compare ideas.",
+        "question": "How would you best translate the μὲν ... δὲ construction?",
+        "options": [
+          "On the one hand ... on the other hand",
+          "First ... then",
+          "Although ... nevertheless",
+          "Before ... after",
+          "Since ... but also",
+          "Great ... lesser"
+        ],
+        "answer": "On the one hand ... on the other hand",
+        "noteOnCorrect": "Although it's often best rendered as 'on the one hand ... on the other', μὲν is frequently left untranslated because English marks contrast differently — through punctuation or emphasis."
+      },
+      {
+        "type": "trivia",
+        "question": "Apart from the amazing stories (and fantasies) put forward by Herodotos why is his work so important?",
+        "options": [
+          "Many of his fanciful stories are actually true",
+          "It is often our only ancient source that treats both Greeks and non-Greeks.",
+          "He put forward the scientific method and source criticism still in use in modern historic writing",
+          "Otherwise we would never have heard of Halikarnassos"
+        ],
+        "answer": "It is often our only ancient source that treats both Greeks and non-Greeks."
+      }
+    ],
+    "finalStep": {
+      "type": "translation",
+      "instruction": "Which is the most accurate (abbreviated) translation of the sentence?",
+      "options": [
+        "Herodotos wrote this to glorify Greece.",
+        "Herodotos tells the story of the war between the Greeks and Persians.",
+        "This is the account of Herodotos, so that great deeds not be forgotten, and the causes of war be remembered.",
+        "This is a list of events by Herodotos that includes many famous battles."
+      ],
+      "answer": "This is the account of Herodotos, so that great deeds not be forgotten, and the causes of war be remembered."
+    },
+    "contextNote": {
+      "text": "Herodotos is often called the 'Father of History'. This sentence comes from the very first line of his *Histories* and sets the stage for a journey into the Greco-Persian wars and their causes."
+    }
+  },
+  {
+    "theme": "The Persian Wars",
+    "segment": "Battle of Marathon",
+    "number": 2,
+    "location": "Marathon",
+    "coordinates": { "x": 0.44, "y": 0.54 },
+    "fullSentence": "νικῶντες δὲ τὸ μὲν τετραμμένον τῶν βαρβάρων φεύγειν ἔων, τοῖσι δὲ τὸ μέσον ῥήξασι αὐτῶν συναγαγόντες τὰ κέρεα ἀμφότερα ἐμάχοντο, καὶ ἐνίκων Ἀθηναῖοι. φεύγουσι δὲ τοῖσι Πέρσῃσι εἵποντο κόπτοντες, ἐς ὃ ἐς τὴν θάλασσαν ἀπικόμενοι πῦρ τε αἴτεον καὶ ἐπελαμβάνοντο τῶν νεῶν.",
+    "translation": "In victory they let the routed foreigners flee, and brought the wings together to fight those who had broken through the center. The Athenians prevailed, then followed the fleeing Persians and struck them down. When they reached the sea they demanded fire and laid hold of the Persian ships.",
+    "fixedSteps": [
+      {
+        "step": "intro",
+        "type": "intro",
+        "content": {
+          "author": "Herodotos",
+          "work": "Histories 6.113",
+          "background": "Herodotos gives a dynamic account of the Battle of Marathon. The Athenian phalanx won the day on the wings - rooting the Persians. This pivotal battle marks the first major victory of the Greeks against Persia."
+        }
+      }
+    ],
+    "randomSteps": [
+      {
+        "type": "match",
+        "instruction": "Match the Greek word with what it refers to.",
+        "pairs": [
+          { "greek": "νικῶντες", "english": "Winning / conquering" },
+          { "greek": "βαρβάρων", "english": "Barbarians (Persians)" },
+          { "greek": "Ἀθηναῖοι", "english": "Athenians" },
+          { "greek": "Πέρσῃσι", "english": "Persians" }
+        ]
+      },
+      {
+        "type": "match",
+        "instruction": "Match each verb to its grammatical form.",
+        "verbs": [
+          { "word": "φεύγειν", "answer": "present - active - infinitive" },
+          { "word": "ἐμάχοντο", "answer": "3rd plur - impf - ind - mid/psv" },
+          { "word": "ἐπελαμβάνοντο", "answer": "3rd plur - impf - ind - mid/psv" },
+          { "word": "εἵποντο", "answer": "3rd plur - aor - ind - mid" }
+        ]
+      },
+      {
+        "type": "media",
+        "instruction": "Drop the Greek words on the correct images.",
+        "mediaFiles": [
+          { "word": "φεύγειν", "answer": "flee.webp" },
+          { "word": "θάλασσαν", "answer": "sea.webp" },
+          { "word": "νεῶν", "answer": "ship.webp" },
+          { "word": "ἀπικόμενοι", "answer": "tocometo.webp" }
+        ]
+      },
+      {
+        "type": "trivia",
+        "question": "Why was the Battle of Marathon such a psychological victory for the Greeks?",
+        "options": [
+          "It was the first time the Persians had been defeated in open battle.",
+          "The Greeks recovered the body of Leonidas.",
+          "The Athenians fought without their allies.",
+          "It was a naval battle showing Greek ship superiority."
+        ],
+        "answer": "It was the first time the Persians had been defeated in open battle."
+      },
+      {
+        "type": "structure",
+        "title": "Athenian Tactics — Join the Wings!",
+        "text": "The Athenians let part of the enemy flee but regrouped to attack the Persian center. The verbs here use participles to show how actions unfold together in Greek.",
+        "question": "What is the main function of all these participles (like νικῶντες, κόπτοντες, συναγαγόντες)?",
+        "options": [
+          "They express simultaneous or background actions",
+          "They show commands",
+          "They are used for comparison",
+          "They modify nouns like adjectives",
+          "They replace main verbs"
+        ],
+        "answer": "They express simultaneous or background actions"
+      },
+      {
+        "type": "trivia",
+        "question": "What was the main difference in equipment between Persian foot soldiers and Greek soldiers?",
+        "options": [
+          "The Persians were usually outnumbered and therefor heavily armed, while the Greeks fought in lighter armour.",
+          "Greeks fought as hoplite citizen soldiers with heavy bronze armor while the Persians preferred mounted combat and light (ranged) troops.",
+          "Because Greeks fought naked the Persians were so shocked as to not be able to resist them.",
+          "Persian soldiers were slaves while Greeks were free soldiers."
+        ],
+        "answer": "Greeks fought as hoplite citizen soldiers with heavy bronze armor while the Persians preferred mounted combat and light (ranged) troops."
+      }
+    ],
+    "finalStep": {
+      "type": "translation",
+      "instruction": "Which best captures the meaning of the sentence?",
+      "options": [
+        "The Athenians chased the Persians into the mountains.",
+        "The Persians pretended to flee and ambushed the Athenians.",
+        "The Athenians encircled the Persians and set fire to their ships.",
+        "The Athenians fled but then regrouped at the coast."
+      ],
+      "answer": "The Athenians encircled the Persians and set fire to their ships."
+    },
+    "contextNote": {
+      "text": "This passage captures the final moments of the Battle of Marathon — a defining victory for the Athenians. It shows both strategy and brutality, as the retreating Persians are cut down all the way to their ships."
+    }
+  },
+  {
+    "theme": "The Persian Wars",
+    "segment": "Xerxes prepares for another campaign",
+    "number": 3,
+    "location": "Sardis",
+    "coordinates": { "x": 0.76, "y": 0.50  },
+    "sentence": "ἡ δὲ στρατηλασίη ἡ βασιλέος οὔνομα μὲν εἶχε ὡς ἐπʼ Ἀθήνας ἐλαύνει, κατίετο δὲ ἐς πᾶσαν τὴν Ἑλλάδα",
+    "translation": "The campaign of the king was said to be headed to Athens, but in fact it descended upon all of Greece.",
+    "fixedSteps": [
+      {
+        "step": "intro",
+        "type": "intro",
+        "content": {
+          "author": "Herodotos",
+          "work": "Histories 7.138",
+          "background": "Herodotos describes Xerxes’ campaign: it was said to be headed to Athens, but in truth, it descended upon all of Greece. A case of imperial ambition."
+        }
+      }
+    ],
+    "randomSteps": [
+      {
+        "type": "match",
+        "instruction": "Match the Greek word with what it refers to.",
+        "pairs": [
+          { "greek": "βασιλέος", "english": "King (the great king Xerxes)" },
+          { "greek": "Ἀθήνας", "english": "Athens" },
+          { "greek": "Ἑλλάδα", "english": "Greece" },
+          { "greek": "στρατηλασίη", "english": "campaign" }
+        ]
+      },
+      {
+        "type": "trivia",
+        "question": "From what dialect is βασιλέος?",
+        "options": ["Ionic", "Doric", "Attic", "Aeolic", "Sicilian", "Lucian"],
+        "answer": "Ionic",
+        "note": "βασιλέος is an Ionic form; the Attic equivalent would be βασιλέως."
+      },
+      {
+        "type": "media",
+        "instruction": "Drop the Greek words on the correct images.",
+        "mediaFiles": [
+          { "word": "ἐλαύνει", "answer": "drive.webp" },
+          { "word": "κατίετο", "answer": "senddown.webp" },
+          { "word": "βασιλέος", "answer": "king.webp" },
+          { "word": "δὲ", "answer": "andbut.webp" }
+        ]
+      },
+      {
+        "type": "grammar",
+        "instruction": "Match the verbs with their grammatical forms.",
+        "verbs": [
+          {
+            "word": "ἐλαύνει",
+            "answer": "3rd sing - present - indicative - active"
+          },
+          {
+            "word": "κατίετο",
+            "answer": "3rd sing - imperfect - middle/passive"
+          }
+        ]
+      },
+      {
+        "type": "structure",
+        "title": "μὲν ... δὲ — Balanced Contrast",
+        "text": "This sentence uses the classical contrast pair μὲν ... δὲ, which is common in Greek for balancing two ideas. It sets up a contrast: what seems to be the case vs. what really is.",
+        "question": "How would you best translate the μὲν ... δὲ structure?",
+        "options": [
+          "On the one hand ... on the other hand",
+          "At first ... eventually",
+          "First ... then",
+          "Although ... however",
+          "Since ... but also",
+          "Great ... lesser"
+        ],
+        "answer": "On the one hand ... on the other hand",
+        "noteOnCorrect": "Even though 'on the one hand ... on the other' is probably the easiest way to remember this, μὲν is often left untranslated. In English, contrast is usually shown by word order or tone — so it's more about *function* than literal words."
+      }
+    ],
+    "finalStep": {
+      "type": "translation",
+      "instruction": "Which is the most accurate (abbreviated) translation of the sentence?",
+      "options": [
+        "The campaign of the king went to Athens.",
+        "The king's army was named after Athens.",
+        "The campaign seemed headed to Athens but actually descended on all of Greece.",
+        "The king went secretly to Greece while naming Athens."
+      ],
+      "answer": "The campaign seemed headed to Athens but actually descended on all of Greece."
+    },
+    "contextNote": {
+      "text": "The campaign of the king sparked much debate in Greece. While many city-states chose to fight, Thebes sided with Persia. Alexander the Great later destroyed it in retaliation."
+    }
+  }
+]

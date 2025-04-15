@@ -1,0 +1,52 @@
+syntax = "proto3";
+option go_package = "github.com/odysseia-greek/apologia/alkibiades/proto";
+
+package apologia_alkibiades;
+
+service Alkibiades {
+  rpc Health (HealthRequest) returns (HealthResponse) {};
+  rpc Options (OptionsRequest) returns (AggregatedOptions) {};
+}
+
+// Empty request messages since these endpoints require no body
+message HealthRequest {}
+
+message OptionsRequest {
+}
+
+// Response message for health check
+message HealthResponse {
+  bool healthy = 1;
+  string time = 2;
+  string version = 3;
+  DatabaseHealth database_health = 4;
+}
+
+// Nested message for database health details
+message DatabaseHealth {
+  bool healthy = 1;
+  string cluster_name = 2;
+  string server_name = 3;
+  string server_version = 4;
+}
+
+message AggregatedOptions {
+  repeated Theme themes = 1;
+}
+
+message Theme {
+  string name = 1;
+  repeated Segments segments = 2;
+}
+
+message Segments {
+  string name = 1;
+  int32 number  = 2;
+  string location  = 3;
+  Coordinates coordinates  = 4;
+}
+
+message Coordinates {
+  float x = 1;
+  float y = 2;
+}

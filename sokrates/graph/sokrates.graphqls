@@ -48,6 +48,15 @@ type AuthorBasedResponse {
   progress: [ProgressEntry]
 }
 
+type AuthorBasedWordForm {
+  dictionaryForm: String
+  wordsInText: [String]
+}
+
+type AuthorBasedWordFormsResponse {
+  forms: [AuthorBasedWordForm]
+}
+
 type AuthorBasedQuiz {
   quizItem: String
   numberOfItems: Int
@@ -251,6 +260,12 @@ input AuthorBasedInput {
   archiveProgress: Boolean
 }
 
+input AuthorBasedWordFormsInput {
+  theme: String
+  segment: String
+  set: String
+}
+
 input GrammarQuizInput {
   theme: String
   set: String
@@ -309,6 +324,7 @@ type Query {
   multipleChoiceQuiz(input: MultipleQuizInput): MultipleChoiceResponse
   authorBasedAnswer(input: AuthorBasedAnswerInput): AuthorBasedAnswerResponse
   authorBasedQuiz(input: AuthorBasedInput): AuthorBasedResponse
+  authorBasedWordForms(input: AuthorBasedWordFormsInput): AuthorBasedWordFormsResponse
   dialogueAnswer(input: DialogueAnswerInput): DialogueAnswer
   dialogueQuiz(input: DialogueQuizInput): DialogueQuizResponse
   grammarQuiz(input: GrammarQuizInput): GrammarQuizResponse

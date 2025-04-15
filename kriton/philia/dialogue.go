@@ -109,7 +109,7 @@ func (d *DialogueServiceImpl) Question(ctx context.Context, request *pb.Creation
 		},
 		Theme:     quiz.Theme,
 		Set:       strconv.Itoa(quiz.Set),
-		Segment:   quiz.Segment,
+		Segment:   quiz.Dialogue.Section,
 		Reference: quiz.Reference,
 	}
 

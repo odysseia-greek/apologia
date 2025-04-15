@@ -115,6 +115,8 @@ func main() {
 				processQuizFile[models.MultipleChoiceQuiz](content, handler, true) // Queue this
 			case "grammar-quiz":
 				processQuizFile[aletheia.GrammarBasedQuiz](content, handler, true)
+			case "journey-quiz":
+				processQuizFile[aletheia.JourneyBasedQuiz](content, handler, false) // No queue for journey mode
 			}
 
 		}(content)

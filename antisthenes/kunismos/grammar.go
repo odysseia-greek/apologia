@@ -13,7 +13,9 @@ import (
 	pb "github.com/odysseia-greek/apologia/antisthenes/proto"
 	"github.com/odysseia-greek/attike/aristophanes/comedy"
 	pbar "github.com/odysseia-greek/attike/aristophanes/proto"
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/status"
 	"math/rand/v2"
 	"net/http"
 	"strings"
@@ -181,33 +183,38 @@ func (g *GrammarServiceImpl) Question(ctx context.Context, request *pb.CreationR
 		}
 	}
 
+	if len(filteredContent) == 0 {
+		g.Progress.ResetSegment(sessionId, segmentKey)
+
+		for _, content := range option.Content {
+			filteredContent = append(filteredContent, content)
+		}
+	}
+
+	if len(filteredContent) == 0 {
+		return nil, status.Errorf(codes.NotFound, "no content available after progress reset")
+	}
+
 	var correctAnswer string
+	var question GrammarContent
 
 	if len(filteredContent) == 1 {
-		question := filteredContent[0]
-		quiz.QuizItem = question.Greek
-		quiz.DictionaryForm = question.DictionaryForm
-		quiz.Stem = question.Stem
-		quiz.Translation = question.Translation
-		quiz.Options = append(quiz.Options, &pb.GrammarOptions{
-			Option: question.GrammarQuestion.CorrectAnswer,
-		})
-
-		correctAnswer = question.GrammarQuestion.CorrectAnswer
+		question = filteredContent[0]
 
 	} else {
 		randNumber := g.Randomizer.RandomNumberBaseZero(len(filteredContent))
-		question := filteredContent[randNumber]
-		quiz.QuizItem = question.Greek
-		quiz.DictionaryForm = question.DictionaryForm
-		quiz.Stem = question.Stem
-		quiz.Translation = question.Translation
-		quiz.Options = append(quiz.Options, &pb.GrammarOptions{
-			Option: question.GrammarQuestion.CorrectAnswer,
-		})
-
-		correctAnswer = question.GrammarQuestion.CorrectAnswer
+		question = filteredContent[randNumber]
 	}
+
+	quiz.QuizItem = question.Greek
+	quiz.DictionaryForm = question.DictionaryForm
+	quiz.Stem = question.Stem
+	quiz.Translation = question.Translation
+	quiz.Options = append(quiz.Options, &pb.GrammarOptions{
+		Option: question.GrammarQuestion.CorrectAnswer,
+	})
+
+	correctAnswer = question.GrammarQuestion.CorrectAnswer
 
 	numberOfNeededAnswers := 4
 

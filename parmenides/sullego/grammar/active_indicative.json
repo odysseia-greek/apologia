@@ -271,7 +271,6 @@
         "greek":"εἰμί",
         "dictionaryForm":"εἰμί",
         "translation":"to be",
-        "stem":"εἰ-",
         "grammarQuestion":{
           "tense":"present",
           "voice":"active",
@@ -285,7 +284,6 @@
         "greek":"εἶ",
         "dictionaryForm":"εἰμί",
         "translation":"to be",
-        "stem":"εἶ-",
         "grammarQuestion":{
           "tense":"present",
           "voice":"active",
@@ -299,7 +297,6 @@
         "greek":"ἐστί(ν)",
         "dictionaryForm":"εἰμί",
         "translation":"to be",
-        "stem":"ἐσ-",
         "grammarQuestion":{
           "tense":"present",
           "voice":"active",
@@ -313,7 +310,6 @@
         "greek":"ἐσμέν",
         "dictionaryForm":"εἰμί",
         "translation":"to be",
-        "stem":"ἐσ-",
         "grammarQuestion":{
           "tense":"present",
           "voice":"active",
@@ -327,7 +323,6 @@
         "greek":"ἐστέ",
         "dictionaryForm":"εἰμί",
         "translation":"to be",
-        "stem":"ἐσ-",
         "grammarQuestion":{
           "tense":"present",
           "voice":"active",
@@ -341,7 +336,6 @@
         "greek":"εἰσί(ν)",
         "dictionaryForm":"εἰμί",
         "translation":"to be",
-        "stem":"εἰ-",
         "grammarQuestion":{
           "tense":"present",
           "voice":"active",

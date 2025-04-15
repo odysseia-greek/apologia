@@ -20,12 +20,12 @@ func (s *SokratesHandler) CreateDialogueQuiz(request *pbkriton.CreationRequest, 
 		},
 		Theme:     &grpcResponse.Theme,
 		Set:       &grpcResponse.Set,
-		Segment:   &grpcResponse.Segment,
+		Segment:   &grpcResponse.Dialogue.Section,
 		Reference: &grpcResponse.Reference,
 		Dialogue: &model.Dialogue{
 			Introduction:  &grpcResponse.Dialogue.Introduction,
-			Section:       &grpcResponse.Dialogue.Introduction,
-			LinkToPerseus: &grpcResponse.Dialogue.Introduction,
+			Section:       &grpcResponse.Dialogue.Section,
+			LinkToPerseus: &grpcResponse.Dialogue.LinkToPerseus,
 		},
 	}
 

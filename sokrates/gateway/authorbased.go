@@ -117,6 +117,32 @@ func (s *SokratesHandler) AuthorBasedOptions(requestID, sessionId string) (*mode
 	}, nil
 }
 
+func (s *SokratesHandler) AuthorBasedWordForms(request *pbxenofon.WordFormRequest, requestID, sessionId string) (*model.AuthorBasedWordFormsResponse, error) {
+	wordFormsCtx, cancel := s.createRequestHeader(requestID, sessionId)
+	defer cancel()
+
+	grpcResponse, err := s.AuthorBasedClient.WordForms(wordFormsCtx, request)
+	if err != nil {
+		return nil, err
+	}
+
+	forms := &model.AuthorBasedWordFormsResponse{
+		Forms: make([]*model.AuthorBasedWordForm, len(grpcResponse.Forms)),
+	}
+	var wordForms []*model.AuthorBasedWordForm
+	for _, grpcForm := range grpcResponse.Forms {
+		wordForm := &model.AuthorBasedWordForm{
+			DictionaryForm: &grpcForm.DictionaryForm,
+			WordsInText:    convertStringSliceToPointer(grpcForm.WordsInText),
+		}
+		wordForms = append(wordForms, wordForm)
+	}
+
+	forms.Forms = wordForms
+
+	return forms, nil
+}
+
 func convertStringSliceToPointer(strings []string) []*string {
 	var ptrSlice []*string
 	for _, s := range strings {

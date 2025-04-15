@@ -236,8 +236,8 @@ github.com/odysseia-greek/apologia/kritias v0.0.4 h1:5gFEVs7+HPBEJFxN6NSIr2z7bbJ
 github.com/odysseia-greek/apologia/kritias v0.0.4/go.mod h1:v2uzG9vknAXUyZV84L2k2wCh4Eko04PdJMeoVACHZGc=
 github.com/odysseia-greek/apologia/kriton v0.0.2 h1:sf47ddmG9aqK/QJj5OiUqSPUTB4feH0moXqE7UX7CvE=
 github.com/odysseia-greek/apologia/kriton v0.0.2/go.mod h1:2QCdgH1VZKT1ldAPEBxeZ0qhQw+TIL/YtSGB/IACl6Y=
-github.com/odysseia-greek/apologia/xenofon v0.0.2 h1:zM2uDsJ6e910qtnmFwz4cdgTsyZPPZSQu3xVAf7Z0I8=
-github.com/odysseia-greek/apologia/xenofon v0.0.2/go.mod h1:ej9NHKeTIKGNWRlQZKnomSwbuIJsgOT+iGIa0mzucjE=
+github.com/odysseia-greek/apologia/xenofon v0.0.3 h1:w3W6JM8ICK8rvQSBCGuI5twjXpraEXhUptmApZwWS+Y=
+github.com/odysseia-greek/apologia/xenofon v0.0.3/go.mod h1:ej9NHKeTIKGNWRlQZKnomSwbuIJsgOT+iGIa0mzucjE=
 github.com/odysseia-greek/attike/aristophanes v0.6.3 h1:ORvHrWlNBRg3nSFARx6BXOOeq7VnhI4CjPA1+bv70yk=
 github.com/odysseia-greek/attike/aristophanes v0.6.3/go.mod h1:aevnXzxrZkRMQBjxBEmszDFVF36tzIKDlVosNDzdOrQ=
 github.com/odysseia-greek/attike/sophokles v0.0.5 h1:rVE3POKGLftx4FsAv5PdWYqMZmxE4ISwI12VozMeZ5g=
