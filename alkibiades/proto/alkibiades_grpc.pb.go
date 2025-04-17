@@ -24,6 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type AlkibiadesClient interface {
 	Health(ctx context.Context, in *HealthRequest, opts ...grpc.CallOption) (*HealthResponse, error)
 	Options(ctx context.Context, in *OptionsRequest, opts ...grpc.CallOption) (*AggregatedOptions, error)
+	Question(ctx context.Context, in *CreationRequest, opts ...grpc.CallOption) (*QuizResponse, error)
 }
 
 type alkibiadesClient struct {
@@ -52,12 +53,22 @@ func (c *alkibiadesClient) Options(ctx context.Context, in *OptionsRequest, opts
 	return out, nil
 }
 
+func (c *alkibiadesClient) Question(ctx context.Context, in *CreationRequest, opts ...grpc.CallOption) (*QuizResponse, error) {
+	out := new(QuizResponse)
+	err := c.cc.Invoke(ctx, "/apologia_alkibiades.Alkibiades/Question", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AlkibiadesServer is the server API for Alkibiades service.
 // All implementations must embed UnimplementedAlkibiadesServer
 // for forward compatibility
 type AlkibiadesServer interface {
 	Health(context.Context, *HealthRequest) (*HealthResponse, error)
 	Options(context.Context, *OptionsRequest) (*AggregatedOptions, error)
+	Question(context.Context, *CreationRequest) (*QuizResponse, error)
 	mustEmbedUnimplementedAlkibiadesServer()
 }
 
@@ -70,6 +81,9 @@ func (UnimplementedAlkibiadesServer) Health(context.Context, *HealthRequest) (*H
 }
 func (UnimplementedAlkibiadesServer) Options(context.Context, *OptionsRequest) (*AggregatedOptions, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Options not implemented")
+}
+func (UnimplementedAlkibiadesServer) Question(context.Context, *CreationRequest) (*QuizResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Question not implemented")
 }
 func (UnimplementedAlkibiadesServer) mustEmbedUnimplementedAlkibiadesServer() {}
 
@@ -120,6 +134,24 @@ func _Alkibiades_Options_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Alkibiades_Question_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AlkibiadesServer).Question(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/apologia_alkibiades.Alkibiades/Question",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AlkibiadesServer).Question(ctx, req.(*CreationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Alkibiades_ServiceDesc is the grpc.ServiceDesc for Alkibiades service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -134,6 +166,10 @@ var Alkibiades_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Options",
 			Handler:    _Alkibiades_Options_Handler,
+		},
+		{
+			MethodName: "Question",
+			Handler:    _Alkibiades_Question_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

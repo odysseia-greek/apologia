@@ -17,6 +17,7 @@ import (
 type JourneyService interface {
 	WaitForHealthyState() bool
 	Options(ctx context.Context, request *pb.OptionsRequest) (*pb.AggregatedOptions, error)
+	Question(ctx context.Context, request *pb.CreationRequest) (*pb.QuizResponse, error)
 }
 
 const (
@@ -77,4 +78,7 @@ func (j *JourneyClient) Health(ctx context.Context, request *pb.HealthRequest) (
 
 func (j *JourneyClient) Options(ctx context.Context, request *pb.OptionsRequest) (*pb.AggregatedOptions, error) {
 	return j.journey.Options(ctx, request)
+}
+func (j *JourneyClient) Question(ctx context.Context, request *pb.CreationRequest) (*pb.QuizResponse, error) {
+	return j.journey.Question(ctx, request)
 }

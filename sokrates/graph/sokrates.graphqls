@@ -211,6 +211,27 @@ type MultipleTheme {
   maxSet: Float
 }
 
+type JourneyOptions {
+  themes: [JourneyThemes]
+}
+
+type JourneyThemes {
+  name: String
+  segments: [JourneySegment]
+}
+
+type JourneySegment {
+  name: String
+  number: Int
+  location: String
+  coordinates: Coordinates
+}
+
+type Coordinates {
+  x: Float
+  y: Float
+}
+
 input MediaAnswerInput {
   theme: String
   set: String
@@ -317,6 +338,7 @@ type Query {
   authorBasedOptions: AggregatedOptions
   dialogueOptions: ThemedOptions
   grammarOptions: GrammarOptions
+  journeyOptions: JourneyOptions
 
   mediaAnswer(input: MediaAnswerInput): ComprehensiveResponse
   mediaQuiz(input: MediaQuizInput): MediaQuizResponse

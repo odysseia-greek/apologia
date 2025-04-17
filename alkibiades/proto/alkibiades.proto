@@ -6,6 +6,7 @@ package apologia_alkibiades;
 service Alkibiades {
   rpc Health (HealthRequest) returns (HealthResponse) {};
   rpc Options (OptionsRequest) returns (AggregatedOptions) {};
+  rpc Question (CreationRequest) returns (QuizResponse) {};
 }
 
 // Empty request messages since these endpoints require no body
@@ -49,4 +50,77 @@ message Segments {
 message Coordinates {
   float x = 1;
   float y = 2;
+}
+
+message CreationRequest {
+  string theme = 1;
+  string segment = 2; // Optional
+}
+
+message QuizResponse {
+  string theme = 1;
+  string segment = 2;
+  int32 number = 3;
+  string sentence = 4;         // Full Greek sentence
+  string translation = 5;      // English translation
+  string contextNote = 6;      // Informational text about the passage
+
+  Intro intro = 7;
+  repeated QuizStep quiz = 8;  // Quiz is polymorphic — see below
+}
+
+message Intro {
+  string author = 1;
+  string work = 2;
+  string background = 3;
+}
+
+message QuizStep {
+  oneof type {
+    MatchQuiz match = 1;
+    TriviaQuiz trivia = 2;
+    StructureQuiz structure = 3;
+    MediaDropQuiz media = 4;
+    TranslationStep final_translation = 5;
+  }
+}
+
+message MatchQuiz {
+  string instruction = 1;
+  repeated MatchPair pairs = 2;
+}
+message MatchPair {
+  string greek = 1;
+  string answer = 2;
+}
+
+message TriviaQuiz {
+  string question = 1;
+  repeated string options = 2;
+  string answer = 3;
+  string note = 4; // optional explanation
+}
+
+message StructureQuiz {
+  string title = 1;
+  string text = 2;
+  string question = 3;
+  repeated string options = 4;
+  string answer = 5;
+  string note = 6; // optional
+}
+
+message MediaDropQuiz {
+  string instruction = 1;
+  repeated MediaEntry mediaFiles = 2;
+}
+message MediaEntry {
+  string word = 1;
+  string answer = 2; // image filename or URL
+}
+
+message TranslationStep {
+  string instruction = 1;
+  repeated string options = 2;
+  string answer = 3;
 }

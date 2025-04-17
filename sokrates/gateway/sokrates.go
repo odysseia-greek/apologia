@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/randomizer"
+	"github.com/odysseia-greek/apologia/alkibiades/strategos"
 	"github.com/odysseia-greek/apologia/antisthenes/kunismos"
 	"github.com/odysseia-greek/apologia/aristippos/hedone"
 	pbartrippos "github.com/odysseia-greek/apologia/aristippos/proto"
@@ -25,6 +26,7 @@ type SokratesHandler struct {
 	MultiChoiceClient *triakonta.MutpleChoiceClient
 	AuthorBasedClient *anabasis.AuthorBasedClient
 	DialogueClient    *philia.DialogueClient
+	JourneyClient     *strategos.JourneyClient
 }
 
 func (s *SokratesHandler) createRequestHeader(requestID, sessionId string) (context.Context, context.CancelFunc) {

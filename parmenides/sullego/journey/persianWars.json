@@ -23,10 +23,10 @@
         "type": "match",
         "instruction": "Match the names with who or what they refer to.",
         "pairs": [
-          { "greek": "Ἡρόδοτος", "english": "Historian from Herodotos" },
-          { "greek": "Ἕλληνες", "english": "Greeks" },
-          { "greek": "βαρβάροι", "english": "Non-Greeks (Barbarians)" },
-          { "greek": "Ἁλικαρνησσέος", "english": "Halikarnassos" }
+          { "greek": "Ἡρόδοτος", "answer": "Historian from Herodotos" },
+          { "greek": "Ἕλληνες", "answer": "Greeks" },
+          { "greek": "βαρβάροι", "answer": "Non-Greeks (Barbarians)" },
+          { "greek": "Ἁλικαρνησσέος", "answer": "Halikarnassos" }
         ]
       },
       {
@@ -127,10 +127,10 @@
         "type": "match",
         "instruction": "Match the Greek word with what it refers to.",
         "pairs": [
-          { "greek": "νικῶντες", "english": "Winning / conquering" },
-          { "greek": "βαρβάρων", "english": "Barbarians (Persians)" },
-          { "greek": "Ἀθηναῖοι", "english": "Athenians" },
-          { "greek": "Πέρσῃσι", "english": "Persians" }
+          { "greek": "νικῶντες", "answer": "Winning / conquering" },
+          { "greek": "βαρβάρων", "answer": "Barbarians (Persians)" },
+          { "greek": "Ἀθηναῖοι", "answer": "Athenians" },
+          { "greek": "Πέρσῃσι", "answer": "Persians" }
         ]
       },
       {
@@ -229,10 +229,10 @@
         "type": "match",
         "instruction": "Match the Greek word with what it refers to.",
         "pairs": [
-          { "greek": "βασιλέος", "english": "King (the great king Xerxes)" },
-          { "greek": "Ἀθήνας", "english": "Athens" },
-          { "greek": "Ἑλλάδα", "english": "Greece" },
-          { "greek": "στρατηλασίη", "english": "campaign" }
+          { "greek": "βασιλέος", "answer": "King (the great king Xerxes)" },
+          { "greek": "Ἀθήνας", "answer": "Athens" },
+          { "greek": "Ἑλλάδα", "answer": "Greece" },
+          { "greek": "στρατηλασίη", "answer": "campaign" }
         ]
       },
       {
@@ -253,8 +253,8 @@
         ]
       },
       {
-        "type": "grammar",
-        "instruction": "Match the verbs with their grammatical forms.",
+        "type": "match",
+        "instruction": "Match each verb to its grammatical form.",
         "verbs": [
           {
             "word": "ἐλαύνει",

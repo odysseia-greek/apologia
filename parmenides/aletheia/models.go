@@ -48,8 +48,8 @@ type JourneyBasedQuiz struct {
 		Type        string `json:"type"`
 		Instruction string `json:"instruction,omitempty"`
 		Pairs       []struct {
-			Greek   string `json:"greek"`
-			English string `json:"english"`
+			Greek  string `json:"greek"`
+			Answer string `json:"answer"`
 		} `json:"pairs,omitempty"`
 		Question   string   `json:"question,omitempty"`
 		Options    []string `json:"options,omitempty"`

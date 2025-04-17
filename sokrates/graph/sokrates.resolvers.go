@@ -6,7 +6,6 @@ package graph
 
 import (
 	"context"
-
 	"github.com/odysseia-greek/agora/plato/config"
 	pbantisthenes "github.com/odysseia-greek/apologia/antisthenes/proto"
 	pbartrippos "github.com/odysseia-greek/apologia/aristippos/proto"
@@ -56,6 +55,13 @@ func (r *queryResolver) GrammarOptions(ctx context.Context) (*model.GrammarOptio
 	requestID, _ := ctx.Value(config.HeaderKey).(string)
 	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
 	return r.Handler.GrammarOptions(requestID, sessionId)
+}
+
+// JourneyOptions is the resolver for the journeyOptions field.
+func (r *queryResolver) JourneyOptions(ctx context.Context) (*model.JourneyOptions, error) {
+	requestID, _ := ctx.Value(config.HeaderKey).(string)
+	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
+	return r.Handler.JourneyOptions(requestID, sessionId)
 }
 
 // MediaAnswer is the resolver for the mediaAnswer field.

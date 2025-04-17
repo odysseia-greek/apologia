@@ -101,6 +101,11 @@ type ConjugationResponse struct {
 	Word *string `json:"word,omitempty"`
 }
 
+type Coordinates struct {
+	X *float64 `json:"x,omitempty"`
+	Y *float64 `json:"y,omitempty"`
+}
+
 type Dialogue struct {
 	Introduction  *string    `json:"introduction,omitempty"`
 	Speakers      []*Speaker `json:"speakers,omitempty"`
@@ -232,6 +237,22 @@ type Hit struct {
 	Greek      *string `json:"greek,omitempty"`
 	LinkedWord *string `json:"linkedWord,omitempty"`
 	Original   *string `json:"original,omitempty"`
+}
+
+type JourneyOptions struct {
+	Themes []*JourneyThemes `json:"themes,omitempty"`
+}
+
+type JourneySegment struct {
+	Name        *string      `json:"name,omitempty"`
+	Number      *int32       `json:"number,omitempty"`
+	Location    *string      `json:"location,omitempty"`
+	Coordinates *Coordinates `json:"coordinates,omitempty"`
+}
+
+type JourneyThemes struct {
+	Name     *string           `json:"name,omitempty"`
+	Segments []*JourneySegment `json:"segments,omitempty"`
 }
 
 type MediaAnswerInput struct {

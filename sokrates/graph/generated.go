@@ -121,6 +121,11 @@ type ComplexityRoot struct {
 		Word func(childComplexity int) int
 	}
 
+	Coordinates struct {
+		X func(childComplexity int) int
+		Y func(childComplexity int) int
+	}
+
 	Dialogue struct {
 		Introduction  func(childComplexity int) int
 		LinkToPerseus func(childComplexity int) int
@@ -216,6 +221,22 @@ type ComplexityRoot struct {
 		Original   func(childComplexity int) int
 	}
 
+	JourneyOptions struct {
+		Themes func(childComplexity int) int
+	}
+
+	JourneySegment struct {
+		Coordinates func(childComplexity int) int
+		Location    func(childComplexity int) int
+		Name        func(childComplexity int) int
+		Number      func(childComplexity int) int
+	}
+
+	JourneyThemes struct {
+		Name     func(childComplexity int) int
+		Segments func(childComplexity int) int
+	}
+
 	MediaOptions struct {
 		AudioURL func(childComplexity int) int
 		ImageURL func(childComplexity int) int
@@ -266,6 +287,7 @@ type ComplexityRoot struct {
 		GrammarOptions        func(childComplexity int) int
 		GrammarQuiz           func(childComplexity int, input *model.GrammarQuizInput) int
 		Health                func(childComplexity int) int
+		JourneyOptions        func(childComplexity int) int
 		MediaAnswer           func(childComplexity int, input *model.MediaAnswerInput) int
 		MediaOptions          func(childComplexity int) int
 		MediaQuiz             func(childComplexity int, input *model.MediaQuizInput) int
@@ -319,6 +341,7 @@ type QueryResolver interface {
 	AuthorBasedOptions(ctx context.Context) (*model.AggregatedOptions, error)
 	DialogueOptions(ctx context.Context) (*model.ThemedOptions, error)
 	GrammarOptions(ctx context.Context) (*model.GrammarOptions, error)
+	JourneyOptions(ctx context.Context) (*model.JourneyOptions, error)
 	MediaAnswer(ctx context.Context, input *model.MediaAnswerInput) (*model.ComprehensiveResponse, error)
 	MediaQuiz(ctx context.Context, input *model.MediaQuizInput) (*model.MediaQuizResponse, error)
 	MultipleChoiceAnswer(ctx context.Context, input *model.MultipleChoiceAnswerInput) (*model.ComprehensiveResponse, error)
@@ -623,6 +646,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.ConjugationResponse.Word(childComplexity), true
+
+	case "Coordinates.x":
+		if e.complexity.Coordinates.X == nil {
+			break
+		}
+
+		return e.complexity.Coordinates.X(childComplexity), true
+
+	case "Coordinates.y":
+		if e.complexity.Coordinates.Y == nil {
+			break
+		}
+
+		return e.complexity.Coordinates.Y(childComplexity), true
 
 	case "Dialogue.introduction":
 		if e.complexity.Dialogue.Introduction == nil {
@@ -1016,6 +1053,55 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Hit.Original(childComplexity), true
 
+	case "JourneyOptions.themes":
+		if e.complexity.JourneyOptions.Themes == nil {
+			break
+		}
+
+		return e.complexity.JourneyOptions.Themes(childComplexity), true
+
+	case "JourneySegment.coordinates":
+		if e.complexity.JourneySegment.Coordinates == nil {
+			break
+		}
+
+		return e.complexity.JourneySegment.Coordinates(childComplexity), true
+
+	case "JourneySegment.location":
+		if e.complexity.JourneySegment.Location == nil {
+			break
+		}
+
+		return e.complexity.JourneySegment.Location(childComplexity), true
+
+	case "JourneySegment.name":
+		if e.complexity.JourneySegment.Name == nil {
+			break
+		}
+
+		return e.complexity.JourneySegment.Name(childComplexity), true
+
+	case "JourneySegment.number":
+		if e.complexity.JourneySegment.Number == nil {
+			break
+		}
+
+		return e.complexity.JourneySegment.Number(childComplexity), true
+
+	case "JourneyThemes.name":
+		if e.complexity.JourneyThemes.Name == nil {
+			break
+		}
+
+		return e.complexity.JourneyThemes.Name(childComplexity), true
+
+	case "JourneyThemes.segments":
+		if e.complexity.JourneyThemes.Segments == nil {
+			break
+		}
+
+		return e.complexity.JourneyThemes.Segments(childComplexity), true
+
 	case "MediaOptions.audioUrl":
 		if e.complexity.MediaOptions.AudioURL == nil {
 			break
@@ -1267,6 +1353,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.Health(childComplexity), true
+
+	case "Query.journeyOptions":
+		if e.complexity.Query.JourneyOptions == nil {
+			break
+		}
+
+		return e.complexity.Query.JourneyOptions(childComplexity), true
 
 	case "Query.mediaAnswer":
 		if e.complexity.Query.MediaAnswer == nil {
@@ -3666,6 +3759,88 @@ func (ec *executionContext) fieldContext_ConjugationResponse_word(_ context.Cont
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Coordinates_x(ctx context.Context, field graphql.CollectedField, obj *model.Coordinates) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Coordinates_x(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.X, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*float64)
+	fc.Result = res
+	return ec.marshalOFloat2ᚖfloat64(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Coordinates_x(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Coordinates",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Float does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Coordinates_y(ctx context.Context, field graphql.CollectedField, obj *model.Coordinates) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Coordinates_y(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Y, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*float64)
+	fc.Result = res
+	return ec.marshalOFloat2ᚖfloat64(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Coordinates_y(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Coordinates",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Float does not have child fields")
 		},
 	}
 	return fc, nil
@@ -6101,6 +6276,315 @@ func (ec *executionContext) fieldContext_Hit_original(_ context.Context, field g
 	return fc, nil
 }
 
+func (ec *executionContext) _JourneyOptions_themes(ctx context.Context, field graphql.CollectedField, obj *model.JourneyOptions) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_JourneyOptions_themes(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Themes, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.JourneyThemes)
+	fc.Result = res
+	return ec.marshalOJourneyThemes2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐJourneyThemes(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_JourneyOptions_themes(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "JourneyOptions",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "name":
+				return ec.fieldContext_JourneyThemes_name(ctx, field)
+			case "segments":
+				return ec.fieldContext_JourneyThemes_segments(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type JourneyThemes", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _JourneySegment_name(ctx context.Context, field graphql.CollectedField, obj *model.JourneySegment) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_JourneySegment_name(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Name, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_JourneySegment_name(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "JourneySegment",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _JourneySegment_number(ctx context.Context, field graphql.CollectedField, obj *model.JourneySegment) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_JourneySegment_number(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Number, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int32)
+	fc.Result = res
+	return ec.marshalOInt2ᚖint32(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_JourneySegment_number(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "JourneySegment",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _JourneySegment_location(ctx context.Context, field graphql.CollectedField, obj *model.JourneySegment) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_JourneySegment_location(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Location, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_JourneySegment_location(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "JourneySegment",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _JourneySegment_coordinates(ctx context.Context, field graphql.CollectedField, obj *model.JourneySegment) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_JourneySegment_coordinates(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Coordinates, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.Coordinates)
+	fc.Result = res
+	return ec.marshalOCoordinates2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐCoordinates(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_JourneySegment_coordinates(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "JourneySegment",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "x":
+				return ec.fieldContext_Coordinates_x(ctx, field)
+			case "y":
+				return ec.fieldContext_Coordinates_y(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Coordinates", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _JourneyThemes_name(ctx context.Context, field graphql.CollectedField, obj *model.JourneyThemes) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_JourneyThemes_name(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Name, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_JourneyThemes_name(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "JourneyThemes",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _JourneyThemes_segments(ctx context.Context, field graphql.CollectedField, obj *model.JourneyThemes) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_JourneyThemes_segments(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Segments, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.JourneySegment)
+	fc.Result = res
+	return ec.marshalOJourneySegment2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐJourneySegment(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_JourneyThemes_segments(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "JourneyThemes",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "name":
+				return ec.fieldContext_JourneySegment_name(ctx, field)
+			case "number":
+				return ec.fieldContext_JourneySegment_number(ctx, field)
+			case "location":
+				return ec.fieldContext_JourneySegment_location(ctx, field)
+			case "coordinates":
+				return ec.fieldContext_JourneySegment_coordinates(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type JourneySegment", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _MediaOptions_audioUrl(ctx context.Context, field graphql.CollectedField, obj *model.MediaOptions) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_MediaOptions_audioUrl(ctx, field)
 	if err != nil {
@@ -7232,6 +7716,51 @@ func (ec *executionContext) fieldContext_Query_grammarOptions(_ context.Context,
 				return ec.fieldContext_GrammarOptions_themes(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type GrammarOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_journeyOptions(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_journeyOptions(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().JourneyOptions(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.JourneyOptions)
+	fc.Result = res
+	return ec.marshalOJourneyOptions2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐJourneyOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_journeyOptions(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "themes":
+				return ec.fieldContext_JourneyOptions_themes(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type JourneyOptions", field.Name)
 		},
 	}
 	return fc, nil
@@ -11874,6 +12403,44 @@ func (ec *executionContext) _ConjugationResponse(ctx context.Context, sel ast.Se
 	return out
 }
 
+var coordinatesImplementors = []string{"Coordinates"}
+
+func (ec *executionContext) _Coordinates(ctx context.Context, sel ast.SelectionSet, obj *model.Coordinates) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, coordinatesImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("Coordinates")
+		case "x":
+			out.Values[i] = ec._Coordinates_x(ctx, field, obj)
+		case "y":
+			out.Values[i] = ec._Coordinates_y(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
 var dialogueImplementors = []string{"Dialogue"}
 
 func (ec *executionContext) _Dialogue(ctx context.Context, sel ast.SelectionSet, obj *model.Dialogue) graphql.Marshaler {
@@ -12428,6 +12995,122 @@ func (ec *executionContext) _Hit(ctx context.Context, sel ast.SelectionSet, obj 
 	return out
 }
 
+var journeyOptionsImplementors = []string{"JourneyOptions"}
+
+func (ec *executionContext) _JourneyOptions(ctx context.Context, sel ast.SelectionSet, obj *model.JourneyOptions) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, journeyOptionsImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("JourneyOptions")
+		case "themes":
+			out.Values[i] = ec._JourneyOptions_themes(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var journeySegmentImplementors = []string{"JourneySegment"}
+
+func (ec *executionContext) _JourneySegment(ctx context.Context, sel ast.SelectionSet, obj *model.JourneySegment) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, journeySegmentImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("JourneySegment")
+		case "name":
+			out.Values[i] = ec._JourneySegment_name(ctx, field, obj)
+		case "number":
+			out.Values[i] = ec._JourneySegment_number(ctx, field, obj)
+		case "location":
+			out.Values[i] = ec._JourneySegment_location(ctx, field, obj)
+		case "coordinates":
+			out.Values[i] = ec._JourneySegment_coordinates(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var journeyThemesImplementors = []string{"JourneyThemes"}
+
+func (ec *executionContext) _JourneyThemes(ctx context.Context, sel ast.SelectionSet, obj *model.JourneyThemes) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, journeyThemesImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("JourneyThemes")
+		case "name":
+			out.Values[i] = ec._JourneyThemes_name(ctx, field, obj)
+		case "segments":
+			out.Values[i] = ec._JourneyThemes_segments(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
 var mediaOptionsImplementors = []string{"MediaOptions"}
 
 func (ec *executionContext) _MediaOptions(ctx context.Context, sel ast.SelectionSet, obj *model.MediaOptions) graphql.Marshaler {
@@ -12796,6 +13479,25 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_grammarOptions(ctx, field)
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "journeyOptions":
+			field := field
+
+			innerFunc := func(ctx context.Context, _ *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_journeyOptions(ctx, field)
 				return res
 			}
 
@@ -14229,6 +14931,13 @@ func (ec *executionContext) marshalOConjugationResponse2ᚖgithubᚗcomᚋodysse
 	return ec._ConjugationResponse(ctx, sel, v)
 }
 
+func (ec *executionContext) marshalOCoordinates2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐCoordinates(ctx context.Context, sel ast.SelectionSet, v *model.Coordinates) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._Coordinates(ctx, sel, v)
+}
+
 func (ec *executionContext) marshalODialogue2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐDialogue(ctx context.Context, sel ast.SelectionSet, v *model.Dialogue) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
@@ -14695,6 +15404,109 @@ func (ec *executionContext) marshalOInt2ᚖint32(ctx context.Context, sel ast.Se
 	}
 	res := graphql.MarshalInt32(*v)
 	return res
+}
+
+func (ec *executionContext) marshalOJourneyOptions2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐJourneyOptions(ctx context.Context, sel ast.SelectionSet, v *model.JourneyOptions) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._JourneyOptions(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOJourneySegment2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐJourneySegment(ctx context.Context, sel ast.SelectionSet, v []*model.JourneySegment) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalOJourneySegment2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐJourneySegment(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	return ret
+}
+
+func (ec *executionContext) marshalOJourneySegment2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐJourneySegment(ctx context.Context, sel ast.SelectionSet, v *model.JourneySegment) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._JourneySegment(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOJourneyThemes2ᚕᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐJourneyThemes(ctx context.Context, sel ast.SelectionSet, v []*model.JourneyThemes) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalOJourneyThemes2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐJourneyThemes(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	return ret
+}
+
+func (ec *executionContext) marshalOJourneyThemes2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐJourneyThemes(ctx context.Context, sel ast.SelectionSet, v *model.JourneyThemes) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._JourneyThemes(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOMediaAnswerInput2ᚖgithubᚗcomᚋodysseiaᚑgreekᚋapologiaᚋsokratesᚋgraphᚋmodelᚐMediaAnswerInput(ctx context.Context, v any) (*model.MediaAnswerInput, error) {
