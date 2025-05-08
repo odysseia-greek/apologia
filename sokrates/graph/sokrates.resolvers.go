@@ -7,6 +7,7 @@ package graph
 import (
 	"context"
 	"github.com/odysseia-greek/agora/plato/config"
+	palkibiades "github.com/odysseia-greek/apologia/alkibiades/proto"
 	pbantisthenes "github.com/odysseia-greek/apologia/antisthenes/proto"
 	pbartrippos "github.com/odysseia-greek/apologia/aristippos/proto"
 	pbkritias "github.com/odysseia-greek/apologia/kritias/proto"
@@ -256,6 +257,19 @@ func (r *queryResolver) GrammarAnswer(ctx context.Context, input *model.GrammarA
 	}
 
 	return r.Handler.CheckGrammar(pb, requestID, sessionId)
+}
+
+// JourneyQuiz is the resolver for the journeyQuiz field.
+func (r *queryResolver) JourneyQuiz(ctx context.Context, input *model.JourneyQuizInput) (*model.JourneySegmentQuiz, error) {
+	requestID, _ := ctx.Value(config.HeaderKey).(string)
+	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
+
+	pb := &palkibiades.CreationRequest{
+		Theme:   *input.Theme,
+		Segment: *input.Segment,
+	}
+
+	return r.Handler.CreateJourneySection(requestID, sessionId, pb)
 }
 
 // Query returns QueryResolver implementation.

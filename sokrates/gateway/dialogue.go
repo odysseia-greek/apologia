@@ -1,6 +1,7 @@
 package gateway
 
 import (
+	"github.com/odysseia-greek/apologia/kriton/philia"
 	pbkriton "github.com/odysseia-greek/apologia/kriton/proto"
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
 )
@@ -9,7 +10,13 @@ func (s *SokratesHandler) CreateDialogueQuiz(request *pbkriton.CreationRequest, 
 	dialogueClientCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
-	grpcResponse, err := s.DialogueClient.Question(dialogueClientCtx, request)
+	var grpcResponse *pbkriton.QuizResponse
+
+	err := s.DialogueClient.CallWithReconnect(func(client *philia.DialogueClient) error {
+		var innerErr error
+		grpcResponse, innerErr = client.Question(dialogueClientCtx, request)
+		return innerErr
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -53,7 +60,13 @@ func (s *SokratesHandler) CheckDialogueQuiz(request *pbkriton.AnswerRequest, req
 	dialogueClientCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
-	grpcResponse, err := s.DialogueClient.Answer(dialogueClientCtx, request)
+	var grpcResponse *pbkriton.AnswerResponse
+
+	err := s.DialogueClient.CallWithReconnect(func(client *philia.DialogueClient) error {
+		var innerErr error
+		grpcResponse, innerErr = client.Answer(dialogueClientCtx, request)
+		return innerErr
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +113,13 @@ func (s *SokratesHandler) DialogueOptions(requestID, sessionId string) (*model.T
 	optionsCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
-	grpcResponse, err := s.DialogueClient.Options(optionsCtx, &pbkriton.OptionsRequest{})
+	var grpcResponse *pbkriton.AggregatedOptions
+
+	err := s.DialogueClient.CallWithReconnect(func(client *philia.DialogueClient) error {
+		var innerErr error
+		grpcResponse, innerErr = client.Options(optionsCtx, &pbkriton.OptionsRequest{})
+		return innerErr
+	})
 	if err != nil {
 		return nil, err
 	}

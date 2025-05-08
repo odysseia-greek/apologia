@@ -9,6 +9,7 @@ import (
 	"github.com/odysseia-greek/agora/aristoteles/models"
 	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
+	"github.com/odysseia-greek/agora/plato/progress"
 	"github.com/odysseia-greek/agora/plato/service"
 	aristophanes "github.com/odysseia-greek/attike/aristophanes/comedy"
 	pbar "github.com/odysseia-greek/attike/aristophanes/proto"
@@ -146,8 +147,8 @@ func CreateNewConfig(ctx context.Context) (*MediaServiceImpl, error) {
 		return nil, err
 	}
 
-	version := os.Getenv("VERSION")
-	
+	version := os.Getenv(config.EnvVersion)
+
 	return &MediaServiceImpl{
 		Index:      index,
 		Elastic:    elastic,
@@ -156,8 +157,8 @@ func CreateNewConfig(ctx context.Context) (*MediaServiceImpl, error) {
 		Streamer:   streamer,
 		Archytas:   cache,
 		Version:    version,
-		Progress: &ProgressTracker{
-			Data: make(map[string]*SessionProgress),
+		Progress: &progress.ProgressTracker{
+			Data: make(map[string]*progress.SessionProgress),
 		},
 	}, nil
 }

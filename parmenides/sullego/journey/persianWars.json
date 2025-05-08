@@ -14,7 +14,7 @@
         "content": {
           "author": "Herodotos",
           "work": "Histories 1.1",
-          "background": "Herodotos introduces himself and what he sets out to do. The word ἱστορίης has lived on in most modern European languages as 'history', and for many, his work stands as the first known historical text. On a personal note, much of what he wrote remains among my favorite texts in Ancient Greek."
+          "background": "Herodotos introduces himself and what he sets out to do. The word ἱστορίης has lived on in most modern European languages as 'history', and for many, his work stands as the first known historical text. On a personal note, much of what he wrote remains among my favorite texts in Ancient Greek. His *histories* are the most important source when dealing with the Persian Wars."
         }
       }
     ],
@@ -23,11 +23,27 @@
         "type": "match",
         "instruction": "Match the names with who or what they refer to.",
         "pairs": [
-          { "greek": "Ἡρόδοτος", "answer": "Historian from Herodotos" },
+          { "greek": "Ἡρόδοτος", "answer": "Herodotos" },
           { "greek": "Ἕλληνες", "answer": "Greeks" },
           { "greek": "βαρβάροι", "answer": "Non-Greeks (Barbarians)" },
           { "greek": "Ἁλικαρνησσέος", "answer": "Halikarnassos" }
         ]
+      },
+      {
+        "type": "structure",
+        "title": "μήτε ... μήτε — A Coordinated Negation",
+        "text": "This sentence uses the correlative structure 'μήτε ... μήτε' to link two ideas in a negative coordination. This kind of structure is common in Greek to express 'neither... nor...'.",
+        "question": "What is the function of 'μήτε ... μήτε' in the phrase 'μήτε τὰ γενόμενα ... μήτε ἔργα μεγάλα τε καὶ θωμαστά';",
+        "options": [
+          "They express a temporal sequence of events.",
+          "They introduce a pair of positive alternatives.",
+          "They are coordinating negatives meaning 'neither ... nor'.",
+          "They indicate contrast like 'but ... yet'.",
+          "They mark a cause and effect relationship.",
+          "They highlight a conditional clause ('if ... then')."
+        ],
+        "answer": "They are coordinating negatives meaning 'neither ... nor'.",
+        "noteOnCorrect": "μήτε ... μήτε links two negated ideas, meaning 'neither this nor that'. It’s a key structure for expressing negative correlation in Greek."
       },
       {
         "type": "trivia",
@@ -42,7 +58,7 @@
       },
       {
         "type": "media",
-        "instruction": "Drop the Greek words on the correct images.",
+        "instruction": "Match the Greek words to the correct images.",
         "mediaFiles": [
           { "word": "ἔργον", "answer": "work.webp" },
           { "word": "γενόμενα", "answer": "born.webp" },
@@ -77,27 +93,47 @@
         "noteOnCorrect": "Although it's often best rendered as 'on the one hand ... on the other', μὲν is frequently left untranslated because English marks contrast differently — through punctuation or emphasis."
       },
       {
+        "type": "match",
+        "instruction": "Match the Greek words with their meanings. These are key words from the opening of Herodotos' *Histories*.",
+        "pairs": [
+          { "greek": "ἱστορίης", "answer": "inquiry, investigation (history)" },
+          { "greek": "αἰτίην", "answer": "cause, reason" },
+          { "greek": "θωμαστά", "answer": "wondrous things, marvels" },
+          { "greek": "ἀκλεᾶ", "answer": "inglorious, forgotten" }
+        ]
+      },
+      {
         "type": "trivia",
         "question": "Apart from the amazing stories (and fantasies) put forward by Herodotos why is his work so important?",
         "options": [
           "Many of his fanciful stories are actually true",
           "It is often our only ancient source that treats both Greeks and non-Greeks.",
-          "He put forward the scientific method and source criticism still in use in modern historic writing",
-          "Otherwise we would never have heard of Halikarnassos"
+          "He put forward the scientific method and source criticism still in use in modern historic writing.",
+          "Otherwise we would never have heard of Halikarnassos."
         ],
         "answer": "It is often our only ancient source that treats both Greeks and non-Greeks."
+      },
+      {
+        "type": "match",
+        "instruction": "Match these Greek expressions to their meanings. These are structural or idiomatic phrases from the text.",
+        "pairs": [
+          { "greek": "ἀλλήλοισι", "answer": "on each other (one another)" },
+          { "greek": "ὡς μήτε", "answer": "so that not / in order that not" },
+          { "greek": "ἐξ ἀνθρώπων", "answer": "from among men (human beings)" },
+          { "greek": "ἔργα μεγάλα τε καὶ θωμαστά", "answer": "great and wondrous deeds" }
+        ]
       }
     ],
     "finalStep": {
-      "type": "translation",
-      "instruction": "Which is the most accurate (abbreviated) translation of the sentence?",
-      "options": [
-        "Herodotos wrote this to glorify Greece.",
-        "Herodotos tells the story of the war between the Greeks and Persians.",
-        "This is the account of Herodotos, so that great deeds not be forgotten, and the causes of war be remembered.",
-        "This is a list of events by Herodotos that includes many famous battles."
-      ],
-      "answer": "This is the account of Herodotos, so that great deeds not be forgotten, and the causes of war be remembered."
+    "type": "translation",
+    "instruction": "Which best captures the purpose and tone of the sentence?",
+    "options": [
+      "Herodotos wrote this to glorify Greece.",
+      "This is a record of wonders, legends, and myth from Greek history.",
+      "Herodotos introduces his inquiry into the causes and deeds of war by Greeks and non-Greeks.",
+      "Herodotos wants to tell the story of the great temple at Halikarnassos"
+    ],
+    "answer": "Herodotos introduces his inquiry into the causes and deeds of war by Greeks and non-Greeks."
     },
     "contextNote": {
       "text": "Herodotos is often called the 'Father of History'. This sentence comes from the very first line of his *Histories* and sets the stage for a journey into the Greco-Persian wars and their causes."
@@ -211,7 +247,7 @@
     "number": 3,
     "location": "Sardis",
     "coordinates": { "x": 0.76, "y": 0.50  },
-    "sentence": "ἡ δὲ στρατηλασίη ἡ βασιλέος οὔνομα μὲν εἶχε ὡς ἐπʼ Ἀθήνας ἐλαύνει, κατίετο δὲ ἐς πᾶσαν τὴν Ἑλλάδα",
+    "fullSentence": "ἡ δὲ στρατηλασίη ἡ βασιλέος οὔνομα μὲν εἶχε ὡς ἐπʼ Ἀθήνας ἐλαύνει, κατίετο δὲ ἐς πᾶσαν τὴν Ἑλλάδα",
     "translation": "The campaign of the king was said to be headed to Athens, but in fact it descended upon all of Greece.",
     "fixedSteps": [
       {
@@ -296,6 +332,80 @@
     },
     "contextNote": {
       "text": "The campaign of the king sparked much debate in Greece. While many city-states chose to fight, Thebes sided with Persia. Alexander the Great later destroyed it in retaliation."
+    }
+  },
+  {
+    "theme": "The Persian Wars",
+    "segment": "Xerxes' Lament",
+    "number": 4,
+    "location": "Susa (off-map)",
+    "coordinates": { "x": 0.99, "y": 0.90 },
+    "offMap": true,
+    "fullSentence": "Ἰάνων γὰρ ἀπηύρα, Ἰάνων ναύφρακτος Ἄρης ἑτεραλκὴς νυχίαν πλάκα κερσάμενος δυσδαίμονά τʼ ἀκτάν.",
+    "translation": "Yes, for the Ionian naval force, turning the tide of battle, swept them away—ravaging the dark sea and the ill-fated shore.",
+    "fixedSteps": [
+      {
+        "step": "intro",
+        "type": "intro",
+        "content": {
+          "author": "Aeschylus",
+          "work": "*Persians*, line ~911",
+          "background": "Xerxes, now returned to Susa, mourns the devastation of his fleet at Salamis. In this lament, he acknowledges the crushing defeat inflicted by the Ionian (Greek) navy, whose reversal of the tide sealed Persia’s fate."
+        }
+      }
+    ],
+    "randomSteps": [
+      {
+        "type": "vocab",
+        "instruction": "Match the Greek words with their meanings.",
+        "pairs": [
+          { "greek": "ναύφρακτος", "answer": "armed with ships" },
+          { "greek": "Ἄρης", "answer": "Ares, god of war" },
+          { "greek": "ἑτεραλκής", "answer": "turning the tide, reversing strength" },
+          { "greek": "νυχίαν πλάκα", "answer": "night-dark sea" }
+        ]
+      },
+      {
+        "type": "structure",
+        "title": "War as a Force",
+        "text": "The phrase 'ναύφρακτος Ἄρης' personifies Ares as fighting through ships — a poetic way to describe naval warfare.",
+        "question": "What does this kind of phrase suggest about war in Greek tragedy?",
+        "options": [
+          "It is unpredictable and divine in nature.",
+          "It is always fought by gods, not men.",
+          "It never involves ships or the sea.",
+          "It was seen as sacred and holy."
+        ],
+        "answer": "It is unpredictable and divine in nature.",
+        "noteOnCorrect": "Greek tragedy often shows war as being driven by gods or fate, with humans caught in the tide."
+      },
+      {
+        "type": "grammar",
+        "question": "What is the form of 'ἀπηύρα'?",
+        "options": [
+          "Aorist indicative active — 3rd singular",
+          "Imperfect middle — 3rd plural",
+          "Future indicative active — 3rd singular",
+          "Present subjunctive — 1st singular"
+        ],
+        "answer": "Aorist indicative active — 3rd singular",
+        "noteOnCorrect": "ἀπηύρα is the 3rd singular aorist of ἀπαυράω, 'to take away, sweep off'."
+      },
+      {
+        "type": "trivia",
+        "question": "What makes Aeschylus’ *Persians* unusual among Greek tragedies?",
+        "options": [
+          "It is set in the future.",
+          "It has no Chorus.",
+          "It depicts historical events from the enemy's perspective.",
+          "It was written in Persia."
+        ],
+        "answer": "It depicts historical events from the enemy's perspective.",
+        "noteOnCorrect": "Aeschylus’ *Persians* is the only surviving tragedy that centers on recent history and gives voice to the defeated Persians."
+      }
+    ],
+    "contextNote": {
+      "text": "This line brings us to the heart of Susa, not on the map of battles, but at the emotional epicenter of Persian loss. Aeschylus invites us to see war not only through the victors' eyes, but through the grief of the defeated."
     }
   }
 ]

@@ -5,8 +5,8 @@ go 1.24.0
 require (
 	github.com/99designs/gqlgen v0.17.70
 	github.com/gorilla/mux v1.8.1
-	github.com/odysseia-greek/agora/plato v0.2.6
-	github.com/odysseia-greek/apologia/alkibiades v0.0.1
+	github.com/odysseia-greek/agora/plato v0.2.7
+	github.com/odysseia-greek/apologia/alkibiades v0.0.2
 	github.com/odysseia-greek/apologia/antisthenes v0.0.1
 	github.com/odysseia-greek/apologia/aristippos v0.0.8
 	github.com/odysseia-greek/apologia/kritias v0.0.4
@@ -80,7 +80,7 @@ require (
 	github.com/monochromegane/go-gitignore v0.0.0-20200626010858-205db1a8cc00 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/mxk/go-flowrate v0.0.0-20140419014527-cca7078d478f // indirect
-	github.com/odysseia-greek/agora/archytas v0.1.1 // indirect
+	github.com/odysseia-greek/agora/archytas v0.1.2 // indirect
 	github.com/odysseia-greek/agora/aristoteles v0.1.13 // indirect
 	github.com/odysseia-greek/agora/diogenes v0.1.15 // indirect
 	github.com/odysseia-greek/agora/thales v0.1.11 // indirect
@@ -102,13 +102,13 @@ require (
 	go.opentelemetry.io/otel v1.35.0 // indirect
 	go.opentelemetry.io/otel/metric v1.35.0 // indirect
 	go.opentelemetry.io/otel/trace v1.35.0 // indirect
-	golang.org/x/crypto v0.36.0 // indirect
-	golang.org/x/net v0.37.0 // indirect
+	golang.org/x/crypto v0.38.0 // indirect
+	golang.org/x/net v0.40.0 // indirect
 	golang.org/x/oauth2 v0.28.0 // indirect
-	golang.org/x/sync v0.12.0 // indirect
-	golang.org/x/sys v0.31.0 // indirect
-	golang.org/x/term v0.30.0 // indirect
-	golang.org/x/text v0.23.0 // indirect
+	golang.org/x/sync v0.14.0 // indirect
+	golang.org/x/sys v0.33.0 // indirect
+	golang.org/x/term v0.32.0 // indirect
+	golang.org/x/text v0.25.0 // indirect
 	golang.org/x/time v0.11.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250313205543-e70fdf4c4cb4 // indirect
 	google.golang.org/protobuf v1.36.6 // indirect

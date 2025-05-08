@@ -65,78 +65,96 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 	}
 
 	mediaClientAddress := config.StringFromEnv(config.EnvMediaClient, config.DefaultMediaAddress)
-	mediaClient, err := hedone.NewAristipposClient(mediaClientAddress)
+	mediaClient, err := NewGenericGrpcClient[*hedone.MediaClient](
+		mediaClientAddress,
+		hedone.NewAristipposClient,
+	)
 	if err != nil {
-		logging.Error(err.Error())
 		return nil, err
 	}
 
-	mediaClientHealthy := mediaClient.WaitForHealthyState()
+	mediaClientHealthy := mediaClient.client.WaitForHealthyState()
 	if !mediaClientHealthy {
 		logging.Debug("media client not ready - restarting seems the only option")
 		os.Exit(1)
 	}
 
 	multipleChoiceClientAddress := config.StringFromEnv(config.EnvMultiChoiceClient, config.DefaultMultiChoiceAddress)
-	multipleChoiceClient, err := triakonta.NewKritiasClient(multipleChoiceClientAddress)
+	multipleChoiceClient, err := NewGenericGrpcClient[*triakonta.MutpleChoiceClient](
+		multipleChoiceClientAddress,
+		triakonta.NewKritiasClient,
+	)
 	if err != nil {
-		logging.Error(err.Error())
 		return nil, err
 	}
 
-	multipleChoiceClientHealthy := multipleChoiceClient.WaitForHealthyState()
+	multipleChoiceClientHealthy := multipleChoiceClient.client.WaitForHealthyState()
 	if !multipleChoiceClientHealthy {
 		logging.Debug("multiplechoice client not ready - restarting seems the only option")
 		os.Exit(1)
 	}
 
 	authorBasedClientAddress := config.StringFromEnv(config.EnvAuthorBasedClient, config.DefaultAuthorBasedAddress)
-	authorBasedClient, err := anabasis.NewXenofonClient(authorBasedClientAddress)
+	authorBasedClient, err := NewGenericGrpcClient[*anabasis.AuthorBasedClient](
+		authorBasedClientAddress,
+		anabasis.NewXenofonClient,
+	)
 	if err != nil {
 		logging.Error(err.Error())
 		return nil, err
 	}
 
-	authorBasedClientHealthy := authorBasedClient.WaitForHealthyState()
+	authorBasedClientHealthy := authorBasedClient.client.WaitForHealthyState()
 	if !authorBasedClientHealthy {
 		logging.Debug("authorbased client not ready - restarting seems the only option")
 		os.Exit(1)
 	}
 
 	dialogueClientAddress := config.StringFromEnv(config.EnvDialogueClient, config.DefaultDialogueAddress)
-	dialogueClient, err := philia.NewKritonClient(dialogueClientAddress)
+	dialogueClient, err := NewGenericGrpcClient[*philia.DialogueClient](
+		dialogueClientAddress,
+		philia.NewKritonClient,
+	)
+
 	if err != nil {
 		logging.Error(err.Error())
 		return nil, err
 	}
 
-	dialogueClientHealthy := dialogueClient.WaitForHealthyState()
+	dialogueClientHealthy := dialogueClient.client.WaitForHealthyState()
 	if !dialogueClientHealthy {
 		logging.Debug("dialogue client not ready - restarting seems the only option")
 		os.Exit(1)
 	}
 
-	grammarClientAddress := config.StringFromEnv("ANTISTHENES_SERVICE", config.DefaultGrammarBasedAddress)
-	grammarClient, err := kunismos.NewAntisthenesClient(grammarClientAddress)
+	grammarClientAddress := config.StringFromEnv(config.EnvGrammarBasedClient, config.DefaultGrammarBasedAddress)
+	grammarClient, err := NewGenericGrpcClient[*kunismos.GrammarClient](
+		grammarClientAddress,
+		kunismos.NewAntisthenesClient,
+	)
 	if err != nil {
 		logging.Error(err.Error())
 		return nil, err
 	}
 
-	grammarClientHealthy := grammarClient.WaitForHealthyState()
+	grammarClientHealthy := grammarClient.client.WaitForHealthyState()
 	if !grammarClientHealthy {
 		logging.Debug("grammar client not ready - restarting seems the only option")
 		os.Exit(1)
 	}
 
 	journeyClientAddress := config.StringFromEnv(config.EnvJourneyClient, config.DefaultJourneyAddress)
-	journeyClient, err := strategos.NewAlkibiadesClient(journeyClientAddress)
+	journeyClient, err := NewGenericGrpcClient[*strategos.JourneyClient](
+		journeyClientAddress,
+		strategos.NewAlkibiadesClient,
+	)
+
 	if err != nil {
 		logging.Error(err.Error())
 		return nil, err
 	}
 
-	journeyClientHealthy := journeyClient.WaitForHealthyState()
+	journeyClientHealthy := journeyClient.client.WaitForHealthyState()
 	if !journeyClientHealthy {
 		logging.Debug("grammar client not ready - restarting seems the only option")
 		os.Exit(1)

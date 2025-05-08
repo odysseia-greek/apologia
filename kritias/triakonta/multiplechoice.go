@@ -152,7 +152,7 @@ func (m *MultipleChoiceServiceImpl) Question(ctx context.Context, request *pb.Cr
 	}
 
 	// Ensure session progress is initialized for this segment
-	if !m.Progress.Exists(sessionId, segmentKey) {
+	if !m.Progress.Exists(sessionId, segmentKey) || request.ResetProgress || request.ArchiveProgress {
 		allGreekWords := make([]string, len(option.Content))
 		for i, c := range option.Content {
 			allGreekWords[i] = c.Greek
@@ -262,7 +262,7 @@ func (m *MultipleChoiceServiceImpl) Answer(ctx context.Context, request *pb.Answ
 			sessionId = headerValue[0]
 		}
 	}
-	segmentKey := fmt.Sprintf("%s+%s+%s", request.Theme, request.Set, request.Segment)
+	segmentKey := fmt.Sprintf("%s+%s", request.Theme, request.Set)
 	cacheItem, _ := m.Archytas.Read(segmentKey)
 
 	var option models.MediaQuiz

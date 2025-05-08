@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/odysseia-greek/agora/archytas"
 	"github.com/odysseia-greek/agora/aristoteles"
+	"github.com/odysseia-greek/agora/plato/progress"
 	"github.com/odysseia-greek/agora/plato/randomizer"
 	"github.com/odysseia-greek/agora/plato/service"
 	pb "github.com/odysseia-greek/apologia/xenofon/proto"
@@ -33,7 +34,7 @@ type AuthorBasedServiceImpl struct {
 	Randomizer randomizer.Random
 	Client     service.OdysseiaClient
 	Archytas   archytas.Client
-	Progress   *ProgressTracker
+	Progress   *progress.ProgressTracker
 	Streamer   pbar.TraceService_ChorusClient
 	pb.UnimplementedXenofonServer
 }

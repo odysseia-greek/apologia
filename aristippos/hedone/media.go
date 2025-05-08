@@ -157,7 +157,8 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 	}
 
 	// Ensure session progress is initialized for this segment
-	if !m.Progress.Exists(sessionId, segmentKey) {
+	if !m.Progress.Exists(sessionId, segmentKey) || request.ResetProgress || request.ArchiveProgress {
+		logging.Info(fmt.Sprintf("initializing progress for segment: %s and session: %s", segmentKey, sessionId))
 		allGreekWords := make([]string, len(option.Content))
 		for i, c := range option.Content {
 			allGreekWords[i] = c.Greek

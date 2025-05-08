@@ -1,6 +1,7 @@
 package gateway
 
 import (
+	"github.com/odysseia-greek/apologia/aristippos/hedone"
 	pbartrippos "github.com/odysseia-greek/apologia/aristippos/proto"
 	"github.com/odysseia-greek/apologia/sokrates/gateway/media"
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
@@ -9,7 +10,14 @@ import (
 func (s *SokratesHandler) CreateMediaQuiz(request *pbartrippos.CreationRequest, requestID, sessionId string) (*model.MediaQuizResponse, error) {
 	mediaClientCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
-	grpcResponse, err := s.MediaClient.Question(mediaClientCtx, request)
+
+	var grpcResponse *pbartrippos.QuizResponse
+
+	err := s.MediaClient.CallWithReconnect(func(client *hedone.MediaClient) error {
+		var innerErr error
+		grpcResponse, innerErr = client.Question(mediaClientCtx, request)
+		return innerErr
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +53,13 @@ func (s *SokratesHandler) CheckMedia(request *pbartrippos.AnswerRequest, request
 	mediaClientCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
-	grpcResponse, err := s.MediaClient.Answer(mediaClientCtx, request)
+	var grpcResponse *pbartrippos.ComprehensiveResponse
+
+	err := s.MediaClient.CallWithReconnect(func(client *hedone.MediaClient) error {
+		var innerErr error
+		grpcResponse, innerErr = client.Answer(mediaClientCtx, request)
+		return innerErr
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +71,13 @@ func (s *SokratesHandler) MediaOptions(requestID, sessionId string) (*model.Aggr
 	optionsCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
-	grpcResponse, err := s.MediaClient.Options(optionsCtx, &pbartrippos.OptionsRequest{})
+	var grpcResponse *pbartrippos.AggregatedOptions
+
+	err := s.MediaClient.CallWithReconnect(func(client *hedone.MediaClient) error {
+		var innerErr error
+		grpcResponse, innerErr = client.Options(optionsCtx, &pbartrippos.OptionsRequest{})
+		return innerErr
+	})
 	if err != nil {
 		return nil, err
 	}

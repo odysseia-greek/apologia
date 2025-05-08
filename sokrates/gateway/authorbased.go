@@ -2,6 +2,7 @@ package gateway
 
 import (
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
+	"github.com/odysseia-greek/apologia/xenofon/anabasis"
 	pbxenofon "github.com/odysseia-greek/apologia/xenofon/proto"
 )
 
@@ -9,7 +10,13 @@ func (s *SokratesHandler) CreateAuthorBasedQuiz(request *pbxenofon.CreationReque
 	authorBasedCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
-	grpcResponse, err := s.AuthorBasedClient.Question(authorBasedCtx, request)
+	var grpcResponse *pbxenofon.QuizResponse
+
+	err := s.AuthorBasedClient.CallWithReconnect(func(client *anabasis.AuthorBasedClient) error {
+		var innerErr error
+		grpcResponse, innerErr = client.Question(authorBasedCtx, request)
+		return innerErr
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +67,13 @@ func (s *SokratesHandler) CheckAuthorBased(request *pbxenofon.AnswerRequest, req
 	authorBasedCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
-	grpcResponse, err := s.AuthorBasedClient.Answer(authorBasedCtx, request)
+	var grpcResponse *pbxenofon.AnswerResponse
+
+	err := s.AuthorBasedClient.CallWithReconnect(func(client *anabasis.AuthorBasedClient) error {
+		var innerErr error
+		grpcResponse, innerErr = client.Answer(authorBasedCtx, request)
+		return innerErr
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +103,13 @@ func (s *SokratesHandler) AuthorBasedOptions(requestID, sessionId string) (*mode
 	optionsCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
-	grpcResponse, err := s.AuthorBasedClient.Options(optionsCtx, &pbxenofon.OptionsRequest{})
+	var grpcResponse *pbxenofon.AggregatedOptions
+
+	err := s.AuthorBasedClient.CallWithReconnect(func(client *anabasis.AuthorBasedClient) error {
+		var innerErr error
+		grpcResponse, innerErr = client.Options(optionsCtx, &pbxenofon.OptionsRequest{})
+		return innerErr
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -121,7 +140,13 @@ func (s *SokratesHandler) AuthorBasedWordForms(request *pbxenofon.WordFormReques
 	wordFormsCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
-	grpcResponse, err := s.AuthorBasedClient.WordForms(wordFormsCtx, request)
+	var grpcResponse *pbxenofon.WordFormResponse
+
+	err := s.AuthorBasedClient.CallWithReconnect(func(client *anabasis.AuthorBasedClient) error {
+		var innerErr error
+		grpcResponse, innerErr = client.WordForms(wordFormsCtx, request)
+		return innerErr
+	})
 	if err != nil {
 		return nil, err
 	}

@@ -169,8 +169,15 @@ type AggregatedHealthResponse {
 type ServiceHealth {
   name: String
   healthy: Boolean
-  databaseHealth: Boolean
   version: String
+  databaseInfo: DatabaseInfo
+}
+
+type DatabaseInfo {
+  healthy: Boolean
+  clusterName: String
+  serverName: String
+  serverVersion: String
 }
 
 type AggregatedOptions {
@@ -230,6 +237,11 @@ type JourneySegment {
 type Coordinates {
   x: Float
   y: Float
+}
+
+input JourneyQuizInput {
+  theme: String
+  segment: String
 }
 
 input MediaAnswerInput {
@@ -331,6 +343,67 @@ input DialogueInputContent {
   speaker: String
 }
 
+type JourneySegmentQuiz {
+  theme: String!
+  segment: String!
+  number: Int!
+  sentence: String!
+  translation: String!
+  contextNote: String
+  intro: QuizIntro
+  quiz: [QuizSection!]!
+}
+
+type QuizIntro {
+  author: String!
+  work: String!
+  background: String!
+}
+
+union QuizSection = MatchQuiz | TriviaQuiz | StructureQuiz | MediaQuiz | FinalTranslationQuiz
+
+type MatchQuiz {
+  instruction: String!
+  pairs: [QuizPair!]!
+}
+
+type QuizPair {
+  greek: String!
+  answer: String!
+}
+
+type TriviaQuiz {
+  question: String!
+  options: [String!]!
+  answer: String!
+  note: String
+}
+
+type StructureQuiz {
+  title: String!
+  text: String!
+  question: String!
+  options: [String!]!
+  answer: String!
+  note: String
+}
+
+type MediaQuiz {
+  instruction: String!
+  mediaFiles: [MediaPair!]!
+}
+
+type MediaPair {
+  word: String!
+  answer: String!
+}
+
+type FinalTranslationQuiz {
+  instruction: String!
+  options: [String!]!
+  answer: String!
+}
+
 type Query {
   health: AggregatedHealthResponse
   mediaOptions: AggregatedOptions
@@ -351,4 +424,5 @@ type Query {
   dialogueQuiz(input: DialogueQuizInput): DialogueQuizResponse
   grammarQuiz(input: GrammarQuizInput): GrammarQuizResponse
   grammarAnswer(input: GrammarAnswerInput): GrammarAnswer
+  journeyQuiz(input: JourneyQuizInput): JourneySegmentQuiz
 }

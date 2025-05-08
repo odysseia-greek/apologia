@@ -146,7 +146,7 @@ func CreateNewConfig(ctx context.Context) (*JourneyServiceImpl, error) {
 		return nil, err
 	}
 
-	version := os.Getenv("VERSION")
+	version := os.Getenv(config.EnvVersion)
 
 	return &JourneyServiceImpl{
 		Index:      index,

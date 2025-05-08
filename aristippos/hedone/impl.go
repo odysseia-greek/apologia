@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/odysseia-greek/agora/archytas"
 	"github.com/odysseia-greek/agora/aristoteles"
+	"github.com/odysseia-greek/agora/plato/progress"
 	"github.com/odysseia-greek/agora/plato/randomizer"
 	"github.com/odysseia-greek/agora/plato/service"
 	pb "github.com/odysseia-greek/apologia/aristippos/proto"
@@ -33,7 +34,7 @@ type MediaServiceImpl struct {
 	Client     service.OdysseiaClient
 	Streamer   pbar.TraceService_ChorusClient
 	Archytas   archytas.Client
-	Progress   *ProgressTracker
+	Progress   *progress.ProgressTracker
 	pb.UnimplementedAristipposServer
 }
 

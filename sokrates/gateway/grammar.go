@@ -1,6 +1,7 @@
 package gateway
 
 import (
+	"github.com/odysseia-greek/apologia/antisthenes/kunismos"
 	pbantisthenes "github.com/odysseia-greek/apologia/antisthenes/proto"
 	"github.com/odysseia-greek/apologia/sokrates/gateway/grammar"
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
@@ -9,7 +10,14 @@ import (
 func (s *SokratesHandler) CreateGrammarQuiz(request *pbantisthenes.CreationRequest, requestID, sessionId string) (*model.GrammarQuizResponse, error) {
 	grammarClientCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
-	grpcResponse, err := s.GrammarClient.Question(grammarClientCtx, request)
+
+	var grpcResponse *pbantisthenes.QuizResponse
+
+	err := s.GrammarClient.CallWithReconnect(func(client *kunismos.GrammarClient) error {
+		var innerErr error
+		grpcResponse, innerErr = client.Question(grammarClientCtx, request)
+		return innerErr
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +57,13 @@ func (s *SokratesHandler) CheckGrammar(request *pbantisthenes.AnswerRequest, req
 	grammarClientCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
-	grpcResponse, err := s.GrammarClient.Answer(grammarClientCtx, request)
+	var grpcResponse *pbantisthenes.ComprehensiveResponse
+
+	err := s.GrammarClient.CallWithReconnect(func(client *kunismos.GrammarClient) error {
+		var innerErr error
+		grpcResponse, innerErr = client.Answer(grammarClientCtx, request)
+		return innerErr
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -61,7 +75,13 @@ func (s *SokratesHandler) GrammarOptions(requestID, sessionId string) (*model.Gr
 	optionsCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
-	grpcResponse, err := s.GrammarClient.Options(optionsCtx, &pbantisthenes.OptionsRequest{})
+	var grpcResponse *pbantisthenes.AggregatedOptions
+
+	err := s.GrammarClient.CallWithReconnect(func(client *kunismos.GrammarClient) error {
+		var innerErr error
+		grpcResponse, innerErr = client.Options(optionsCtx, &pbantisthenes.OptionsRequest{})
+		return innerErr
+	})
 	if err != nil {
 		return nil, err
 	}

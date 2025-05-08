@@ -3,88 +3,72 @@
 
 ## Table of Contents
 
-- [kriton.proto](#kriton-proto)
-    - [AggregatedOptions](#apologia_kriton-AggregatedOptions)
-    - [AnswerRequest](#apologia_kriton-AnswerRequest)
-    - [AnswerResponse](#apologia_kriton-AnswerResponse)
-    - [CreationRequest](#apologia_kriton-CreationRequest)
-    - [DatabaseHealth](#apologia_kriton-DatabaseHealth)
-    - [Dialogue](#apologia_kriton-Dialogue)
-    - [DialogueContent](#apologia_kriton-DialogueContent)
-    - [DialogueCorrection](#apologia_kriton-DialogueCorrection)
-    - [HealthRequest](#apologia_kriton-HealthRequest)
-    - [HealthResponse](#apologia_kriton-HealthResponse)
-    - [OptionsRequest](#apologia_kriton-OptionsRequest)
-    - [QuizMetadata](#apologia_kriton-QuizMetadata)
-    - [QuizResponse](#apologia_kriton-QuizResponse)
-    - [Segment](#apologia_kriton-Segment)
-    - [Speaker](#apologia_kriton-Speaker)
-    - [Theme](#apologia_kriton-Theme)
+- [alkibiades.proto](#alkibiades-proto)
+    - [AggregatedOptions](#apologia_alkibiades-AggregatedOptions)
+    - [Coordinates](#apologia_alkibiades-Coordinates)
+    - [CreationRequest](#apologia_alkibiades-CreationRequest)
+    - [DatabaseHealth](#apologia_alkibiades-DatabaseHealth)
+    - [HealthRequest](#apologia_alkibiades-HealthRequest)
+    - [HealthResponse](#apologia_alkibiades-HealthResponse)
+    - [Intro](#apologia_alkibiades-Intro)
+    - [MatchPair](#apologia_alkibiades-MatchPair)
+    - [MatchQuiz](#apologia_alkibiades-MatchQuiz)
+    - [MediaDropQuiz](#apologia_alkibiades-MediaDropQuiz)
+    - [MediaEntry](#apologia_alkibiades-MediaEntry)
+    - [OptionsRequest](#apologia_alkibiades-OptionsRequest)
+    - [QuizResponse](#apologia_alkibiades-QuizResponse)
+    - [QuizStep](#apologia_alkibiades-QuizStep)
+    - [Segments](#apologia_alkibiades-Segments)
+    - [StructureQuiz](#apologia_alkibiades-StructureQuiz)
+    - [Theme](#apologia_alkibiades-Theme)
+    - [TranslationStep](#apologia_alkibiades-TranslationStep)
+    - [TriviaQuiz](#apologia_alkibiades-TriviaQuiz)
   
-    - [Kriton](#apologia_kriton-Kriton)
+    - [Alkibiades](#apologia_alkibiades-Alkibiades)
   
 - [Scalar Value Types](#scalar-value-types)
 
 
 
-<a name="kriton-proto"></a>
+<a name="alkibiades-proto"></a>
 <p align="right"><a href="#top">Top</a></p>
 
-## kriton.proto
+## alkibiades.proto
 
 
 
-<a name="apologia_kriton-AggregatedOptions"></a>
+<a name="apologia_alkibiades-AggregatedOptions"></a>
 
 ### AggregatedOptions
-Response message for quiz options
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| themes | [Theme](#apologia_kriton-Theme) | repeated |  |
-
-
-
-
-
-
-<a name="apologia_kriton-AnswerRequest"></a>
-
-### AnswerRequest
 
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| theme | [string](#string) | optional |  |
-| set | [int32](#int32) | optional |  |
-| content | [DialogueContent](#apologia_kriton-DialogueContent) | repeated |  |
+| themes | [Theme](#apologia_alkibiades-Theme) | repeated |  |
 
 
 
 
 
 
-<a name="apologia_kriton-AnswerResponse"></a>
+<a name="apologia_alkibiades-Coordinates"></a>
 
-### AnswerResponse
+### Coordinates
 
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| percentage | [double](#double) |  |  |
-| input | [DialogueContent](#apologia_kriton-DialogueContent) | repeated |  |
-| answer | [DialogueContent](#apologia_kriton-DialogueContent) | repeated |  |
-| wronglyPlaced | [DialogueCorrection](#apologia_kriton-DialogueCorrection) | repeated |  |
+| x | [float](#float) |  |  |
+| y | [float](#float) |  |  |
 
 
 
 
 
 
-<a name="apologia_kriton-CreationRequest"></a>
+<a name="apologia_alkibiades-CreationRequest"></a>
 
 ### CreationRequest
 
@@ -93,14 +77,14 @@ Response message for quiz options
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | theme | [string](#string) |  |  |
-| set | [string](#string) |  |  |
+| segment | [string](#string) |  | Optional |
 
 
 
 
 
 
-<a name="apologia_kriton-DatabaseHealth"></a>
+<a name="apologia_alkibiades-DatabaseHealth"></a>
 
 ### DatabaseHealth
 Nested message for database health details
@@ -118,62 +102,7 @@ Nested message for database health details
 
 
 
-<a name="apologia_kriton-Dialogue"></a>
-
-### Dialogue
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| introduction | [string](#string) |  |  |
-| speakers | [Speaker](#apologia_kriton-Speaker) | repeated |  |
-| section | [string](#string) |  |  |
-| linkToPerseus | [string](#string) |  |  |
-
-
-
-
-
-
-<a name="apologia_kriton-DialogueContent"></a>
-
-### DialogueContent
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| translation | [string](#string) |  |  |
-| greek | [string](#string) | optional |  |
-| place | [int32](#int32) | optional |  |
-| speaker | [string](#string) | optional |  |
-
-
-
-
-
-
-<a name="apologia_kriton-DialogueCorrection"></a>
-
-### DialogueCorrection
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| translation | [string](#string) |  |  |
-| greek | [string](#string) | optional |  |
-| place | [int32](#int32) | optional |  |
-| speaker | [string](#string) | optional |  |
-| correctPlace | [int32](#int32) | optional |  |
-
-
-
-
-
-
-<a name="apologia_kriton-HealthRequest"></a>
+<a name="apologia_alkibiades-HealthRequest"></a>
 
 ### HealthRequest
 Empty request messages since these endpoints require no body
@@ -183,7 +112,7 @@ Empty request messages since these endpoints require no body
 
 
 
-<a name="apologia_kriton-HealthResponse"></a>
+<a name="apologia_alkibiades-HealthResponse"></a>
 
 ### HealthResponse
 Response message for health check
@@ -194,14 +123,95 @@ Response message for health check
 | healthy | [bool](#bool) |  |  |
 | time | [string](#string) |  |  |
 | version | [string](#string) |  |  |
-| database_health | [DatabaseHealth](#apologia_kriton-DatabaseHealth) |  |  |
+| database_health | [DatabaseHealth](#apologia_alkibiades-DatabaseHealth) |  |  |
 
 
 
 
 
 
-<a name="apologia_kriton-OptionsRequest"></a>
+<a name="apologia_alkibiades-Intro"></a>
+
+### Intro
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| author | [string](#string) |  |  |
+| work | [string](#string) |  |  |
+| background | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="apologia_alkibiades-MatchPair"></a>
+
+### MatchPair
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| greek | [string](#string) |  |  |
+| answer | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="apologia_alkibiades-MatchQuiz"></a>
+
+### MatchQuiz
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| instruction | [string](#string) |  |  |
+| pairs | [MatchPair](#apologia_alkibiades-MatchPair) | repeated |  |
+
+
+
+
+
+
+<a name="apologia_alkibiades-MediaDropQuiz"></a>
+
+### MediaDropQuiz
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| instruction | [string](#string) |  |  |
+| mediaFiles | [MediaEntry](#apologia_alkibiades-MediaEntry) | repeated |  |
+
+
+
+
+
+
+<a name="apologia_alkibiades-MediaEntry"></a>
+
+### MediaEntry
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| word | [string](#string) |  |  |
+| answer | [string](#string) |  | image filename or URL |
+
+
+
+
+
+
+<a name="apologia_alkibiades-OptionsRequest"></a>
 
 ### OptionsRequest
 
@@ -211,22 +221,7 @@ Response message for health check
 
 
 
-<a name="apologia_kriton-QuizMetadata"></a>
-
-### QuizMetadata
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| language | [string](#string) |  |  |
-
-
-
-
-
-
-<a name="apologia_kriton-QuizResponse"></a>
+<a name="apologia_alkibiades-QuizResponse"></a>
 
 ### QuizResponse
 
@@ -234,62 +229,122 @@ Response message for health check
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| quizMetadata | [QuizMetadata](#apologia_kriton-QuizMetadata) |  |  |
-| theme | [string](#string) | optional |  |
-| set | [int32](#int32) | optional |  |
-| segment | [string](#string) | optional |  |
-| reference | [string](#string) | optional |  |
-| dialogue | [Dialogue](#apologia_kriton-Dialogue) | optional |  |
-| content | [DialogueContent](#apologia_kriton-DialogueContent) | repeated |  |
+| theme | [string](#string) |  |  |
+| segment | [string](#string) |  |  |
+| number | [int32](#int32) |  |  |
+| sentence | [string](#string) |  | Full Greek sentence |
+| translation | [string](#string) |  | English translation |
+| contextNote | [string](#string) |  | Informational text about the passage |
+| intro | [Intro](#apologia_alkibiades-Intro) |  |  |
+| quiz | [QuizStep](#apologia_alkibiades-QuizStep) | repeated | Quiz is polymorphic — see below |
 
 
 
 
 
 
-<a name="apologia_kriton-Segment"></a>
+<a name="apologia_alkibiades-QuizStep"></a>
 
-### Segment
-Structure for segments within a theme
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| name | [string](#string) |  |  |
-| max_set | [float](#float) |  |  |
-
-
-
-
-
-
-<a name="apologia_kriton-Speaker"></a>
-
-### Speaker
+### QuizStep
 
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
+| match | [MatchQuiz](#apologia_alkibiades-MatchQuiz) |  |  |
+| trivia | [TriviaQuiz](#apologia_alkibiades-TriviaQuiz) |  |  |
+| structure | [StructureQuiz](#apologia_alkibiades-StructureQuiz) |  |  |
+| media | [MediaDropQuiz](#apologia_alkibiades-MediaDropQuiz) |  |  |
+| final_translation | [TranslationStep](#apologia_alkibiades-TranslationStep) |  |  |
+
+
+
+
+
+
+<a name="apologia_alkibiades-Segments"></a>
+
+### Segments
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
 | name | [string](#string) |  |  |
-| shorthand | [string](#string) |  |  |
-| translation | [string](#string) |  |  |
+| number | [int32](#int32) |  |  |
+| location | [string](#string) |  |  |
+| coordinates | [Coordinates](#apologia_alkibiades-Coordinates) |  |  |
 
 
 
 
 
 
-<a name="apologia_kriton-Theme"></a>
+<a name="apologia_alkibiades-StructureQuiz"></a>
+
+### StructureQuiz
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| title | [string](#string) |  |  |
+| text | [string](#string) |  |  |
+| question | [string](#string) |  |  |
+| options | [string](#string) | repeated |  |
+| answer | [string](#string) |  |  |
+| note | [string](#string) |  | optional |
+
+
+
+
+
+
+<a name="apologia_alkibiades-Theme"></a>
 
 ### Theme
-Structure for quiz themes
+
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | name | [string](#string) |  |  |
-| segments | [Segment](#apologia_kriton-Segment) | repeated |  |
+| segments | [Segments](#apologia_alkibiades-Segments) | repeated |  |
+
+
+
+
+
+
+<a name="apologia_alkibiades-TranslationStep"></a>
+
+### TranslationStep
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| instruction | [string](#string) |  |  |
+| options | [string](#string) | repeated |  |
+| answer | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="apologia_alkibiades-TriviaQuiz"></a>
+
+### TriviaQuiz
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| question | [string](#string) |  |  |
+| options | [string](#string) | repeated |  |
+| answer | [string](#string) |  |  |
+| note | [string](#string) |  | optional explanation |
 
 
 
@@ -302,17 +357,16 @@ Structure for quiz themes
  
 
 
-<a name="apologia_kriton-Kriton"></a>
+<a name="apologia_alkibiades-Alkibiades"></a>
 
-### Kriton
+### Alkibiades
 
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| Health | [HealthRequest](#apologia_kriton-HealthRequest) | [HealthResponse](#apologia_kriton-HealthResponse) |  |
-| Options | [OptionsRequest](#apologia_kriton-OptionsRequest) | [AggregatedOptions](#apologia_kriton-AggregatedOptions) |  |
-| Question | [CreationRequest](#apologia_kriton-CreationRequest) | [QuizResponse](#apologia_kriton-QuizResponse) |  |
-| Answer | [AnswerRequest](#apologia_kriton-AnswerRequest) | [AnswerResponse](#apologia_kriton-AnswerResponse) |  |
+| Health | [HealthRequest](#apologia_alkibiades-HealthRequest) | [HealthResponse](#apologia_alkibiades-HealthResponse) |  |
+| Options | [OptionsRequest](#apologia_alkibiades-OptionsRequest) | [AggregatedOptions](#apologia_alkibiades-AggregatedOptions) |  |
+| Question | [CreationRequest](#apologia_alkibiades-CreationRequest) | [QuizResponse](#apologia_alkibiades-QuizResponse) |  |
 
  
 
