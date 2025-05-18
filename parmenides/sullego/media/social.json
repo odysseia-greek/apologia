@@ -3,7 +3,6 @@
     "quizMetadata":{
       "language":"English"
     },
-    "quizType":"media",
     "theme":"Social",
     "set": 1,
     "segment": "City Life",
@@ -134,7 +133,6 @@
     "quizMetadata": {
       "language": "English"
     },
-    "quizType": "media",
     "theme":"Social",
     "set": 1,
     "segment": "War",
@@ -265,7 +263,6 @@
     "quizMetadata": {
       "language": "English"
     },
-    "quizType": "media",
     "theme":"Social",
     "segment": "Democracy",
     "set": 1,

@@ -1,7 +1,5 @@
 [
-  {
-    "quizType": "authorbased",
-    "theme": "Matthew - The New Testament Gospel Of Matthew",
+{    "theme": "Matthew - The New Testament Gospel Of Matthew",
     "reference": "/texts?author=Matthew&book=New+Testament,+Gospel+of+Matthew&reference=12",
     "set": 1,
     "segment": "12.1",
@@ -146,9 +144,7 @@
       }
     ]
   },
-  {
-    "quizType": "authorbased",
-    "theme": "Matthew - The New Testament Gospel Of Matthew",
+{    "theme": "Matthew - The New Testament Gospel Of Matthew",
     "reference": "/texts?author=Matthew&book=New+Testament,+Gospel+of+Matthew&reference=12",
     "set": 1,
     "segment": "12.37",

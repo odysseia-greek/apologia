@@ -1,0 +1,138 @@
+syntax = "proto3";
+option go_package = "github.com/odysseia-greek/apologia/kritias/proto";
+
+package apologia_kritias;
+
+service Kritias {
+  rpc Health (HealthRequest) returns (HealthResponse) {};
+  rpc Options (OptionsRequest) returns (AggregatedOptions) {};
+  rpc Question (CreationRequest) returns (QuizResponse) {};
+  rpc Answer (AnswerRequest) returns (ComprehensiveResponse) {};
+}
+
+// Empty request messages since these endpoints require no body
+message HealthRequest {}
+
+message OptionsRequest {
+}
+
+// Response message for health check
+message HealthResponse {
+  bool healthy = 1;
+  string time = 2;
+  string version = 3;
+  DatabaseHealth database_health = 4;
+}
+
+// Nested message for database health details
+message DatabaseHealth {
+  bool healthy = 1;
+  string cluster_name = 2;
+  string server_name = 3;
+  string server_version = 4;
+}
+
+// Response message for quiz options
+message AggregatedOptions {
+  repeated Theme themes = 1;
+}
+
+// Structure for quiz themes
+message Theme {
+  string name = 1;
+  float max_set = 2;
+}
+
+// Request message for creating a quiz question
+message CreationRequest {
+  string theme = 1;
+  string set = 2;
+  string segment = 3; // Optional
+  string order = 4;
+  int32 doneAfter = 5; // Number of times a word must be played before it's considered done
+  bool resetProgress = 6;   // Hard reset
+  bool archiveProgress = 7; // Soft reset (archive and start fresh)
+}
+
+// Response message for quiz creation
+message QuizResponse {
+  string quiz_item = 1;
+  int32 number_of_items = 2;
+  repeated Options options = 3;
+  repeated ProgressEntry progress = 4; // Optional: only if sessionId is set
+}
+
+// Quiz options (word, audio, image)
+message Options {
+  string option = 1;
+}
+
+// Request message for checking an answer
+message AnswerRequest {
+  string theme = 1;
+  string set = 2;
+  string segment = 4; // Optional
+  bool comprehensive = 5; // Optional
+  string answer = 6;
+  string quiz_word = 7;
+  int32 doneAfter = 8;
+}
+
+// Response message for answer validation
+message ComprehensiveResponse {
+  bool correct = 1;
+  string quiz_word = 2;
+  AnalyzeTextResponse found_in_text = 3; // Optional
+  repeated Meros similar_words = 4; // Optional
+  repeated ProgressEntry progress = 5; // Optional: only if sessionId is set
+  bool finished = 6;
+}
+
+// Similar words structure
+message Meros {
+  string greek = 1;
+  string english = 2;
+  string dutch = 3; // Optional
+  string linked_word = 4; // Optional
+  string original = 5; // Optional
+}
+
+// Text analysis response
+message AnalyzeTextResponse {
+  string rootword = 1;
+  string part_of_speech = 2;
+  repeated Conjugations conjugations = 3;
+  repeated AnalyzeResult texts = 4;
+}
+
+// Conjugation details
+message Conjugations {
+  string word = 1;
+  string rule = 2;
+}
+
+// Analysis result per text reference
+message AnalyzeResult {
+  string reference_link = 1;
+  string author = 2;
+  string book = 3;
+  string reference = 4;
+  Rhema text = 5;
+}
+
+// Text details
+message Rhema {
+  string greek = 1;
+  repeated string translations = 2;
+  string section = 3;
+}
+
+// Word progress entry
+message ProgressEntry {
+  string greek = 1;
+  string translation = 2;
+  int32 play_count = 3;
+  int32 correct_count = 4;
+  int32 incorrect_count = 5;
+  string last_played = 6; // ISO timestamp format
+}

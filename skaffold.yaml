@@ -1,0 +1,120 @@
+apiVersion: skaffold/v4beta12
+kind: Config
+metadata:
+  name: odysseia
+deploy:
+  kubeContext: k3d-odysseia
+  tolerateFailuresUntilDeadline: true
+  helm:
+    releases:
+      - name: sokrates
+        chartPath: ../../odysseia-greek/mykenai/themistokles/odysseia/charts/sokrates
+        valuesFiles:
+          - ../../odysseia-greek/mykenai/themistokles/odysseia/values/local.yaml
+          - ../../odysseia-greek/mykenai/themistokles/odysseia/values/skaffold-values.yaml
+      - name: aristippos
+        chartPath: ../../odysseia-greek/mykenai/themistokles/odysseia/charts/aristippos
+        valuesFiles:
+          - ../../odysseia-greek/mykenai/themistokles/odysseia/values/local.yaml
+          - ../../odysseia-greek/mykenai/themistokles/odysseia/values/skaffold-values.yaml
+      - name: kritias
+        chartPath: ../../odysseia-greek/mykenai/themistokles/odysseia/charts/kritias
+        valuesFiles:
+          - ../../odysseia-greek/mykenai/themistokles/odysseia/values/local.yaml
+          - ../../odysseia-greek/mykenai/themistokles/odysseia/values/skaffold-values.yaml
+      - name: xenofon
+        chartPath: ../../odysseia-greek/mykenai/themistokles/odysseia/charts/xenofon
+        valuesFiles:
+          - ../../odysseia-greek/mykenai/themistokles/odysseia/values/local.yaml
+          - ../../odysseia-greek/mykenai/themistokles/odysseia/values/skaffold-values.yaml
+      - name: kriton
+        chartPath: ../../odysseia-greek/mykenai/themistokles/odysseia/charts/kriton
+        valuesFiles:
+          - ../../odysseia-greek/mykenai/themistokles/odysseia/values/local.yaml
+          - ../../odysseia-greek/mykenai/themistokles/odysseia/values/skaffold-values.yaml
+      - name: antisthenes
+        chartPath: ../../odysseia-greek/mykenai/themistokles/odysseia/charts/antisthenes
+        valuesFiles:
+          - ../../odysseia-greek/mykenai/themistokles/odysseia/values/local.yaml
+          - ../../odysseia-greek/mykenai/themistokles/odysseia/values/skaffold-values.yaml
+      - name: alkibiades
+        chartPath: ../../odysseia-greek/mykenai/themistokles/odysseia/charts/alkibiades
+        valuesFiles:
+          - ../../odysseia-greek/mykenai/themistokles/odysseia/values/local.yaml
+          - ../../odysseia-greek/mykenai/themistokles/odysseia/values/skaffold-values.yaml
+
+build:
+  local:
+    push: false
+  platforms: ["linux/arm64"]
+  artifacts:
+    - image: ghcr.io/odysseia-greek/sokrates
+      context: ./sokrates
+      docker:
+        target: prod
+        buildArgs:
+          project_name: "sokrates"
+      sync:
+        manual:
+          - src: '**/*.go'
+            dest: '/app'
+    - image: ghcr.io/odysseia-greek/aristippos
+      context: ./aristippos
+      docker:
+        target: prod
+        buildArgs:
+          project_name: "aristippos"
+      sync:
+        manual:
+          - src: '**/*.go'
+            dest: '/app'
+    - image: ghcr.io/odysseia-greek/kritias
+      context: ./kritias
+      docker:
+        target: prod
+        buildArgs:
+          project_name: "kritias"
+      sync:
+        manual:
+          - src: '**/*.go'
+            dest: '/app'
+    - image: ghcr.io/odysseia-greek/xenofon
+      context: ./xenofon
+      docker:
+        target: prod
+        buildArgs:
+          project_name: "xenofon"
+      sync:
+        manual:
+          - src: '**/*.go'
+            dest: '/app'
+    - image: ghcr.io/odysseia-greek/kriton
+      context: ./kriton
+      docker:
+        target: prod
+        buildArgs:
+          project_name: "kriton"
+      sync:
+        manual:
+          - src: '**/*.go'
+            dest: '/app'
+    - image: ghcr.io/odysseia-greek/antisthenes
+      context: ./antisthenes
+      docker:
+        target: prod
+        buildArgs:
+          project_name: "antisthenes"
+      sync:
+        manual:
+          - src: '**/*.go'
+            dest: '/app'
+    - image: ghcr.io/odysseia-greek/alkibiades
+      context: ./alkibiades
+      docker:
+        target: prod
+        buildArgs:
+          project_name: "alkibiades"
+      sync:
+        manual:
+          - src: '**/*.go'
+            dest: '/app'

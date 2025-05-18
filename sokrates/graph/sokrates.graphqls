@@ -1,0 +1,428 @@
+type ComprehensiveResponse {
+  correct: Boolean
+  foundInText: AnalyzeTextResponse
+  quizWord: String
+  similarWords: [Hit]
+  progress: [ProgressEntry]
+  finished: Boolean
+}
+
+type MediaOptions {
+  audioUrl: String
+  imageUrl: String
+  option: String
+}
+
+type Options {
+  option: String
+}
+
+type MediaQuizResponse {
+  numberOfItems: Int
+  options: [MediaOptions]
+  quizItem: String
+  progress: [ProgressEntry]
+}
+
+type MultipleChoiceResponse {
+  numberOfItems: Int
+  options: [Options]
+  quizItem: String
+  progress: [ProgressEntry]
+}
+
+type AuthorBasedAnswerResponse {
+  correct: Boolean
+  quizWord: String
+  wordsInText: [String]
+  progress: [ProgressEntry]
+  finished: Boolean
+}
+
+type AuthorBasedResponse {
+  fullSentence: String
+  translation: String
+  reference: String
+  quiz: AuthorBasedQuiz
+  grammarQuiz: [GrammarQuizAdded]
+  progress: [ProgressEntry]
+}
+
+type AuthorBasedWordForm {
+  dictionaryForm: String
+  wordsInText: [String]
+}
+
+type AuthorBasedWordFormsResponse {
+  forms: [AuthorBasedWordForm]
+}
+
+type AuthorBasedQuiz {
+  quizItem: String
+  numberOfItems: Int
+  options: [AuthorBasedOptions]
+}
+
+type GrammarQuizResponse {
+  quizItem: String
+  dictionaryForm: String
+  stem: String
+  translation: String
+  numberOfItems: Int
+  description: String
+  difficulty: String
+  contractionRule: String
+  options: [GrammarOption]
+  progress: [ProgressEntry]
+}
+
+type GrammarOption {
+  option: String
+}
+
+type AuthorBasedOptions {
+  quizWord: String
+}
+
+type GrammarQuizAdded {
+  correctAnswer: String
+  wordInText: String
+  extraInformation: String
+  options: [AuthorBasedOptions]
+}
+
+type DialogueQuizResponse {
+  quizMetadata: QuizMetadata
+  theme: String
+  set: String
+  segment: String
+  reference: String
+  dialogue: Dialogue
+  content: [DialogueContent]
+}
+
+type QuizMetadata {
+  language: String
+}
+
+type Dialogue {
+  introduction: String
+  speakers: [Speaker]
+  section: String
+  linkToPerseus: String
+}
+
+type Speaker {
+  name: String
+  shorthand: String
+  translation: String
+}
+
+type DialogueAnswer {
+  percentage: Float
+  input: [DialogueContent]
+  answer: [DialogueContent]
+  wronglyPlaced: [DialogueCorrection]
+}
+
+type GrammarAnswer {
+  correct: Boolean
+  quizWord: String
+  progress: [ProgressEntry]
+  similarWords: [Hit]
+  foundInText: AnalyzeTextResponse
+  finished: Boolean
+}
+
+type DialogueContent {
+  translation: String
+  greek: String
+  place: Int
+  speaker: String
+}
+
+type DialogueCorrection {
+  translation: String
+  greek: String
+  place: Int
+  speaker: String
+  correctPlace: Int
+}
+
+type ProgressEntry {
+  greek: String
+  translation: String
+  playCount: Int
+  correctCount: Int
+  incorrectCount: Int
+  lastPlayed: String
+}
+
+
+type AggregatedHealthResponse {
+  healthy: Boolean
+  time: String
+  version: String
+  services: [ServiceHealth]
+}
+
+type ServiceHealth {
+  name: String
+  healthy: Boolean
+  version: String
+  databaseInfo: DatabaseInfo
+}
+
+type DatabaseInfo {
+  healthy: Boolean
+  clusterName: String
+  serverName: String
+  serverVersion: String
+}
+
+type AggregatedOptions {
+  themes: [Theme]
+}
+
+type Theme {
+  name: String
+  segments: [Segment]
+}
+
+type Segment {
+  name: String
+  maxSet: Float
+}
+
+type GrammarOptions {
+  themes: [GrammarThemes]
+}
+
+type GrammarThemes {
+  name: String
+  segments: [GrammarSegment]
+}
+
+type GrammarSegment {
+  name: String
+  difficulty: String
+  maxSet: Int
+}
+
+type ThemedOptions {
+  themes: [MultipleTheme]
+}
+
+type MultipleTheme {
+  name: String
+  maxSet: Float
+}
+
+type JourneyOptions {
+  themes: [JourneyThemes]
+}
+
+type JourneyThemes {
+  name: String
+  segments: [JourneySegment]
+}
+
+type JourneySegment {
+  name: String
+  number: Int
+  location: String
+  coordinates: Coordinates
+}
+
+type Coordinates {
+  x: Float
+  y: Float
+}
+
+input JourneyQuizInput {
+  theme: String
+  segment: String
+}
+
+input MediaAnswerInput {
+  theme: String
+  set: String
+  segment: String
+  quizWord: String
+  answer: String
+  comprehensive: Boolean
+  doneAfter: Int
+}
+
+input AuthorBasedAnswerInput {
+  doneAfter: Int
+  theme: String
+  set: String
+  segment: String
+  quizWord: String
+  answer: String
+}
+
+input GrammarAnswerInput {
+  theme: String
+  set: String
+  segment: String
+  quizWord: String
+  answer: String
+  comprehensive: Boolean
+  doneAfter: Int
+  dictionaryForm: String
+}
+
+input MediaQuizInput {
+  doneAfter: Int
+  theme: String
+  set: String
+  segment: String
+  order: String
+  resetProgress: Boolean
+  archiveProgress: Boolean
+}
+
+input AuthorBasedInput {
+  theme: String
+  set: String
+  segment: String
+  doneAfter: Int
+  resetProgress: Boolean
+  archiveProgress: Boolean
+}
+
+input AuthorBasedWordFormsInput {
+  theme: String
+  segment: String
+  set: String
+}
+
+input GrammarQuizInput {
+  theme: String
+  set: String
+  segment: String
+  doneAfter: Int
+  resetProgress: Boolean
+  archiveProgress: Boolean
+}
+
+input MultipleChoiceAnswerInput {
+  theme: String
+  set: String
+  quizWord: String
+  answer: String
+  comprehensive: Boolean
+}
+
+input MultipleQuizInput {
+  doneAfter: Int
+  theme: String
+  set: String
+  order: String
+  resetProgress: Boolean
+  archiveProgress: Boolean
+}
+
+input DialogueQuizInput {
+  theme: String
+  set: String
+}
+
+input DialogueAnswerInput {
+  theme: String
+  set: String
+  content: [DialogueInputContent]
+}
+
+input DialogueInputContent {
+  translation: String
+  greek: String
+  place: Int
+  speaker: String
+}
+
+type JourneySegmentQuiz {
+  theme: String!
+  segment: String!
+  number: Int!
+  sentence: String!
+  translation: String!
+  contextNote: String
+  intro: QuizIntro
+  quiz: [QuizSection!]!
+}
+
+type QuizIntro {
+  author: String!
+  work: String!
+  background: String!
+}
+
+union QuizSection = MatchQuiz | TriviaQuiz | StructureQuiz | MediaQuiz | FinalTranslationQuiz
+
+type MatchQuiz {
+  instruction: String!
+  pairs: [QuizPair!]!
+}
+
+type QuizPair {
+  greek: String!
+  answer: String!
+}
+
+type TriviaQuiz {
+  question: String!
+  options: [String!]!
+  answer: String!
+  note: String
+}
+
+type StructureQuiz {
+  title: String!
+  text: String!
+  question: String!
+  options: [String!]!
+  answer: String!
+  note: String
+}
+
+type MediaQuiz {
+  instruction: String!
+  mediaFiles: [MediaPair!]!
+}
+
+type MediaPair {
+  word: String!
+  answer: String!
+}
+
+type FinalTranslationQuiz {
+  instruction: String!
+  options: [String!]!
+  answer: String!
+}
+
+type Query {
+  health: AggregatedHealthResponse
+  mediaOptions: AggregatedOptions
+  multipleChoiceOptions: ThemedOptions
+  authorBasedOptions: AggregatedOptions
+  dialogueOptions: ThemedOptions
+  grammarOptions: GrammarOptions
+  journeyOptions: JourneyOptions
+
+  mediaAnswer(input: MediaAnswerInput): ComprehensiveResponse
+  mediaQuiz(input: MediaQuizInput): MediaQuizResponse
+  multipleChoiceAnswer(input: MultipleChoiceAnswerInput): ComprehensiveResponse
+  multipleChoiceQuiz(input: MultipleQuizInput): MultipleChoiceResponse
+  authorBasedAnswer(input: AuthorBasedAnswerInput): AuthorBasedAnswerResponse
+  authorBasedQuiz(input: AuthorBasedInput): AuthorBasedResponse
+  authorBasedWordForms(input: AuthorBasedWordFormsInput): AuthorBasedWordFormsResponse
+  dialogueAnswer(input: DialogueAnswerInput): DialogueAnswer
+  dialogueQuiz(input: DialogueQuizInput): DialogueQuizResponse
+  grammarQuiz(input: GrammarQuizInput): GrammarQuizResponse
+  grammarAnswer(input: GrammarAnswerInput): GrammarAnswer
+  journeyQuiz(input: JourneyQuizInput): JourneySegmentQuiz
+}

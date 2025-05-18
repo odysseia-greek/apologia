@@ -40,7 +40,7 @@ func TestParmenidesHandlerAdd(t *testing.T) {
 			Channel: channel,
 		}
 
-		err = testHandler.EnqueueTask(context.Background(), msg)
+		err = testHandler.enqueueTask(context.Background(), msg)
 		assert.Nil(t, err)
 	})
 

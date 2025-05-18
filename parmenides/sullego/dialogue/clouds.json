@@ -1,0 +1,228 @@
+[
+  {
+  "quizMetadata": {
+    "language": "English"
+  },
+  "theme": "Aristophanes - Clouds",
+  "set": 1,
+  "dialogue": {
+    "introduction": "Aristophanes’ \"Clouds\" is a bold and satirical comedy that offers a sharp critique of Athenian intellectual trends in the late 5th century BCE, particularly the rise of sophistry and the figure of Socrates. Set in a fictionalized Athens, the play follows Strepsiades, an aging debtor, who enrolls his son in the “Thinkery,” a school led by a caricatured Socrates, in hopes of learning rhetorical tricks to evade his creditors. With biting humor and inventive imagery—including the titular chorus of Clouds as personifications of lofty thinking—Aristophanes mocks the perceived moral decay brought on by new philosophies. “Clouds” is both a theatrical masterpiece and a cultural artifact, reflecting the tensions between tradition and intellectual innovation in classical Athens. It remains a vivid window into the public perception of philosophy and education in the ancient world.",
+    "speakers": [
+      {
+        "name": "ΣΤΡΕΨΙΑΔΗΣ",
+        "shorthand": "ΣΤΡΕΨΙΑΔΗΣ",
+        "translation": "Strepsiades"
+      },
+      {
+        "name": "ΦΕΙΔΙΠΠΙΔΗΣ",
+        "shorthand": "ΦΕΙΔΙΠΠΙΔΗΣ",
+        "translation": "Pheidippides"
+      }
+    ],
+    "section": "20-40",
+    "linkToPerseus": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0019.tlg003.perseus-grc2:20-40?right=perseus-eng2"
+  },
+  "content": [
+    {
+      "place": 1,
+      "speaker": "ΦΕΙΔΙΠΠΙΔΗΣ",
+      "greek": "Φίλων ἀδικεῖς· ἔλαυνε τὸν σαυτοῦ δρόμον.",
+      "translation": "Philon, that’s unfair! Drive your chariot straight."
+    },
+    {
+      "place": 2,
+      "speaker": "ΣΤΡΕΨΙΑΔΗΣ",
+      "greek": "τοῦτ᾽ ἔστι τουτὶ τὸ κακὸν ὅ μ᾽ ἀπολώλεκεν· ὀνειροπολεῖ γὰρ καὶ καθεύδων ἱππικήν.",
+      "translation": "That there’s my problem—that’s what’s killing me. Even fast asleep he dreams of horses!"
+    },
+    {
+      "place": 3,
+      "speaker": "ΦΕΙΔΙΠΠΙΔΗΣ",
+      "greek": "πόσους δρόμους ἐλᾷ τὰ πολεμιστήρια;",
+      "translation": "In this war-chariot race how many times do we drive round the track?."
+    },
+    {
+      "place": 4,
+      "speaker": "ΣΤΡΕΨΙΑΔΗΣ",
+      "greek": "τοῦτ᾽ ἔστι τουτὶ τὸ κακὸν ὅ μ᾽ ἀπολώλεκεν· ὀνειροπολεῖ γὰρ καὶ καθεύδων ἱππικήν.",
+      "translation": "You’re driving me, your father, too far round the bend. Let’s see, after Pasias, what’s the next debt I owe? 'Three minai to Amynias.' For what? A small chariot board and pair of wheels?"
+    },
+    {
+      "place": 5,
+      "speaker": "ΦΕΙΔΙΠΠΙΔΗΣ",
+      "greek": "ἄπαγε τὸν ἵππον ἐξαλίσας οἴκαδε.",
+      "translation": "Let the horse have a roll. Then take him home."
+    },
+    {
+      "place": 6,
+      "speaker": "ΣΤΡΕΨΙΑΔΗΣ",
+      "greek": "ἀλλ᾽ ὦ μέλ᾽ ἐξήλικας ἐμέ γ᾽ ἐκ τῶν ἐμῶν, ὅτε καὶ δίκας ὤφληκα χἄτεροι τόκου ἐνεχυράσεσθαί φασιν.",
+      "translation": "You, my lad, have been rolling in my cash. Now I’ve lost in court, and other creditors are going to take out liens on all my stuff to get their interest."
+    },
+    {
+      "place": 7,
+      "speaker": "ΦΕΙΔΙΠΠΙΔΗΣ",
+      "greek": "ἐτεὸν ὦ πάτερ τί δυσκολαίνεις καὶ στρέφει τὴν νύχθ᾽ ὅλην;",
+      "translation": "What’s the matter, dad? You’ve been grumbling and tossing around there all night long."
+    },
+    {
+      "place": 8,
+      "speaker": "ΣΤΡΕΨΙΑΔΗΣ",
+      "greek": "δάκνει μὲ δήμαρχός τις ἐκ τῶν στρωμάτων.",
+      "translation": "I keep getting bitten— some bum bailiff in the bedding."
+    },
+    {
+      "place": 9,
+      "speaker": "ΦΕΙΔΙΠΠΙΔΗΣ",
+      "greek": "ἔασον ὦ δαιμόνιε καταδαρθεῖν τί με.",
+      "translation": "Ease off , dad. Let me get some sleep.."
+    },
+    {
+      "place": 10,
+      "speaker": "ΣΤΡΕΨΙΑΔΗΣ",
+      "greek": "σὺ δ᾽ οὖν κάθευδε· τὰ δὲ χρέα ταῦτ᾽ ἴσθ᾽ ὅτι ἐς τὴν κεφαλὴν ἅπαντα τὴν σὴν τρέψεται.",
+      "translation": "All right, keep sleeping. Just bear in mind that one fine day these debts will all be your concern."
+    }
+  ]
+},
+  {
+    "quizMetadata": {
+      "language": "English"
+    },
+    "theme": "Aristophanes - Clouds",
+    "set": 2,
+    "dialogue": {
+      "introduction": "Aristophanes’ \"Clouds\" is a bold and satirical comedy that offers a sharp critique of Athenian intellectual trends in the late 5th century BCE, particularly the rise of sophistry and the figure of Socrates. Set in a fictionalized Athens, the play follows Strepsiades, an aging debtor, who enrolls his son in the “Thinkery,” a school led by a caricatured Socrates, in hopes of learning rhetorical tricks to evade his creditors. With biting humor and inventive imagery—including the titular chorus of Clouds as personifications of lofty thinking—Aristophanes mocks the perceived moral decay brought on by new philosophies. “Clouds” is both a theatrical masterpiece and a cultural artifact, reflecting the tensions between tradition and intellectual innovation in classical Athens. It remains a vivid window into the public perception of philosophy and education in the ancient world.",
+      "speakers": [
+        {
+          "name": "ΣΩΚΡΑΤΗΣ",
+          "shorthand": "ΣΩΚΡΑΤΗΣ",
+          "translation": "Sokrates"
+        },
+        {
+          "name": "ΣΤΡΕΨΙΑΔΗΣ",
+          "shorthand": "ΣΤΡΕΨΙΑΔΗΣ",
+          "translation": "Strepsiades"
+        }
+      ],
+      "section": "230-260",
+      "linkToPerseus": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0019.tlg003.perseus-grc2:230-260?right=perseus-eng2"
+    },
+    "content": [
+      {
+        "place": 1,
+        "speaker": "ΣΩΚΡΑΤΗΣ",
+        "greek": "ἦλθες δὲ κατὰ τί;",
+        "translation": "Why have you come?"
+      },
+      {
+        "place": 2,
+        "speaker": "ΣΤΡΕΨΙΑΔΗΣ",
+        "greek": "βουλόμενος μαθεῖν λέγειν. ὑπὸ γὰρ τόκων χρήστων τε δυσκολωτάτων ἄγομαι φέρομαι, τὰ χρήματʼ ἐνεχυράζομαι.",
+        "translation": "I want to learn to argue. I’m being pillaged—ruined by interest and by creditors I can’t pay off — they’re slapping liens on all my property."
+      },
+      {
+        "place": 3,
+        "speaker": "ΣΩΚΡΑΤΗΣ",
+        "greek": "πόθεν δ᾽ ὑπόχρεως σαυτὸν ἔλαθες γενόμενος;",
+        "translation": "How come you got in such a pile of debt without your knowledge?"
+      },
+      {
+        "place": 4,
+        "speaker": "ΣΤΡΕΨΙΑΔΗΣ",
+        "greek": "νόσος μ᾽ ἐπέτριψεν ἱππικὴ δεινὴ φαγεῖν. ἀλλά με δίδαξον τὸν ἕτερον τοῖν σοῖν λόγοιν, τὸν μηδὲν ἀποδιδόντα. μισθὸν δ᾽ ὅντιν᾽ ἂν πράττῃ μ᾽ ὀμοῦμαί σοι καταθήσειν τοὺς θεούς.",
+        "translation": "I’ve been ravaged by disease — I’m horse sick. It’s draining me in the most dreadful way. But please teach me one of your two styles of arguing, the one which never has to discharge any debt. Whatever payment you want me to make, I promise you I’ll pay—by all the gods."
+      },
+      {
+        "place": 5,
+        "speaker": "ΣΩΚΡΑΤΗΣ",
+        "greek": "ποίους θεοὺς ὀμεῖ σύ; πρῶτον γὰρ θεοὶ ἡμῖν νόμισμ᾽ οὐκ ἔστι.",
+        "translation": "What gods do you intend to swear by? To start with, the gods hold no currency with us."
+      },
+      {
+        "place": 6,
+        "speaker": "ΣΤΡΕΨΙΑΔΗΣ",
+        "greek": "τῷ γὰρ ὄμνυτ᾽; ἢ σιδαρέοισιν ὥσπερ ἐν Βυζαντίῳ;",
+        "translation": "Then, what currency do you use to swear? Is it iron coin, like in Byzantium?"
+      },
+      {
+        "place": 7,
+        "speaker": "ΣΩΚΡΑΤΗΣ",
+        "greek": "ποίους θεοὺς ὀμεῖ σύ; πρῶτον γὰρ θεοὶ ἡμῖν νόμισμ᾽ οὐκ ἔστι.",
+        "translation": "Do you want to know the truth of things divine, the way they really are?"
+      },
+      {
+        "place": 8,
+        "speaker": "ΣΤΡΕΨΙΑΔΗΣ",
+        "greek": "νὴ Δί᾽ εἴπερ ἔστι γε.",
+        "translation": "Yes, by god, I do, if that’s possible"
+      },
+      {
+        "place": 9,
+        "speaker": "ΣΩΚΡΑΤΗΣ",
+        "greek": "καὶ ξυγγενέσθαι ταῖς Νεφέλαισιν ἐς λόγους, ταῖς ἡμετέραισι δαίμοσιν;",
+        "translation": "And to commune and talk with our own deities the Clouds?"
+      },
+      {
+        "place": 10,
+        "speaker": "ΣΤΡΕΨΙΑΔΗΣ",
+        "greek": "μάλιστά γε.",
+        "translation": "Yes, I do."
+      },
+      {
+        "place": 11,
+        "speaker": "ΣΩΚΡΑΤΗΣ",
+        "greek": "κάθιζε τοίνυν ἐπὶ τὸν ἱερὸν σκίμποδα.",
+        "translation": "Then sit down on the sacred couch."
+      },
+      {
+        "place": 12,
+        "speaker": "ΣΤΡΕΨΙΑΔΗΣ",
+        "greek": "ἰδοὺ κάθημαι.",
+        "translation": "All right. I’m sitting down."
+      },
+      {
+        "place": 13,
+        "speaker": "ΣΩΚΡΑΤΗΣ",
+        "greek": "τουτονὶ τοίνυν λαβὲ τὸν στέφανον.",
+        "translation": "Take this wreath."
+      },
+      {
+        "place": 14,
+        "speaker": "ΣΤΡΕΨΙΑΔΗΣ",
+        "greek": "ἐπὶ τί στέφανον; οἴμοι Σώκρατες ὥσπερ με τὸν Ἀθάμανθ᾽ ὅπως μὴ θύσετε",
+        "translation": "Why a wreath? Oh dear, Socrates, don’t off er me up in sacrifice, like Athamas."
+      },
+      {
+        "place": 13,
+        "speaker": "ΣΩΚΡΑΤΗΣ",
+        "greek": "οὔκ, ἀλλὰ ταῦτα πάντα τοὺς τελουμένους ἡμεῖς ποιοῦμεν",
+        "translation": "No, no. We go through all this for everyone — it’s their initiation"
+      },
+      {
+        "place": 14,
+        "speaker": "ΣΤΡΕΨΙΑΔΗΣ",
+        "greek": "εἶτα δὴ τί κερδανῶ;",
+        "translation": "What do I get?"
+      },
+      {
+        "place": 13,
+        "speaker": "ΣΩΚΡΑΤΗΣ",
+        "greek": "λέγειν γενήσει τρῖμμα κρόταλον παιπάλη. ἀλλ᾽ ἔχ᾽ ἀτρεμί. [Sokrates sprinkles flour on poor Strepsiades]",
+        "translation": "You’ll learn to be a clever talker, to rattle off a speech, to strain your words like flour. Just keep still."
+      },
+      {
+        "place": 14,
+        "speaker": "ΣΤΡΕΨΙΑΔΗΣ",
+        "greek": "μὰ τὸν Δί᾽ οὐ ψεύσει γέ με· καταπαττόμενος γὰρ παιπάλη γενήσομαι.",
+        "translation": "By god, that’s no lie! I’ll turn into flour if you keep sprinkling me"
+      },
+      {
+        "place": 15,
+        "speaker": "ΣΩΚΡΑΤΗΣ",
+        "greek": "εὐφημεῖν χρὴ τὸν πρεσβύτην καὶ τῆς εὐχῆς ἐπακούειν. ὦ δέσποτ᾽ ἄναξ ἀμέτρητ᾽ Ἀήρ, ὃς ἔχεις τὴν γῆν μετέωρον, λαμπρός τ᾽ Αἰθὴρ σεμναί τε θεαὶ Νεφέλαι βροντησικέ- ραυνοι, ἄρθητε φάνητ᾽ ὦ δέσποιναι τῷ φροντιστῇ μετέωροι.",
+        "translation": "Old man, be quiet. Listen to the prayer. O Sovereign Lord, O Boundless Air, who keeps the earth suspended here in space, O Bright Sky, O Sacred Goddesses— the Thunder-bearing Clouds—arise, you holy ladies, issue forth on high, before the man who holds you in his mind."
+      }
+    ]
+  }
+]

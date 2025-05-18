@@ -1,19 +1,16 @@
 package aletheia
 
-func quizIndex(policyName string) map[string]interface{} {
+func quizIndex(policyName string, numberOfShards, numberOfReplicas int) map[string]interface{} {
 	return map[string]interface{}{
 		"settings": map[string]interface{}{
 			"index": map[string]interface{}{
-				"number_of_shards":   2,
-				"number_of_replicas": 1,
+				"number_of_shards":   numberOfShards,
+				"number_of_replicas": numberOfReplicas,
 				"lifecycle.name":     policyName,
 			},
 		},
 		"mappings": map[string]interface{}{
 			"properties": map[string]interface{}{
-				"quizType": map[string]interface{}{
-					"type": "keyword",
-				},
 				"theme": map[string]interface{}{
 					"type": "keyword",
 				},
@@ -23,7 +20,6 @@ func quizIndex(policyName string) map[string]interface{} {
 				"set": map[string]interface{}{
 					"type": "integer",
 				},
-				// 'content' field is not defined here as it won't be queried
 			},
 		},
 	}

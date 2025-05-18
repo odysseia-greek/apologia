@@ -1,7 +1,5 @@
 [
-  {
-    "quizType": "authorbased",
-    "theme": "Herodotos - Histories",
+{    "theme": "Herodotos - Histories",
     "reference": "/texts?author=Herodotos&book=Histories&reference=1.1",
     "set": 1,
     "segment": "1.1.0",
@@ -411,9 +409,7 @@
       }
     ]
   },
-  {
-    "quizType": "authorbased",
-    "theme": "Herodotos - Histories",
+{    "theme": "Herodotos - Histories",
     "reference": "/texts?author=Herodotos&book=Histories&reference=1.1",
     "set": 1,
     "segment": "1.1.1",
@@ -689,9 +685,7 @@
       }
     ]
   },
-  {
-    "quizType": "authorbased",
-    "theme": "Herodotos - Histories",
+{    "theme": "Herodotos - Histories",
     "reference": "/texts?author=Herodotos&book=Histories&reference=1.1",
     "set": 1,
     "segment": "1.1.2",
@@ -831,9 +825,7 @@
       }
     ]
   },
-  {
-    "quizType": "authorbased",
-    "theme": "Herodotos - Histories",
+{    "theme": "Herodotos - Histories",
     "reference": "/texts?author=Herodotos&book=Histories&reference=1.1",
     "set": 1,
     "segment": "1.1.3",
@@ -1069,9 +1061,7 @@
       }
     ]
   },
-  {
-    "quizType": "authorbased",
-    "theme": "Herodotos - Histories",
+{    "theme": "Herodotos - Histories",
     "reference": "/texts?author=Herodotos&book=Histories&reference=1.1",
     "set": 1,
     "segment": "1.1.4",
@@ -1316,9 +1306,527 @@
       }
     ]
   },
-  {
-    "quizType": "authorbased",
+{
     "theme": "Herodotos - Histories",
+    "reference": "/texts?author=Herodotos&book=Histories&reference=6.106",
+    "set": 1,
+    "segment": "6.106.2",
+    "fullSentence": "ὦ Λακεδαιμόνιοι, Ἀθηναῖοι ὑμέων δέονται σφίσι βοηθῆσαι καὶ μὴ περιιδεῖν πόλιν ἀρχαιοτάτην ἐν τοῖσι Ἕλλησι δουλοσύνῃ περιπεσοῦσαν πρὸς ἀνδρῶν βαρβάρων· καὶ γὰρ νῦν Ἐρέτριά τε ἠνδραπόδισται καὶ πόλι λογίμῳ ἡ Ἑλλὰς γέγονε ἀσθενεστέρη.",
+    "translation": "Lacedaemonians, the Athenians ask you to come to their aid and not allow the most ancient city among the Hellenes to fall into slavery at the hands of the foreigners. Even now Eretria has been enslaved, and Hellas has become weaker by an important city.",
+    "grammarQuestionOptions": {
+      "verbs": [
+        "3rd sing - pres - ind - act",
+        "3rd plur - pres - ind - act",
+        "3rd sing - aor - ind - mid",
+        "3rd sing - perf - ind - mid/psv",
+        "3rd sing - impf - ind - act",
+        "3rd sing - perf - ind - act",
+        "3rd plur - pres - ind - mid/psv"
+      ],
+      "nouns": [
+
+      ],
+      "misc": []
+    },
+    "content": [
+      {
+        "greek": "ὦ",
+        "translation": "O! oh! (or vocative)",
+        "wordsInText": ["ὦ"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "Λακεδαιμόνιος",
+        "translation": "Spartan",
+        "wordsInText": ["Λακεδαιμόνιοι"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "Ἀθηναῖος",
+        "translation": "Athenian",
+        "wordsInText": ["Ἀθηναῖοι"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "σύ",
+        "translation": "you (personal pronoun)",
+        "wordsInText": ["ὑμέων"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "δέω",
+        "translation": "to lack, miss, stand in need of",
+        "wordsInText": ["δέονται"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "3rd plur - pres - ind - mid/psv",
+            "typeOfWord": "verb",
+            "wordInText": "δέονται"
+          }
+        ]
+      },
+      {
+        "greek": "σφεῖς",
+        "translation": "they; personal/reflexive pronoun",
+        "wordsInText": ["σφίσι"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "βοηθέω",
+        "translation": "to come to aid, to assist",
+        "wordsInText": ["βοηθῆσαι"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "καί",
+        "translation": "and, also",
+        "wordsInText": [
+          "καὶ"
+        ],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "μή",
+        "translation": "not",
+        "wordsInText": ["μὴ"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "περιοράω",
+        "translation": "to overlook, stand by",
+        "wordsInText": ["περιιδεῖν"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "aorist - active - infinitive",
+            "typeOfWord": "verb",
+            "wordInText": "περιιδεῖν"
+          }
+        ]
+      },
+      {
+        "greek": "πόλις",
+        "translation": "city",
+        "wordsInText": ["πόλιν", "πόλι"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "ἀρχαῖος",
+        "translation": "ancient, from the beginning",
+        "wordsInText": ["ἀρχαιοτάτην"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "ἐν",
+        "translation": "in, among (dat.)",
+        "wordsInText": ["ἐν"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "ὁ",
+        "translation": "the",
+        "wordsInText": ["τοῖσι", "ἡ"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "Ἕλλην",
+        "translation": "Greek",
+        "wordsInText": ["Ἕλλησι"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "δουλοσύνη",
+        "translation": "slavery",
+        "wordsInText": ["δουλοσύνῃ"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "περιπίπτω",
+        "translation": "to fall into",
+        "wordsInText": ["περιπεσοῦσαν"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "πρός",
+        "translation": "from (w. gen.);  at, near, in addition to (w. dat.);to, toward, regarding (w. acc.)",
+        "wordsInText": ["πρὸς"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "ἀνήρ",
+        "translation": "man",
+        "wordsInText": ["ἀνδρῶν"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "βάρβαρος",
+        "translation": "barbarian",
+        "wordsInText": ["βαρβάρων"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "γάρ",
+        "translation": "for",
+        "wordsInText": ["γὰρ"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "νῦν",
+        "translation": "now",
+        "wordsInText": ["νῦν"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "Ἐρέτρια",
+        "translation": "Eretria",
+        "wordsInText": ["Ἐρέτριά"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "ἀνδραποδίζω",
+        "translation": "to enslave",
+        "wordsInText": ["ἠνδραπόδισται"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "3rd sing - perf - ind - mid/psv",
+            "typeOfWord": "verb",
+            "wordInText": "ἠνδραπόδισται"
+          }
+        ]
+      },
+      {
+        "greek": "Ἑλλὰς",
+        "translation": "Hellas",
+        "wordsInText": ["Ἑλλὰς"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "τε",
+        "translation": "and",
+        "wordsInText": ["τε"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "λόγιμος",
+        "translation": "famous, notable",
+        "wordsInText": ["λογίμῳ"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "γίγνομαι",
+        "translation": "to become, to be",
+        "wordsInText": ["γέγονε"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "3rd sing - perf - ind - act",
+            "typeOfWord": "verb",
+            "wordInText": "γέγονε"
+          }
+        ]
+      },
+      {
+        "greek": "ἀσθενής",
+        "translation": "weak, feeble",
+        "wordsInText": ["ἀσθενεστέρη"],
+        "hasGrammarQuestions": false
+      }
+    ]
+  },
+{
+    "theme": "Herodotos - Histories",
+    "reference": "/texts?author=Herodotos&book=Histories&reference=6.113",
+    "set": 1,
+    "segment": "6.113.1",
+    "fullSentence": "νικῶντες δὲ τὸ μὲν τετραμμένον τῶν βαρβάρων φεύγειν ἔων, τοῖσι δὲ τὸ μέσον ῥήξασι αὐτῶν συναγαγόντες τὰ κέρεα ἀμφότερα ἐμάχοντο, καὶ ἐνίκων Ἀθηναῖοι. φεύγουσι δὲ τοῖσι Πέρσῃσι εἵποντο κόπτοντες, ἐς ὃ ἐς τὴν θάλασσαν ἀπικόμενοι πῦρ τε αἴτεον καὶ ἐπελαμβάνοντο τῶν νεῶν.",
+    "translation": "In victory they let the routed foreigners flee, and brought the wings together to fight those who had broken through the center. The Athenians prevailed, then followed the fleeing Persians and struck them down. When they reached the sea they demanded fire and laid hold of the Persian ships.",
+    "grammarQuestionOptions": {
+      "verbs": [
+        "3rd plur - pres - ind - act",
+        "3rd plur - impf - ind - act",
+        "3rd plur - imp - act - ind",
+        "3rd plur - perf - ind - mid/psv",
+        "3rd sing - aor - ind - act",
+        "aorist part - masc - plur - nom",
+        "aorist part - masc - plur - dat",
+        "present part - masc - plur - nom",
+        "aorist - active - infinitive",
+        "present - active - infinitive",
+        "3rd plur - impf - ind - mid/psv"
+      ],
+      "nouns": [
+      ],
+      "misc": []
+    },
+    "content": [
+      {
+        "greek": "νικάω",
+        "translation": "to conquer, prevail",
+        "wordsInText": ["νικῶντες", "ἐνίκων"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "present part - masc - plur - nom",
+            "typeOfWord": "verb",
+            "wordInText": "νικῶντες"
+          },
+          {
+            "correctAnswer": "3rd plur - imp - act - ind",
+            "typeOfWord": "verb",
+            "wordInText": "ἐνίκων"
+          }
+        ]
+      },
+      {
+        "greek": "δέ",
+        "translation": "but",
+        "wordsInText": ["δὲ"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "τρέπω",
+        "translation": "to turn",
+        "wordsInText": ["τετραμμένον"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "βάρβαρος",
+        "translation": "barbarian",
+        "wordsInText": ["βαρβάρων"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "φεύγω",
+        "translation": "to flee",
+        "wordsInText": ["φεύγειν", "φεύγουσι"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "present - active - infinitive",
+            "typeOfWord": "verb",
+            "wordInText": "φεύγειν"
+          },
+          {
+            "correctAnswer": "3rd plur - pres - ind - act",
+            "typeOfWord": "verb",
+            "wordInText": "φεύγουσι"
+          }
+        ]
+      },
+      {
+        "greek": "εἰς",
+        "translation": "into, to (acc.)",
+        "wordsInText": ["ἐς"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "εἰμί",
+        "translation": "to be",
+        "wordsInText": ["ἔων"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "μέσος",
+        "translation": "middle",
+        "wordsInText": ["μέσον"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "ῥήγνυμι",
+        "translation": "to break",
+        "wordsInText": ["ῥήξασι"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "aorist part - masc - plur - dat",
+            "typeOfWord": "verb",
+            "wordInText": "ῥήξασι"
+          }
+        ]
+      },
+      {
+        "greek": "αὐτός",
+        "translation": "themselves",
+        "wordsInText": ["αὐτῶν"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "συνάγω",
+        "translation": "to gather together",
+        "wordsInText": ["συναγαγόντες"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "aorist part - masc - plur - nom",
+            "typeOfWord": "verb",
+            "wordInText": "συναγαγόντες"
+          }
+        ]
+      },
+      {
+        "greek": "κέρας",
+        "translation": "wing, horn",
+        "wordsInText": ["κέρεα"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "ἀμφότερος",
+        "translation": "both",
+        "wordsInText": ["ἀμφότερα"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "μάχομαι",
+        "translation": "to fight",
+        "wordsInText": ["ἐμάχοντο"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "3rd plur - impf - ind - mid/psv",
+            "typeOfWord": "verb",
+            "wordInText": "ἐμάχοντο"
+          }
+        ]
+      },
+      {
+        "greek": "Ἀθηναῖος",
+        "translation": "Athenian",
+        "wordsInText": ["Ἀθηναῖοι"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "ἕπομαι",
+        "translation": "to follow",
+        "wordsInText": ["εἵποντο"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "3rd plur - aor - ind - mid",
+            "typeOfWord": "verb",
+            "wordInText": "εἵποντο"
+          }
+        ]
+      },
+      {
+        "greek": "κόπτω",
+        "translation": "to strike",
+        "wordsInText": ["κόπτοντες"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "pres part - masc - plur - nom",
+            "typeOfWord": "verb",
+            "wordInText": "κόπτοντες"
+          }
+        ]
+      },
+      {
+        "greek": "ἀφικνέομαι",
+        "translation": "to arrive",
+        "wordsInText": ["ἀπικόμενοι"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "aorist part - masc - plur - nom",
+            "typeOfWord": "verb",
+            "wordInText": "ἀπικόμενοι"
+          }
+        ]
+      },
+      {
+        "greek": "πῦρ",
+        "translation": "fire",
+        "wordsInText": ["πῦρ"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "αἰτέω",
+        "translation": "to ask, request",
+        "wordsInText": ["αἴτεον"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "3rd plur - impf - ind - act",
+            "typeOfWord": "verb",
+            "wordInText": "αἴτεον"
+          }
+        ]
+      },
+      {
+        "greek": "ἐπιλαμβάνω",
+        "translation": "to seize, grab hold of",
+        "wordsInText": ["ἐπελαμβάνοντο"],
+        "hasGrammarQuestions": true,
+        "grammarQuestions": [
+          {
+            "correctAnswer": "3rd plur - impf - ind - mid/psv",
+            "typeOfWord": "verb",
+            "wordInText": "ἐπελαμβάνοντο"
+          }
+        ]
+      },
+      {
+        "greek": "ναῦς",
+        "translation": "ship",
+        "wordsInText": ["νεῶν"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "θάλασσα",
+        "translation": "the sea",
+        "wordsInText": ["θάλασσαν"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "τε",
+        "translation": "and",
+        "wordsInText": ["τε"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "ὁ",
+        "translation": "the",
+        "wordsInText": ["τὸ", "τοῖσι", "τὴν", "τῶν", "τὰ"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "ὅς",
+        "translation": "who, which",
+        "wordsInText": ["ὃ"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "Πέρσης",
+        "translation": "Persian",
+        "wordsInText": ["Πέρσῃσι"],
+        "hasGrammarQuestions": false
+      },
+      {
+        "greek": "καί",
+        "translation": "and, also",
+        "wordsInText": [
+          "καὶ"
+        ]
+      },
+      {
+        "greek": "δέ",
+        "translation": "but",
+        "wordsInText": [
+          "δὲ"
+        ]
+      },
+      {
+        "greek": "μὲν",
+        "translation": "on the one hand, on the other hand",
+        "wordsInText": [
+          "μὲν"
+        ]
+      }
+    ]
+  },
+{    "theme": "Herodotos - Histories",
     "reference": "/texts?author=Herodotos&book=Histories&reference=7.138",
     "set": 1,
     "segment": "7.138.1",
@@ -1598,9 +2106,7 @@
 
     ]
   },
-  {
-    "quizType": "authorbased",
-    "theme": "Herodotos - Histories",
+{    "theme": "Herodotos - Histories",
     "reference": "/texts?author=Herodotos&book=Histories&reference=7.138",
     "set": 1,
     "segment": "7.138.2",
@@ -1886,9 +2392,7 @@
       }
     ]
   },
-  {
-    "quizType": "authorbased",
-    "theme": "Herodotos - Histories",
+{    "theme": "Herodotos - Histories",
     "reference": "/texts?author=Herodotos&book=Histories&reference=7.142",
     "set": 1,
     "segment": "7.142.3",
@@ -2063,9 +2567,7 @@
       }
     ]
   },
-  {
-    "quizType": "authorbased",
-    "theme": "Herodotos - Histories",
+{    "theme": "Herodotos - Histories",
     "reference": "/texts?author=Herodotos&book=Histories&reference=7.208",
     "set": 1,
     "segment": "7.208.3",
@@ -2324,9 +2826,7 @@
       }
     ]
   },
-  {
-    "quizType": "authorbased",
-    "theme": "Herodotos - Histories",
+{    "theme": "Herodotos - Histories",
     "reference": "/texts?author=Herodotos&book=Histories&reference=7.209",
     "set": 1,
     "segment": "7.209.3",
@@ -2521,9 +3021,7 @@
       }
     ]
   },
-  {
-    "quizType": "authorbased",
-    "theme": "Herodotos - Histories",
+{    "theme": "Herodotos - Histories",
     "reference": "/texts?author=Herodotos&book=Histories&reference=8.65",
     "set": 1,
     "segment": "8.65.3",

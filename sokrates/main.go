@@ -1,24 +1,26 @@
 package main
 
 import (
+	"context"
 	"fmt"
-	"github.com/odysseia-greek/agora/plato/logging"
-	"github.com/odysseia-greek/apologia/sokrates/quiz"
-	"golang.org/x/net/context"
+	"github.com/odysseia-greek/apologia/sokrates/gateway"
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/odysseia-greek/agora/plato/logging"
+	"github.com/odysseia-greek/apologia/sokrates/routing"
 )
 
-const standardPort = ":5000"
+const standardPort = ":8080"
 
 func main() {
+	// Set up port with environment variable fallback
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = standardPort
 	}
 
-	//https://patorjk.com/software/taag/#p=display&f=Crawford2&t=SOKRATES
 	logging.System(`
   _____  ___   __  _  ____    ____  ______    ___  _____
  / ___/ /   \ |  |/ ]|    \  /    ||      |  /  _]/ ___/
@@ -31,22 +33,18 @@ func main() {
 `)
 	logging.System("\"ἓν οἶδα ὅτι οὐδὲν οἶδα\"")
 	logging.System("\"I know one thing, that I know nothing\"")
-	logging.System("starting up.....")
-	logging.System("starting up and getting env variables")
+	logging.System("starting up and getting environment variables...")
 
-	ctx := context.Background()
-
-	sokratesConfig, err := quiz.CreateNewConfig(ctx)
+	handler, err := gateway.CreateNewConfig(context.Background())
 	if err != nil {
-		log.Print(err)
-		log.Fatal("death has found me")
+		log.Fatal(err)
 	}
 
-	srv := quiz.InitRoutes(sokratesConfig)
+	graphqlServer := routing.InitRoutes(handler)
 
-	logging.System(fmt.Sprintf("%s : %s", "running on port", port))
-	err = http.ListenAndServe(port, srv)
+	logging.System(fmt.Sprintf("Server running on port %s", port))
+	err = http.ListenAndServe(port, graphqlServer)
 	if err != nil {
-		panic(err)
+		log.Fatal("Server failed to start: ", err)
 	}
 }

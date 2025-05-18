@@ -1,7 +1,5 @@
 [
-  {
-    "quizType":"authorbased",
-    "theme":"Plato - Euthyphro",
+{    "theme":"Plato - Euthyphro",
     "reference":"/texts?author=Plato&book=Euthyphro&reference=2",
     "set":1,
     "segment":"2.2",

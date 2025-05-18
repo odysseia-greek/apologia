@@ -1,0 +1,95 @@
+[
+  {
+  "theme": "Subjunctive - Active",
+  "set": 1,
+  "segment": "Present",
+  "description": "Present Subjunctive Active Endings",
+  "difficulty": "intermediate",
+  "content": [
+    {
+      "greek": "λύω",
+      "dictionaryForm": "λύω",
+      "translation":"to release",
+      "stem": "λυ-",
+      "grammarQuestion": {
+        "tense": "present",
+        "voice": "active",
+        "mood": "subjunctive",
+        "person": "1st",
+        "number": "sing",
+        "correctAnswer": "1st sing - pres - subj - act"
+      }
+    },
+    {
+      "greek": "λύῃς",
+      "dictionaryForm": "λύω",
+      "translation":"to release",
+      "stem": "λυ-",
+      "grammarQuestion": {
+        "tense": "present",
+        "voice": "active",
+        "mood": "subjunctive",
+        "person": "2nd",
+        "number": "sing",
+        "correctAnswer": "2nd sing - pres - subj - act"
+      }
+    },
+    {
+      "greek": "λύῃ",
+      "dictionaryForm": "λύω",
+      "translation":"to release",
+      "stem": "λυ-",
+      "grammarQuestion": {
+        "tense": "present",
+        "voice": "active",
+        "mood": "subjunctive",
+        "person": "3rd",
+        "number": "sing",
+        "correctAnswer": "3rd sing - pres - subj - act"
+      }
+    },
+    {
+      "greek": "λύωμεν",
+      "dictionaryForm": "λύω",
+      "translation":"to release",
+      "stem": "λυ-",
+      "grammarQuestion": {
+        "tense": "present",
+        "voice": "active",
+        "mood": "subjunctive",
+        "person": "1st",
+        "number": "plur",
+        "correctAnswer": "1st plur - pres - subj - act"
+      }
+    },
+    {
+      "greek": "λύητε",
+      "dictionaryForm": "λύω",
+      "translation":"to release",
+      "stem": "λυ-",
+      "grammarQuestion": {
+        "tense": "present",
+        "voice": "active",
+        "mood": "subjunctive",
+        "person": "2nd",
+        "number": "plur",
+        "correctAnswer": "2nd plur - pres - subj - act"
+      }
+    },
+    {
+      "greek": "λύωσι(ν)",
+      "dictionaryForm": "λύω",
+      "translation":"to release",
+      "stem": "λυ-",
+      "grammarQuestion": {
+        "tense": "present",
+        "voice": "active",
+        "mood": "subjunctive",
+        "person": "3rd",
+        "number": "plur",
+        "correctAnswer": "3rd plur - pres - subj - act"
+      }
+    }
+  ]
+  }
+]

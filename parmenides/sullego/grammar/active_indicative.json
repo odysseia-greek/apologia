@@ -1,0 +1,1769 @@
+[
+  {
+    "theme": "Active - Indicative",
+    "set":1,
+    "segment":"Present",
+    "description": "Basic Formation",
+    "difficulty":"beginner",
+    "content":[
+      {
+        "greek":"λύω",
+        "dictionaryForm":"λύω",
+        "translation":"to release",
+        "stem":"λύ-",
+        "grammarQuestion":{
+          "tense":"present",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"sing",
+          "correctAnswer":"1st sing - pres - ind - act"
+        }
+      },
+      {
+        "greek":"λύεις",
+        "dictionaryForm":"λύω",
+        "translation":"to release",
+        "stem":"λύ-",
+        "grammarQuestion":{
+          "tense":"present",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"sing",
+          "correctAnswer":"2nd sing - pres - ind - act"
+        }
+      },
+      {
+        "greek":"λύει",
+        "dictionaryForm":"λύω",
+        "translation":"to release",
+        "stem":"λύ-",
+        "grammarQuestion":{
+          "tense":"present",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"sing",
+          "correctAnswer":"3rd sing - pres - ind - act"
+        }
+      },
+      {
+        "greek":"λύομεν",
+        "dictionaryForm":"λύω",
+        "translation":"to release",
+        "stem":"λύ-",
+        "grammarQuestion":{
+          "tense":"present",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"plur",
+          "correctAnswer":"1st plur - pres - ind - act"
+        }
+      },
+      {
+        "greek":"λύετε",
+        "dictionaryForm":"λύω",
+        "translation":"to release",
+        "stem":"λύ-",
+        "grammarQuestion":{
+          "tense":"present",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"plur",
+          "correctAnswer":"2nd plur - pres - ind - act"
+        }
+      },
+      {
+        "greek":"λύουσι(ν)",
+        "dictionaryForm":"λύω",
+        "translation":"to release",
+        "stem":"λύ-",
+        "grammarQuestion":{
+          "tense":"present",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"plur",
+          "correctAnswer":"3rd plur - pres - ind - act"
+        }
+      },
+      {
+        "greek":"φέρω",
+        "dictionaryForm":"φέρω",
+        "translation":"to carry",
+        "stem":"φέρ-",
+        "grammarQuestion":{
+          "tense":"present",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"sing",
+          "correctAnswer":"1st sing - pres - ind - act"
+        }
+      },
+      {
+        "greek":"φέρεις",
+        "dictionaryForm":"φέρω",
+        "translation":"to carry",
+        "stem":"φέρ-",
+        "grammarQuestion":{
+          "tense":"present",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"sing",
+          "correctAnswer":"2nd sing - pres - ind - act"
+        }
+      },
+      {
+        "greek":"φέρει",
+        "dictionaryForm":"φέρω",
+        "translation":"to carry",
+        "stem":"φέρ-",
+        "grammarQuestion":{
+          "tense":"present",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"sing",
+          "correctAnswer":"3rd sing - pres - ind - act"
+        }
+      },
+      {
+        "greek":"φέρομεν",
+        "dictionaryForm":"φέρω",
+        "translation":"to carry",
+        "stem":"φέρ-",
+        "grammarQuestion":{
+          "tense":"present",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"plur",
+          "correctAnswer":"1st plur - pres - ind - act"
+        }
+      },
+      {
+        "greek":"φέρετε",
+        "dictionaryForm":"φέρω",
+        "translation":"to carry",
+        "stem":"φέρ-",
+        "grammarQuestion":{
+          "tense":"present",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"plur",
+          "correctAnswer":"2nd plur - pres - ind - act"
+        }
+      },
+      {
+        "greek":"φέρουσι(ν)",
+        "dictionaryForm":"φέρω",
+        "translation":"to carry",
+        "stem":"φέρ-",
+        "grammarQuestion":{
+          "tense":"present",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"plur",
+          "correctAnswer":"3rd plur - pres - ind - act"
+        }
+      },
+      {
+        "greek":"δοκῶ",
+        "dictionaryForm":"δοκέω",
+        "translation":"to seem, think",
+        "stem":"δοκ-",
+        "grammarQuestion":{
+          "tense":"present",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"sing",
+          "correctAnswer":"1st sing - pres - ind - act"
+        }
+      },
+      {
+        "greek":"δοκεῖς",
+        "dictionaryForm":"δοκέω",
+        "translation":"to seem, think",
+        "stem":"δοκ-",
+        "grammarQuestion":{
+          "tense":"present",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"sing",
+          "correctAnswer":"2nd sing - pres - ind - act"
+        }
+      },
+      {
+        "greek":"δοκεῖ",
+        "dictionaryForm":"δοκέω",
+        "translation":"to seem, think",
+        "stem":"δοκ-",
+        "grammarQuestion":{
+          "tense":"present",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"sing",
+          "correctAnswer":"3rd sing - pres - ind - act"
+        }
+      },
+      {
+        "greek":"δοκοῦμεν",
+        "dictionaryForm":"δοκέω",
+        "translation":"to seem, think",
+        "stem":"δοκ-",
+        "grammarQuestion":{
+          "tense":"present",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"plur",
+          "correctAnswer":"1st plur - pres - ind - act"
+        }
+      },
+      {
+        "greek":"δοκεῖτε",
+        "dictionaryForm":"δοκέω",
+        "translation":"to seem, think",
+        "stem":"δοκ-",
+        "grammarQuestion":{
+          "tense":"present",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"plur",
+          "correctAnswer":"2nd plur - pres - ind - act"
+        }
+      },
+      {
+        "greek":"δοκοῦσι(ν)",
+        "dictionaryForm":"δοκέω",
+        "translation":"to seem, think",
+        "stem":"δοκ-",
+        "grammarQuestion":{
+          "tense":"present",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"plur",
+          "correctAnswer":"3rd plur - pres - ind - act"
+        }
+      }
+    ]
+  },
+  {
+    "theme": "Active - Indicative",
+    "set":1,
+    "segment":"Present (εἰμί)",
+    "description": "Formation of the irregular verb εἰμί",
+    "difficulty":"beginner",
+    "content":[
+      {
+        "greek":"εἰμί",
+        "dictionaryForm":"εἰμί",
+        "translation":"to be",
+        "grammarQuestion":{
+          "tense":"present",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"sing",
+          "correctAnswer":"1st sing - pres - ind - act"
+        }
+      },
+      {
+        "greek":"εἶ",
+        "dictionaryForm":"εἰμί",
+        "translation":"to be",
+        "grammarQuestion":{
+          "tense":"present",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"sing",
+          "correctAnswer":"2nd sing - pres - ind - act"
+        }
+      },
+      {
+        "greek":"ἐστί(ν)",
+        "dictionaryForm":"εἰμί",
+        "translation":"to be",
+        "grammarQuestion":{
+          "tense":"present",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"sing",
+          "correctAnswer":"3rd sing - pres - ind - act"
+        }
+      },
+      {
+        "greek":"ἐσμέν",
+        "dictionaryForm":"εἰμί",
+        "translation":"to be",
+        "grammarQuestion":{
+          "tense":"present",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"plur",
+          "correctAnswer":"1st plur - pres - ind - act"
+        }
+      },
+      {
+        "greek":"ἐστέ",
+        "dictionaryForm":"εἰμί",
+        "translation":"to be",
+        "grammarQuestion":{
+          "tense":"present",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"plur",
+          "correctAnswer":"2nd plur - pres - ind - act"
+        }
+      },
+      {
+        "greek":"εἰσί(ν)",
+        "dictionaryForm":"εἰμί",
+        "translation":"to be",
+        "grammarQuestion":{
+          "tense":"present",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"plur",
+          "correctAnswer":"3rd plur - pres - ind - act"
+        }
+      }
+    ]
+  },
+  {
+    "theme": "Active - Indicative",
+    "set":1,
+    "segment":"Imperfect",
+    "description": "Basic Formation",
+    "difficulty":"beginner",
+    "content":[
+      {
+        "greek":"ἔλυον",
+        "dictionaryForm":"λύω",
+        "translation":"to release",
+        "stem":"λυ-",
+        "grammarQuestion":{
+          "tense":"imperfect",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"sing",
+          "correctAnswer":"1st sing - impf - ind - act"
+        }
+      },
+      {
+        "greek":"ἔλυες",
+        "dictionaryForm":"λύω",
+        "translation":"to release",
+        "stem":"λυ-",
+        "grammarQuestion":{
+          "tense":"imperfect",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"sing",
+          "correctAnswer":"2nd sing - impf - ind - act"
+        }
+      },
+      {
+        "greek":"ἔλυε(ν)",
+        "dictionaryForm":"λύω",
+        "translation":"to release",
+        "stem":"λυ-",
+        "grammarQuestion":{
+          "tense":"imperfect",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"sing",
+          "correctAnswer":"3rd sing - impf - ind - act"
+        }
+      },
+      {
+        "greek":"ἐλύομεν",
+        "dictionaryForm":"λύω",
+        "translation":"to release",
+        "stem":"λυ-",
+        "grammarQuestion":{
+          "tense":"imperfect",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"plur",
+          "correctAnswer":"1st plur - impf - ind - act"
+        }
+      },
+      {
+        "greek":"ἐλύετε",
+        "dictionaryForm":"λύω",
+        "translation":"to release",
+        "stem":"λυ-",
+        "grammarQuestion":{
+          "tense":"imperfect",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"plur",
+          "correctAnswer":"2nd plur - impf - ind - act"
+        }
+      },
+      {
+        "greek":"ἔλυον",
+        "dictionaryForm":"λύω",
+        "translation":"to release",
+        "stem":"λυ-",
+        "grammarQuestion":{
+          "tense":"imperfect",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"plur",
+          "correctAnswer":"3rd plur - impf - ind - act"
+        }
+      },
+      {
+        "greek":"ἔφερον",
+        "dictionaryForm":"φέρω",
+        "translation":"to carry",
+        "stem":"φερ-",
+        "grammarQuestion":{
+          "tense":"imperfect",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"sing",
+          "correctAnswer":"1st sing - impf - ind - act"
+        }
+      },
+      {
+        "greek":"ἔφερες",
+        "dictionaryForm":"φέρω",
+        "translation":"to carry",
+        "stem":"φερ-",
+        "grammarQuestion":{
+          "tense":"imperfect",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"sing",
+          "correctAnswer":"2nd sing - impf - ind - act"
+        }
+      },
+      {
+        "greek":"ἔφερεν",
+        "dictionaryForm":"φέρω",
+        "translation":"to carry",
+        "stem":"φερ-",
+        "grammarQuestion":{
+          "tense":"imperfect",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"sing",
+          "correctAnswer":"3rd sing - impf - ind - act"
+        }
+      },
+      {
+        "greek":"ἐφέρομεν",
+        "dictionaryForm":"φέρω",
+        "translation":"to carry",
+        "stem":"φερ-",
+        "grammarQuestion":{
+          "tense":"imperfect",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"plur",
+          "correctAnswer":"1st plur - impf - ind - act"
+        }
+      },
+      {
+        "greek":"ἐφέρετε",
+        "dictionaryForm":"φέρω",
+        "translation":"to carry",
+        "stem":"φερ-",
+        "grammarQuestion":{
+          "tense":"imperfect",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"plur",
+          "correctAnswer":"2nd plur - impf - ind - act"
+        }
+      },
+      {
+        "greek":"ἔφερον",
+        "dictionaryForm":"φέρω",
+        "translation":"to carry",
+        "stem":"φερ-",
+        "grammarQuestion":{
+          "tense":"imperfect",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"plur",
+          "correctAnswer":"3rd plur - impf - ind - act"
+        }
+      },
+      {
+        "greek":"ἐδόκουν",
+        "dictionaryForm":"δοκέω",
+        "translation":"to seem",
+        "stem":"δοκ-",
+        "grammarQuestion":{
+          "tense":"imperfect",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"sing",
+          "correctAnswer":"1st sing - impf - ind - act"
+        }
+      },
+      {
+        "greek":"ἐδόκεις",
+        "dictionaryForm":"δοκέω",
+        "translation":"to seem",
+        "stem":"δοκ-",
+        "grammarQuestion":{
+          "tense":"imperfect",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"sing",
+          "correctAnswer":"2nd sing - impf - ind - act"
+        }
+      },
+      {
+        "greek":"ἐδόκει",
+        "dictionaryForm":"δοκέω",
+        "translation":"to seem",
+        "stem":"δοκ-",
+        "grammarQuestion":{
+          "tense":"imperfect",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"sing",
+          "correctAnswer":"3rd sing - impf - ind - act"
+        }
+      },
+      {
+        "greek":"ἐδοκοῦμεν",
+        "dictionaryForm":"δοκέω",
+        "translation":"to seem",
+        "stem":"δοκ-",
+        "grammarQuestion":{
+          "tense":"imperfect",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"plur",
+          "correctAnswer":"1st plur - impf - ind - act"
+        }
+      },
+      {
+        "greek":"ἐδοκεῖτε",
+        "dictionaryForm":"δοκέω",
+        "translation":"to seem",
+        "stem":"δοκ-",
+        "grammarQuestion":{
+          "tense":"imperfect",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"plur",
+          "correctAnswer":"2nd plur - impf - ind - act"
+        }
+      },
+      {
+        "greek":"ἐδόκουν",
+        "dictionaryForm":"δοκέω",
+        "translation":"to seem",
+        "stem":"δοκ-",
+        "grammarQuestion":{
+          "tense":"imperfect",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"plur",
+          "correctAnswer":"3rd plur - impf - ind - act"
+        }
+      }
+    ]
+  },
+  {
+    "theme": "Active - Indicative",
+    "set":1,
+    "segment":"Aorist",
+    "description": "Basic Formation",
+    "difficulty":"beginner",
+    "content":[
+      {
+        "greek":"ἔλυσα",
+        "dictionaryForm":"λύω",
+        "translation":"to release",
+        "stem":"λυ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"sing",
+          "correctAnswer":"1st sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἔλυσας",
+        "dictionaryForm":"λύω",
+        "translation":"to release",
+        "stem":"λυ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"sing",
+          "correctAnswer":"2nd sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἔλυσε(ν)",
+        "dictionaryForm":"λύω",
+        "translation":"to release",
+        "stem":"λυ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"sing",
+          "correctAnswer":"3rd sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐλύσαμεν",
+        "dictionaryForm":"λύω",
+        "translation":"to release",
+        "stem":"λυ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"plur",
+          "correctAnswer":"1st plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐλύσατε",
+        "dictionaryForm":"λύω",
+        "translation":"to release",
+        "stem":"λυ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"plur",
+          "correctAnswer":"2nd plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἔλυσαν",
+        "dictionaryForm":"λύω",
+        "translation":"to release",
+        "stem":"λυ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"plur",
+          "correctAnswer":"3rd plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐπαίδευσα",
+        "dictionaryForm":"παιδεύω",
+        "translation":"to educate",
+        "stem":"παιδευ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"sing",
+          "correctAnswer":"1st sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐπαίδευσας",
+        "dictionaryForm":"παιδεύω",
+        "translation":"to educate",
+        "stem":"παιδευ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"sing",
+          "correctAnswer":"2nd sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐπαίδευσε(ν)",
+        "dictionaryForm":"παιδεύω",
+        "translation":"to educate",
+        "stem":"παιδευ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"sing",
+          "correctAnswer":"3rd sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐπαιδεύσαμεν",
+        "dictionaryForm":"παιδεύω",
+        "translation":"to educate",
+        "stem":"παιδευ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"plur",
+          "correctAnswer":"1st plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐπαιδεύσατε",
+        "dictionaryForm":"παιδεύω",
+        "translation":"to educate",
+        "stem":"παιδευ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"plur",
+          "correctAnswer":"2nd plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐπαίδευσαν",
+        "dictionaryForm":"παιδεύω",
+        "translation":"to educate",
+        "stem":"παιδευ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"plur",
+          "correctAnswer":"3rd plur - aor - ind - act"
+        }
+      }
+    ]
+  },
+  {
+    "theme": "Active - Indicative",
+    "set":2,
+    "segment":"Aorist",
+    "description": "Aorist With Contraction",
+    "difficulty":"beginner",
+    "contractionRule":"In the aorist, verbs with stems ending in epsilon contract by lengthening ε to η before adding the tense marker",
+    "content":[
+      {
+        "greek":"ἐδόκησα",
+        "dictionaryForm":"δοκέω",
+        "translation":"to seem",
+        "stem":"δοκ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"sing",
+          "correctAnswer":"1st sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐδόκησας",
+        "dictionaryForm":"δοκέω",
+        "translation":"to seem",
+        "stem":"δοκ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"sing",
+          "correctAnswer":"2nd sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐδόκησε(ν)",
+        "dictionaryForm":"δοκέω",
+        "translation":"to seem",
+        "stem":"δοκ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"sing",
+          "correctAnswer":"3rd sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐδοκήσαμεν",
+        "dictionaryForm":"δοκέω",
+        "translation":"to seem",
+        "stem":"δοκ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"plur",
+          "correctAnswer":"1st plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐδοκήσατε",
+        "dictionaryForm":"δοκέω",
+        "translation":"to seem",
+        "stem":"δοκ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"plur",
+          "correctAnswer":"2nd plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐδόκησαν",
+        "dictionaryForm":"δοκέω",
+        "translation":"to seem",
+        "stem":"δοκ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"plur",
+          "correctAnswer":"3rd plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐποίησα",
+        "dictionaryForm":"ποιέω",
+        "translation":"to make",
+        "stem":"ποιέ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"sing",
+          "correctAnswer":"1st sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐποίησας",
+        "dictionaryForm":"ποιέω",
+        "translation":"to make",
+        "stem":"ποιέ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"sing",
+          "correctAnswer":"2nd sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐποίησε(ν)",
+        "dictionaryForm":"ποιέω",
+        "translation":"to make",
+        "stem":"ποιέ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"sing",
+          "correctAnswer":"3rd sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐποιήσαμεν",
+        "dictionaryForm":"ποιέω",
+        "translation":"to make",
+        "stem":"ποιέ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"plur",
+          "correctAnswer":"1st plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐποιήσατε",
+        "dictionaryForm":"ποιέω",
+        "translation":"to make",
+        "stem":"ποιέ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"plur",
+          "correctAnswer":"2nd plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐποίησαν",
+        "dictionaryForm":"ποιέω",
+        "translation":"to make",
+        "stem":"ποιέ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"plur",
+          "correctAnswer":"3rd plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐτίμησα",
+        "dictionaryForm":"τιμάω",
+        "translation":"to honor",
+        "stem":"τιμά-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"sing",
+          "correctAnswer":"1st sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐτίμησας",
+        "dictionaryForm":"τιμάω",
+        "translation":"to honor",
+        "stem":"τιμά-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"sing",
+          "correctAnswer":"2nd sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐτίμησε(ν)",
+        "dictionaryForm":"τιμάω",
+        "translation":"to honor",
+        "stem":"τιμά-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"sing",
+          "correctAnswer":"3rd sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐτιμήσαμεν",
+        "dictionaryForm":"τιμάω",
+        "translation":"to honor",
+        "stem":"τιμά-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"plur",
+          "correctAnswer":"1st plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐτιμήσατε",
+        "dictionaryForm":"τιμάω",
+        "translation":"to honor",
+        "stem":"τιμά-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"plur",
+          "correctAnswer":"2nd plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐτίμησαν",
+        "dictionaryForm":"τιμάω",
+        "translation":"to honor",
+        "stem":"τιμά-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"plur",
+          "correctAnswer":"3rd plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐδήλωσα",
+        "dictionaryForm":"δηλόω",
+        "translation":"to show",
+        "stem":"δηλό-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"sing",
+          "correctAnswer":"1st sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐδήλωσας",
+        "dictionaryForm":"δηλόω",
+        "translation":"to show",
+        "stem":"δηλό-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"sing",
+          "correctAnswer":"2nd sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐδήλωσε(ν)",
+        "dictionaryForm":"δηλόω",
+        "translation":"to show",
+        "stem":"δηλό-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"sing",
+          "correctAnswer":"3rd sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐδηλώσαμεν",
+        "dictionaryForm":"δηλόω",
+        "translation":"to show",
+        "stem":"δηλό-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"plur",
+          "correctAnswer":"1st plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐδηλώσατε",
+        "dictionaryForm":"δηλόω",
+        "translation":"to show",
+        "stem":"δηλό-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"plur",
+          "correctAnswer":"2nd plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐδήλωσαν",
+        "dictionaryForm":"δηλόω",
+        "translation":"to show",
+        "stem":"δηλό-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"plur",
+          "correctAnswer":"3rd plur - aor - ind - act"
+        }
+      }
+    ]
+  },
+  {
+    "theme": "Active - Indicative",
+    "set":3,
+    "segment":"Aorist",
+    "description": "Aorist With Consonant Stem Shift",
+    "difficulty":"beginner",
+    "contractionRule":"In the aorist, the sigma contracts with specific consonants from the verb stem to form stem endings in ψ or ξ (e.g. stems ending in π, β, φ, κ, γ, χ, σκ)",
+    "content":[
+      {
+        "greek":"ἐγραψα",
+        "dictionaryForm":"γράφω",
+        "translation":"to write",
+        "stem":"γράφ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"sing",
+          "correctAnswer":"1st sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐγραψας",
+        "dictionaryForm":"γράφω",
+        "translation":"to write",
+        "stem":"γράφ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"sing",
+          "correctAnswer":"2nd sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐγραψε(ν)",
+        "dictionaryForm":"γράφω",
+        "translation":"to write",
+        "stem":"γράφ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"sing",
+          "correctAnswer":"3rd sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐγραψαμεν",
+        "dictionaryForm":"γράφω",
+        "translation":"to write",
+        "stem":"γράφ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"plur",
+          "correctAnswer":"1st plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐγραψατε",
+        "dictionaryForm":"γράφω",
+        "translation":"to write",
+        "stem":"γράφ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"plur",
+          "correctAnswer":"2nd plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐγραψαν",
+        "dictionaryForm":"γράφω",
+        "translation":"to write",
+        "stem":"γράφ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"plur",
+          "correctAnswer":"3rd plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐπεμψα",
+        "dictionaryForm":"πέμπω",
+        "translation":"to send",
+        "stem":"πέμπ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"sing",
+          "correctAnswer":"1st sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐπεμψας",
+        "dictionaryForm":"πέμπω",
+        "translation":"to send",
+        "stem":"πέμπ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"sing",
+          "correctAnswer":"2nd sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐπεμψε(ν)",
+        "dictionaryForm":"πέμπω",
+        "translation":"to send",
+        "stem":"πέμπ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"sing",
+          "correctAnswer":"3rd sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐπεμψαμεν",
+        "dictionaryForm":"πέμπω",
+        "translation":"to send",
+        "stem":"πέμπ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"plur",
+          "correctAnswer":"1st plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐπεμψατε",
+        "dictionaryForm":"πέμπω",
+        "translation":"to send",
+        "stem":"πέμπ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"plur",
+          "correctAnswer":"2nd plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐπεμψαν",
+        "dictionaryForm":"πέμπω",
+        "translation":"to send",
+        "stem":"πέμπ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"plur",
+          "correctAnswer":"3rd plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐκρυψα",
+        "dictionaryForm":"κρύπτω",
+        "translation":"to hide",
+        "stem":"κρύπτ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"sing",
+          "correctAnswer":"1st sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐκρυψας",
+        "dictionaryForm":"κρύπτω",
+        "translation":"to hide",
+        "stem":"κρύπτ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"sing",
+          "correctAnswer":"2nd sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐκρυψε(ν)",
+        "dictionaryForm":"κρύπτω",
+        "translation":"to hide",
+        "stem":"κρύπτ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"sing",
+          "correctAnswer":"3rd sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐκρυψαμεν",
+        "dictionaryForm":"κρύπτω",
+        "translation":"to hide",
+        "stem":"κρύπτ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"plur",
+          "correctAnswer":"1st plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐκρυψατε",
+        "dictionaryForm":"κρύπτω",
+        "translation":"to hide",
+        "stem":"κρύπτ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"plur",
+          "correctAnswer":"2nd plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐκρυψαν",
+        "dictionaryForm":"κρύπτω",
+        "translation":"to hide",
+        "stem":"κρύπτ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"plur",
+          "correctAnswer":"3rd plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐφυλαξα",
+        "dictionaryForm":"φυλάσσω",
+        "translation":"to guard",
+        "stem":"φυλάσσ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"sing",
+          "correctAnswer":"1st sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐφυλαξας",
+        "dictionaryForm":"φυλάσσω",
+        "translation":"to guard",
+        "stem":"φυλάσσ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"sing",
+          "correctAnswer":"2nd sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐφυλαξε(ν)",
+        "dictionaryForm":"φυλάσσω",
+        "translation":"to guard",
+        "stem":"φυλάσσ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"sing",
+          "correctAnswer":"3rd sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐφυλαξαμεν",
+        "dictionaryForm":"φυλάσσω",
+        "translation":"to guard",
+        "stem":"φυλάσσ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"plur",
+          "correctAnswer":"1st plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐφυλαξατε",
+        "dictionaryForm":"φυλάσσω",
+        "translation":"to guard",
+        "stem":"φυλάσσ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"plur",
+          "correctAnswer":"2nd plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐφυλαξαν",
+        "dictionaryForm":"φυλάσσω",
+        "translation":"to guard",
+        "stem":"φυλάσσ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"plur",
+          "correctAnswer":"3rd plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐδιωξα",
+        "dictionaryForm":"διώκω",
+        "translation":"to pursue",
+        "stem":"διώκ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"sing",
+          "correctAnswer":"1st sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐδιωξας",
+        "dictionaryForm":"διώκω",
+        "translation":"to pursue",
+        "stem":"διώκ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"sing",
+          "correctAnswer":"2nd sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐδιωξε(ν)",
+        "dictionaryForm":"διώκω",
+        "translation":"to pursue",
+        "stem":"διώκ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"sing",
+          "correctAnswer":"3rd sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐδιωξαμεν",
+        "dictionaryForm":"διώκω",
+        "translation":"to pursue",
+        "stem":"διώκ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"plur",
+          "correctAnswer":"1st plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐδιωξατε",
+        "dictionaryForm":"διώκω",
+        "translation":"to pursue",
+        "stem":"διώκ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"plur",
+          "correctAnswer":"2nd plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐδιωξαν",
+        "dictionaryForm":"διώκω",
+        "translation":"to pursue",
+        "stem":"διώκ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"plur",
+          "correctAnswer":"3rd plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐκοψα",
+        "dictionaryForm":"κόπτω",
+        "translation":"to cut",
+        "stem":"κόπτ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"sing",
+          "correctAnswer":"1st sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐκοψας",
+        "dictionaryForm":"κόπτω",
+        "translation":"to cut",
+        "stem":"κόπτ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"sing",
+          "correctAnswer":"2nd sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐκοψε(ν)",
+        "dictionaryForm":"κόπτω",
+        "translation":"to cut",
+        "stem":"κόπτ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"sing",
+          "correctAnswer":"3rd sing - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐκοψαμεν",
+        "dictionaryForm":"κόπτω",
+        "translation":"to cut",
+        "stem":"κόπτ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"1st",
+          "number":"plur",
+          "correctAnswer":"1st plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐκοψατε",
+        "dictionaryForm":"κόπτω",
+        "translation":"to cut",
+        "stem":"κόπτ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"2nd",
+          "number":"plur",
+          "correctAnswer":"2nd plur - aor - ind - act"
+        }
+      },
+      {
+        "greek":"ἐκοψαν",
+        "dictionaryForm":"κόπτω",
+        "translation":"to cut",
+        "stem":"κόπτ-",
+        "grammarQuestion":{
+          "tense":"aorist",
+          "voice":"active",
+          "mood":"indicative",
+          "person":"3rd",
+          "number":"plur",
+          "correctAnswer":"3rd plur - aor - ind - act"
+        }
+      }
+    ]
+  },
+  {
+    "theme": "Active - Participle",
+    "set": 1,
+    "segment": "Present",
+    "description": "Masculine",
+    "difficulty": "intermediate",
+    "content": [
+      {
+        "greek": "λύων",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "sing",
+          "correctAnswer": "nom sing - pres - act - part"
+        }
+      },
+      {
+        "greek": "λύοντος",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "sing",
+          "correctAnswer": "gen sing - pres - act - part"
+        }
+      },
+      {
+        "greek": "λύοντι",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "sing",
+          "correctAnswer": "dat sing - pres - act - part"
+        }
+      },
+      {
+        "greek": "λύοντα",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "sing",
+          "correctAnswer": "acc sing - pres - act - part"
+        }
+      },
+      {
+        "greek": "λύοντες",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "plur",
+          "correctAnswer": "nom plur - pres - act - part"
+        }
+      },
+      {
+        "greek": "λυόντων",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "plur",
+          "correctAnswer": "gen plur - pres - act - part"
+        }
+      },
+      {
+        "greek": "λύουσι(ν)",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "plur",
+          "correctAnswer": "dat plur - pres - act - part"
+        }
+      },
+      {
+        "greek": "λύοντας",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "plur",
+          "correctAnswer": "acc plur - pres - act - part"
+        }
+      }
+    ]
+  }
+]

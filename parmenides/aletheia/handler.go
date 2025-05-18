@@ -11,20 +11,24 @@ import (
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/models"
 	"github.com/odysseia-greek/agora/plato/service"
-	ptolemaios "github.com/odysseia-greek/delphi/ptolemaios/diplomat"
+	aristides "github.com/odysseia-greek/delphi/aristides/diplomat"
+	pba "github.com/odysseia-greek/olympia/aristarchos/proto"
 	"strings"
+	"sync"
 )
 
 type ParmenidesHandler struct {
-	Index        string
-	Created      int
-	Elastic      elastic.Client
-	Eupalinos    EupalinosClient
-	Channel      string
-	DutchChannel string
-	ExitCode     string
-	PolicyName   string
-	Ambassador   *ptolemaios.ClientAmbassador
+	Index            string
+	Created          int
+	Elastic          elastic.Client
+	Eupalinos        EupalinosClient
+	Channel          string
+	DutchChannel     string
+	ExitCode         string
+	PolicyName       string
+	Ambassador       *aristides.ClientAmbassador
+	Aggregator       pba.Aristarchos_CreateNewEntryClient
+	AggregatorCancel context.CancelFunc
 }
 
 func (p *ParmenidesHandler) DeleteIndexAtStartUp() error {
@@ -61,9 +65,8 @@ func (p *ParmenidesHandler) CreateIndexAtStartup() error {
 	err := p.createPolicyAtStartup()
 	if err != nil {
 		return err
-
 	}
-	indexMapping := quizIndex(p.PolicyName)
+	indexMapping := quizIndex(p.PolicyName, 1, 0)
 	created, err := p.Elastic.Index().Create(p.Index, indexMapping)
 	if err != nil {
 		return err
@@ -74,79 +77,256 @@ func (p *ParmenidesHandler) CreateIndexAtStartup() error {
 	return nil
 }
 
-func (p *ParmenidesHandler) AddWithQueue(quizzes []models.MultipleChoiceQuiz) error {
+func (p *ParmenidesHandler) AddWithQueue(quizDocs []interface{}) error {
 	var buf bytes.Buffer
+	var wg sync.WaitGroup
 
-	var currBatch int
+	// Process each quiz type in a separate goroutine
+	for _, doc := range quizDocs {
+		switch q := doc.(type) {
+		case models.MediaQuiz:
+			wg.Add(1)
+			go func(q models.MediaQuiz) {
+				defer wg.Done()
+				p.processMediaQuiz(q)
+			}(q)
 
-	for _, quiz := range quizzes {
-		currBatch++
-		for _, word := range quiz.Content {
-			meros := models.Meros{
-				Greek:    word.Greek,
-				English:  word.Translation,
-				Original: word.Greek,
-			}
+		case models.AuthorbasedQuiz:
+			wg.Add(1)
+			go func(q models.AuthorbasedQuiz) {
+				defer wg.Done()
+				p.processAuthorBasedQuiz(q)
+			}(q)
 
-			alternateChannel := false
-			if quiz.QuizMetadata.Language == "Dutch" {
-				meros.Dutch = word.Translation
-				meros.English = ""
-				alternateChannel = true
-			}
+		case models.MultipleChoiceQuiz:
+			wg.Add(1)
+			go func(q models.MultipleChoiceQuiz) {
+				defer wg.Done()
+				p.processMultipleChoiceQuiz(q)
+			}(q)
 
-			jsonsifiedMeros, _ := meros.Marshal()
-			msg := &pb.Epistello{
-				Data:    string(jsonsifiedMeros),
-				Channel: p.Channel,
-			}
-
-			if alternateChannel {
-				msg.Channel = p.DutchChannel
-			}
-
-			err := p.EnqueueTask(context.Background(), msg)
-			if err != nil {
-				logging.Error(err.Error())
-			}
-		}
-
-		meta := []byte(fmt.Sprintf(`{ "index": {} }%s`, "\n"))
-		jsonifiedWord, _ := json.Marshal(quiz)
-		jsonifiedWord = append(jsonifiedWord, "\n"...)
-		buf.Grow(len(meta) + len(jsonifiedWord))
-		buf.Write(meta)
-		buf.Write(jsonifiedWord)
-
-		if currBatch == len(quizzes) {
-			res, err := p.Elastic.Document().Bulk(buf, p.Index)
-			if err != nil {
-				logging.Error(err.Error())
-				return err
-			}
-
-			p.Created = p.Created + len(res.Items)
+		case GrammarBasedQuiz:
+			wg.Add(1)
+			go func(q GrammarBasedQuiz) {
+				defer wg.Done()
+				p.processGrammarQuiz(q)
+			}(q)
 		}
 	}
+
+	// Collect documents for bulk indexing
+	for _, doc := range quizDocs {
+		meta := []byte(fmt.Sprintf(`{ "index": {} }%s`, "\n"))
+		jsonifiedQuiz, err := json.Marshal(doc)
+		if err != nil {
+			logging.Error("Failed to marshal quiz: " + err.Error())
+			continue
+		}
+
+		buf.Grow(len(meta) + len(jsonifiedQuiz) + 1)
+		buf.Write(meta)
+		buf.Write(jsonifiedQuiz)
+		buf.WriteByte('\n')
+	}
+
+	// Wait for queue processing before sending to Elasticsearch
+	wg.Wait()
+
+	// Bulk insert into Elasticsearch
+	res, err := p.Elastic.Document().Bulk(buf, p.Index)
+	if err != nil {
+		logging.Error(err.Error())
+		return err
+	}
+
+	p.Created += len(res.Items)
 	return nil
 }
 
-func (p *ParmenidesHandler) AddWithoutQueue(content []byte) error {
-	_, err := p.Elastic.Index().CreateDocument(p.Index, content)
+func (p *ParmenidesHandler) AddWithoutQueue(quizDocs []interface{}) error {
+	var buf bytes.Buffer
+
+	for _, doc := range quizDocs {
+		meta := []byte(fmt.Sprintf(`{ "index": {} }%s`, "\n"))
+		jsonifiedDoc, err := json.Marshal(doc)
+		if err != nil {
+			logging.Error("Failed to marshal JSON: " + err.Error())
+			continue
+		}
+
+		buf.Grow(len(meta) + len(jsonifiedDoc) + 1)
+		buf.Write(meta)
+		buf.Write(jsonifiedDoc)
+		buf.WriteByte('\n') // Ensure newline after each document
+	}
+
+	// Send all documents in a single bulk request
+	res, err := p.Elastic.Document().Bulk(buf, p.Index)
+	if err != nil {
+		logging.Error(err.Error())
+		return err
+	}
+
+	p.Created += len(res.Items)
+	return nil
+}
+
+func (p *ParmenidesHandler) processMediaQuiz(q models.MediaQuiz) {
+	for _, word := range q.Content {
+		meros := models.Meros{
+			Greek:    word.Greek,
+			English:  word.Translation,
+			Original: word.Greek,
+		}
+
+		jsonMeros, _ := meros.Marshal()
+		msg := &pb.Epistello{
+			Data:    string(jsonMeros),
+			Channel: p.Channel,
+		}
+
+		err := p.enqueueTask(context.Background(), msg)
+		if err != nil {
+			logging.Error(err.Error())
+		}
+	}
+}
+
+func (p *ParmenidesHandler) processAuthorBasedQuiz(q models.AuthorbasedQuiz) {
+	for _, word := range q.Content {
+		meros := models.Meros{
+			Greek:    word.Greek,
+			English:  word.Translation,
+			Original: word.Greek,
+		}
+
+		jsonMeros, _ := meros.Marshal()
+		msg := &pb.Epistello{
+			Data:    string(jsonMeros),
+			Channel: p.Channel,
+		}
+
+		err := p.enqueueTask(context.Background(), msg)
+		if err != nil {
+			logging.Error(err.Error())
+		}
+
+		if word.HasGrammarQuestions {
+			for _, grammarQuestion := range word.GrammarQuestions {
+				err = p.sendToAggregator(context.Background(), grammarQuestion, word.Greek, word.Translation)
+				if err != nil {
+					logging.Error(err.Error())
+					break
+				}
+			}
+		}
+
+	}
+}
+
+func (p *ParmenidesHandler) processMultipleChoiceQuiz(q models.MultipleChoiceQuiz) {
+	for _, word := range q.Content {
+		meros := models.Meros{
+			Greek:    word.Greek,
+			English:  word.Translation,
+			Original: word.Greek,
+		}
+
+		alternateChannel := false
+		if q.QuizMetadata.Language == "Dutch" {
+			meros.Dutch = word.Translation
+			meros.English = ""
+			alternateChannel = true
+		}
+
+		jsonMeros, _ := meros.Marshal()
+		msg := &pb.Epistello{
+			Data:    string(jsonMeros),
+			Channel: p.Channel,
+		}
+
+		if alternateChannel {
+			msg.Channel = p.DutchChannel
+		}
+
+		err := p.enqueueTask(context.Background(), msg)
+		if err != nil {
+			logging.Error(err.Error())
+		}
+	}
+}
+
+func (p *ParmenidesHandler) processGrammarQuiz(q GrammarBasedQuiz) {
+	for _, word := range q.Content {
+		grammarQuestion := models.GrammarQuestion{
+			CorrectAnswer:    word.GrammarQuestion.CorrectAnswer,
+			TypeOfWord:       "verb",
+			WordInText:       word.Greek,
+			ExtraInformation: "",
+		}
+
+		if strings.Contains(q.Theme, "Participle") {
+			grammarQuestion.TypeOfWord = "participle"
+		}
+
+		err := p.sendToAggregator(context.Background(), grammarQuestion, word.DictionaryForm, word.Translation)
+		if err != nil {
+			logging.Error(err.Error())
+		}
+	}
+}
+
+func (p *ParmenidesHandler) sendToAggregator(ctx context.Context, grammarQuestion models.GrammarQuestion, greekWord, translation string) error {
+	if p.Aggregator == nil {
+		return fmt.Errorf("aggregator is empty")
+	}
+
+	traceID, err := uuid.NewUUID()
+	ctx = context.WithValue(ctx, service.HeaderKey, traceID.String())
 	if err != nil {
 		return err
 	}
 
-	p.Created += 1
+	// send word to aggregator
+	partOfSpeech := pba.PartOfSpeech_VERB
+	if grammarQuestion.TypeOfWord == "noun" {
+		partOfSpeech = pba.PartOfSpeech_NOUN
+	} else if grammarQuestion.TypeOfWord == "misc" {
+		partOfSpeech = pba.PartOfSpeech_PARTICIPLE
+	} else if grammarQuestion.TypeOfWord == "verb" {
+		if strings.Contains(grammarQuestion.CorrectAnswer, "part") {
+			partOfSpeech = pba.PartOfSpeech_PARTICLE
+		}
+	}
+
+	request := &pba.AggregatorCreationRequest{
+		Word:         grammarQuestion.WordInText,
+		Rule:         grammarQuestion.CorrectAnswer,
+		RootWord:     greekWord,
+		Translation:  translation,
+		PartOfSpeech: partOfSpeech,
+		TraceId:      traceID.String(),
+	}
+
+	if err = p.Aggregator.Send(request); err != nil {
+		logging.Error(err.Error())
+		return err
+	}
 
 	return nil
 }
 
 // EnqueueTask sends a task to the Eupalinos queue
-func (p *ParmenidesHandler) EnqueueTask(ctx context.Context, message *pb.Epistello) error {
+func (p *ParmenidesHandler) enqueueTask(ctx context.Context, message *pb.Epistello) error {
 	traceID, err := uuid.NewUUID()
 	ctx = context.WithValue(ctx, service.HeaderKey, traceID.String())
+	if err != nil {
+		return err
+	}
 
 	_, err = p.Eupalinos.EnqueueMessage(ctx, message)
+	if err != nil {
+		return err
+	}
 	return err
 }

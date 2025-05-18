@@ -3,7 +3,6 @@
     "quizMetadata":{
       "language":"English"
     },
-    "quizType":"media",
     "theme":"Economy",
     "set":1,
     "segment":"The Market",
@@ -134,7 +133,6 @@
     "quizMetadata": {
       "language": "English"
     },
-    "quizType": "media",
     "theme": "Economy",
     "set": 1,
     "segment": "Trade",

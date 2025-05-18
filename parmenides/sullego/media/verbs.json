@@ -1,0 +1,652 @@
+[
+  {
+    "quizMetadata":{
+      "language":"English"
+    },
+    "theme":"Verbs",
+    "segment": "Common Verbs 1",
+    "set": 1,
+    "content":[
+      {
+        "greek":"φέρω",
+        "translation":"carry",
+        "imageURL":"carry.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"πίνω",
+        "translation":"to drink",
+        "imageURL":"drink.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"θηράω",
+        "translation":"to hunt",
+        "imageURL":"hunt.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ἄγω",
+        "translation":"to lead",
+        "imageURL":"lead.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"λύω",
+        "translation":"loose",
+        "imageURL":"loose.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"φιλέω",
+        "translation":"love",
+        "imageURL":"love.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ἀγγέλλω",
+        "translation":"message",
+        "imageURL":"message.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ὠνέομαι",
+        "translation":"to purchase",
+        "imageURL":"purchase.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"τρέχω",
+        "translation":"to run",
+        "imageURL":"run.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"θύω",
+        "translation":"sacrifice",
+        "imageURL":"sacrifice.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"πλέω",
+        "translation":"sail",
+        "imageURL":"sail.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"πλάσσω",
+        "translation":"shape",
+        "imageURL":"shape.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ἀείδω",
+        "translation":"sing",
+        "imageURL":"sing.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ὀαρίζω",
+        "translation":"converse",
+        "imageURL":"converse.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"παύω",
+        "translation":"stop",
+        "imageURL":"stop.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"διδάσκω",
+        "translation":"teach",
+        "imageURL":"teach.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"φρονέω",
+        "translation":"to think",
+        "imageURL":"think.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"εἰμί",
+        "translation":"to be",
+        "imageURL":"tobe.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"παλαίω",
+        "translation":"to wrestle",
+        "imageURL":"wrestle.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"γράφω",
+        "translation":"to write",
+        "imageURL":"write.webp",
+        "audioFile":""
+      }
+    ]
+  },
+  {
+    "quizMetadata":{
+      "language":"English"
+    },
+    "theme":"Verbs",
+    "segment": "Common Verbs 2",
+    "set": 1,
+    "content":[
+      {
+        "greek":"οἰκοδομέω",
+        "translation":"to build a house",
+        "imageURL":"buildahouse.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"μάχομαι",
+        "translation":"to fight",
+        "imageURL":"fight.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ἀναγιγνώσκω",
+        "translation":"to know well, to read",
+        "imageURL":"knowwell.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"καθεύδω",
+        "translation":"to sleep",
+        "imageURL":"sleep.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"πονέω",
+        "translation":"to suffer",
+        "imageURL":"suffer.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ὀρχέομαι",
+        "translation":"to dance in a row",
+        "imageURL":"todanceinarow.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"πέτομαι",
+        "translation":"to fly",
+        "imageURL":"fly.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"νέω",
+        "translation":"to swim",
+        "imageURL":"swim.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ἰάομαι",
+        "translation":"to heal",
+        "imageURL":"heal.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"κινέω",
+        "translation":"to move",
+        "imageURL":"move.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ἐξαπατάω",
+        "translation":"deceive",
+        "imageURL":"deceive.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"θαυμάζω",
+        "translation":"to wonder, marvel, be astonished",
+        "imageURL":"marvel.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ἄρχω",
+        "translation":"(to be first) to rule, to begin",
+        "imageURL":"rule.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"οἶδα",
+        "translation":"to know",
+        "imageURL":"know.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ἔχω",
+        "translation":"to have",
+        "imageURL":"have.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ἐπιλανθάνομαι",
+        "translation":"to forget",
+        "imageURL":"forget.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"γίγνομαι",
+        "translation":"become, be born",
+        "imageURL":"born.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"δείκνυμι",
+        "translation":"to show",
+        "imageURL":"show.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"δοκέω",
+        "translation":"to seem, think, suppose, imagine",
+        "imageURL":"suppose.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"κοσμέω",
+        "translation":"to order, arrange",
+        "imageURL":"order.webp",
+        "audioFile":""
+      }
+    ]
+  },
+  {
+    "quizMetadata":{
+      "language":"English"
+    },
+    "theme":"Verbs",
+    "segment": "Common Verbs 3",
+    "set": 1,
+    "content":[
+      {
+        "greek":"ἀκούω",
+        "translation":"hear, listen to",
+        "imageURL":"hear.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ἀποθνῄσκω",
+        "translation":"die, be killed",
+        "imageURL":"die.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ἀποκτείνω",
+        "translation":"kill, slay",
+        "imageURL":"kill.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ἀπορέω",
+        "translation":"be at a loss",
+        "imageURL":"beataloss.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"βαίνω",
+        "translation":"go, to step",
+        "imageURL":"go.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"βοάω",
+        "translation":"shout",
+        "imageURL":"shout.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"γελάω",
+        "translation":"laugh",
+        "imageURL":"laugh.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"δηλόω",
+        "translation":"to make apparent",
+        "imageURL":"apparent.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"εὑρίσκω",
+        "translation":"find",
+        "imageURL":"find.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ζητέω",
+        "translation":"look for, seek",
+        "imageURL":"seek.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"κλαίω",
+        "translation":"cry, weep",
+        "imageURL":"cry.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"κλέπτω",
+        "translation":"steal",
+        "imageURL":"steal.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"λαμβάνω",
+        "translation":"take, seize",
+        "imageURL":"seize.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"νικάω",
+        "translation":"conquer, win",
+        "imageURL":"conquer.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ὁράω",
+        "translation":"see",
+        "imageURL":"see.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"πολιορκέω",
+        "translation":"besiege",
+        "imageURL":"besiege.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ποιέω",
+        "translation":"make, do",
+        "imageURL":"do.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"πωλέω",
+        "translation":"sell",
+        "imageURL":"sell.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"λέγω ",
+        "translation":"say; speak",
+        "imageURL":"speak.webp",
+        "audioFile":""
+      },
+      {
+        "greek": "παρασκευάζω",
+        "translation": "to get ready, prepare",
+        "imageURL":"prepare.webp",
+        "audioFile":""
+      }
+    ]
+  },
+  {
+    "quizMetadata": {
+      "language": "English"
+    },
+    "theme": "Verbs",
+    "segment": "Common Verbs 4",
+    "set": 1,
+    "content": [
+      {
+        "greek": "τόλμαω",
+        "translation": "to dare, to undertake, take heart",
+        "imageURL": "dare.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ὑπάρχω",
+        "translation": "to begin, make a beginning, take initiative, be first",
+        "imageURL": "begin.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "πιέζω",
+        "translation": "to press, squeeze, oppress, distress",
+        "imageURL": "squeeze.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "προφέρω",
+        "translation": "to bring before",
+        "imageURL": "bringbefore.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "πείθω",
+        "translation": "to prevail upon, win over, persuade",
+        "imageURL": "persuade.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "νομίζω",
+        "translation": "to have as a custom; to believe",
+        "imageURL": "believe.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "κτάομαι",
+        "translation": "to procure for oneself, to get, acquire",
+        "imageURL": "acquire.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "εἶπον",
+        "translation": "to speak, say",
+        "imageURL": "speak.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ἀπαγινέω",
+        "translation": "paying tribute",
+        "imageURL": "paytribute.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ἀφικνέομαι",
+        "translation": "to come to",
+        "imageURL": "tocometo.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "εἰσαφικνέομαι",
+        "translation": "to come into",
+        "imageURL": "comeinto.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "καταλαμβάνω",
+        "translation": "to seize upon, lay hold of",
+        "imageURL": "seize.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "φαίνω",
+        "translation": "to bring to light, make to appear",
+        "imageURL": "appear.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ἀντέχω",
+        "translation": "to hold out against, withstand",
+        "imageURL": "withstand.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ἥκω",
+        "translation": "to have come, be present, be here",
+        "imageURL": "bepresent.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ἐάω",
+        "translation": "allow, to agree",
+        "imageURL": "allow.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "μένω",
+        "translation": "to stay at home, stay where one is, not stir",
+        "imageURL": "staywhereoneis.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "φεύγω",
+        "translation": "to flee, take flight, run away",
+        "imageURL": "flee.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "φαράω",
+        "translation": "plough",
+        "imageURL": "plough.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "λείπω",
+        "translation": "to leave, quit",
+        "imageURL": "leave.webp",
+        "audioFile": ""
+      }
+    ]
+  },
+  {
+    "quizMetadata": {
+      "language": "English"
+    },
+    "theme": "Verbs",
+    "segment": "Common Verbs 5",
+    "set": 1,
+    "content": [
+      {
+        "greek": "ἐλαύνω",
+        "translation": "to drive, drive on, set in motion",
+        "imageURL": "drive.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "καθίημι",
+        "translation": "to send down, let fall",
+        "imageURL": "senddown.webp",
+        "audioFile": ""
+      },
+      {
+        "greek":"καλέω",
+        "translation":"to call, summon",
+        "imageURL": "call.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ἀποδείκνυμι",
+        "translation": "display, appoint, demonstrate",
+        "imageURL": "display.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "πολεμέω",
+        "translation": "to make war, to be at war",
+        "imageURL": "makewar.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "πυνθάνομαι",
+        "translation": "to learn by hearsay",
+        "imageURL": "learnbyhearsay.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ἐκπέμπω",
+        "translation": "to send out",
+        "imageURL": "sendout.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "δέω",
+        "translation": "to bind, tie, fasten, fetter",
+        "imageURL": "tie.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "στρατεύω",
+        "translation": "to serve in war, take the field, march",
+        "imageURL": "serveinwar.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "καταστρέφω",
+        "translation": "to turn down, trample on",
+        "imageURL": "trample.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ἀνακρίνω",
+        "translation": "to examine closely, to question, interrogate",
+        "imageURL": "interrogate.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "κατηγορέω",
+        "translation": "to speak against, to accuse",
+        "imageURL": "accuse.webp",
+        "audioFile": ""
+      },
+      {
+        "greek":"τιμάω",
+        "translation":"to honour, to pay honour to",
+        "imageURL": "honour.webp",
+        "audioFile": ""
+      },
+      {
+        "greek":"κωλύω",
+        "translation":"to let, hinder, check, prevent",
+        "imageURL": "hinder.webp",
+        "audioFile": ""
+      },
+      {
+        "greek":"δράω",
+        "translation":"to do",
+        "imageURL":"todo.webp",
+        "audioFile": ""
+      },
+      {
+        "greek":"χαίρω",
+        "translation":"to be happy",
+        "imageURL":"behappy.webp",
+        "audioFile": ""
+      },
+      {
+        "greek":"βάλλω",
+        "translation":"throw, hurl",
+        "imageURL":"throw.webp",
+        "audioFile": ""
+      },
+      {
+        "greek":"τέμνω",
+        "translation":"cut, cut down, cut to pieces",
+        "imageURL":"cut.webp",
+        "audioFile": ""
+      },
+      {
+        "greek":"μανθάνω",
+        "translation":"learn, ascertain",
+        "imageURL":"learn.webp",
+        "audioFile": ""
+      },
+      {
+        "greek":"τρέφω",
+        "translation":"nourish, feed, support",
+        "imageURL":"nourish.webp",
+        "audioFile": ""
+      }
+    ]
+  }
+]

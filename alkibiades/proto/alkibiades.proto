@@ -1,0 +1,126 @@
+syntax = "proto3";
+option go_package = "github.com/odysseia-greek/apologia/alkibiades/proto";
+
+package apologia_alkibiades;
+
+service Alkibiades {
+  rpc Health (HealthRequest) returns (HealthResponse) {};
+  rpc Options (OptionsRequest) returns (AggregatedOptions) {};
+  rpc Question (CreationRequest) returns (QuizResponse) {};
+}
+
+// Empty request messages since these endpoints require no body
+message HealthRequest {}
+
+message OptionsRequest {
+}
+
+// Response message for health check
+message HealthResponse {
+  bool healthy = 1;
+  string time = 2;
+  string version = 3;
+  DatabaseHealth database_health = 4;
+}
+
+// Nested message for database health details
+message DatabaseHealth {
+  bool healthy = 1;
+  string cluster_name = 2;
+  string server_name = 3;
+  string server_version = 4;
+}
+
+message AggregatedOptions {
+  repeated Theme themes = 1;
+}
+
+message Theme {
+  string name = 1;
+  repeated Segments segments = 2;
+}
+
+message Segments {
+  string name = 1;
+  int32 number  = 2;
+  string location  = 3;
+  Coordinates coordinates  = 4;
+}
+
+message Coordinates {
+  float x = 1;
+  float y = 2;
+}
+
+message CreationRequest {
+  string theme = 1;
+  string segment = 2; // Optional
+}
+
+message QuizResponse {
+  string theme = 1;
+  string segment = 2;
+  int32 number = 3;
+  string sentence = 4;         // Full Greek sentence
+  string translation = 5;      // English translation
+  string contextNote = 6;      // Informational text about the passage
+
+  Intro intro = 7;
+  repeated QuizStep quiz = 8;  // Quiz is polymorphic — see below
+}
+
+message Intro {
+  string author = 1;
+  string work = 2;
+  string background = 3;
+}
+
+message QuizStep {
+  oneof type {
+    MatchQuiz match = 1;
+    TriviaQuiz trivia = 2;
+    StructureQuiz structure = 3;
+    MediaDropQuiz media = 4;
+    TranslationStep final_translation = 5;
+  }
+}
+
+message MatchQuiz {
+  string instruction = 1;
+  repeated MatchPair pairs = 2;
+}
+message MatchPair {
+  string greek = 1;
+  string answer = 2;
+}
+
+message TriviaQuiz {
+  string question = 1;
+  repeated string options = 2;
+  string answer = 3;
+  string note = 4; // optional explanation
+}
+
+message StructureQuiz {
+  string title = 1;
+  string text = 2;
+  string question = 3;
+  repeated string options = 4;
+  string answer = 5;
+  string note = 6; // optional
+}
+
+message MediaDropQuiz {
+  string instruction = 1;
+  repeated MediaEntry mediaFiles = 2;
+}
+message MediaEntry {
+  string word = 1;
+  string answer = 2; // image filename or URL
+}
+
+message TranslationStep {
+  string instruction = 1;
+  repeated string options = 2;
+  string answer = 3;
+}

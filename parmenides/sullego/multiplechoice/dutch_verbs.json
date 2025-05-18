@@ -1,1110 +1,1038 @@
 [
   {
-    "quizMetadata": {
-      "language": "Dutch"
+    "quizMetadata":{
+      "language":"Dutch"
     },
-    "quizType": "multiplechoice",
-    "theme": "Verbs - Nederlands",
-    "set": 1,
-    "content": [
+    "theme":"Verbs - Nederlands",
+    "set":1,
+    "content":[
       {
-        "translation": "het is nodig/wenselijk dat, het/men moet",
-        "greek": "χρή"
+        "translation":"het is nodig/wenselijk dat, het/men moet",
+        "greek":"χρή"
       },
       {
-        "translation": "aan boord gaan van",
-        "greek": "ἁναβαίνω εἰς"
+        "translation":"aan boord gaan van",
+        "greek":"ἁναβαίνω εἰς"
       },
       {
-        "translation": "jij lacht zonder dat wij het merken",
-        "greek": "ἡμᾶς λανθάνεις γελῶν"
+        "translation":"jij lacht zonder dat wij het merken",
+        "greek":"ἡμᾶς λανθάνεις γελῶν"
       },
       {
-        "translation": "ik ben helemaal niet geïnteresseerd in die woorden",
-        "greek": "οὐδὲν μέλει μοι τούτων τῶν λόγων"
+        "translation":"ik ben helemaal niet geïnteresseerd in die woorden",
+        "greek":"οὐδὲν μέλει μοι τούτων τῶν λόγων"
       },
       {
-        "translation": "(be)zingen",
-        "greek": "ᾄδω"
+        "translation":"(be)zingen",
+        "greek":"ᾄδω"
       },
       {
-        "translation": "hebben, houden",
-        "greek": "ἔχω"
+        "translation":"hebben, houden",
+        "greek":"ἔχω"
       },
       {
-        "translation": "losmaken, beslechten (van een ruzie), schenden (een verdrag)",
-        "greek": "λύω"
+        "translation":"losmaken, beslechten (van een ruzie), schenden (een verdrag)",
+        "greek":"λύω"
       },
       {
-        "translation": "gekomen zijn, komen",
-        "greek": "ἥκω"
+        "translation":"gekomen zijn, komen",
+        "greek":"ἥκω"
       },
       {
-        "translation": "leiden, brengen",
-        "greek": "ἂγω"
+        "translation":"leiden, brengen",
+        "greek":"ἂγω"
       },
       {
-        "translation": "(toe)laten, toestaan",
-        "greek": "ἐάω"
+        "translation":"(toe)laten, toestaan",
+        "greek":"ἐάω"
       },
       {
-        "translation": "offeren",
-        "greek": "θύω"
+        "translation":"offeren",
+        "greek":"θύω"
       },
       {
-        "translation": "zeggen, spreken",
-        "greek": "λέγω"
+        "translation":"zeggen, spreken",
+        "greek":"λέγω"
       },
       {
-        "translation": "dragen, brengen",
-        "greek": "φέρω"
+        "translation":"dragen, brengen",
+        "greek":"φέρω"
       },
       {
-        "translation": "optillen, oppakken, oprichten",
-        "greek": "αἴρω"
+        "translation":"optillen, oppakken, oprichten",
+        "greek":"αἴρω"
       },
       {
-        "translation": "doen stoppen, een eind maken aan",
-        "greek": "παύω"
+        "translation":"doen stoppen, een eind maken aan",
+        "greek":"παύω"
       },
       {
-        "translation": "wachten, blijven",
-        "greek": "μένω"
+        "translation":"wachten, blijven",
+        "greek":"μένω"
       },
       {
-        "translation": "zijn, er zijn",
-        "greek": "εἱμί"
+        "translation":"zijn, er zijn",
+        "greek":"εἱμί"
       },
       {
-        "translation": "varen",
-        "greek": "πλέω"
+        "translation":"varen",
+        "greek":"πλέω"
       },
       {
-        "translation": "drinken",
-        "greek": "πίνω"
+        "translation":"drinken",
+        "greek":"πίνω"
       },
       {
-        "translation": "zien",
-        "greek": "ὁράω"
+        "translation":"zien",
+        "greek":"ὁράω"
       }
-    ],
-    "progress": {
-      "timesCorrect": 0,
-      "timesIncorrect": 0,
-      "averageAccuracy": 0
-    }
+    ]
   },
   {
-    "quizMetadata": {
-      "language": "Dutch"
+    "quizMetadata":{
+      "language":"Dutch"
     },
-    "quizType": "multiplechoice",
-    "theme": "Verbs - Nederlands",
-    "set": 2,
-    "content": [
+    "theme":"Verbs - Nederlands",
+    "set":2,
+    "content":[
       {
-        "translation": "beginnen",
-        "greek": "ἄρχω"
+        "translation":"beginnen",
+        "greek":"ἄρχω"
       },
       {
-        "translation": "doen, handelen",
-        "greek": "δράω"
+        "translation":"doen, handelen",
+        "greek":"δράω"
       },
       {
-        "translation": "roepen, schreeuwen",
-        "greek": "βοάω"
+        "translation":"roepen, schreeuwen",
+        "greek":"βοάω"
       },
       {
-        "translation": "1. gaan, komen; 2. zullen gaan, zullen komen",
-        "greek": "εἶμι"
+        "translation":"1. gaan, komen; 2. zullen gaan, zullen komen",
+        "greek":"εἶμι"
       },
       {
-        "translation": "1. laten gaan; 2. zenden",
-        "greek": "ἵημι"
+        "translation":"1. laten gaan; 2. zenden",
+        "greek":"ἵημι"
       },
       {
-        "translation": "zeggen, beweren, ja zeggen",
-        "greek": "φημί"
+        "translation":"zeggen, beweren, ja zeggen",
+        "greek":"φημί"
       },
       {
-        "translation": "verdelen, toedelen",
-        "greek": "νέμω"
+        "translation":"verdelen, toedelen",
+        "greek":"νέμω"
       },
       {
-        "translation": "redden, behouden",
-        "greek": "σῴζω"
+        "translation":"redden, behouden",
+        "greek":"σῴζω"
       },
       {
-        "translation": "1. werken, zwoegen 2. het zwaar hebben, pijn lijden",
-        "greek": "πονέω"
+        "translation":"1. werken, zwoegen 2. het zwaar hebben, pijn lijden",
+        "greek":"πονέω"
       },
       {
-        "translation": "achtervolgen",
-        "greek": "διώκω"
+        "translation":"achtervolgen",
+        "greek":"διώκω"
       },
       {
-        "translation": "vluchten, ontvluchten",
-        "greek": "φεύγω"
+        "translation":"vluchten, ontvluchten",
+        "greek":"φεύγω"
       },
       {
-        "translation": "drukken op",
-        "greek": "πιέζω"
+        "translation":"drukken op",
+        "greek":"πιέζω"
       },
       {
-        "translation": "stappen, gaan",
-        "greek": "βαίνω"
+        "translation":"stappen, gaan",
+        "greek":"βαίνω"
       },
       {
-        "translation": "zoeken",
-        "greek": "ζητέω"
+        "translation":"zoeken",
+        "greek":"ζητέω"
       },
       {
-        "translation": "verlaten, achterlaten, overlaten",
-        "greek": "λείπω"
+        "translation":"verlaten, achterlaten, overlaten",
+        "greek":"λείπω"
       },
       {
-        "translation": "maken, doen, veroorzaken",
-        "greek": "ποιέω"
+        "translation":"maken, doen, veroorzaken",
+        "greek":"ποιέω"
       },
       {
-        "translation": "houden van",
-        "greek": "φιλέω"
+        "translation":"houden van",
+        "greek":"φιλέω"
       },
       {
-        "translation": "werpen, treffen",
-        "greek": "βάλλω"
+        "translation":"werpen, treffen",
+        "greek":"βάλλω"
       },
       {
-        "translation": "kijken, zien",
-        "greek": "βλέπω"
+        "translation":"kijken, zien",
+        "greek":"βλέπω"
       },
       {
-        "translation": "bewegen",
-        "greek": "κινέω"
+        "translation":"bewegen",
+        "greek":"κινέω"
       }
-    ],
-    "progress": {
-      "timesCorrect": 0,
-      "timesIncorrect": 0,
-      "averageAccuracy": 0
-    }
+    ]
   },
   {
-    "quizMetadata": {
-      "language": "Dutch"
+    "quizMetadata":{
+      "language":"Dutch"
     },
-    "quizType": "multiplechoice",
-    "theme": "Verbs - Nederlands",
-    "set": 3,
-    "content": [
+    "theme":"Verbs - Nederlands",
+    "set":3,
+    "content":[
       {
-        "translation": "tonen, laten zien",
-        "greek": "φαίνω"
+        "translation":"tonen, laten zien",
+        "greek":"φαίνω"
       },
       {
-        "translation": "vragen, eisen",
-        "greek": "αἰτέω"
+        "translation":"vragen, eisen",
+        "greek":"αἰτέω"
       },
       {
-        "translation": "roepen",
-        "greek": "καλέω"
+        "translation":"roepen",
+        "greek":"καλέω"
       },
       {
-        "translation": "verhinderen, beletten",
-        "greek": "κωλύω"
+        "translation":"verhinderen, beletten",
+        "greek":"κωλύω"
       },
       {
-        "translation": "slaan",
-        "greek": "κόπτω"
+        "translation":"slaan",
+        "greek":"κόπτω"
       },
       {
-        "translation": "aarzelen",
-        "greek": "μέλλω"
+        "translation":"aarzelen",
+        "greek":"μέλλω"
       },
       {
-        "translation": "zenden, sturen",
-        "greek": "πέμπω"
+        "translation":"zenden, sturen",
+        "greek":"πέμπω"
       },
       {
-        "translation": "houden van",
-        "greek": "φιλέω"
+        "translation":"houden van",
+        "greek":"φιλέω"
       },
       {
-        "translation": "plaats maken, wijken, gaan",
-        "greek": "χωρέω"
+        "translation":"plaats maken, wijken, gaan",
+        "greek":"χωρέω"
       },
       {
-        "translation": "overreden, overtuigen",
-        "greek": "πείθω"
+        "translation":"overreden, overtuigen",
+        "greek":"πείθω"
       },
       {
-        "translation": "(in)nemen, gevangen nemen",
-        "greek": "αἱρέω"
+        "translation":"(in)nemen, gevangen nemen",
+        "greek":"αἱρέω"
       },
       {
-        "translation": "duidelijk maken",
-        "greek": "δηλόω"
+        "translation":"duidelijk maken",
+        "greek":"δηλόω"
       },
       {
-        "translation": "(be)wonen",
-        "greek": "οἰκέω"
+        "translation":"(be)wonen",
+        "greek":"οἰκέω"
       },
       {
-        "translation": "eren",
-        "greek": "τιμάω"
+        "translation":"eren",
+        "greek":"τιμάω"
       },
       {
-        "translation": "wensen, bilijk achten, verwachten",
-        "greek": "ἀξιόω"
+        "translation":"wensen, bilijk achten, verwachten",
+        "greek":"ἀξιόω"
       },
       {
-        "translation": "1. aarzelen 2. zullen, op het punt staan",
-        "greek": "μέλλω"
+        "translation":"1. aarzelen 2. zullen, op het punt staan",
+        "greek":"μέλλω"
       },
       {
-        "translation": "meedelen",
-        "greek": "φράζω"
+        "translation":"meedelen",
+        "greek":"φράζω"
       },
       {
-        "translation": "(over)winnen, overwinnaar zijn",
-        "greek": "νικάω"
+        "translation":"(over)winnen, overwinnaar zijn",
+        "greek":"νικάω"
       },
       {
-        "translation": "snijden",
-        "greek": "τέμνω"
+        "translation":"snijden",
+        "greek":"τέμνω"
       },
       {
-        "translation": "lachen",
-        "greek": "γελάω"
+        "translation":"lachen",
+        "greek":"γελάω"
       }
-    ],
-    "progress": {
-      "timesCorrect": 0,
-      "timesIncorrect": 0,
-      "averageAccuracy": 0
-    }
+    ]
   },
   {
-    "quizMetadata": {
-      "language": "Dutch"
+    "quizMetadata":{
+      "language":"Dutch"
     },
-    "quizType": "multiplechoice",
-    "theme": "Verbs - Nederlands",
-    "set": 4,
-    "content": [
+    "theme":"Verbs - Nederlands",
+    "set":4,
+    "content":[
       {
-        "translation": "1. roepen; 2. noemen",
-        "greek": "καλέω"
+        "translation":"1. roepen; 2. noemen",
+        "greek":"καλέω"
       },
       {
-        "translation": "baren, ter wereld brengen, voortbrengen",
-        "greek": "τίκτω"
+        "translation":"baren, ter wereld brengen, voortbrengen",
+        "greek":"τίκτω"
       },
       {
-        "translation": "schrijven",
-        "greek": "γράφω"
+        "translation":"schrijven",
+        "greek":"γράφω"
       },
       {
-        "translation": "(be)oordelen",
-        "greek": "κρίνω"
+        "translation":"(be)oordelen",
+        "greek":"κρίνω"
       },
       {
-        "translation": "opstellen, ordenen",
-        "greek": "τάττω"
+        "translation":"opstellen, ordenen",
+        "greek":"τάττω"
       },
       {
-        "translation": "nastreven",
-        "greek": "ζηλόω"
+        "translation":"nastreven",
+        "greek":"ζηλόω"
       },
       {
-        "translation": "voeden, grootbrengen, onderhouden",
-        "greek": "τρέφω"
+        "translation":"voeden, grootbrengen, onderhouden",
+        "greek":"τρέφω"
       },
       {
-        "translation": "lijden, te verduren hebben, ondervinden, ervaren",
-        "greek": "πάσχω"
+        "translation":"lijden, te verduren hebben, ondervinden, ervaren",
+        "greek":"πάσχω"
       },
       {
-        "translation": "vallen",
-        "greek": "πίπτω"
+        "translation":"vallen",
+        "greek":"πίπτω"
       },
       {
-        "translation": "rennen",
-        "greek": "τρέχω"
+        "translation":"rennen",
+        "greek":"τρέχω"
       },
       {
-        "translation": "zwijgen",
-        "greek": "σιγάω"
+        "translation":"zwijgen",
+        "greek":"σιγάω"
       },
       {
-        "translation": "gaan zitten, zitten",
-        "greek": "καθίζω"
+        "translation":"gaan zitten, zitten",
+        "greek":"καθίζω"
       },
       {
-        "translation": "menen",
-        "greek": "νομίζω"
+        "translation":"menen",
+        "greek":"νομίζω"
       },
       {
-        "translation": "in zijn macht houden, vasthouden, beheersen",
-        "greek": "κατέχω"
+        "translation":"in zijn macht houden, vasthouden, beheersen",
+        "greek":"κατέχω"
       },
       {
-        "translation": "ophalen, lichten (zoals een anker)",
-        "greek": "ἁνέλκω"
+        "translation":"ophalen, lichten (zoals een anker)",
+        "greek":"ἁνέλκω"
       },
       {
-        "translation": "onwetend zijn, niet weten",
-        "greek": "ἀγνοέω"
+        "translation":"onwetend zijn, niet weten",
+        "greek":"ἀγνοέω"
       },
       {
-        "translation": "in onzekerheid verkeren, zich geen raad weten, niet weten",
-        "greek": "ἀπορέω"
+        "translation":"in onzekerheid verkeren, zich geen raad weten, niet weten",
+        "greek":"ἀπορέω"
       },
       {
-        "translation": "verschaffen",
-        "greek": "παρέχω"
+        "translation":"verschaffen",
+        "greek":"παρέχω"
       },
       {
-        "translation": "verbergen",
-        "greek": "κρύπτω"
+        "translation":"verbergen",
+        "greek":"κρύπτω"
       },
       {
-        "translation": "menen",
-        "greek": "νομίζω"
+        "translation":"menen",
+        "greek":"νομίζω"
       }
-    ],
-    "progress": {
-      "timesCorrect": 0,
-      "timesIncorrect": 0,
-      "averageAccuracy": 0
-    }
+    ]
   },
   {
-    "quizMetadata": {
-      "language": "Dutch"
+    "quizMetadata":{
+      "language":"Dutch"
     },
-    "quizType": "multiplechoice",
-    "theme": "Verbs - Nederlands",
-    "set": 5,
-    "content": [
+    "theme":"Verbs - Nederlands",
+    "set":5,
+    "content":[
       {
-        "translation": "zich haasten",
-        "greek": "σπεύδω"
+        "translation":"zich haasten",
+        "greek":"σπεύδω"
       },
       {
-        "translation": "bekijken, letten op; beschouwen",
-        "greek": "σκοπέω"
+        "translation":"bekijken, letten op; beschouwen",
+        "greek":"σκοπέω"
       },
       {
-        "translation": "verstandig zijn, denken",
-        "greek": "φρονέω"
+        "translation":"verstandig zijn, denken",
+        "greek":"φρονέω"
       },
       {
-        "translation": "bevelen, verzoeken, aanraden",
-        "greek": "κελεύω"
+        "translation":"bevelen, verzoeken, aanraden",
+        "greek":"κελεύω"
       },
       {
-        "translation": "handelen, doen",
-        "greek": "πράττω"
+        "translation":"handelen, doen",
+        "greek":"πράττω"
       },
       {
-        "translation": "vragen",
-        "greek": "ἐρωτάω"
+        "translation":"vragen",
+        "greek":"ἐρωτάω"
       },
       {
-        "translation": "1. ordenen; 2. versieren, voorzien van",
-        "greek": "κοσμέω"
+        "translation":"1. ordenen; 2. versieren, voorzien van",
+        "greek":"κοσμέω"
       },
       {
-        "translation": "1. agressief/overmoedig handelen; 2. mishandelen",
-        "greek": "ὑβρίζω"
+        "translation":"1. agressief/overmoedig handelen; 2. mishandelen",
+        "greek":"ὑβρίζω"
       },
       {
-        "translation": "(weg)sturen, vrijlaten",
-        "greek": "ἀφίημι"
+        "translation":"(weg)sturen, vrijlaten",
+        "greek":"ἀφίημι"
       },
       {
-        "translation": "geven",
-        "greek": "δίδωμι"
+        "translation":"geven",
+        "greek":"δίδωμι"
       },
       {
-        "translation": "doen staan, oprichten, tot staan brengen",
-        "greek": "ἵστημι"
+        "translation":"doen staan, oprichten, tot staan brengen",
+        "greek":"ἵστημι"
       },
       {
-        "translation": "leggen, plaatsen",
-        "greek": "τίθημι"
+        "translation":"leggen, plaatsen",
+        "greek":"τίθημι"
       },
       {
-        "translation": "helpen, een dienst bewijzen",
-        "greek": "ὠφελέω"
+        "translation":"helpen, een dienst bewijzen",
+        "greek":"ὠφελέω"
       },
       {
-        "translation": "wakker maken, (op)wekken",
-        "greek": "ἐγείρω"
+        "translation":"wakker maken, (op)wekken",
+        "greek":"ἐγείρω"
       },
       {
-        "translation": "rijden, varen",
-        "greek": "ἐλαύνω"
+        "translation":"rijden, varen",
+        "greek":"ἐλαύνω"
       },
       {
-        "translation": "brengen, halen, meenemen",
-        "greek": "κομίζω"
+        "translation":"brengen, halen, meenemen",
+        "greek":"κομίζω"
       },
       {
-        "translation": "durven, wagen",
-        "greek": "τολμάω"
+        "translation":"durven, wagen",
+        "greek":"τολμάω"
       },
       {
-        "translation": "onrecht doen, onrechtvaardig (be)handelen",
-        "greek": "ἀδικέω"
+        "translation":"onrecht doen, onrechtvaardig (be)handelen",
+        "greek":"ἀδικέω"
       },
       {
-        "translation": "straffen",
-        "greek": "ζημιόω"
+        "translation":"straffen",
+        "greek":"ζημιόω"
       },
       {
-        "translation": "nemen krijgen",
-        "greek": "λαμβάνω"
+        "translation":"nemen krijgen",
+        "greek":"λαμβάνω"
       }
-    ],
-    "progress": {
-      "timesCorrect": 0,
-      "timesIncorrect": 0,
-      "averageAccuracy": 0
-    }
+    ]
   },
   {
-    "quizMetadata": {
-      "language": "Dutch"
+    "quizMetadata":{
+      "language":"Dutch"
     },
-    "quizType": "multiplechoice",
-    "theme": "Verbs - Nederlands",
-    "set": 6,
-    "content": [
+    "theme":"Verbs - Nederlands",
+    "set":6,
+    "content":[
       {
-        "translation": "leren, onderwijzen",
-        "greek": "διδάσκω"
+        "translation":"leren, onderwijzen",
+        "greek":"διδάσκω"
       },
       {
-        "translation": "bewonderen",
-        "greek": "θαυμάζω"
+        "translation":"bewonderen",
+        "greek":"θαυμάζω"
       },
       {
-        "translation": "lawaai maken",
-        "greek": "θοπυβέω"
+        "translation":"lawaai maken",
+        "greek":"θοπυβέω"
       },
       {
-        "translation": "leren, onderwijzen",
-        "greek": "διδάσκω"
+        "translation":"leren, onderwijzen",
+        "greek":"διδάσκω"
       },
       {
-        "translation": "berichten, melden",
-        "greek": "ἀγγέλλω"
+        "translation":"berichten, melden",
+        "greek":"ἀγγέλλω"
       },
       {
-        "translation": "bedekken",
-        "greek": "καλύπτω"
+        "translation":"bedekken",
+        "greek":"καλύπτω"
       },
       {
-        "translation": "verzamelen",
-        "greek": "συλλέγω"
+        "translation":"verzamelen",
+        "greek":"συλλέγω"
       },
       {
-        "translation": "goedkeuren, prijzen, instemmen met",
-        "greek": "ἐπαινέω"
+        "translation":"goedkeuren, prijzen, instemmen met",
+        "greek":"ἐπαινέω"
       },
       {
-        "translation": "vinden, ontdekken, aantreffen",
-        "greek": "εὑρίσκω"
+        "translation":"vinden, ontdekken, aantreffen",
+        "greek":"εὑρίσκω"
       },
       {
-        "translation": "slapen",
-        "greek": "καθεύδω"
+        "translation":"slapen",
+        "greek":"καθεύδω"
       },
       {
-        "translation": "leren kennen, begrijpen, vernemen",
-        "greek": "μανθάνω"
+        "translation":"leren kennen, begrijpen, vernemen",
+        "greek":"μανθάνω"
       },
       {
-        "translation": "1. voorbij laten gaan; 2. toelaten, binnen laten, toestaan",
-        "greek": "παρίημι"
+        "translation":"1. voorbij laten gaan; 2. toelaten, binnen laten, toestaan",
+        "greek":"παρίημι"
       },
       {
-        "translation": "1. bewonderen; 2. zich verwonderen over",
-        "greek": "θαυμάζω"
+        "translation":"1. bewonderen; 2. zich verwonderen over",
+        "greek":"θαυμάζω"
       },
       {
-        "translation": "begrijpen",
-        "greek": "συνίημι"
+        "translation":"begrijpen",
+        "greek":"συνίημι"
       },
       {
-        "translation": "(door een teken) duidelijk maken, betekenen",
-        "greek": "σημαίνω"
+        "translation":"(door een teken) duidelijk maken, betekenen",
+        "greek":"σημαίνω"
       },
       {
-        "translation": "de wacht houden, bewaken, bewaren",
-        "greek": "φυλάττω"
+        "translation":"de wacht houden, bewaken, bewaren",
+        "greek":"φυλάττω"
       },
       {
-        "translation": "verwerven",
-        "greek": "κτάομαι"
+        "translation":"verwerven",
+        "greek":"κτάομαι"
       },
       {
-        "translation": "kunnen, in staat zijn",
-        "greek": "δύναμαι"
+        "translation":"kunnen, in staat zijn",
+        "greek":"δύναμαι"
       },
       {
-        "translation": "komen, gaan",
-        "greek": "ἔρχομαι"
+        "translation":"komen, gaan",
+        "greek":"ἔρχομαι"
       },
       {
-        "translation": "1. menen 2. beschouwen als",
-        "greek": "ἥγέομαι"
+        "translation":"1. menen 2. beschouwen als",
+        "greek":"ἥγέομαι"
       }
-    ],
-    "progress": {
-      "timesCorrect": 0,
-      "timesIncorrect": 0,
-      "averageAccuracy": 0
-    }
+    ]
   },
   {
-    "quizMetadata": {
-      "language": "Dutch"
+    "quizMetadata":{
+      "language":"Dutch"
     },
-    "quizType": "multiplechoice",
-    "theme": "Verbs - Nederlands",
-    "set": 7,
-    "content": [
+    "theme":"Verbs - Nederlands",
+    "set":7,
+    "content":[
       {
-        "translation": "aanraken",
-        "greek": "ἅπτομαι"
+        "translation":"aanraken",
+        "greek":"ἅπτομαι"
       },
       {
-        "translation": "geboren worden, onstaan, gebeuren",
-        "greek": "γίγομαι"
+        "translation":"geboren worden, onstaan, gebeuren",
+        "greek":"γίγομαι"
       },
       {
-        "translation": "naar voren komen",
-        "greek": "προβαίνω"
+        "translation":"naar voren komen",
+        "greek":"προβαίνω"
       },
       {
-        "translation": "bestijgen",
-        "greek": "ἀναβαίνω"
+        "translation":"bestijgen",
+        "greek":"ἀναβαίνω"
       },
       {
-        "translation": "ingaan, binnengaan",
-        "greek": "εἰσβαίνω"
+        "translation":"ingaan, binnengaan",
+        "greek":"εἰσβαίνω"
       },
       {
-        "translation": "de tijd doorbrengen, verblijven",
-        "greek": "διατρίβω"
+        "translation":"de tijd doorbrengen, verblijven",
+        "greek":"διατρίβω"
       },
       {
-        "translation": "uit het veld slaan, verbijsteren, laten schrikken",
-        "greek": "ἐκπλήττω"
+        "translation":"uit het veld slaan, verbijsteren, laten schrikken",
+        "greek":"ἐκπλήττω"
       },
       {
-        "translation": "vermoeden, verdenken, argwaan koesteren",
-        "greek": "ὑποπτεύω"
+        "translation":"vermoeden, verdenken, argwaan koesteren",
+        "greek":"ὑποπτεύω"
       },
       {
-        "translation": "noodzaken, dwingen",
-        "greek": "ἀναγκάζω"
+        "translation":"noodzaken, dwingen",
+        "greek":"ἀναγκάζω"
       },
       {
-        "translation": "inzien, begrijpen, leren kennen, kennen",
-        "greek": "γιγνώσκω"
+        "translation":"inzien, begrijpen, leren kennen, kennen",
+        "greek":"γιγνώσκω"
       },
       {
-        "translation": "1. naar voren komen 2. voortgaan",
-        "greek": "προβαίνω"
+        "translation":"1. naar voren komen 2. voortgaan",
+        "greek":"προβαίνω"
       },
       {
-        "translation": "1. (be)ëindigen; 2. sterven",
-        "greek": "τελευτάω"
+        "translation":"1. (be)ëindigen; 2. sterven",
+        "greek":"τελευτάω"
       },
       {
-        "translation": "aanwijzen, (aan)tonen",
-        "greek": "δείκνυμι"
+        "translation":"aanwijzen, (aan)tonen",
+        "greek":"δείκνυμι"
       },
       {
-        "translation": "vullen",
-        "greek": "πίμπλημι"
+        "translation":"vullen",
+        "greek":"πίμπλημι"
       },
       {
-        "translation": "(ver)mengen",
-        "greek": "μείγνυμι"
+        "translation":"(ver)mengen",
+        "greek":"μείγνυμι"
       },
       {
-        "translation": "een veldtocht ondernemen, optrekken",
-        "greek": "στρατεύω"
+        "translation":"een veldtocht ondernemen, optrekken",
+        "greek":"στρατεύω"
       },
       {
-        "translation": "bang zijn, vrezen",
-        "greek": "φοβέομαι"
+        "translation":"bang zijn, vrezen",
+        "greek":"φοβέομαι"
       },
       {
-        "translation": "(graag) willen, liever willen",
-        "greek": "βούλομαι"
+        "translation":"(graag) willen, liever willen",
+        "greek":"βούλομαι"
       },
       {
-        "translation": "te gronde richten",
-        "greek": "ἀπόλλυμι"
+        "translation":"te gronde richten",
+        "greek":"ἀπόλλυμι"
       },
       {
-        "translation": "overlaten, toevertrouwen",
-        "greek": "ἐπιτρέπω"
+        "translation":"overlaten, toevertrouwen",
+        "greek":"ἐπιτρέπω"
       }
-    ],
-    "progress": {
-      "timesCorrect": 0,
-      "timesIncorrect": 0,
-      "averageAccuracy": 0
-    }
+    ]
   },
   {
-    "quizMetadata": {
-      "language": "Dutch"
+    "quizMetadata":{
+      "language":"Dutch"
     },
-    "quizType": "multiplechoice",
-    "theme": "Verbs - Nederlands",
-    "set": 8,
-    "content": [
+    "theme":"Verbs - Nederlands",
+    "set":8,
+    "content":[
       {
-        "translation": "boos zijn",
-        "greek": "ἁγανακτέω"
+        "translation":"boos zijn",
+        "greek":"ἁγανακτέω"
       },
       {
-        "translation": "erbij roepen, uitnodigen, vermanen",
-        "greek": "παρακαλέω"
+        "translation":"erbij roepen, uitnodigen, vermanen",
+        "greek":"παρακαλέω"
       },
       {
-        "translation": "rapporteren, vermelden",
-        "greek": "ἀπαγγέλλω"
+        "translation":"rapporteren, vermelden",
+        "greek":"ἀπαγγέλλω"
       },
       {
-        "translation": "neerzetten, neerleggen",
-        "greek": "καθίστημι"
+        "translation":"neerzetten, neerleggen",
+        "greek":"καθίστημι"
       },
       {
-        "translation": "van plan zijn",
-        "greek": "ἐν νῷ ἔχω"
+        "translation":"van plan zijn",
+        "greek":"ἐν νῷ ἔχω"
       },
       {
-        "translation": "ten gronde richten, bederven",
-        "greek": "διαφθείρω"
+        "translation":"ten gronde richten, bederven",
+        "greek":"διαφθείρω"
       },
       {
-        "translation": "sterven, gedood worden",
-        "greek": "ἀποθνῄσκω"
+        "translation":"sterven, gedood worden",
+        "greek":"ἀποθνῄσκω"
       },
       {
-        "translation": "verlaten, achterlaten",
-        "greek": "καταλείπω"
+        "translation":"verlaten, achterlaten",
+        "greek":"καταλείπω"
       },
       {
-        "translation": "1. neerzetten, neerleggen; 2. brengen (tot/in)",
-        "greek": "καθίστημι"
+        "translation":"1. neerzetten, neerleggen; 2. brengen (tot/in)",
+        "greek":"καθίστημι"
       },
       {
-        "translation": "1. teruggeven, (als verschuldigd) geven; 2. betalen",
-        "greek": "ἀποδίδωμι"
+        "translation":"1. teruggeven, (als verschuldigd) geven; 2. betalen",
+        "greek":"ἀποδίδωμι"
       },
       {
-        "translation": "doden",
-        "greek": "ἀποκτείνω"
+        "translation":"doden",
+        "greek":"ἀποκτείνω"
       },
       {
-        "translation": "overweldigen",
-        "greek": "χειροόμαι"
+        "translation":"overweldigen",
+        "greek":"χειροόμαι"
       },
       {
-        "translation": "geluid geven, zijn stem laten horen",
-        "greek": "φθέγγομαι"
+        "translation":"geluid geven, zijn stem laten horen",
+        "greek":"φθέγγομαι"
       },
       {
-        "translation": "werken, doen, maken",
-        "greek": "ἐργάζομαι"
+        "translation":"werken, doen, maken",
+        "greek":"ἐργάζομαι"
       },
       {
-        "translation": "gevaar lopen, riskeren, de kans lopen",
-        "greek": "κινδυνεύω"
+        "translation":"gevaar lopen, riskeren, de kans lopen",
+        "greek":"κινδυνεύω"
       },
       {
-        "translation": "antwoorden",
-        "greek": "ὑπολαμβάνω"
+        "translation":"antwoorden",
+        "greek":"ὑπολαμβάνω"
       },
       {
-        "translation": "willen, bereid zijn",
-        "greek": "ἐθέλω/θέλω"
+        "translation":"willen, bereid zijn",
+        "greek":"ἐθέλω/θέλω"
       },
       {
-        "translation": "overgeven, overleveren",
-        "greek": "παραδίδωμι"
+        "translation":"overgeven, overleveren",
+        "greek":"παραδίδωμι"
       },
       {
-        "translation": "aankomen",
-        "greek": "ἀφικνέομαι"
+        "translation":"aankomen",
+        "greek":"ἀφικνέομαι"
       },
       {
-        "translation": "1. vernemen; 2. vragen naar, informeren naar",
-        "greek": "πυνθάνομαι"
+        "translation":"1. vernemen; 2. vragen naar, informeren naar",
+        "greek":"πυνθάνομαι"
       }
-    ],
-    "progress": {
-      "timesCorrect": 0,
-      "timesIncorrect": 0,
-      "averageAccuracy": 0
-    }
+    ]
   },
   {
-    "quizMetadata": {
-      "language": "Dutch"
+    "quizMetadata":{
+      "language":"Dutch"
     },
-    "quizType": "multiplechoice",
-    "theme": "Verbs - Nederlands",
-    "set": 9,
-    "content": [
+    "theme":"Verbs - Nederlands",
+    "set":9,
+    "content":[
       {
-        "translation": "strijden, een wedstrijd houden",
-        "greek": "ἀγωνίζομαι"
+        "translation":"strijden, een wedstrijd houden",
+        "greek":"ἀγωνίζομαι"
       },
       {
-        "translation": "klaarmaken, voorzien van, organiseren",
-        "greek": "παρασκευάζω"
+        "translation":"klaarmaken, voorzien van, organiseren",
+        "greek":"παρασκευάζω"
       },
       {
-        "translation": "1. laten zien, te kennen geven; 2. aantonen. benoemen",
-        "greek": "ἀποδείκνυμι"
+        "translation":"1. laten zien, te kennen geven; 2. aantonen. benoemen",
+        "greek":"ἀποδείκνυμι"
       },
       {
-        "translation": "antwoorden",
-        "greek": "ἀποκρίνομαι"
+        "translation":"antwoorden",
+        "greek":"ἀποκρίνομαι"
       },
       {
-        "translation": "aansporen",
-        "greek": "παρακελεύομαι"
+        "translation":"aansporen",
+        "greek":"παρακελεύομαι"
       },
       {
-        "translation": "ik besluit:. het volk besloot",
-        "greek": "δοκεῖ μοι + AcI: ἔδοξε τῷ δήμῳ"
+        "translation":"ik besluit:. het volk besloot",
+        "greek":"δοκεῖ μοι + AcI: ἔδοξε τῷ δήμῳ"
       },
       {
-        "translation": "gegroet",
-        "greek": "χαῖρε/χαίρετε imperat. van χαίρω"
+        "translation":"gegroet",
+        "greek":"χαῖρε/χαίρετε imperat. van χαίρω"
       },
       {
-        "translation": "voor anker liggen",
-        "greek": "ὀρμέν"
+        "translation":"voor anker liggen",
+        "greek":"ὀρμέν"
       },
       {
-        "translation": "(zij) zijn",
-        "greek": "ἐισί(ν)"
+        "translation":"(zij) zijn",
+        "greek":"ἐισί(ν)"
       },
       {
-        "translation": "vooruit! (bij een verzoek of bevel)",
-        "greek": "ἄγε(τε)"
+        "translation":"vooruit! (bij een verzoek of bevel)",
+        "greek":"ἄγε(τε)"
       },
       {
-        "translation": "het is mogelijk, het is geoorloofd",
-        "greek": "ἔξεστι(ν)"
+        "translation":"het is mogelijk, het is geoorloofd",
+        "greek":"ἔξεστι(ν)"
       },
       {
-        "translation": "de eerste zijn om te ..., beginnen met/te",
-        "greek": "ἄρχω + ptc"
+        "translation":"de eerste zijn om te ..., beginnen met/te",
+        "greek":"ἄρχω + ptc"
       },
       {
-        "translation": "blij zijn met, plezier hebben in",
-        "greek": "χαίρω +dat."
+        "translation":"blij zijn met, plezier hebben in",
+        "greek":"χαίρω +dat."
       },
       {
-        "translation": "vol zijn met",
-        "greek": "γέμω + gen."
+        "translation":"vol zijn met",
+        "greek":"γέμω + gen."
       },
       {
-        "translation": "wachten op",
-        "greek": "μένω + acc."
+        "translation":"wachten op",
+        "greek":"μένω + acc."
       },
       {
-        "translation": "verliefd zijn op, verlangen naar",
-        "greek": "ἐράω + gen."
+        "translation":"verliefd zijn op, verlangen naar",
+        "greek":"ἐράω + gen."
       },
       {
-        "translation": "menen",
-        "greek": "δοκέω + AcI"
+        "translation":"menen",
+        "greek":"δοκέω + AcI"
       },
       {
-        "translation": "horen, luisteren naar",
-        "greek": "ἀκούω + gen."
+        "translation":"horen, luisteren naar",
+        "greek":"ἀκούω + gen."
       },
       {
-        "translation": "het gaat (iemand) ter harte; het interesseert (iemand)",
-        "greek": "μέλει + dat."
+        "translation":"het gaat (iemand) ter harte; het interesseert (iemand)",
+        "greek":"μέλει + dat."
       },
       {
-        "translation": "het gaat (iemand) ter harte; het interesseert (iemand)",
-        "greek": "μέλει + dat."
+        "translation":"het gaat (iemand) ter harte; het interesseert (iemand)",
+        "greek":"μέλει + dat."
       }
-    ],
-    "progress": {
-      "timesCorrect": 0,
-      "timesIncorrect": 0,
-      "averageAccuracy": 0
-    }
+    ]
   },
   {
-    "quizMetadata": {
-      "language": "Dutch"
+    "quizMetadata":{
+      "language":"Dutch"
     },
-    "quizType": "multiplechoice",
-    "theme": "Verbs - Nederlands",
-    "set": 10,
-    "content": [
+    "theme":"Verbs - Nederlands",
+    "set":10,
+    "content":[
       {
-        "translation": "gewoon zijn te/gewend zijn te",
-        "greek": "φιλέω + inf."
+        "translation":"gewoon zijn te/gewend zijn te",
+        "greek":"φιλέω + inf."
       },
       {
-        "translation": "blij zijn met, plezier hebben in",
-        "greek": "χαίρω + dat."
+        "translation":"blij zijn met, plezier hebben in",
+        "greek":"χαίρω + dat."
       },
       {
-        "translation": "plezier hebben in, graag ...",
-        "greek": "χαίρω + ptc."
+        "translation":"plezier hebben in, graag ...",
+        "greek":"χαίρω + ptc."
       },
       {
-        "translation": "afweren",
-        "greek": "ἀμύνω + acc."
+        "translation":"afweren",
+        "greek":"ἀμύνω + acc."
       },
       {
-        "translation": "helpen",
-        "greek": "ἀμύνω + dat."
+        "translation":"helpen",
+        "greek":"ἀμύνω + dat."
       },
       {
-        "translation": "helpen",
-        "greek": "βοηθέω + dat."
+        "translation":"helpen",
+        "greek":"βοηθέω + dat."
       },
       {
-        "translation": "plezier geven, bevallen",
-        "greek": "ἀρέσκω + dat."
+        "translation":"plezier geven, bevallen",
+        "greek":"ἀρέσκω + dat."
       },
       {
-        "translation": "deel hebben aan, meedoen aan",
-        "greek": "μετέχω + gen."
+        "translation":"deel hebben aan, meedoen aan",
+        "greek":"μετέχω + gen."
       },
       {
-        "translation": "jaloers zijn op misgunnen, benijden",
-        "greek": "φθονέω + dat."
+        "translation":"jaloers zijn op misgunnen, benijden",
+        "greek":"φθονέω + dat."
       },
       {
-        "translation": "macht hebben over, heerser zijn van, overwinnen",
-        "greek": "κρατέω + gen."
+        "translation":"macht hebben over, heerser zijn van, overwinnen",
+        "greek":"κρατέω + gen."
       },
       {
-        "translation": "ik moet zeggen",
-        "greek": "δεῖ με λέγειν"
+        "translation":"ik moet zeggen",
+        "greek":"δεῖ με λέγειν"
       },
       {
-        "translation": "ik moet zeggen",
-        "greek": "χρή με λέγειν"
+        "translation":"ik moet zeggen",
+        "greek":"χρή με λέγειν"
       },
       {
-        "translation": "omgaan met, verbonden zijn met",
-        "greek": "ὁμιλέω + dat."
+        "translation":"omgaan met, verbonden zijn met",
+        "greek":"ὁμιλέω + dat."
       },
       {
-        "translation": "bedreigen",
-        "greek": "ἀπειλέω + dat."
+        "translation":"bedreigen",
+        "greek":"ἀπειλέω + dat."
       },
       {
-        "translation": "(hij/zij/het) is ",
-        "greek": "ἐστί(ν) + dat."
+        "translation":"(hij/zij/het) is ",
+        "greek":"ἐστί(ν) + dat."
       },
       {
-        "translation": "verlangen naar",
-        "greek": "ἐπιθυμέω +gen."
+        "translation":"verlangen naar",
+        "greek":"ἐπιθυμέω +gen."
       },
       {
-        "translation": "toekomen aan, passend zijn voor",
-        "greek": "προσήκω + dat."
+        "translation":"toekomen aan, passend zijn voor",
+        "greek":"προσήκω + dat."
       },
       {
-        "translation": "het eens zijn met, instemmen",
-        "greek": "ὁμολογέω + dat"
+        "translation":"het eens zijn met, instemmen",
+        "greek":"ὁμολογέω + dat"
       },
       {
-        "translation": "het is nodig dat, het/men moet",
-        "greek": "δεῖ + AcI/inf."
+        "translation":"het is nodig dat, het/men moet",
+        "greek":"δεῖ + AcI/inf."
       },
       {
-        "translation": "1. verschillen van; 2. uitmunten boven",
-        "greek": "διαφέρω + gen."
+        "translation":"1. verschillen van; 2. uitmunten boven",
+        "greek":"διαφέρω + gen."
       }
-    ],
-    "progress": {
-      "timesCorrect": 0,
-      "timesIncorrect": 0,
-      "averageAccuracy": 0
-    }
+    ]
   },
   {
-    "quizMetadata": {
-      "language": "Dutch"
+    "quizMetadata":{
+      "language":"Dutch"
     },
-    "quizType": "multiplechoice",
-    "theme": "Verbs - Nederlands",
-    "set": 11,
-    "content": [
+    "theme":"Verbs - Nederlands",
+    "set":11,
+    "content":[
       {
-        "translation": "verborgen zijn voor",
-        "greek": "λανθάνω + acc."
+        "translation":"verborgen zijn voor",
+        "greek":"λανθάνω + acc."
       },
       {
-        "translation": "ongemerkt ...",
-        "greek": "λανθάνω + ptc."
+        "translation":"ongemerkt ...",
+        "greek":"λανθάνω + ptc."
       },
       {
-        "translation": "treffen, krijgen",
-        "greek": "τυγχάνω + gen."
+        "translation":"treffen, krijgen",
+        "greek":"τυγχάνω + gen."
       },
       {
-        "translation": "het geval wil dat (ik), toevallig ..., net ..., juist ...",
-        "greek": "τυγχάνω + ptc."
+        "translation":"het geval wil dat (ik), toevallig ..., net ..., juist ...",
+        "greek":"τυγχάνω + ptc."
       },
       {
-        "translation": "slaaf zijn van, dienen",
-        "greek": "δουλεύω + dat."
+        "translation":"slaaf zijn van, dienen",
+        "greek":"δουλεύω + dat."
       },
       {
-        "translation": "zich bekommeren om",
-        "greek": "φροντίζω + gen."
+        "translation":"zich bekommeren om",
+        "greek":"φροντίζω + gen."
       },
       {
-        "translation": "(het doel) missen, mislopen",
-        "greek": "ἁμαρτάνω + gen."
+        "translation":"(het doel) missen, mislopen",
+        "greek":"ἁμαρτάνω + gen."
       },
       {
-        "translation": "tegenkomen, ontmoeten",
-        "greek": "ἐντυγχάνω + dat"
+        "translation":"tegenkomen, ontmoeten",
+        "greek":"ἐντυγχάνω + dat"
       },
       {
-        "translation": "afwezig zijn",
-        "greek": "ἄπειμι (\u003c εἰμί)"
+        "translation":"afwezig zijn",
+        "greek":"ἄπειμι (< εἰμί)"
       },
       {
-        "translation": "weggaan",
-        "greek": "ἄπειμι (\u003c εἶμι)"
+        "translation":"weggaan",
+        "greek":"ἄπειμι (< εἶμι)"
       },
       {
-        "translation": "doorgaan met ..., voortdurend ...",
-        "greek": "διατελέω + ptc."
+        "translation":"doorgaan met ..., voortdurend ...",
+        "greek":"διατελέω + ptc."
       },
       {
-        "translation": "1. het schijnt me dat; 2. het schijnt met goed toe om...",
-        "greek": "δοκεῖ μοι + AcI"
+        "translation":"1. het schijnt me dat; 2. het schijnt met goed toe om...",
+        "greek":"δοκεῖ μοι + AcI"
       },
       {
-        "translation": "raad geven, aanraden",
-        "greek": "συμβουλεύω +dat."
+        "translation":"raad geven, aanraden",
+        "greek":"συμβουλεύω +dat."
       },
       {
-        "translation": "boos zijn op",
-        "greek": "χαλεπαίνω + dat."
+        "translation":"boos zijn op",
+        "greek":"χαλεπαίνω + dat."
       },
       {
-        "translation": "mij gaat ... ter harte, ik heb interesse in",
-        "greek": "μέλει μοι + gen."
+        "translation":"mij gaat ... ter harte, ik heb interesse in",
+        "greek":"μέλει μοι + gen."
       },
       {
-        "translation": "voorbijgaan",
-        "greek": "πάρειμι (\u003c εἶμι)"
+        "translation":"voorbijgaan",
+        "greek":"πάρειμι (< εἶμι)"
       },
       {
-        "translation": "beroven van",
-        "greek": "ἀποστερέω + gen."
+        "translation":"beroven van",
+        "greek":"ἀποστερέω + gen."
       },
       {
-        "translation": "minachten",
-        "greek": "καταφονέω + gen."
+        "translation":"minachten",
+        "greek":"καταφονέω + gen."
       },
       {
-        "translation": "iets in de zin hebben tegen, belagen",
-        "greek": "ἐπιβουλεύω + dat."
+        "translation":"iets in de zin hebben tegen, belagen",
+        "greek":"ἐπιβουλεύω + dat."
       },
       {
-        "translation": "helpen",
-        "greek": "συλλαμβάνω + dat."
+        "translation":"helpen",
+        "greek":"συλλαμβάνω + dat."
       }
-    ],
-    "progress": {
-      "timesCorrect": 0,
-      "timesIncorrect": 0,
-      "averageAccuracy": 0
-    }
+    ]
   },
   {
-    "quizMetadata": {
-      "language": "Dutch"
+    "quizMetadata":{
+      "language":"Dutch"
     },
-    "quizType": "multiplechoice",
-    "theme": "Verbs - Nederlands",
-    "set": 12,
-    "content": [
+    "theme":"Verbs - Nederlands",
+    "set":12,
+    "content":[
       {
-        "translation": "de vrouw begon te zeggen",
-        "greek": "ἡ γυνὴ ἦρχε λέγουσα"
+        "translation":"de vrouw begon te zeggen",
+        "greek":"ἡ γυνὴ ἦρχε λέγουσα"
       },
       {
-        "translation": "vragen (om iets te krijgen), van iemand eisen",
-        "greek": "αἰτέω + dubbele acc."
+        "translation":"vragen (om iets te krijgen), van iemand eisen",
+        "greek":"αἰτέω + dubbele acc."
       },
       {
-        "translation": "beschouwen als",
-        "greek": "νομίζω + dubbele acc."
+        "translation":"beschouwen als",
+        "greek":"νομίζω + dubbele acc."
       },
       {
-        "translation": "aanvatten, ter hand nemen, proberen",
-        "greek": "ἐπιχειρέω + dat./inf."
+        "translation":"aanvatten, ter hand nemen, proberen",
+        "greek":"ἐπιχειρέω + dat./inf."
       },
       {
-        "translation": "samen zijn met, omgaan met",
-        "greek": "σύνειμι (εἰμί) + dat."
+        "translation":"samen zijn met, omgaan met",
+        "greek":"σύνειμι (εἰμί) + dat."
       },
       {
-        "translation": "(toe)schijnen, de indruk maken (te)",
-        "greek": "δοκέω + dat (en inf.)"
+        "translation":"(toe)schijnen, de indruk maken (te)",
+        "greek":"δοκέω + dat (en inf.)"
       },
       {
-        "translation": "iemand iets leren/onderwijzen",
-        "greek": "διδάσκω + dubbele acc."
+        "translation":"iemand iets leren/onderwijzen",
+        "greek":"διδάσκω + dubbele acc."
       },
       {
-        "translation": "(toe)schijnen, de indruk maken (te)",
-        "greek": "δοκέω + dat. (en inf.)"
+        "translation":"(toe)schijnen, de indruk maken (te)",
+        "greek":"δοκέω + dat. (en inf.)"
       },
       {
-        "translation": "zijn aandacht richten op, letten op",
-        "greek": "προσέχω τὸν νοῦν + dat."
+        "translation":"zijn aandacht richten op, letten op",
+        "greek":"προσέχω τὸν νοῦν + dat."
       },
       {
-        "translation": "het is passend (voor iemand om te ...)",
-        "greek": "πρέπει (+ dat. en inf.)"
+        "translation":"het is passend (voor iemand om te ...)",
+        "greek":"πρέπει (+ dat. en inf.)"
       },
       {
-        "translation": "je merkt heel goed dat we plezier hebben",
-        "greek": "οὐ σε λανθάνομεν χαίροντες"
+        "translation":"je merkt heel goed dat we plezier hebben",
+        "greek":"οὐ σε λανθάνομεν χαίροντες"
       },
       {
-        "translation": "aanwezig zijn, bijstaan",
-        "greek": "πάρειμι (samenstelling van εἰμί)"
+        "translation":"aanwezig zijn, bijstaan",
+        "greek":"πάρειμι (samenstelling van εἰμί)"
       }
-    ],
-    "progress": {
-      "timesCorrect": 0,
-      "timesIncorrect": 0,
-      "averageAccuracy": 0
-    }
+    ]
   }
 ]

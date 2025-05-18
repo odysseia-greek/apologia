@@ -1,0 +1,37 @@
+spectaql:
+  faviconFile: ./docs/favicon.png
+  displayAllServers: true
+
+introspection:
+  removeTrailingPeriodFromDescriptions: false
+  url: http://k3d-odysseia.greek:8080/sokrates/graphql
+  queryNameStrategy: capitalizeFirst
+  fieldExpansionDepth: 3
+
+info:
+  title: Sokrates
+  description: Sokrates is the gateway for all quiz modes
+  termsOfService: there are no TOS at this moment, use at your own risk we take no responsibility
+  contact:
+    name: odysseia-greek
+    url: https://github.com/odysseia-greek
+    email: joerivrijaldenhoven@odysseia.io
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT
+  x-introItems:
+    - title: Quote
+      description: ἓν οἶδα ὅτι οὐδὲν οἶδα - I know one thing, that I know nothing
+    - title: Links
+      description:
+        https://github.com/odysseia-greek/apologia/sokrates
+        https://github.com/anvilco/spectaql
+
+
+servers:
+  - url: http://k3d-odysseia.greek:8080/sokrates/graphql
+    description: k3d
+    production: false
+  - url: https://odysseia-greek.com/sokrates/graphql
+    description: Production
+    production: true

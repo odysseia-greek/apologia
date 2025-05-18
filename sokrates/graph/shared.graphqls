@@ -1,0 +1,32 @@
+type AnalyzeResult {
+    author: String
+    book: String
+    reference: String
+    referenceLink: String
+    text: Rhema
+}
+
+type AnalyzeTextResponse {
+    conjugations: [ConjugationResponse]
+    texts: [AnalyzeResult]
+    rootword: String
+}
+
+type ConjugationResponse {
+    rule: String
+    word: String
+}
+
+type Hit {
+  dutch: String
+  english: String
+  greek: String
+  linkedWord: String
+  original: String
+}
+
+type Rhema {
+    greek: String
+    section: String
+    translations: [String]
+}
