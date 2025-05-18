@@ -31,8 +31,8 @@
       },
       {
         "type": "structure",
-        "title": "μήτε ... μήτε — A Coordinated Negation",
-        "text": "This sentence uses the correlative structure 'μήτε ... μήτε' to link two ideas in a negative coordination. This kind of structure is common in Greek to express 'neither... nor...'.",
+        "title": "μήτε ... μήτε — Structure",
+        "text": "This sentence uses the correlative structure 'μήτε ... μήτε' to link two ideas in a negative coordination. This kind of structure is common in Greek to express:.",
         "question": "What is the function of 'μήτε ... μήτε' in the phrase 'μήτε τὰ γενόμενα ... μήτε ἔργα μεγάλα τε καὶ θωμαστά';",
         "options": [
           "They express a temporal sequence of events.",
@@ -78,8 +78,8 @@
       },
       {
         "type": "structure",
-        "title": "μὲν ... δὲ — A Structural Balancer",
-        "text": "The sentence uses the classic Greek balancing structure μὲν ... δὲ, often left untranslated in English but serving to contrast or compare ideas.",
+        "title": "μὲν ... δὲ — Structure",
+        "text": "The sentence uses the classic Greek balancing structure μὲν ... δὲ, often left untranslated in English but close to:",
         "question": "How would you best translate the μὲν ... δὲ construction?",
         "options": [
           "On the one hand ... on the other hand",
@@ -174,7 +174,7 @@
         "instruction": "Match each verb to its grammatical form.",
         "verbs": [
           { "word": "φεύγειν", "answer": "present - active - infinitive" },
-          { "word": "ἐμάχοντο", "answer": "3rd plur - impf - ind - mid/psv" },
+          { "word": "ἔων", "answer": "participle - masc - sing - pres - act" },
           { "word": "ἐπελαμβάνοντο", "answer": "3rd plur - impf - ind - mid/psv" },
           { "word": "εἵποντο", "answer": "3rd plur - aor - ind - mid" }
         ]
@@ -187,6 +187,16 @@
           { "word": "θάλασσαν", "answer": "sea.webp" },
           { "word": "νεῶν", "answer": "ship.webp" },
           { "word": "ἀπικόμενοι", "answer": "tocometo.webp" }
+        ]
+      },
+      {
+        "type": "match",
+        "instruction": "Match each verb to its grammatical form.",
+        "verbs": [
+          { "word": "ἐνίκων", "answer": "3rd plur - impf - ind - act" },
+          { "word": "φεύγουσι", "answer": "3rd plur - pres - ind - act" },
+          { "word": "ἀπικόμενοι", "answer": "participle - masc - plur - aor - mid" },
+          { "word": "ἐμάχοντο", "answer": "3rd plur - impf - ind - mid/psv" }
         ]
       },
       {
@@ -304,8 +314,8 @@
       },
       {
         "type": "structure",
-        "title": "μὲν ... δὲ — Balanced Contrast",
-        "text": "This sentence uses the classical contrast pair μὲν ... δὲ, which is common in Greek for balancing two ideas. It sets up a contrast: what seems to be the case vs. what really is.",
+        "title": "μὲν ... δὲ — Structure",
+        "text": "The sentence uses the classic Greek balancing structure μὲν ... δὲ, often left untranslated in English but close to:.",
         "question": "How would you best translate the μὲν ... δὲ structure?",
         "options": [
           "On the one hand ... on the other hand",

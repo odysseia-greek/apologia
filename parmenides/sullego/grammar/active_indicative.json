@@ -1648,8 +1648,8 @@
   {
     "theme": "Active - Participle",
     "set": 1,
-    "segment": "Present Participle (Masculine)",
-    "description": "Present Active Participle Forms (Masculine)",
+    "segment": "Present",
+    "description": "Masculine",
     "difficulty": "intermediate",
     "content": [
       {
@@ -1663,7 +1663,7 @@
           "mood": "participle",
           "person": "",
           "number": "sing",
-          "option": "nom sing - pres - act - part"
+          "correctAnswer": "nom sing - pres - act - part"
         }
       },
       {
@@ -1677,7 +1677,7 @@
           "mood": "participle",
           "person": "",
           "number": "sing",
-          "option": "gen sing - pres - act - part"
+          "correctAnswer": "gen sing - pres - act - part"
         }
       },
       {
@@ -1691,7 +1691,7 @@
           "mood": "participle",
           "person": "",
           "number": "sing",
-          "option": "dat sing - pres - act - part"
+          "correctAnswer": "dat sing - pres - act - part"
         }
       },
       {
@@ -1705,7 +1705,7 @@
           "mood": "participle",
           "person": "",
           "number": "sing",
-          "option": "acc sing - pres - act - part"
+          "correctAnswer": "acc sing - pres - act - part"
         }
       },
       {
@@ -1719,7 +1719,7 @@
           "mood": "participle",
           "person": "",
           "number": "plur",
-          "option": "nom plur - pres - act - part"
+          "correctAnswer": "nom plur - pres - act - part"
         }
       },
       {
@@ -1733,7 +1733,7 @@
           "mood": "participle",
           "person": "",
           "number": "plur",
-          "option": "gen plur - pres - act - part"
+          "correctAnswer": "gen plur - pres - act - part"
         }
       },
       {
@@ -1747,7 +1747,7 @@
           "mood": "participle",
           "person": "",
           "number": "plur",
-          "option": "dat plur - pres - act - part"
+          "correctAnswer": "dat plur - pres - act - part"
         }
       },
       {
@@ -1761,7 +1761,7 @@
           "mood": "participle",
           "person": "",
           "number": "plur",
-          "option": "acc plur - pres - act - part"
+          "correctAnswer": "acc plur - pres - act - part"
         }
       }
     ]

@@ -6,7 +6,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/odysseia-greek/agora/aristoteles v0.1.13
 	github.com/odysseia-greek/agora/eupalinos v0.1.0
-	github.com/odysseia-greek/agora/plato v0.2.5
+	github.com/odysseia-greek/agora/plato v0.2.7
 	github.com/odysseia-greek/delphi/aristides v0.0.1
 	github.com/odysseia-greek/olympia/aristarchos v0.0.13
 	github.com/stretchr/testify v1.10.0
@@ -82,10 +82,10 @@ require (
 	golang.org/x/crypto v0.33.0 // indirect
 	golang.org/x/net v0.35.0 // indirect
 	golang.org/x/oauth2 v0.26.0 // indirect
-	golang.org/x/sync v0.11.0 // indirect
+	golang.org/x/sync v0.14.0 // indirect
 	golang.org/x/sys v0.30.0 // indirect
 	golang.org/x/term v0.29.0 // indirect
-	golang.org/x/text v0.22.0 // indirect
+	golang.org/x/text v0.25.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250218202821-56aae31c358a // indirect
 	google.golang.org/protobuf v1.36.5 // indirect
