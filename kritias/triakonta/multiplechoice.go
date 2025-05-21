@@ -185,14 +185,6 @@ func (m *MultipleChoiceServiceImpl) Question(ctx context.Context, request *pb.Cr
 	}
 
 	if len(filteredContent) == 0 {
-		m.Progress.ResetSegment(sessionId, segmentKey)
-
-		for _, content := range option.Content {
-			filteredContent = append(filteredContent, content)
-		}
-	}
-
-	if len(filteredContent) == 0 {
 		return nil, status.Errorf(codes.NotFound, "no content available after progress reset")
 	}
 
@@ -339,6 +331,16 @@ func (m *MultipleChoiceServiceImpl) Answer(ctx context.Context, request *pb.Answ
 				IncorrectCount: int32(p.IncorrectCount),
 				LastPlayed:     p.LastPlayed.Format(time.RFC3339),
 			})
+		}
+
+		if finished {
+			m.Progress.ClearSegment(sessionId, segmentKey)
+
+			var greekWords []string
+			for _, content := range option.Content {
+				greekWords = append(greekWords, content.Greek)
+			}
+			m.Progress.InitWordsForSegment(sessionId, segmentKey, greekWords)
 		}
 	}
 

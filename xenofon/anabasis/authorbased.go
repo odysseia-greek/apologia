@@ -174,20 +174,13 @@ func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *pb.Creat
 	}
 
 	if len(filteredContent) == 0 {
-		a.Progress.ResetSegment(sessionId, segmentKey)
-
-		for _, content := range option.Content {
-			filteredContent = append(filteredContent, content)
-		}
-	}
-
-	if len(filteredContent) == 0 {
 		return nil, status.Errorf(codes.NotFound, "no content available after progress reset")
 	}
 
 	var question models.AuthorBasedContent
 	var translation string
 	if len(filteredContent) == 1 {
+		logging.Warn(fmt.Sprintf("%v", filteredContent[0]))
 		question = filteredContent[0]
 	} else {
 		randNumber := a.Randomizer.RandomNumberBaseZero(len(filteredContent))
@@ -371,9 +364,6 @@ func (a *AuthorBasedServiceImpl) Answer(ctx context.Context, request *pb.AnswerR
 	if sessionId != "" {
 		progressList, finished := a.Progress.GetProgressForSegment(sessionId, segmentKey, int(request.DoneAfter))
 		answer.Finished = finished
-		if finished {
-			a.Progress.ResetSegment(sessionId, segmentKey)
-		}
 		for word, p := range progressList {
 			answer.Progress = append(answer.Progress, &pb.ProgressEntry{
 				Greek:          word,
@@ -384,6 +374,17 @@ func (a *AuthorBasedServiceImpl) Answer(ctx context.Context, request *pb.AnswerR
 				LastPlayed:     p.LastPlayed.Format(time.RFC3339),
 			})
 		}
+
+		if finished {
+			a.Progress.ClearSegment(sessionId, segmentKey)
+
+			var greekWords []string
+			for _, content := range option.Content {
+				greekWords = append(greekWords, content.Greek)
+			}
+			a.Progress.InitWordsForSegment(sessionId, segmentKey, greekWords)
+		}
+
 	}
 
 	return answer, nil
