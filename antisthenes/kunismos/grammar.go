@@ -185,14 +185,6 @@ func (g *GrammarServiceImpl) Question(ctx context.Context, request *pb.CreationR
 	}
 
 	if len(filteredContent) == 0 {
-		g.Progress.ResetSegment(sessionId, segmentKey)
-
-		for _, content := range option.Content {
-			filteredContent = append(filteredContent, content)
-		}
-	}
-
-	if len(filteredContent) == 0 {
 		return nil, status.Errorf(codes.NotFound, "no content available after progress reset")
 	}
 
@@ -349,6 +341,16 @@ func (g *GrammarServiceImpl) Answer(ctx context.Context, request *pb.AnswerReque
 				IncorrectCount: int32(p.IncorrectCount),
 				LastPlayed:     p.LastPlayed.Format(time.RFC3339),
 			})
+		}
+
+		if finished {
+			g.Progress.ClearSegment(sessionId, segmentKey)
+
+			var greekWords []string
+			for _, content := range option.Content {
+				greekWords = append(greekWords, content.Greek)
+			}
+			g.Progress.InitWordsForSegment(sessionId, segmentKey, greekWords)
 		}
 	}
 
