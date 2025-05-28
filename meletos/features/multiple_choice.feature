@@ -1,3 +1,4 @@
+@wip
 Feature: Sokrates GraphQL API for Multiple Choice Quiz Functionality
   As a user of the Odysseia Greek application
   I want to interact with the Sokrates GraphQL API

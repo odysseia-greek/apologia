@@ -20,7 +20,7 @@ func Options() string {
 func Answer(answer model.MultipleChoiceAnswerInput) (string, map[string]interface{}) {
 	variables, _ := model.StructToMap(answer)
 
-	query := `query multipleChoiceAnswer($set: String!, $theme: String!, $quizWord: String!, $answer: String!, $comprehensive: Boolean!) {
+	query := `query multipleChoiceAnswer($set: String!, $theme: String!, $quizWord: String!, $answer: String!, $doneAfter: Int!, $comprehensive: Boolean!) {
 		multipleChoiceAnswer(
 			input: {
 				set: $set
@@ -28,6 +28,7 @@ func Answer(answer model.MultipleChoiceAnswerInput) (string, map[string]interfac
 				quizWord: $quizWord	
 				answer: $answer
 				comprehensive: $comprehensive
+				doneAfter: $doneAfter
 			}
 		) {
 			correct

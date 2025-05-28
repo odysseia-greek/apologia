@@ -335,12 +335,6 @@ func (m *MultipleChoiceServiceImpl) Answer(ctx context.Context, request *pb.Answ
 
 		if finished {
 			m.Progress.ClearSegment(sessionId, segmentKey)
-
-			var greekWords []string
-			for _, content := range option.Content {
-				greekWords = append(greekWords, content.Greek)
-			}
-			m.Progress.InitWordsForSegment(sessionId, segmentKey, greekWords)
 		}
 	}
 

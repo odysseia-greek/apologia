@@ -6,7 +6,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/odysseia-greek/agora/aristoteles v0.1.13
 	github.com/odysseia-greek/agora/eupalinos v0.1.0
-	github.com/odysseia-greek/agora/plato v0.2.7
+	github.com/odysseia-greek/agora/plato v0.2.9
 	github.com/odysseia-greek/delphi/aristides v0.0.1
 	github.com/odysseia-greek/olympia/aristarchos v0.0.13
 	github.com/stretchr/testify v1.10.0

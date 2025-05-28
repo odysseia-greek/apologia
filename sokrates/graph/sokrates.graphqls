@@ -314,6 +314,7 @@ input MultipleChoiceAnswerInput {
   quizWord: String
   answer: String
   comprehensive: Boolean
+  doneAfter: Int
 }
 
 input MultipleQuizInput {
