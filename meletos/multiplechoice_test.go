@@ -90,8 +90,8 @@ func (m *MeletosFixture) iUseTheMultipleChoiceOptionsToCreateAQuestion() error {
 func (m *MeletosFixture) iSubmitEachMultipleChoiceOptionOnce() error {
 	question := m.ctx.Value(Question).(model.MultipleChoiceResponse)
 	variables := m.ctx.Value(Variables).(map[string]interface{})
-	var mediaInput model.MediaQuizInput
-	err := model.MapToStruct(variables, &mediaInput)
+	var mcInput model.MultipleQuizInput
+	err := model.MapToStruct(variables, &mcInput)
 	if err != nil {
 		return err
 	}
@@ -103,11 +103,12 @@ func (m *MeletosFixture) iSubmitEachMultipleChoiceOptionOnce() error {
 
 	for _, option := range question.Options {
 		answer := model.MultipleChoiceAnswerInput{
-			Theme:         mediaInput.Theme,
-			Set:           mediaInput.Set,
+			Theme:         mcInput.Theme,
+			Set:           mcInput.Set,
 			QuizWord:      question.QuizItem,
 			Answer:        option.Option,
 			Comprehensive: &comprehensive,
+			DoneAfter:     mcInput.DoneAfter,
 		}
 
 		query, vars := multiplechoice.Answer(answer)

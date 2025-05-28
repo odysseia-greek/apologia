@@ -437,7 +437,7 @@ func (e *executableSchema) Schema() *ast.Schema {
 	return parsedSchema
 }
 
-func (e *executableSchema) Complexity(typeName, field string, childComplexity int, rawArgs map[string]any) (int, bool) {
+func (e *executableSchema) Complexity(ctx context.Context, typeName, field string, childComplexity int, rawArgs map[string]any) (int, bool) {
 	ec := executionContext{nil, e, 0, 0, nil}
 	_ = ec
 	switch typeName + "." + field {
@@ -1462,7 +1462,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			break
 		}
 
-		args, err := ec.field_Query_authorBasedAnswer_args(context.TODO(), rawArgs)
+		args, err := ec.field_Query_authorBasedAnswer_args(ctx, rawArgs)
 		if err != nil {
 			return 0, false
 		}
@@ -1481,7 +1481,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			break
 		}
 
-		args, err := ec.field_Query_authorBasedQuiz_args(context.TODO(), rawArgs)
+		args, err := ec.field_Query_authorBasedQuiz_args(ctx, rawArgs)
 		if err != nil {
 			return 0, false
 		}
@@ -1493,7 +1493,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			break
 		}
 
-		args, err := ec.field_Query_authorBasedWordForms_args(context.TODO(), rawArgs)
+		args, err := ec.field_Query_authorBasedWordForms_args(ctx, rawArgs)
 		if err != nil {
 			return 0, false
 		}
@@ -1505,7 +1505,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			break
 		}
 
-		args, err := ec.field_Query_dialogueAnswer_args(context.TODO(), rawArgs)
+		args, err := ec.field_Query_dialogueAnswer_args(ctx, rawArgs)
 		if err != nil {
 			return 0, false
 		}
@@ -1524,7 +1524,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			break
 		}
 
-		args, err := ec.field_Query_dialogueQuiz_args(context.TODO(), rawArgs)
+		args, err := ec.field_Query_dialogueQuiz_args(ctx, rawArgs)
 		if err != nil {
 			return 0, false
 		}
@@ -1536,7 +1536,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			break
 		}
 
-		args, err := ec.field_Query_grammarAnswer_args(context.TODO(), rawArgs)
+		args, err := ec.field_Query_grammarAnswer_args(ctx, rawArgs)
 		if err != nil {
 			return 0, false
 		}
@@ -1555,7 +1555,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			break
 		}
 
-		args, err := ec.field_Query_grammarQuiz_args(context.TODO(), rawArgs)
+		args, err := ec.field_Query_grammarQuiz_args(ctx, rawArgs)
 		if err != nil {
 			return 0, false
 		}
@@ -1581,7 +1581,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			break
 		}
 
-		args, err := ec.field_Query_journeyQuiz_args(context.TODO(), rawArgs)
+		args, err := ec.field_Query_journeyQuiz_args(ctx, rawArgs)
 		if err != nil {
 			return 0, false
 		}
@@ -1593,7 +1593,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			break
 		}
 
-		args, err := ec.field_Query_mediaAnswer_args(context.TODO(), rawArgs)
+		args, err := ec.field_Query_mediaAnswer_args(ctx, rawArgs)
 		if err != nil {
 			return 0, false
 		}
@@ -1612,7 +1612,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			break
 		}
 
-		args, err := ec.field_Query_mediaQuiz_args(context.TODO(), rawArgs)
+		args, err := ec.field_Query_mediaQuiz_args(ctx, rawArgs)
 		if err != nil {
 			return 0, false
 		}
@@ -1624,7 +1624,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			break
 		}
 
-		args, err := ec.field_Query_multipleChoiceAnswer_args(context.TODO(), rawArgs)
+		args, err := ec.field_Query_multipleChoiceAnswer_args(ctx, rawArgs)
 		if err != nil {
 			return 0, false
 		}
@@ -1643,7 +1643,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			break
 		}
 
-		args, err := ec.field_Query_multipleChoiceQuiz_args(context.TODO(), rawArgs)
+		args, err := ec.field_Query_multipleChoiceQuiz_args(ctx, rawArgs)
 		if err != nil {
 			return 0, false
 		}
@@ -13849,7 +13849,7 @@ func (ec *executionContext) unmarshalInputMultipleChoiceAnswerInput(ctx context.
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"theme", "set", "quizWord", "answer", "comprehensive"}
+	fieldsInOrder := [...]string{"theme", "set", "quizWord", "answer", "comprehensive", "doneAfter"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -13891,6 +13891,13 @@ func (ec *executionContext) unmarshalInputMultipleChoiceAnswerInput(ctx context.
 				return it, err
 			}
 			it.Comprehensive = data
+		case "doneAfter":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("doneAfter"))
+			data, err := ec.unmarshalOInt2ᚖint32(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.DoneAfter = data
 		}
 	}
 
@@ -16967,6 +16974,7 @@ func (ec *executionContext) unmarshalNBoolean2bool(ctx context.Context, v any) (
 }
 
 func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.SelectionSet, v bool) graphql.Marshaler {
+	_ = sel
 	res := graphql.MarshalBoolean(v)
 	if res == graphql.Null {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -16982,6 +16990,7 @@ func (ec *executionContext) unmarshalNInt2int32(ctx context.Context, v any) (int
 }
 
 func (ec *executionContext) marshalNInt2int32(ctx context.Context, sel ast.SelectionSet, v int32) graphql.Marshaler {
+	_ = sel
 	res := graphql.MarshalInt32(v)
 	if res == graphql.Null {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -17159,6 +17168,7 @@ func (ec *executionContext) unmarshalNString2string(ctx context.Context, v any) 
 }
 
 func (ec *executionContext) marshalNString2string(ctx context.Context, sel ast.SelectionSet, v string) graphql.Marshaler {
+	_ = sel
 	res := graphql.MarshalString(v)
 	if res == graphql.Null {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -17252,6 +17262,7 @@ func (ec *executionContext) unmarshalN__DirectiveLocation2string(ctx context.Con
 }
 
 func (ec *executionContext) marshalN__DirectiveLocation2string(ctx context.Context, sel ast.SelectionSet, v string) graphql.Marshaler {
+	_ = sel
 	res := graphql.MarshalString(v)
 	if res == graphql.Null {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -17440,6 +17451,7 @@ func (ec *executionContext) unmarshalN__TypeKind2string(ctx context.Context, v a
 }
 
 func (ec *executionContext) marshalN__TypeKind2string(ctx context.Context, sel ast.SelectionSet, v string) graphql.Marshaler {
+	_ = sel
 	res := graphql.MarshalString(v)
 	if res == graphql.Null {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -17672,6 +17684,8 @@ func (ec *executionContext) unmarshalOBoolean2bool(ctx context.Context, v any) (
 }
 
 func (ec *executionContext) marshalOBoolean2bool(ctx context.Context, sel ast.SelectionSet, v bool) graphql.Marshaler {
+	_ = sel
+	_ = ctx
 	res := graphql.MarshalBoolean(v)
 	return res
 }
@@ -17688,6 +17702,8 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	if v == nil {
 		return graphql.Null
 	}
+	_ = sel
+	_ = ctx
 	res := graphql.MarshalBoolean(*v)
 	return res
 }
@@ -17932,6 +17948,7 @@ func (ec *executionContext) marshalOFloat2ᚖfloat64(ctx context.Context, sel as
 	if v == nil {
 		return graphql.Null
 	}
+	_ = sel
 	res := graphql.MarshalFloatContext(*v)
 	return graphql.WrapContextMarshaler(ctx, res)
 }
@@ -18225,6 +18242,8 @@ func (ec *executionContext) marshalOInt2ᚖint32(ctx context.Context, sel ast.Se
 	if v == nil {
 		return graphql.Null
 	}
+	_ = sel
+	_ = ctx
 	res := graphql.MarshalInt32(*v)
 	return res
 }
@@ -18792,6 +18811,8 @@ func (ec *executionContext) marshalOString2ᚖstring(ctx context.Context, sel as
 	if v == nil {
 		return graphql.Null
 	}
+	_ = sel
+	_ = ctx
 	res := graphql.MarshalString(*v)
 	return res
 }

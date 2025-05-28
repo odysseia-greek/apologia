@@ -348,6 +348,7 @@ type MultipleChoiceAnswerInput struct {
 	QuizWord      *string `json:"quizWord,omitempty"`
 	Answer        *string `json:"answer,omitempty"`
 	Comprehensive *bool   `json:"comprehensive,omitempty"`
+	DoneAfter     *int32  `json:"doneAfter,omitempty"`
 }
 
 type MultipleChoiceResponse struct {

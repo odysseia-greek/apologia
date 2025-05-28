@@ -20,7 +20,6 @@ Feature: Sokrates GraphQL API for Dialogue Quiz Functionality
     Then the percentage should be lower than 100
     And wronglyPlaced should hold a reference to the correct place
 
-  @wip
   Scenario: Answer a Dialogue quiz without a mistake
     When I query for dialogue quiz options
     And I use the dialogue options to create a question
