@@ -1,11 +1,11 @@
 module github.com/odysseia-greek/apologia/meletos
 
-go 1.24.0
+go 1.25.5
 
 require (
-	github.com/cucumber/godog v0.15.0
-	github.com/odysseia-greek/agora/plato v0.2.9
-	github.com/stretchr/testify v1.10.0
+	github.com/cucumber/godog v0.15.1
+	github.com/odysseia-greek/agora/plato v0.2.10
+	github.com/stretchr/testify v1.11.1
 )
 
 require (
@@ -17,6 +17,6 @@ require (
 	github.com/hashicorp/go-memdb v1.3.4 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
-	github.com/spf13/pflag v1.0.5 // indirect
+	github.com/spf13/pflag v1.0.7 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

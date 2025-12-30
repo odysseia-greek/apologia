@@ -40,12 +40,11 @@ func main() {
 
 	logging.Debug("creating config")
 
-	handler, conn, err := aletheia.CreateNewConfig()
+	handler, err := aletheia.CreateNewConfig()
 	if err != nil {
 		logging.Error(err.Error())
 		log.Fatal("death has found me")
 	}
-	defer conn.Close()
 
 	err = handler.DeleteIndexAtStartUp()
 	if err != nil {

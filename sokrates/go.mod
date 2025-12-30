@@ -1,6 +1,6 @@
 module github.com/odysseia-greek/apologia/sokrates
 
-go 1.24.0
+go 1.25.5
 
 require (
 	github.com/99designs/gqlgen v0.17.73

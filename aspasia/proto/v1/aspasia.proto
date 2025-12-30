@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package aspasia.v1;
+option go_package = "github.com/odysseia-greek/apologia/aspasia/gen/go/v1;aspasiav1";
+
+import "google/protobuf/empty.proto";
+import "koinos/v1/health.proto";
+
+service AspasiaService {
+  rpc Health(google.protobuf.Empty) returns (koinos.v1.HealthResponse);
+}

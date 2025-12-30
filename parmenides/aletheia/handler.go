@@ -5,23 +5,25 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strings"
+	"sync"
+
 	"github.com/google/uuid"
 	elastic "github.com/odysseia-greek/agora/aristoteles"
 	pb "github.com/odysseia-greek/agora/eupalinos/proto"
+	"github.com/odysseia-greek/agora/eupalinos/stomion"
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/models"
 	"github.com/odysseia-greek/agora/plato/service"
 	aristides "github.com/odysseia-greek/delphi/aristides/diplomat"
 	pba "github.com/odysseia-greek/olympia/aristarchos/proto"
-	"strings"
-	"sync"
 )
 
 type ParmenidesHandler struct {
 	Index            string
 	Created          int
 	Elastic          elastic.Client
-	Eupalinos        EupalinosClient
+	Eupalinos        *stomion.QueueClient
 	Channel          string
 	DutchChannel     string
 	ExitCode         string
@@ -49,23 +51,7 @@ func (p *ParmenidesHandler) DeleteIndexAtStartUp() error {
 	return nil
 }
 
-func (p *ParmenidesHandler) createPolicyAtStartup() error {
-	policyCreated, err := p.Elastic.Policy().CreateHotPolicy(p.PolicyName)
-	if err != nil {
-		return err
-	}
-
-	logging.Info(fmt.Sprintf("created policy: %s %v", p.PolicyName, policyCreated.Acknowledged))
-
-	return nil
-}
-
 func (p *ParmenidesHandler) CreateIndexAtStartup() error {
-	logging.Info(fmt.Sprintf("creating policy: %s", p.PolicyName))
-	err := p.createPolicyAtStartup()
-	if err != nil {
-		return err
-	}
 	indexMapping := quizIndex(p.PolicyName, 1, 0)
 	created, err := p.Elastic.Index().Create(p.Index, indexMapping)
 	if err != nil {

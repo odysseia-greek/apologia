@@ -1,4 +1,5 @@
 PROTO_DIRS := alkibiades antisthenes aristippos kritias kriton xenofon
+PROTO_DIRS_NEW := aspasia diotima
 
 .PHONY: all
 all: generate docs
@@ -11,6 +12,11 @@ generate:
 		 protoc --go_out=. --go_opt=paths=source_relative \
 		        --go-grpc_out=. --go-grpc_opt=paths=source_relative \
 		        proto/$$dir.proto); \
+	done
+
+	@for dir in $(PROTO_DIRS_NEW); do \
+		echo "Generating Protobuf files in $$dir..."; \
+		buf generate --template $$dir/buf.gen.yaml $$dir; \
 	done
 
 .PHONY: docs
