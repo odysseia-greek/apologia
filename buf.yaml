@@ -1,0 +1,9 @@
+# apologia/buf.yaml
+version: v2
+modules:
+  - path: diotima/proto
+  - path: aspasia/proto
+lint:
+  use: [DEFAULT]
+breaking:
+  use: [FILE]
