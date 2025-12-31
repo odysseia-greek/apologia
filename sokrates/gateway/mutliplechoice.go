@@ -2,7 +2,6 @@ package gateway
 
 import (
 	v1 "github.com/odysseia-greek/apologia/kritias/gen/go/v1"
-	pbkritias "github.com/odysseia-greek/apologia/kritias/proto"
 	"github.com/odysseia-greek/apologia/kritias/triakonta"
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
 )
@@ -11,7 +10,7 @@ func (s *SokratesHandler) CreateMultipleChoiceQuiz(request *v1.CreationRequest, 
 	multipleChoiceCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
-	var grpcResponse *pbkritias.QuizResponse
+	var grpcResponse *v1.QuizResponse
 
 	err := s.MultiChoiceClient.CallWithReconnect(func(client *triakonta.MutpleChoiceClient) error {
 		var innerErr error
@@ -47,11 +46,11 @@ func (s *SokratesHandler) CreateMultipleChoiceQuiz(request *v1.CreationRequest, 
 	return quizResponse, nil
 }
 
-func (s *SokratesHandler) CheckMultipleChoice(request *pbkritias.AnswerRequest, requestID, sessionId string) (*model.ComprehensiveResponse, error) {
+func (s *SokratesHandler) CheckMultipleChoice(request *v1.AnswerRequest, requestID, sessionId string) (*model.ComprehensiveResponse, error) {
 	multipleChoiceCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
-	var grpcResponse *pbkritias.ComprehensiveResponse
+	var grpcResponse *v1.AnswerResponse
 
 	err := s.MultiChoiceClient.CallWithReconnect(func(client *triakonta.MutpleChoiceClient) error {
 		var innerErr error
@@ -75,11 +74,11 @@ func (s *SokratesHandler) MultipleChoiceOptions(requestID, sessionId string) (*m
 	multipleChoiceCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
-	var grpcResponse *pbkritias.AggregatedOptions
+	var grpcResponse *v1.AggregatedOptions
 
 	err := s.MultiChoiceClient.CallWithReconnect(func(client *triakonta.MutpleChoiceClient) error {
 		var innerErr error
-		grpcResponse, innerErr = client.Options(multipleChoiceCtx, &pbkritias.OptionsRequest{})
+		grpcResponse, innerErr = client.Options(multipleChoiceCtx, &v1.OptionsRequest{})
 		return innerErr
 	})
 	if err != nil {

@@ -53,11 +53,11 @@ func databaseSpan(response *models.Response, query map[string]interface{}, ctx c
 		hits = response.Hits.Total.Value
 	}
 
-	dataBaseSpan := &pb.ParabasisRequest{
+	dataBaseSpan := &v1.ParabasisRequest{
 		TraceId:      traceID,
 		ParentSpanId: spanID,
 		SpanId:       spanID,
-		RequestType: &pb.ParabasisRequest_DatabaseSpan{DatabaseSpan: &pb.DatabaseSpanRequest{
+		RequestType: &v1.ParabasisRequest_DatabaseSpan{DatabaseSpan: &v1.DatabaseSpanRequest{
 			Action:   "search",
 			Query:    string(parsedQuery),
 			Hits:     hits,
@@ -78,11 +78,11 @@ func cacheSpan(response string, sessionId string, ctx context.Context) {
 		return
 	}
 
-	span := &pb.ParabasisRequest{
+	span := &v1.ParabasisRequest{
 		TraceId:      traceID,
 		ParentSpanId: spanID,
 		SpanId:       spanID,
-		RequestType: &pb.ParabasisRequest_Span{Span: &pb.SpanRequest{
+		RequestType: &v1.ParabasisRequest_Span{Span: &v1.SpanRequest{
 			Action: fmt.Sprintf("taken from cache with key: %s", sessionId),
 			Status: response,
 		}},

@@ -124,15 +124,28 @@ func (r *queryResolver) MultipleChoiceAnswer(ctx context.Context, input *model.M
 	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
 
 	pb := &pbkritias.AnswerRequest{
-		Theme:         *input.Theme,
-		Set:           *input.Set,
-		Comprehensive: *input.Comprehensive,
-		Answer:        *input.Answer,
-		QuizWord:      *input.QuizWord,
-		DoneAfter:     *input.DoneAfter,
+		Theme:     *input.Theme,
+		Set:       *input.Set,
+		Answer:    *input.Answer,
+		QuizWord:  *input.QuizWord,
+		DoneAfter: *input.DoneAfter,
 	}
 
-	return r.Handler.CheckMultipleChoice(pb, requestID, sessionId)
+	fromMultiChoice, err := r.Handler.CheckMultipleChoice(pb, requestID, sessionId)
+	if err != nil {
+		return nil, err
+	}
+
+	if *input.Comprehensive {
+		fromGatherer, err := r.Handler.GatherComprehensiveResponse(*input.QuizWord, requestID, sessionId)
+		if err != nil {
+			return nil, err
+		}
+		fromMultiChoice.FoundInText = fromGatherer.FoundInText
+		fromMultiChoice.SimilarWords = fromGatherer.SimilarWords
+	}
+
+	return fromMultiChoice, nil
 }
 
 // MultipleChoiceQuiz is the resolver for the multipleChoiceQuiz field.

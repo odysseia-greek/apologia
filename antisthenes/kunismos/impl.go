@@ -3,23 +3,24 @@ package kunismos
 import (
 	"context"
 	"fmt"
+	"time"
+
 	"github.com/odysseia-greek/agora/archytas"
 	"github.com/odysseia-greek/agora/aristoteles"
 	"github.com/odysseia-greek/agora/plato/progress"
 	"github.com/odysseia-greek/agora/plato/randomizer"
 	"github.com/odysseia-greek/agora/plato/service"
-	pb "github.com/odysseia-greek/apologia/antisthenes/proto"
+	v1 "github.com/odysseia-greek/apologia/antisthenes/gen/go/v1"
 	pbar "github.com/odysseia-greek/attike/aristophanes/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	"time"
 )
 
 type GrammarService interface {
 	WaitForHealthyState() bool
-	Options(ctx context.Context, request *pb.OptionsRequest) (*pb.AggregatedOptions, error)
-	Question(ctx context.Context, request *pb.CreationRequest) (*pb.QuizResponse, error)
-	Answer(ctx context.Context, request *pb.AnswerRequest) (*pb.ComprehensiveResponse, error)
+	Options(ctx context.Context, request *v1.OptionsRequest) (*v1.AggregatedOptions, error)
+	Question(ctx context.Context, request *v1.CreationRequest) (*v1.QuizResponse, error)
+	Answer(ctx context.Context, request *v1.AnswerRequest) (*v1.AnswerResponse, error)
 }
 
 const (
@@ -35,7 +36,7 @@ type GrammarServiceImpl struct {
 	Streamer   pbar.TraceService_ChorusClient
 	Archytas   archytas.Client
 	Progress   *progress.ProgressTracker
-	pb.UnimplementedAntisthenesServer
+	v1.UnimplementedAntisthenesServer
 }
 
 type GrammarServiceClient struct {
@@ -43,7 +44,7 @@ type GrammarServiceClient struct {
 }
 
 type GrammarClient struct {
-	grammar pb.AntisthenesClient
+	grammar v1.AntisthenesClient
 }
 
 func NewAntisthenesClient(address string) (*GrammarClient, error) {
@@ -54,7 +55,7 @@ func NewAntisthenesClient(address string) (*GrammarClient, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to connect to tracing service: %w", err)
 	}
-	client := pb.NewAntisthenesClient(conn)
+	client := v1.NewAntisthenesClient(conn)
 	return &GrammarClient{grammar: client}, nil
 }
 
@@ -64,7 +65,7 @@ func (g *GrammarClient) WaitForHealthyState() bool {
 	endTime := time.Now().Add(timeout)
 
 	for time.Now().Before(endTime) {
-		response, err := g.Health(context.Background(), &pb.HealthRequest{})
+		response, err := g.Health(context.Background(), &v1.HealthRequest{})
 		if err == nil && response.Healthy {
 			return true
 		}
@@ -75,18 +76,18 @@ func (g *GrammarClient) WaitForHealthyState() bool {
 	return false
 }
 
-func (g *GrammarClient) Health(ctx context.Context, request *pb.HealthRequest) (*pb.HealthResponse, error) {
+func (g *GrammarClient) Health(ctx context.Context, request *v1.HealthRequest) (*v1.HealthResponse, error) {
 	return g.grammar.Health(ctx, request)
 }
 
-func (g *GrammarClient) Options(ctx context.Context, request *pb.OptionsRequest) (*pb.AggregatedOptions, error) {
+func (g *GrammarClient) Options(ctx context.Context, request *v1.OptionsRequest) (*v1.AggregatedOptions, error) {
 	return g.grammar.Options(ctx, request)
 }
 
-func (g *GrammarClient) Question(ctx context.Context, request *pb.CreationRequest) (*pb.QuizResponse, error) {
+func (g *GrammarClient) Question(ctx context.Context, request *v1.CreationRequest) (*v1.QuizResponse, error) {
 	return g.grammar.Question(ctx, request)
 }
 
-func (g *GrammarClient) Answer(ctx context.Context, request *pb.AnswerRequest) (*pb.ComprehensiveResponse, error) {
+func (g *GrammarClient) Answer(ctx context.Context, request *v1.AnswerRequest) (*v1.AnswerResponse, error) {
 	return g.grammar.Answer(ctx, request)
 }

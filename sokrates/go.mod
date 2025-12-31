@@ -3,14 +3,14 @@ module github.com/odysseia-greek/apologia/sokrates
 go 1.25.5
 
 require (
-	github.com/99designs/gqlgen v0.17.73
+	github.com/99designs/gqlgen v0.17.85
 	github.com/gorilla/mux v1.8.1
 	github.com/odysseia-greek/agora/plato v0.2.10
 	github.com/odysseia-greek/apologia/alkibiades v0.0.2
 	github.com/odysseia-greek/apologia/antisthenes v0.0.1
 	github.com/odysseia-greek/apologia/aristippos v0.0.9-rho1
 	github.com/odysseia-greek/apologia/aspasia v0.0.1-rho1
-	github.com/odysseia-greek/apologia/kritias v0.0.5-rho2
+	github.com/odysseia-greek/apologia/kritias v0.0.5-rho3
 	github.com/odysseia-greek/apologia/kriton v0.0.2
 	github.com/odysseia-greek/apologia/xenofon v0.0.3
 	github.com/odysseia-greek/attike/aristophanes v0.6.3
@@ -40,7 +40,7 @@ require (
 	github.com/go-openapi/jsonpointer v0.21.1 // indirect
 	github.com/go-openapi/jsonreference v0.21.0 // indirect
 	github.com/go-openapi/swag v0.23.1 // indirect
-	github.com/go-viper/mapstructure/v2 v2.2.1 // indirect
+	github.com/go-viper/mapstructure/v2 v2.4.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
@@ -106,15 +106,15 @@ require (
 	go.opentelemetry.io/otel v1.38.0 // indirect
 	go.opentelemetry.io/otel/metric v1.38.0 // indirect
 	go.opentelemetry.io/otel/trace v1.38.0 // indirect
-	golang.org/x/net v0.47.0 // indirect
+	golang.org/x/net v0.48.0 // indirect
 	golang.org/x/oauth2 v0.32.0 // indirect
-	golang.org/x/sync v0.18.0 // indirect
-	golang.org/x/sys v0.38.0 // indirect
-	golang.org/x/term v0.37.0 // indirect
-	golang.org/x/text v0.31.0 // indirect
+	golang.org/x/sync v0.19.0 // indirect
+	golang.org/x/sys v0.39.0 // indirect
+	golang.org/x/term v0.38.0 // indirect
+	golang.org/x/text v0.32.0 // indirect
 	golang.org/x/time v0.11.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20251029180050-ab9386a59fda // indirect
-	google.golang.org/protobuf v1.36.10 // indirect
+	google.golang.org/protobuf v1.36.11 // indirect
 	gopkg.in/evanphx/json-patch.v4 v4.12.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect

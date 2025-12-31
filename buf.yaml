@@ -5,6 +5,7 @@ modules:
   - path: aspasia/proto
   - path: kritias/proto
   - path: aristippos/proto
+  - path: antisthenes/proto
 lint:
   use: [DEFAULT]
 breaking:
