@@ -4,12 +4,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strings"
+
 	"github.com/odysseia-greek/agora/aristoteles/models"
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/service"
 	pb "github.com/odysseia-greek/attike/aristophanes/proto"
 	"google.golang.org/grpc/metadata"
-	"strings"
 )
 
 func extractRequestIds(ctx context.Context) (string, string, bool) {
@@ -53,11 +54,11 @@ func databaseSpan(response *models.Response, query map[string]interface{}, ctx c
 		hits = response.Hits.Total.Value
 	}
 
-	dataBaseSpan := &v1.ParabasisRequest{
+	dataBaseSpan := &pb.ParabasisRequest{
 		TraceId:      traceID,
 		ParentSpanId: spanID,
 		SpanId:       spanID,
-		RequestType: &v1.ParabasisRequest_DatabaseSpan{DatabaseSpan: &v1.DatabaseSpanRequest{
+		RequestType: &pb.ParabasisRequest_DatabaseSpan{DatabaseSpan: &pb.DatabaseSpanRequest{
 			Action:   "search",
 			Query:    string(parsedQuery),
 			Hits:     hits,
@@ -78,11 +79,11 @@ func cacheSpan(response string, sessionId string, ctx context.Context) {
 		return
 	}
 
-	span := &v1.ParabasisRequest{
+	span := &pb.ParabasisRequest{
 		TraceId:      traceID,
 		ParentSpanId: spanID,
 		SpanId:       spanID,
-		RequestType: &v1.ParabasisRequest_Span{Span: &v1.SpanRequest{
+		RequestType: &pb.ParabasisRequest_Span{Span: &pb.SpanRequest{
 			Action: fmt.Sprintf("taken from cache with key: %s", sessionId),
 			Status: response,
 		}},

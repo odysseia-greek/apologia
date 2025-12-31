@@ -13,7 +13,7 @@ import (
 	"github.com/odysseia-greek/apologia/xenofon/anabasis"
 
 	pbalkibiades "github.com/odysseia-greek/apologia/alkibiades/proto"
-	pbantisthenes "github.com/odysseia-greek/apologia/antisthenes/proto"
+	pbantisthenes "github.com/odysseia-greek/apologia/antisthenes/gen/go/v1"
 	pbartrippos "github.com/odysseia-greek/apologia/aristippos/gen/go/v1"
 	pbkritias "github.com/odysseia-greek/apologia/kritias/gen/go/v1"
 	pbkriton "github.com/odysseia-greek/apologia/kriton/proto"

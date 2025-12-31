@@ -9,7 +9,7 @@ import (
 
 	"github.com/odysseia-greek/agora/plato/config"
 	palkibiades "github.com/odysseia-greek/apologia/alkibiades/proto"
-	pbantisthenes "github.com/odysseia-greek/apologia/antisthenes/proto"
+	pbantisthenes "github.com/odysseia-greek/apologia/antisthenes/gen/go/v1"
 	pbartrippos "github.com/odysseia-greek/apologia/aristippos/gen/go/v1"
 	pbkritias "github.com/odysseia-greek/apologia/kritias/gen/go/v1"
 	pbkriton "github.com/odysseia-greek/apologia/kriton/proto"
@@ -281,10 +281,24 @@ func (r *queryResolver) GrammarAnswer(ctx context.Context, input *model.GrammarA
 		QuizWord:       *input.QuizWord,
 		DoneAfter:      *input.DoneAfter,
 		DictionaryForm: *input.DictionaryForm,
-		Comprehensive:  *input.Comprehensive,
 	}
 
-	return r.Handler.CheckGrammar(pb, requestID, sessionId)
+	fromGrammar, err := r.Handler.CheckGrammar(pb, requestID, sessionId)
+	if err != nil {
+		return nil, err
+	}
+
+	if *input.Comprehensive {
+		fromGatherer, err := r.Handler.GatherComprehensiveResponse(*input.QuizWord, requestID, sessionId)
+		if err != nil {
+			return nil, err
+		}
+		fromGrammar.FoundInText = fromGatherer.FoundInText
+		fromGrammar.SimilarWords = fromGatherer.SimilarWords
+	}
+
+	return fromGrammar, nil
+
 }
 
 // JourneyQuiz is the resolver for the journeyQuiz field.

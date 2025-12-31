@@ -7,7 +7,7 @@ require (
 	github.com/gorilla/mux v1.8.1
 	github.com/odysseia-greek/agora/plato v0.2.10
 	github.com/odysseia-greek/apologia/alkibiades v0.0.2
-	github.com/odysseia-greek/apologia/antisthenes v0.0.1
+	github.com/odysseia-greek/apologia/antisthenes v0.0.2-rho1
 	github.com/odysseia-greek/apologia/aristippos v0.0.9-rho1
 	github.com/odysseia-greek/apologia/aspasia v0.0.1-rho1
 	github.com/odysseia-greek/apologia/kritias v0.0.5-rho3

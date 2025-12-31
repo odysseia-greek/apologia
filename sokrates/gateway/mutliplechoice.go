@@ -67,6 +67,17 @@ func (s *SokratesHandler) CheckMultipleChoice(request *v1.AnswerRequest, request
 		Finished: &grpcResponse.Finished,
 	}
 
+	for _, progress := range grpcResponse.Progress {
+		mappedResponse.Progress = append(mappedResponse.Progress, &model.ProgressEntry{
+			Greek:          &progress.Greek,
+			Translation:    &progress.Translation,
+			PlayCount:      &progress.PlayCount,
+			CorrectCount:   &progress.CorrectCount,
+			IncorrectCount: &progress.IncorrectCount,
+			LastPlayed:     &progress.LastPlayed,
+		})
+	}
+
 	return mappedResponse, nil
 }
 

@@ -1,17 +1,16 @@
 package gateway
 
 import (
+	v1 "github.com/odysseia-greek/apologia/antisthenes/gen/go/v1"
 	"github.com/odysseia-greek/apologia/antisthenes/kunismos"
-	pbantisthenes "github.com/odysseia-greek/apologia/antisthenes/proto"
-	"github.com/odysseia-greek/apologia/sokrates/gateway/grammar"
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
 )
 
-func (s *SokratesHandler) CreateGrammarQuiz(request *pbantisthenes.CreationRequest, requestID, sessionId string) (*model.GrammarQuizResponse, error) {
+func (s *SokratesHandler) CreateGrammarQuiz(request *v1.CreationRequest, requestID, sessionId string) (*model.GrammarQuizResponse, error) {
 	grammarClientCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
-	var grpcResponse *pbantisthenes.QuizResponse
+	var grpcResponse *v1.QuizResponse
 
 	err := s.GrammarClient.CallWithReconnect(func(client *kunismos.GrammarClient) error {
 		var innerErr error
@@ -53,11 +52,11 @@ func (s *SokratesHandler) CreateGrammarQuiz(request *pbantisthenes.CreationReque
 	return quizResponse, nil
 }
 
-func (s *SokratesHandler) CheckGrammar(request *pbantisthenes.AnswerRequest, requestID, sessionId string) (*model.GrammarAnswer, error) {
+func (s *SokratesHandler) CheckGrammar(request *v1.AnswerRequest, requestID, sessionId string) (*model.GrammarAnswer, error) {
 	grammarClientCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
-	var grpcResponse *pbantisthenes.ComprehensiveResponse
+	var grpcResponse *v1.AnswerResponse
 
 	err := s.GrammarClient.CallWithReconnect(func(client *kunismos.GrammarClient) error {
 		var innerErr error
@@ -68,18 +67,35 @@ func (s *SokratesHandler) CheckGrammar(request *pbantisthenes.AnswerRequest, req
 		return nil, err
 	}
 
-	return grammar.MapComprehensiveResponse(grpcResponse), nil
+	mappedResponse := &model.GrammarAnswer{
+		Correct:  &grpcResponse.Correct,
+		QuizWord: &grpcResponse.QuizWord,
+		Finished: &grpcResponse.Finished,
+	}
+
+	for _, progress := range grpcResponse.Progress {
+		mappedResponse.Progress = append(mappedResponse.Progress, &model.ProgressEntry{
+			Greek:          &progress.Greek,
+			Translation:    &progress.Translation,
+			PlayCount:      &progress.PlayCount,
+			CorrectCount:   &progress.CorrectCount,
+			IncorrectCount: &progress.IncorrectCount,
+			LastPlayed:     &progress.LastPlayed,
+		})
+	}
+
+	return mappedResponse, nil
 }
 
 func (s *SokratesHandler) GrammarOptions(requestID, sessionId string) (*model.GrammarOptions, error) {
 	optionsCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
-	var grpcResponse *pbantisthenes.AggregatedOptions
+	var grpcResponse *v1.AggregatedOptions
 
 	err := s.GrammarClient.CallWithReconnect(func(client *kunismos.GrammarClient) error {
 		var innerErr error
-		grpcResponse, innerErr = client.Options(optionsCtx, &pbantisthenes.OptionsRequest{})
+		grpcResponse, innerErr = client.Options(optionsCtx, &v1.OptionsRequest{})
 		return innerErr
 	})
 	if err != nil {

@@ -230,8 +230,8 @@ github.com/odysseia-greek/agora/thales v0.1.11 h1:UE54gcSt3QDeIZ3TLnN0l2ga63WBnO
 github.com/odysseia-greek/agora/thales v0.1.11/go.mod h1:Lrg/m4WBIGc9+omEJoqBZvLhlgm0Ke9hgQOMzkE4uWM=
 github.com/odysseia-greek/apologia/alkibiades v0.0.2 h1:AypbRv+p2/PjaOe+nK5JOX5TLuZmO3FCXrBVaAH1y1w=
 github.com/odysseia-greek/apologia/alkibiades v0.0.2/go.mod h1:oiQlnAs1LwQ3LMq/TxugXPXR9qH26NWgpOlnmiQuf6M=
-github.com/odysseia-greek/apologia/antisthenes v0.0.1 h1:AlcgD4fP4o/RSlGSmEFM3JgJeECp+tnQPRCHKpNLPlA=
-github.com/odysseia-greek/apologia/antisthenes v0.0.1/go.mod h1:6XZkPYTxMhz7yqRc3QjCwVeTS1296xJPvHRvtNaepxk=
+github.com/odysseia-greek/apologia/antisthenes v0.0.2-rho1 h1:lE9P8ZQHXAa52XRi7CjFkvDIMSvWPBa6RACfpyHPFWo=
+github.com/odysseia-greek/apologia/antisthenes v0.0.2-rho1/go.mod h1:lJBZemsudBtVpx/W94dam2+xuQ7HyIS/BSH+wGkN35w=
 github.com/odysseia-greek/apologia/aristippos v0.0.9-rho1 h1:p81h3iueF4UwK6kCbpkDuDER5M9n/N+gM7v6cuAWyQ0=
 github.com/odysseia-greek/apologia/aristippos v0.0.9-rho1/go.mod h1:DDshvksIFVp4w4qlTDbZ6gs0m32geMZrBAHUymJ6P7s=
 github.com/odysseia-greek/apologia/aspasia v0.0.1-rho1 h1:hmiXckYL4xwstbtsbC9FXLXGW07MgbBMRrjr8mwG1Tg=
