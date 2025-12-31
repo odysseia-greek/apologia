@@ -3,21 +3,24 @@ package gateway
 import (
 	"context"
 	"fmt"
+	"time"
+
 	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/apologia/alkibiades/strategos"
 	"github.com/odysseia-greek/apologia/antisthenes/kunismos"
 	"github.com/odysseia-greek/apologia/aristippos/hedone"
+	"github.com/odysseia-greek/apologia/aspasia/rhetorike"
 	"github.com/odysseia-greek/apologia/kritias/triakonta"
 	"github.com/odysseia-greek/apologia/kriton/philia"
 	"github.com/odysseia-greek/apologia/xenofon/anabasis"
 	aristophanes "github.com/odysseia-greek/attike/aristophanes/comedy"
 	pb "github.com/odysseia-greek/attike/aristophanes/proto"
-	"os"
-	"time"
 )
 
 func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
+	start := time.Now()
+
 	randomizer, err := config.CreateNewRandomizer()
 	if err != nil {
 		return nil, err
@@ -26,8 +29,8 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 	var tracer *aristophanes.ClientTracer
 	var streamer pb.TraceService_ChorusClient
 
-	maxRetries := 3
-	retryDelay := 10 * time.Second
+	maxRetries := 10
+	retryDelay := 3 * time.Second
 
 	for i := 1; i <= maxRetries; i++ {
 		tracer, err = aristophanes.NewClientTracer(aristophanes.DefaultAddress)
@@ -42,11 +45,6 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 		}
 	}
 
-	if err != nil {
-		logging.Error("giving up after 3 retries to connect to tracer")
-		os.Exit(1)
-	}
-
 	for i := 1; i <= maxRetries; i++ {
 		streamer, err = tracer.Chorus(ctx)
 		if err == nil {
@@ -59,9 +57,9 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 		}
 	}
 
-	healthy := tracer.WaitForHealthyState()
-	if !healthy {
-		logging.Error("tracing service not ready - starting up without traces")
+	healthyTracer := false
+	if tracer != nil {
+		healthyTracer = tracer.WaitForHealthyState()
 	}
 
 	mediaClientAddress := config.StringFromEnv(config.EnvMediaClient, config.DefaultMediaAddress)
@@ -73,10 +71,9 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 		return nil, err
 	}
 
-	mediaClientHealthy := mediaClient.client.WaitForHealthyState()
-	if !mediaClientHealthy {
-		logging.Debug("media client not ready - restarting seems the only option")
-		os.Exit(1)
+	mediaClientHealthy := false
+	if mediaClient != nil {
+		mediaClientHealthy = mediaClient.client.WaitForHealthyState()
 	}
 
 	multipleChoiceClientAddress := config.StringFromEnv(config.EnvMultiChoiceClient, config.DefaultMultiChoiceAddress)
@@ -88,10 +85,9 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 		return nil, err
 	}
 
-	multipleChoiceClientHealthy := multipleChoiceClient.client.WaitForHealthyState()
-	if !multipleChoiceClientHealthy {
-		logging.Debug("multiplechoice client not ready - restarting seems the only option")
-		os.Exit(1)
+	multipleChoiceClientHealthy := false
+	if multipleChoiceClient != nil {
+		multipleChoiceClientHealthy = multipleChoiceClient.client.WaitForHealthyState()
 	}
 
 	authorBasedClientAddress := config.StringFromEnv(config.EnvAuthorBasedClient, config.DefaultAuthorBasedAddress)
@@ -104,10 +100,9 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 		return nil, err
 	}
 
-	authorBasedClientHealthy := authorBasedClient.client.WaitForHealthyState()
-	if !authorBasedClientHealthy {
-		logging.Debug("authorbased client not ready - restarting seems the only option")
-		os.Exit(1)
+	authorBasedClientHealthy := false
+	if authorBasedClient != nil {
+		authorBasedClientHealthy = authorBasedClient.client.WaitForHealthyState()
 	}
 
 	dialogueClientAddress := config.StringFromEnv(config.EnvDialogueClient, config.DefaultDialogueAddress)
@@ -121,10 +116,9 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 		return nil, err
 	}
 
-	dialogueClientHealthy := dialogueClient.client.WaitForHealthyState()
-	if !dialogueClientHealthy {
-		logging.Debug("dialogue client not ready - restarting seems the only option")
-		os.Exit(1)
+	dialogueClientHealthy := false
+	if dialogueClient != nil {
+		dialogueClientHealthy = dialogueClient.client.WaitForHealthyState()
 	}
 
 	grammarClientAddress := config.StringFromEnv(config.EnvGrammarBasedClient, config.DefaultGrammarBasedAddress)
@@ -137,10 +131,9 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 		return nil, err
 	}
 
-	grammarClientHealthy := grammarClient.client.WaitForHealthyState()
-	if !grammarClientHealthy {
-		logging.Debug("grammar client not ready - restarting seems the only option")
-		os.Exit(1)
+	grammarClientHealthy := false
+	if grammarClient != nil {
+		grammarClientHealthy = grammarClient.client.WaitForHealthyState()
 	}
 
 	journeyClientAddress := config.StringFromEnv(config.EnvJourneyClient, config.DefaultJourneyAddress)
@@ -154,11 +147,50 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 		return nil, err
 	}
 
-	journeyClientHealthy := journeyClient.client.WaitForHealthyState()
-	if !journeyClientHealthy {
-		logging.Debug("grammar client not ready - restarting seems the only option")
-		os.Exit(1)
+	journeyClientHealthy := false
+	if journeyClient != nil {
+		journeyClientHealthy = journeyClient.client.WaitForHealthyState()
 	}
+
+	gathererClientAddress := config.StringFromEnv("ASPASIA_SERVICE", "aspasia:50060")
+	gathererClient, err := NewGenericGrpcClient[*rhetorike.GathererClient](
+		gathererClientAddress,
+		rhetorike.NewAspasiaClient,
+	)
+
+	if err != nil {
+		logging.Error(err.Error())
+		return nil, err
+	}
+
+	gathererClientHealthy := false
+	if gathererClient != nil {
+		gathererClientHealthy = gathererClient.client.WaitForHealthyState()
+	}
+
+	elapsed := time.Since(start)
+
+	logging.System(fmt.Sprintf(`Sokrates Configuration Overview:
+- Initialization Time: %s
+- Tracer Service:      %v (Address: %s)
+- Aristipoos Service:   %v (Address: %s)
+- Kritias Service:   %v (Address: %s)
+- Xenofon Service:  %v (Address: %s)
+- Kriton Service:  %v (Address: %s)
+- Antisthenes Service:   %v (Address: %s)
+- Alkibiades Service:  %v (Address: %s)
+- Aspasia Service:   %v (Address: %s)
+`,
+		elapsed,
+		healthyTracer, aristophanes.DefaultAddress,
+		mediaClientHealthy, mediaClientAddress,
+		multipleChoiceClientHealthy, multipleChoiceClientAddress,
+		authorBasedClientHealthy, authorBasedClientAddress,
+		dialogueClientHealthy, dialogueClientAddress,
+		grammarClientHealthy, grammarClientAddress,
+		journeyClientHealthy, journeyClientAddress,
+		gathererClientHealthy, gathererClientAddress,
+	))
 
 	return &SokratesHandler{
 		Streamer:          streamer,
@@ -169,5 +201,6 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 		DialogueClient:    dialogueClient,
 		GrammarClient:     grammarClient,
 		JourneyClient:     journeyClient,
+		GathererClient:    gathererClient,
 	}, nil
 }

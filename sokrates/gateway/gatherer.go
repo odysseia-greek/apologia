@@ -1,20 +1,37 @@
-package media
+package gateway
 
 import (
-	pbartrippos "github.com/odysseia-greek/apologia/aristippos/proto"
+	v1 "github.com/odysseia-greek/apologia/aspasia/gen/go/v1"
+	"github.com/odysseia-greek/apologia/aspasia/rhetorike"
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
 )
 
-func MapComprehensiveResponse(grpcResp *pbartrippos.ComprehensiveResponse) *model.ComprehensiveResponse {
+func (s *SokratesHandler) GatherComprehensiveResponse(word, requestID, sessionId string) (*model.ComprehensiveResponse, error) {
+	gatherClientCtx, cancel := s.createRequestHeader(requestID, sessionId)
+	defer cancel()
+
+	var grpcResponse *v1.ExtendedSearchResponse
+
+	request := &v1.ExtendedSearch{Word: word}
+
+	err := s.GathererClient.CallWithReconnect(func(client *rhetorike.GathererClient) error {
+		var innerErr error
+		grpcResponse, innerErr = client.Search(gatherClientCtx, request)
+		return innerErr
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return mapComprehensiveResponse(grpcResponse), nil
+}
+
+func mapComprehensiveResponse(grpcResp *v1.ExtendedSearchResponse) *model.ComprehensiveResponse {
 	if grpcResp == nil {
 		return nil
 	}
 
-	mappedResponse := &model.ComprehensiveResponse{
-		Correct:  &grpcResp.Correct,
-		QuizWord: &grpcResp.QuizWord,
-		Finished: &grpcResp.Finished,
-	}
+	mappedResponse := &model.ComprehensiveResponse{}
 
 	if grpcResp.FoundInText != nil {
 		mappedResponse.FoundInText = &model.AnalyzeTextResponse{
@@ -26,29 +43,15 @@ func MapComprehensiveResponse(grpcResp *pbartrippos.ComprehensiveResponse) *mode
 
 	for _, word := range grpcResp.SimilarWords {
 		mappedResponse.SimilarWords = append(mappedResponse.SimilarWords, &model.Hit{
-			Greek:      &word.Greek,
-			English:    &word.English,
-			Dutch:      &word.Dutch,
-			LinkedWord: &word.LinkedWord,
-			Original:   &word.Original,
-		})
-	}
-
-	for _, progress := range grpcResp.Progress {
-		mappedResponse.Progress = append(mappedResponse.Progress, &model.ProgressEntry{
-			Greek:          &progress.Greek,
-			Translation:    &progress.Translation,
-			PlayCount:      &progress.PlayCount,
-			CorrectCount:   &progress.CorrectCount,
-			IncorrectCount: &progress.IncorrectCount,
-			LastPlayed:     &progress.LastPlayed,
+			Greek:   &word.Greek,
+			English: &word.English,
 		})
 	}
 
 	return mappedResponse
 }
 
-func mapConjugations(grpcConj []*pbartrippos.Conjugations) []*model.ConjugationResponse {
+func mapConjugations(grpcConj []*v1.Conjugations) []*model.ConjugationResponse {
 	if grpcConj == nil {
 		return nil
 	}
@@ -63,7 +66,7 @@ func mapConjugations(grpcConj []*pbartrippos.Conjugations) []*model.ConjugationR
 	return result
 }
 
-func mapAnalyzeResults(grpcResults []*pbartrippos.AnalyzeResult) []*model.AnalyzeResult {
+func mapAnalyzeResults(grpcResults []*v1.AnalyzeResult) []*model.AnalyzeResult {
 	if grpcResults == nil {
 		return nil
 	}
@@ -83,13 +86,4 @@ func mapAnalyzeResults(grpcResults []*pbartrippos.AnalyzeResult) []*model.Analyz
 		})
 	}
 	return result
-}
-
-// Helper function to convert []string to []*string
-func convertStringSliceToPointer(strings []string) []*string {
-	var ptrSlice []*string
-	for _, s := range strings {
-		ptrSlice = append(ptrSlice, &s)
-	}
-	return ptrSlice
 }

@@ -10,7 +10,7 @@ import (
 	"github.com/odysseia-greek/agora/plato/progress"
 	"github.com/odysseia-greek/agora/plato/randomizer"
 	"github.com/odysseia-greek/agora/plato/service"
-	v1 "github.com/odysseia-greek/apologia/kritias/gen/go/v1/gen/go/v1"
+	v1 "github.com/odysseia-greek/apologia/kritias/gen/go/v1"
 	pbar "github.com/odysseia-greek/attike/aristophanes/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"

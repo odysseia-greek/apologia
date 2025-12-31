@@ -1,17 +1,16 @@
 package gateway
 
 import (
+	v1 "github.com/odysseia-greek/apologia/aristippos/gen/go/v1"
 	"github.com/odysseia-greek/apologia/aristippos/hedone"
-	pbartrippos "github.com/odysseia-greek/apologia/aristippos/proto"
-	"github.com/odysseia-greek/apologia/sokrates/gateway/media"
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
 )
 
-func (s *SokratesHandler) CreateMediaQuiz(request *pbartrippos.CreationRequest, requestID, sessionId string) (*model.MediaQuizResponse, error) {
+func (s *SokratesHandler) CreateMediaQuiz(request *v1.CreationRequest, requestID, sessionId string) (*model.MediaQuizResponse, error) {
 	mediaClientCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
-	var grpcResponse *pbartrippos.QuizResponse
+	var grpcResponse *v1.QuizResponse
 
 	err := s.MediaClient.CallWithReconnect(func(client *hedone.MediaClient) error {
 		var innerErr error
@@ -49,11 +48,11 @@ func (s *SokratesHandler) CreateMediaQuiz(request *pbartrippos.CreationRequest, 
 	return quizResponse, nil
 }
 
-func (s *SokratesHandler) CheckMedia(request *pbartrippos.AnswerRequest, requestID, sessionId string) (*model.ComprehensiveResponse, error) {
+func (s *SokratesHandler) CheckMedia(request *v1.AnswerRequest, requestID, sessionId string) (*model.ComprehensiveResponse, error) {
 	mediaClientCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
-	var grpcResponse *pbartrippos.ComprehensiveResponse
+	var grpcResponse *v1.AnswerResponse
 
 	err := s.MediaClient.CallWithReconnect(func(client *hedone.MediaClient) error {
 		var innerErr error
@@ -64,18 +63,24 @@ func (s *SokratesHandler) CheckMedia(request *pbartrippos.AnswerRequest, request
 		return nil, err
 	}
 
-	return media.MapComprehensiveResponse(grpcResponse), nil
+	mappedResponse := &model.ComprehensiveResponse{
+		Correct:  &grpcResponse.Correct,
+		QuizWord: &grpcResponse.QuizWord,
+		Finished: &grpcResponse.Finished,
+	}
+
+	return mappedResponse, nil
 }
 
 func (s *SokratesHandler) MediaOptions(requestID, sessionId string) (*model.AggregatedOptions, error) {
 	optionsCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
-	var grpcResponse *pbartrippos.AggregatedOptions
+	var grpcResponse *v1.AggregatedOptions
 
 	err := s.MediaClient.CallWithReconnect(func(client *hedone.MediaClient) error {
 		var innerErr error
-		grpcResponse, innerErr = client.Options(optionsCtx, &pbartrippos.OptionsRequest{})
+		grpcResponse, innerErr = client.Options(optionsCtx, &v1.OptionsRequest{})
 		return innerErr
 	})
 	if err != nil {

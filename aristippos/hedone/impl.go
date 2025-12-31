@@ -3,6 +3,8 @@ package hedone
 import (
 	"context"
 	"fmt"
+	"time"
+
 	"github.com/odysseia-greek/agora/archytas"
 	"github.com/odysseia-greek/agora/aristoteles"
 	"github.com/odysseia-greek/agora/plato/progress"
@@ -12,7 +14,6 @@ import (
 	pbar "github.com/odysseia-greek/attike/aristophanes/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	"time"
 )
 
 type MediaService interface {

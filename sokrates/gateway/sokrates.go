@@ -12,6 +12,7 @@ import (
 	"github.com/odysseia-greek/apologia/alkibiades/strategos"
 	"github.com/odysseia-greek/apologia/antisthenes/kunismos"
 	"github.com/odysseia-greek/apologia/aristippos/hedone"
+	"github.com/odysseia-greek/apologia/aspasia/rhetorike"
 	"github.com/odysseia-greek/apologia/kritias/triakonta"
 	"github.com/odysseia-greek/apologia/kriton/philia"
 	"github.com/odysseia-greek/apologia/xenofon/anabasis"
@@ -30,6 +31,7 @@ type SokratesHandler struct {
 	DialogueClient    *GenericGrpcClient[*philia.DialogueClient]
 	GrammarClient     *GenericGrpcClient[*kunismos.GrammarClient]
 	JourneyClient     *GenericGrpcClient[*strategos.JourneyClient]
+	GathererClient    *GenericGrpcClient[*rhetorike.GathererClient]
 }
 type GenericGrpcClient[T any] struct {
 	client  T

@@ -1,13 +1,13 @@
 package gateway
 
 import (
+	v1 "github.com/odysseia-greek/apologia/kritias/gen/go/v1"
 	pbkritias "github.com/odysseia-greek/apologia/kritias/proto"
 	"github.com/odysseia-greek/apologia/kritias/triakonta"
-	"github.com/odysseia-greek/apologia/sokrates/gateway/multiplechoice"
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
 )
 
-func (s *SokratesHandler) CreateMultipleChoiceQuiz(request *pbkritias.CreationRequest, requestID, sessionId string) (*model.MultipleChoiceResponse, error) {
+func (s *SokratesHandler) CreateMultipleChoiceQuiz(request *v1.CreationRequest, requestID, sessionId string) (*model.MultipleChoiceResponse, error) {
 	multipleChoiceCtx, cancel := s.createRequestHeader(requestID, sessionId)
 	defer cancel()
 
@@ -62,7 +62,13 @@ func (s *SokratesHandler) CheckMultipleChoice(request *pbkritias.AnswerRequest, 
 		return nil, err
 	}
 
-	return multiplechoice.MapComprehensiveResponse(grpcResponse), nil
+	mappedResponse := &model.ComprehensiveResponse{
+		Correct:  &grpcResponse.Correct,
+		QuizWord: &grpcResponse.QuizWord,
+		Finished: &grpcResponse.Finished,
+	}
+
+	return mappedResponse, nil
 }
 
 func (s *SokratesHandler) MultipleChoiceOptions(requestID, sessionId string) (*model.ThemedOptions, error) {

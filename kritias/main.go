@@ -8,8 +8,8 @@ import (
 	"os"
 
 	"github.com/odysseia-greek/agora/plato/logging"
-	v1 "github.com/odysseia-greek/apologia/kritias/gen/go/v1/gen/go/v1"
-	"github.com/odysseia-greek/apologia/kritias/gen/go/v1/triakonta"
+	v1 "github.com/odysseia-greek/apologia/kritias/gen/go/v1"
+	"github.com/odysseia-greek/apologia/kritias/triakonta"
 	"google.golang.org/grpc"
 )
 

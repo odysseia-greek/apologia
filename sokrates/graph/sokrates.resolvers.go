@@ -10,8 +10,8 @@ import (
 	"github.com/odysseia-greek/agora/plato/config"
 	palkibiades "github.com/odysseia-greek/apologia/alkibiades/proto"
 	pbantisthenes "github.com/odysseia-greek/apologia/antisthenes/proto"
-	pbartrippos "github.com/odysseia-greek/apologia/aristippos/proto"
-	pbkritias "github.com/odysseia-greek/apologia/kritias/proto"
+	pbartrippos "github.com/odysseia-greek/apologia/aristippos/gen/go/v1"
+	pbkritias "github.com/odysseia-greek/apologia/kritias/gen/go/v1"
 	pbkriton "github.com/odysseia-greek/apologia/kriton/proto"
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
 	pbxenofon "github.com/odysseia-greek/apologia/xenofon/proto"
@@ -72,16 +72,29 @@ func (r *queryResolver) MediaAnswer(ctx context.Context, input *model.MediaAnswe
 	sessionId, _ := ctx.Value(config.SessionIdKey).(string)
 
 	pb := &pbartrippos.AnswerRequest{
-		Theme:         *input.Theme,
-		Set:           *input.Set,
-		Segment:       *input.Segment,
-		Comprehensive: *input.Comprehensive,
-		Answer:        *input.Answer,
-		QuizWord:      *input.QuizWord,
-		DoneAfter:     *input.DoneAfter,
+		Theme:     *input.Theme,
+		Set:       *input.Set,
+		Segment:   *input.Segment,
+		Answer:    *input.Answer,
+		QuizWord:  *input.QuizWord,
+		DoneAfter: *input.DoneAfter,
 	}
 
-	return r.Handler.CheckMedia(pb, requestID, sessionId)
+	fromMedia, err := r.Handler.CheckMedia(pb, requestID, sessionId)
+	if err != nil {
+		return nil, err
+	}
+
+	if *input.Comprehensive {
+		fromGatherer, err := r.Handler.GatherComprehensiveResponse(*input.QuizWord, requestID, sessionId)
+		if err != nil {
+			return nil, err
+		}
+		fromMedia.FoundInText = fromGatherer.FoundInText
+		fromMedia.SimilarWords = fromGatherer.SimilarWords
+	}
+
+	return fromMedia, nil
 }
 
 // MediaQuiz is the resolver for the mediaQuiz field.

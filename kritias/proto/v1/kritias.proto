@@ -1,7 +1,7 @@
 syntax = "proto3";
-option go_package = "github.com/odysseia-greek/apologia/kritias/gen/go/v1;kritiasv1";
-
 package kritias.v1;
+
+option go_package = "github.com/odysseia-greek/apologia/kritias/gen/go/v1;kritiasv1";
 
 service Kritias {
   rpc Health (HealthRequest) returns (HealthResponse) {};

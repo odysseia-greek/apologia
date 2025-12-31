@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	v1 "github.com/odysseia-greek/apologia/kritias/gen/go/v1/gen/go/v1"
+	v1 "github.com/odysseia-greek/apologia/kritias/gen/go/v1"
 )
 
 func quizAggregationQuery() map[string]interface{} {
