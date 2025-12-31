@@ -1,4 +1,3 @@
-@wip
 Feature: Sokrates GraphQL API for Multiple Choice Quiz Functionality
   As a user of the Odysseia Greek application
   I want to interact with the Sokrates GraphQL API
@@ -6,7 +5,6 @@ Feature: Sokrates GraphQL API for Multiple Choice Quiz Functionality
 
   Background:
     Given the graphql backend is running
-
 
   Scenario: Check health status of the Media service
     When I query the health status

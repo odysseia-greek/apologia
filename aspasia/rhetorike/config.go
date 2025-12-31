@@ -2,14 +2,19 @@ package rhetorike
 
 import (
 	"context"
+	"fmt"
 	"os"
+	"time"
 
 	"github.com/odysseia-greek/agora/archytas"
 	"github.com/odysseia-greek/agora/plato/config"
+	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/apologia/diotima/theoria"
+	"github.com/odysseia-greek/makedonia/antigonos/monophthalmus"
 )
 
-func CreateNewConfig(ctx context.Context) (*ExtendedServiceImpl, error) {
+func CreateNewConfig(ctx context.Context) (*GathererServiceImpl, error) {
+	start := time.Now()
 	theoria.SetStreamer(ctx)
 
 	cache, err := archytas.CreateBadgerClient()
@@ -19,8 +24,40 @@ func CreateNewConfig(ctx context.Context) (*ExtendedServiceImpl, error) {
 
 	version := os.Getenv(config.EnvVersion)
 
-	return &ExtendedServiceImpl{
-		Archytas: cache,
-		Version:  version,
+	client, err := config.CreateOdysseiaClient()
+	if err != nil {
+		return nil, err
+	}
+
+	fuzzyClientAddress := config.StringFromEnv("ANTIGONOS_SERVICE", "antigonos.makedonia.svc.cluster.local:50060")
+	fuzzyClient, err := NewGenericGrpcClient[*monophthalmus.FuzzyClient](
+		fuzzyClientAddress,
+		monophthalmus.NewAntigonosClient,
+	)
+
+	if err != nil {
+		logging.Error(err.Error())
+	}
+
+	fuzzyClientHealthy := false
+	if fuzzyClient != nil {
+		fuzzyClientHealthy = fuzzyClient.client.WaitForHealthyState()
+	}
+
+	elapsed := time.Since(start)
+
+	logging.System(fmt.Sprintf(`Aspasia Configuration Overview:
+- Initialization Time: %s
+- Antigonos Service:   %v (Address: %s)
+`,
+		elapsed,
+		fuzzyClientHealthy, fuzzyClientAddress,
+	))
+
+	return &GathererServiceImpl{
+		Archytas:    cache,
+		Version:     version,
+		Client:      client,
+		FuzzyClient: fuzzyClient,
 	}, nil
 }

@@ -3,6 +3,8 @@ package strategos
 import (
 	"context"
 	"fmt"
+	"time"
+
 	"github.com/odysseia-greek/agora/archytas"
 	"github.com/odysseia-greek/agora/aristoteles"
 	"github.com/odysseia-greek/agora/plato/randomizer"
@@ -11,7 +13,6 @@ import (
 	pbar "github.com/odysseia-greek/attike/aristophanes/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	"time"
 )
 
 type JourneyService interface {
@@ -79,6 +80,7 @@ func (j *JourneyClient) Health(ctx context.Context, request *pb.HealthRequest) (
 func (j *JourneyClient) Options(ctx context.Context, request *pb.OptionsRequest) (*pb.AggregatedOptions, error) {
 	return j.journey.Options(ctx, request)
 }
+
 func (j *JourneyClient) Question(ctx context.Context, request *pb.CreationRequest) (*pb.QuizResponse, error) {
 	return j.journey.Question(ctx, request)
 }

@@ -32,8 +32,8 @@ func main() {
 |  |  |\    ||  |  |  |  |\    | |  | |  |  |
 |__|__| \___||__|  |__|__| \___||____||__|__|
 `)
-	logging.System("\"Πτολεμαῖος δ᾿ ὁ Σωτὴρ ὄναρ εἶδε τὸν ἐν Σινώπῃ τοῦ Πλούτωνος κολοσσόν.\"")
-	logging.System("Ptolemy Soter saw in a dream the colossal statue of Pluto in Sinope.")
+	logging.System("\"ἐπεὶ δʼ Ἀσπασία χαριζόμενος δοκεῖ πρᾶξαι τὰ πρὸς Σαμίους, ἐνταῦθα ἂν εἴη καιρὸς διαπορῆσαι μάλιστα περὶ τῆς ἀνθρώπου, τίνα τέχνην ἢ δύναμιν τοσαύτην ἔχουσα τῶν τε πολιτικῶν τοὺς πρωτεύοντας ἐχειρώσατο καὶ τοῖς φιλοσόφοις οὐ φαῦλον οὐδʼ ὀλίγον ὑπὲρ αὑτῆς παρέσχε λόγον.\"")
+	logging.System("Now, since it is thought that he proceeded thus against the Samians to gratify Aspasia, this may be a fitting place to raise the query what great art or power this woman had, that she managed as she pleased the foremost men of the state, and afforded the philosophers occasion to discuss her in exalted terms and at great length.")
 
 	logging.System("starting up.....")
 	logging.System("starting up and getting env variables")

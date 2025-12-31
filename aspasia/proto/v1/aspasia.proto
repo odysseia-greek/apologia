@@ -4,8 +4,48 @@ package aspasia.v1;
 option go_package = "github.com/odysseia-greek/apologia/aspasia/gen/go/v1;aspasiav1";
 
 import "google/protobuf/empty.proto";
-import "koinos/v1/health.proto";
 
 service AspasiaService {
-  rpc Health(google.protobuf.Empty) returns (koinos.v1.HealthResponse);
+  rpc Search(ExtendedSearch) returns (ExtendedSearchResponse);
+}
+
+
+message ExtendedSearch {
+  string word = 1;        // e.g., "Ἀθηναῖος"
+}
+
+message ExtendedSearchResponse {
+  AnalyzeTextResponse found_in_text = 1;
+  repeated SimilarWords similar_words = 2;
+}
+
+message AnalyzeTextResponse {
+  string rootword = 1;
+  string part_of_speech = 2;
+  repeated Conjugations conjugations = 3;
+  repeated AnalyzeResult texts = 4;
+}
+
+message Conjugations {
+  string word = 1;
+  string rule = 2;
+}
+
+message AnalyzeResult {
+  string reference_link = 1;
+  string author = 2;
+  string book = 3;
+  string reference = 4;
+  Rhema text = 5;
+}
+
+message Rhema {
+  string greek = 1;
+  repeated string translations = 2;
+  string section = 3;
+}
+
+message SimilarWords {
+  string english = 1;
+  string greek = 2;
 }
