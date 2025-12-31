@@ -3,6 +3,8 @@ package triakonta
 import (
 	"context"
 	"fmt"
+	"strings"
+
 	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
 	aristophanes "github.com/odysseia-greek/attike/aristophanes/comedy"
@@ -10,7 +12,6 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/peer"
-	"strings"
 )
 
 func Interceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {

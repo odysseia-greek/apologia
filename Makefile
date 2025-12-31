@@ -1,5 +1,5 @@
-PROTO_DIRS := alkibiades antisthenes aristippos kritias kriton xenofon
-PROTO_DIRS_NEW := aspasia diotima
+PROTO_DIRS := alkibiades antisthenes   kriton xenofon
+PROTO_DIRS_NEW := aspasia diotima kritias aristippos
 
 .PHONY: all
 all: generate docs

@@ -1,13 +1,13 @@
 syntax = "proto3";
-option go_package = "github.com/odysseia-greek/apologia/aristippos/proto";
+option go_package = "github.com/odysseia-greek/apologia/aristippos/gen/go/v1;aristipposv1";
 
-package apologia_aristippos;
+package aristippos.v1;
 
 service Aristippos {
   rpc Health (HealthRequest) returns (HealthResponse) {};
   rpc Options (OptionsRequest) returns (AggregatedOptions) {};
   rpc Question (CreationRequest) returns (QuizResponse) {};
-  rpc Answer (AnswerRequest) returns (ComprehensiveResponse) {};
+  rpc Answer (AnswerRequest) returns (AnswerResponse) {};
 }
 
 // Empty request messages since these endpoints require no body
@@ -80,59 +80,17 @@ message AnswerRequest {
   string theme = 1;
   string set = 2;
   string segment = 4; // Optional
-  bool comprehensive = 5; // Optional
-  string answer = 6;
-  string quiz_word = 7;
-  int32 doneAfter = 8;
+  string answer = 5;
+  string quiz_word = 6;
+  int32 doneAfter = 7;
 }
 
 // Response message for answer validation
-message ComprehensiveResponse {
+message AnswerResponse {
   bool correct = 1;
   string quiz_word = 2;
-  AnalyzeTextResponse found_in_text = 3; // Optional
-  repeated Meros similar_words = 4; // Optional
-  repeated ProgressEntry progress = 5; // Optional: only if sessionId is set
-  bool finished = 6;
-}
-
-// Similar words structure
-message Meros {
-  string greek = 1;
-  string english = 2;
-  string dutch = 3; // Optional
-  string linked_word = 4; // Optional
-  string original = 5; // Optional
-}
-
-// Text analysis response
-message AnalyzeTextResponse {
-  string rootword = 1;
-  string part_of_speech = 2;
-  repeated Conjugations conjugations = 3;
-  repeated AnalyzeResult texts = 4;
-}
-
-// Conjugation details
-message Conjugations {
-  string word = 1;
-  string rule = 2;
-}
-
-// Analysis result per text reference
-message AnalyzeResult {
-  string reference_link = 1;
-  string author = 2;
-  string book = 3;
-  string reference = 4;
-  Rhema text = 5;
-}
-
-// Text details
-message Rhema {
-  string greek = 1;
-  repeated string translations = 2;
-  string section = 3;
+  repeated ProgressEntry progress = 3; // Optional: only if sessionId is set
+  bool finished = 4;
 }
 
 // Word progress entry

@@ -3,6 +3,8 @@ version: v2
 modules:
   - path: diotima/proto
   - path: aspasia/proto
+  - path: kritias/proto
+  - path: aristippos/proto
 lint:
   use: [DEFAULT]
 breaking:

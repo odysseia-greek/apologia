@@ -1,4 +1,4 @@
-module github.com/odysseia-greek/apologia/kritias
+module github.com/odysseia-greek/apologia/kritias/gen/go/v1
 
 go 1.25.5
 

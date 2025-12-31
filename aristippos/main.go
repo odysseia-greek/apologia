@@ -3,13 +3,14 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/odysseia-greek/agora/plato/logging"
-	"github.com/odysseia-greek/apologia/aristippos/hedone"
-	pb "github.com/odysseia-greek/apologia/aristippos/proto"
-	"google.golang.org/grpc"
 	"log"
 	"net"
 	"os"
+
+	"github.com/odysseia-greek/agora/plato/logging"
+	v1 "github.com/odysseia-greek/apologia/aristippos/gen/go/v1"
+	"github.com/odysseia-greek/apologia/aristippos/hedone"
+	"google.golang.org/grpc"
 )
 
 const standardPort = ":50060"
@@ -52,7 +53,7 @@ func main() {
 
 	server = grpc.NewServer(grpc.UnaryInterceptor(hedone.MediaInterceptor))
 
-	pb.RegisterAristipposServer(server, config)
+	v1.RegisterAristipposServer(server, config)
 
 	logging.Info(fmt.Sprintf("Server listening on %s", port))
 	if err := server.Serve(listener); err != nil {

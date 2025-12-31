@@ -3,6 +3,9 @@ package hedone
 import (
 	"context"
 	"fmt"
+	"os"
+	"time"
+
 	"github.com/google/uuid"
 	"github.com/odysseia-greek/agora/archytas"
 	"github.com/odysseia-greek/agora/aristoteles"
@@ -16,8 +19,6 @@ import (
 	"github.com/odysseia-greek/delphi/aristides/diplomat"
 	pb "github.com/odysseia-greek/delphi/aristides/proto"
 	"google.golang.org/grpc/metadata"
-	"os"
-	"time"
 )
 
 var streamer pbar.TraceService_ChorusClient

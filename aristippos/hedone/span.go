@@ -4,12 +4,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strings"
+
 	"github.com/odysseia-greek/agora/aristoteles/models"
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/service"
 	pb "github.com/odysseia-greek/attike/aristophanes/proto"
 	"google.golang.org/grpc/metadata"
-	"strings"
 )
 
 func extractRequestIds(ctx context.Context) (string, string, bool) {

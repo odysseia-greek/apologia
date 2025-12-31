@@ -3,13 +3,14 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/odysseia-greek/agora/plato/logging"
-	pb "github.com/odysseia-greek/apologia/kritias/proto"
-	"github.com/odysseia-greek/apologia/kritias/triakonta"
-	"google.golang.org/grpc"
 	"log"
 	"net"
 	"os"
+
+	"github.com/odysseia-greek/agora/plato/logging"
+	v1 "github.com/odysseia-greek/apologia/kritias/gen/go/v1/gen/go/v1"
+	"github.com/odysseia-greek/apologia/kritias/gen/go/v1/triakonta"
+	"google.golang.org/grpc"
 )
 
 const standardPort = ":50060"
@@ -52,7 +53,7 @@ func main() {
 
 	server = grpc.NewServer(grpc.UnaryInterceptor(triakonta.Interceptor))
 
-	pb.RegisterKritiasServer(server, config)
+	v1.RegisterKritiasServer(server, config)
 
 	logging.Info(fmt.Sprintf("Server listening on %s", port))
 	if err := server.Serve(listener); err != nil {
