@@ -6,13 +6,13 @@ require (
 	github.com/99designs/gqlgen v0.17.85
 	github.com/gorilla/mux v1.8.1
 	github.com/odysseia-greek/agora/plato v0.2.12
-	github.com/odysseia-greek/apologia/alkibiades v0.0.2
-	github.com/odysseia-greek/apologia/antisthenes v0.0.2-rho2
-	github.com/odysseia-greek/apologia/aristippos v0.0.9-rho1
+	github.com/odysseia-greek/apologia/alkibiades v0.1.1
+	github.com/odysseia-greek/apologia/antisthenes v0.1.2
+	github.com/odysseia-greek/apologia/aristippos v0.1.2
 	github.com/odysseia-greek/apologia/aspasia v0.0.1-rho1
-	github.com/odysseia-greek/apologia/kritias v0.0.5-rho3
-	github.com/odysseia-greek/apologia/kriton v0.0.2
-	github.com/odysseia-greek/apologia/xenofon v0.0.3
+	github.com/odysseia-greek/apologia/kritias v0.1.2
+	github.com/odysseia-greek/apologia/kriton v0.1.1
+	github.com/odysseia-greek/apologia/xenofon v0.1.1
 	github.com/odysseia-greek/attike/aristophanes v0.7.0-rho2
 	github.com/vektah/gqlparser/v2 v2.5.31
 	google.golang.org/grpc v1.78.0
