@@ -8,7 +8,7 @@ import (
 	"github.com/odysseia-greek/agora/plato/randomizer"
 	"github.com/odysseia-greek/agora/plato/service"
 	pb "github.com/odysseia-greek/apologia/kriton/proto"
-	pbar "github.com/odysseia-greek/attike/aristophanes/proto"
+	arv1 "github.com/odysseia-greek/attike/aristophanes/gen/go/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"time"
@@ -31,7 +31,7 @@ type DialogueServiceImpl struct {
 	Version    string
 	Randomizer randomizer.Random
 	Client     service.OdysseiaClient
-	Streamer   pbar.TraceService_ChorusClient
+	Streamer   arv1.TraceService_ChorusClient
 	Archytas   archytas.Client
 	pb.UnimplementedKritonServer
 }

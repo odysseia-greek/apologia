@@ -4,12 +4,14 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strings"
+
 	"github.com/odysseia-greek/agora/aristoteles/models"
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/service"
-	pb "github.com/odysseia-greek/attike/aristophanes/proto"
+	"github.com/odysseia-greek/attike/aristophanes/comedy"
+	arv1 "github.com/odysseia-greek/attike/aristophanes/gen/go/v1"
 	"google.golang.org/grpc/metadata"
-	"strings"
 )
 
 func extractRequestIds(ctx context.Context) (string, string, bool) {
@@ -53,15 +55,15 @@ func databaseSpan(response *models.Response, query map[string]interface{}, ctx c
 		hits = response.Hits.Total.Value
 	}
 
-	dataBaseSpan := &pb.ParabasisRequest{
+	dataBaseSpan := &arv1.ObserveRequest{
 		TraceId:      traceID,
 		ParentSpanId: spanID,
 		SpanId:       spanID,
-		RequestType: &pb.ParabasisRequest_DatabaseSpan{DatabaseSpan: &pb.DatabaseSpanRequest{
-			Action:   "search",
-			Query:    string(parsedQuery),
-			Hits:     hits,
-			TimeTook: response.Took,
+		Kind: &arv1.ObserveRequest_DbSpan{DbSpan: &arv1.ObserveDbSpan{
+			Action: "search",
+			Query:  string(parsedQuery),
+			Hits:   hits,
+			TookMs: response.Took,
 		}},
 	}
 
@@ -78,17 +80,19 @@ func cacheSpan(response string, sessionId string, ctx context.Context) {
 		return
 	}
 
-	span := &pb.ParabasisRequest{
+	parabasis := &arv1.ObserveRequest{
 		TraceId:      traceID,
 		ParentSpanId: spanID,
-		SpanId:       spanID,
-		RequestType: &pb.ParabasisRequest_Span{Span: &pb.SpanRequest{
-			Action: fmt.Sprintf("taken from cache with key: %s", sessionId),
-			Status: response,
-		}},
+		SpanId:       comedy.GenerateSpanID(),
+		Kind: &arv1.ObserveRequest_Action{
+			Action: &arv1.ObserveAction{
+				Action: fmt.Sprintf("taken from cache with key: %s", sessionId),
+				Status: response,
+			},
+		},
 	}
 
-	err := streamer.Send(span)
+	err := streamer.Send(parabasis)
 	if err != nil {
 		logging.Error(fmt.Sprintf("error returned from tracer: %s", err.Error()))
 	}

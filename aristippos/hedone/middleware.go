@@ -8,7 +8,7 @@ import (
 	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
 	aristophanes "github.com/odysseia-greek/attike/aristophanes/comedy"
-	pbar "github.com/odysseia-greek/attike/aristophanes/proto"
+	arv1 "github.com/odysseia-greek/attike/aristophanes/gen/go/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/peer"
@@ -58,12 +58,12 @@ func MediaInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServ
 		newCtx := context.WithValue(ctx, config.DefaultTracingName, combinedId)
 
 		go func() {
-			parabasis := &pbar.ParabasisRequest{
+			parabasis := &arv1.ObserveRequest{
 				TraceId:      traceID,
 				ParentSpanId: spanID,
 				SpanId:       newSpan,
-				RequestType: &pbar.ParabasisRequest_Trace{
-					Trace: &pbar.TraceRequest{
+				Kind: &arv1.ObserveRequest_TraceHop{
+					TraceHop: &arv1.ObserveTraceHop{
 						Method: info.FullMethod,
 						Url:    info.FullMethod,
 						Host:   host,
@@ -75,7 +75,6 @@ func MediaInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServ
 			}
 
 			logging.Trace(fmt.Sprintf("trace with requestID: %s and span: %s", requestId, newSpan))
-			logging.Info(fmt.Sprintf("received request: %s for method: %s", host, info.FullMethod))
 		}()
 		responseMd := metadata.New(map[string]string{config.HeaderKey: traceID})
 		grpc.SendHeader(newCtx, responseMd)

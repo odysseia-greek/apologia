@@ -9,7 +9,7 @@ import (
 	"github.com/odysseia-greek/agora/plato/randomizer"
 	"github.com/odysseia-greek/agora/plato/service"
 	pb "github.com/odysseia-greek/apologia/xenofon/proto"
-	pbar "github.com/odysseia-greek/attike/aristophanes/proto"
+	arv1 "github.com/odysseia-greek/attike/aristophanes/gen/go/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"time"
@@ -35,7 +35,7 @@ type AuthorBasedServiceImpl struct {
 	Client     service.OdysseiaClient
 	Archytas   archytas.Client
 	Progress   *progress.ProgressTracker
-	Streamer   pbar.TraceService_ChorusClient
+	Streamer   arv1.TraceService_ChorusClient
 	pb.UnimplementedXenofonServer
 }
 type AuthorBasedServiceClient struct {

@@ -12,7 +12,7 @@ import (
 	"github.com/odysseia-greek/agora/plato/service"
 	v1 "github.com/odysseia-greek/apologia/aspasia/gen/go/v1"
 	"github.com/odysseia-greek/apologia/diotima/theoria"
-	pb "github.com/odysseia-greek/attike/aristophanes/proto"
+	arv1 "github.com/odysseia-greek/attike/aristophanes/gen/go/v1"
 	antigonosv1 "github.com/odysseia-greek/makedonia/antigonos/gen/go/v1"
 	"github.com/odysseia-greek/makedonia/antigonos/monophthalmus"
 	koinos "github.com/odysseia-greek/makedonia/filippos/gen/go/koinos/v1"
@@ -86,8 +86,8 @@ func (g *GathererServiceImpl) gatherSimilarWords(
 ) ([]*v1.SimilarWords, error) {
 	var similarWords []*v1.SimilarWords
 
-	antigonosSpan := &pb.ParabasisRequest{
-		RequestType: &pb.ParabasisRequest_Span{Span: &pb.SpanRequest{
+	antigonosSpan := &arv1.ObserveRequest{
+		Kind: &arv1.ObserveRequest_Action{Action: &arv1.ObserveAction{
 			Action: "analyseText",
 			Status: fmt.Sprintf("querying Antigonos for word: %s", word),
 		}},
@@ -117,10 +117,10 @@ func (g *GathererServiceImpl) gatherSimilarWords(
 	}
 
 	endTime := time.Since(startTime)
-	antigonosSpan = &pb.ParabasisRequest{
-		RequestType: &pb.ParabasisRequest_Span{Span: &pb.SpanRequest{
+	antigonosSpan = &arv1.ObserveRequest{
+		Kind: &arv1.ObserveRequest_Action{Action: &arv1.ObserveAction{
 			Action: "fuzzySearch",
-			Took:   fmt.Sprintf("%v", endTime),
+			TookMs: endTime.Milliseconds(),
 			Status: "querying Antigonos returned success",
 		}},
 	}
@@ -171,8 +171,9 @@ func (g *GathererServiceImpl) gatherSimilarWords(
 
 func (g *GathererServiceImpl) gatherTexts(ctx context.Context, word, requestId string) (*v1.AnalyzeTextResponse, error) {
 	var analyseResult *v1.AnalyzeTextResponse
-	herodotosSpan := &pb.ParabasisRequest{
-		RequestType: &pb.ParabasisRequest_Span{Span: &pb.SpanRequest{
+
+	herodotosSpan := &arv1.ObserveRequest{
+		Kind: &arv1.ObserveRequest_Action{Action: &arv1.ObserveAction{
 			Action: "analyseText",
 			Status: fmt.Sprintf("querying Herodotos for word: %s", word),
 		}},
@@ -198,10 +199,10 @@ func (g *GathererServiceImpl) gatherTexts(ctx context.Context, word, requestId s
 			logging.Error(fmt.Sprintf("error while decoding: %s", err.Error()))
 		}
 
-		herodotosSpan = &pb.ParabasisRequest{
-			RequestType: &pb.ParabasisRequest_Span{Span: &pb.SpanRequest{
+		herodotosSpan = &arv1.ObserveRequest{
+			Kind: &arv1.ObserveRequest_Action{Action: &arv1.ObserveAction{
 				Action: "analyseText",
-				Took:   fmt.Sprintf("%v", endTime),
+				TookMs: endTime.Milliseconds(),
 				Status: fmt.Sprintf("querying Herodotos returned: %d", foundInText.StatusCode),
 			}},
 		}
