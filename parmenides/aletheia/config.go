@@ -13,9 +13,9 @@ import (
 	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/service"
+	aristarchos "github.com/odysseia-greek/alexandreia/aristarchos/scholar"
 	"github.com/odysseia-greek/delphi/aristides/diplomat"
 	pbp "github.com/odysseia-greek/delphi/aristides/proto"
-	aristarchos "github.com/odysseia-greek/olympia/aristarchos/scholar"
 	"google.golang.org/grpc/metadata"
 )
 

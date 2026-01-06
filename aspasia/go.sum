@@ -158,8 +158,8 @@ github.com/odysseia-greek/agora/eupalinos v0.2.7 h1:9hkbj7MtGXh4SvtPHqP7Ro0XTj5E
 github.com/odysseia-greek/agora/eupalinos v0.2.7/go.mod h1:fl96Ggm6I7DjFB+DDNeo9R4IgXRPZbBmT1h+c/0r8nE=
 github.com/odysseia-greek/agora/plato v0.2.12 h1:hxZ8wr38lskNSaUlgWPgwaMEFXFbUuP2QUttY5owYew=
 github.com/odysseia-greek/agora/plato v0.2.12/go.mod h1:8Y89JmcuT7XH9OHi9aIxTu8BXZNV/C4QbWdlfWuzm0E=
-github.com/odysseia-greek/apologia/diotima v0.0.1-rho2 h1:BTM3Gs4hkXMgg8F6gcufC2ZLMPaV/UDHzb/qN//jkgY=
-github.com/odysseia-greek/apologia/diotima v0.0.1-rho2/go.mod h1:RGnAMUT7DxwOCS1n/7AejDB0hpCnU5X5F+r85Jry0Jg=
+github.com/odysseia-greek/apologia/diotima v0.0.1-rho3 h1:dg916gk7SJ1BAaCG/ONxApUvGIBtoHljDqq7Jp5Tzdk=
+github.com/odysseia-greek/apologia/diotima v0.0.1-rho3/go.mod h1:O5HzinumTRboGXHX+reY9/UciabaYyW6hvR5F2Vcbdo=
 github.com/odysseia-greek/attike v0.2.1 h1:lflbGLIhDIiyeDkesBlqNW7Z2UCvABEbWPEhYXuVJIM=
 github.com/odysseia-greek/attike v0.2.1/go.mod h1:OvAzjt7CeAmg3LsGYd77urtSJ34Ar5z2YdgCYFD7pok=
 github.com/odysseia-greek/attike/aristophanes v0.7.0-rho2 h1:aUUgopsBMjIiUs1erBkK0tv9k3CdzF9o3byptpwhPN8=

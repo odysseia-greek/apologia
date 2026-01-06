@@ -3,6 +3,8 @@ package anabasis
 import (
 	"context"
 	"fmt"
+	"time"
+
 	"github.com/odysseia-greek/agora/archytas"
 	"github.com/odysseia-greek/agora/aristoteles"
 	"github.com/odysseia-greek/agora/plato/progress"
@@ -12,7 +14,6 @@ import (
 	arv1 "github.com/odysseia-greek/attike/aristophanes/gen/go/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	"time"
 )
 
 type AuthorBasedService interface {

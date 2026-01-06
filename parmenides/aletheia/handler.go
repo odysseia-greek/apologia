@@ -15,8 +15,8 @@ import (
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/models"
 	"github.com/odysseia-greek/agora/plato/service"
+	arisv1 "github.com/odysseia-greek/alexandreia/aristarchos/gen/go/v1"
 	aristides "github.com/odysseia-greek/delphi/aristides/diplomat"
-	pba "github.com/odysseia-greek/olympia/aristarchos/proto"
 )
 
 type ParmenidesHandler struct {
@@ -29,7 +29,7 @@ type ParmenidesHandler struct {
 	ExitCode         string
 	PolicyName       string
 	Ambassador       *aristides.ClientAmbassador
-	Aggregator       pba.Aristarchos_CreateNewEntryClient
+	Aggregator       arisv1.Aristarchos_CreateNewEntryClient
 	AggregatorCancel context.CancelFunc
 }
 
@@ -274,18 +274,18 @@ func (p *ParmenidesHandler) sendToAggregator(ctx context.Context, grammarQuestio
 	}
 
 	// send word to aggregator
-	partOfSpeech := pba.PartOfSpeech_VERB
+	partOfSpeech := arisv1.PartOfSpeech_VERB
 	if grammarQuestion.TypeOfWord == "noun" {
-		partOfSpeech = pba.PartOfSpeech_NOUN
+		partOfSpeech = arisv1.PartOfSpeech_NOUN
 	} else if grammarQuestion.TypeOfWord == "misc" {
-		partOfSpeech = pba.PartOfSpeech_PARTICIPLE
+		partOfSpeech = arisv1.PartOfSpeech_PARTICIPLE
 	} else if grammarQuestion.TypeOfWord == "verb" {
 		if strings.Contains(grammarQuestion.CorrectAnswer, "part") {
-			partOfSpeech = pba.PartOfSpeech_PARTICLE
+			partOfSpeech = arisv1.PartOfSpeech_PARTICLE
 		}
 	}
 
-	request := &pba.AggregatorCreationRequest{
+	request := &arisv1.AggregatorCreationRequest{
 		Word:         grammarQuestion.WordInText,
 		Rule:         grammarQuestion.CorrectAnswer,
 		RootWord:     greekWord,
