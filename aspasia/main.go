@@ -7,10 +7,10 @@ import (
 	"net"
 	"os"
 
+	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
 	v1 "github.com/odysseia-greek/apologia/aspasia/gen/go/v1"
 	"github.com/odysseia-greek/apologia/aspasia/rhetorike"
-	"github.com/odysseia-greek/apologia/diotima/theoria"
 	"github.com/odysseia-greek/attike/aristophanes/comedy"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
@@ -40,7 +40,7 @@ func main() {
 	logging.System("starting up and getting env variables")
 
 	ctx := context.Background()
-	config, err := rhetorike.CreateNewConfig(ctx)
+	cfg, err := rhetorike.CreateNewConfig(ctx)
 	if err != nil {
 		logging.Error(err.Error())
 		log.Fatal("death has found me")
@@ -56,18 +56,17 @@ func main() {
 	server = grpc.NewServer(
 		grpc.UnaryInterceptor(
 			comedy.UnaryServerInterceptor(
-				streamer,
-				tracing.WithHeaderKey(config.HeaderKey),
-				tracing.WithContextKeyName(config.DefaultTracingName),
-				tracing.WithCloseHop(),
+				cfg.Streamer,
+				comedy.WithHeaderKey(config.HeaderKey),
+				comedy.WithContextKeyName(config.DefaultTracingName),
+				comedy.WithCloseHop(),
 			),
 		),
 	)
 
-	grpc.NewServer(grpc.UnaryInterceptor(theoria.Interceptor))
 	reflection.Register(server)
 
-	v1.RegisterAspasiaServiceServer(server, config)
+	v1.RegisterAspasiaServiceServer(server, cfg)
 
 	logging.Info(fmt.Sprintf("Server listening on %s", port))
 	if err := server.Serve(listener); err != nil {

@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/models"
 	"github.com/odysseia-greek/agora/plato/service"
@@ -41,7 +42,7 @@ func (g *GathererServiceImpl) Search(ctx context.Context, request *v1.ExtendedSe
 
 		logging.Debug(fmt.Sprintf("found in cache: %s number of results: %d", request.Word, len(analyseResult.FoundInText.Texts)))
 
-		go theoria.CacheSpan(string(cacheItem), request.Word, ctx)
+		go theoria.CacheSpan(string(cacheItem), request.Word, ctx, g.Streamer)
 		return analyseResult, nil
 	}
 
@@ -96,14 +97,13 @@ func (g *GathererServiceImpl) gatherSimilarWords(
 	fuzzyClientCtx, cancel := g.createRequestHeader(requestId, "")
 	defer cancel()
 
-	theoria.ServiceToServiceSpan(antigonosSpan, ctx)
+	theoria.ServiceToServiceSpanWithCtx(ctx, antigonosSpan, g.Streamer)
 
 	request := &koinos.SearchQuery{
 		Word:            word,
 		Language:        koinos.Language_LANG_GREEK,
 		NumberOfResults: 10, // we search for 10 words so we can return at least 5 results
 	}
-	startTime := time.Now()
 
 	var grpcResponse *antigonosv1.SearchResponse
 
@@ -115,16 +115,6 @@ func (g *GathererServiceImpl) gatherSimilarWords(
 	if err != nil {
 		return nil, err
 	}
-
-	endTime := time.Since(startTime)
-	antigonosSpan = &arv1.ObserveRequest{
-		Kind: &arv1.ObserveRequest_Action{Action: &arv1.ObserveAction{
-			Action: "fuzzySearch",
-			TookMs: endTime.Milliseconds(),
-			Status: "querying Antigonos returned success",
-		}},
-	}
-	theoria.ServiceToServiceSpan(antigonosSpan, ctx)
 
 	// Precompute normalized form of the requested word
 	targetNorm := g.normalizeGreekWithArticle(word)
@@ -179,9 +169,8 @@ func (g *GathererServiceImpl) gatherTexts(ctx context.Context, word, requestId s
 		}},
 	}
 
-	theoria.ServiceToServiceSpan(herodotosSpan, ctx)
+	theoria.ServiceToServiceSpanWithCtx(ctx, herodotosSpan, g.Streamer)
 
-	startTime := time.Now()
 	r := models.AnalyzeTextRequest{Rootword: word}
 	jsonBody, err := json.Marshal(r)
 	if err != nil {
@@ -189,7 +178,6 @@ func (g *GathererServiceImpl) gatherTexts(ctx context.Context, word, requestId s
 	}
 
 	foundInText, err := g.Client.Herodotos().Analyze(jsonBody, requestId)
-	endTime := time.Since(startTime)
 
 	if foundInText != nil {
 		var source models.AnalyzeTextResponse
@@ -198,15 +186,6 @@ func (g *GathererServiceImpl) gatherTexts(ctx context.Context, word, requestId s
 		if err != nil {
 			logging.Error(fmt.Sprintf("error while decoding: %s", err.Error()))
 		}
-
-		herodotosSpan = &arv1.ObserveRequest{
-			Kind: &arv1.ObserveRequest_Action{Action: &arv1.ObserveAction{
-				Action: "analyseText",
-				TookMs: endTime.Milliseconds(),
-				Status: fmt.Sprintf("querying Herodotos returned: %d", foundInText.StatusCode),
-			}},
-		}
-		theoria.ServiceToServiceSpan(herodotosSpan, ctx)
 
 		analyseResult = &v1.AnalyzeTextResponse{
 			Rootword:     source.Rootword,
@@ -261,4 +240,13 @@ func (g *GathererServiceImpl) normalizeGreekWithArticle(s string) string {
 	}
 
 	return s
+}
+
+func (g *GathererServiceImpl) createRequestHeader(requestID, sessionId string) (context.Context, context.CancelFunc) {
+	requestCtx, ctxCancel := context.WithTimeout(context.Background(), 30*time.Second)
+	md := metadata.New(map[string]string{config.HeaderKey: requestID,
+		config.SessionIdKey: sessionId})
+	requestCtx = metadata.NewOutgoingContext(requestCtx, md)
+
+	return requestCtx, ctxCancel
 }
