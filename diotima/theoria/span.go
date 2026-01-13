@@ -148,11 +148,8 @@ func ServiceToServiceSpanWithCtx(ctx context.Context, span *arv1.ObserveRequest,
 			TraceId:      traceID,
 			ParentSpanId: parentSpanID,
 			SpanId:       childSpanID,
-			Kind: &arv1.ObserveRequest_TraceHop{
-				TraceHop: &arv1.ObserveTraceHop{
-					Method:       "grpc_call",
-					Url:          "grpc_call",
-					Host:         "", // fill if you want
+			Kind: &arv1.ObserveRequest_TraceHopStop{
+				TraceHopStop: &arv1.ObserveTraceHopStop{
 					ResponseCode: code,
 					TookMs:       tookMs,
 				},

@@ -9,13 +9,11 @@ import (
 	"github.com/odysseia-greek/agora/archytas"
 	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
-	"github.com/odysseia-greek/apologia/diotima/theoria"
 	"github.com/odysseia-greek/makedonia/antigonos/monophthalmus"
 )
 
 func CreateNewConfig(ctx context.Context) (*GathererServiceImpl, error) {
 	start := time.Now()
-	theoria.SetStreamer(ctx)
 
 	cache, err := archytas.CreateBadgerClient()
 	if err != nil {
@@ -30,7 +28,7 @@ func CreateNewConfig(ctx context.Context) (*GathererServiceImpl, error) {
 	}
 
 	fuzzyClientAddress := config.StringFromEnv("ANTIGONOS_SERVICE", "antigonos.makedonia.svc.cluster.local:50060")
-	fuzzyClient, err := NewGenericGrpcClient[*monophthalmus.FuzzyClient](
+	fuzzyClient, err := hesiodos.NewGenericGrpcClient[*monophthalmus.FuzzyClient](
 		fuzzyClientAddress,
 		monophthalmus.NewAntigonosClient,
 	)

@@ -11,6 +11,7 @@ import (
 	v1 "github.com/odysseia-greek/apologia/aspasia/gen/go/v1"
 	"github.com/odysseia-greek/apologia/aspasia/rhetorike"
 	"github.com/odysseia-greek/apologia/diotima/theoria"
+	"github.com/odysseia-greek/attike/aristophanes/comedy"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -52,7 +53,18 @@ func main() {
 
 	var server *grpc.Server
 
-	server = grpc.NewServer(grpc.UnaryInterceptor(theoria.Interceptor))
+	server = grpc.NewServer(
+		grpc.UnaryInterceptor(
+			comedy.UnaryServerInterceptor(
+				streamer,
+				tracing.WithHeaderKey(config.HeaderKey),
+				tracing.WithContextKeyName(config.DefaultTracingName),
+				tracing.WithCloseHop(),
+			),
+		),
+	)
+
+	grpc.NewServer(grpc.UnaryInterceptor(theoria.Interceptor))
 	reflection.Register(server)
 
 	v1.RegisterAspasiaServiceServer(server, config)
