@@ -23,7 +23,7 @@ import (
 )
 
 type SokratesHandler struct {
-	Streamer          pbar.TraceService_ChorusClient
+	Streamer          arv1.TraceService_ChorusClient
 	Randomizer        randomizer.Random
 	MediaClient       *GenericGrpcClient[*hedone.MediaClient]
 	MultiChoiceClient *GenericGrpcClient[*triakonta.MutpleChoiceClient]

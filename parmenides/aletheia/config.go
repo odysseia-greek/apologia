@@ -73,6 +73,7 @@ func CreateNewConfig() (*ParmenidesHandler, error) {
 		logging.Error(err.Error())
 	}
 
+	logging.Debug(fmt.Sprintf("created new eupalinos client with channel and dutch: %s + %s + %s", eupalinosAddress, channel, config.DefaultDutchChannel))
 	logging.Debug("waiting for queue to be ready")
 	queueHealthy := queue.WaitForHealthyState()
 	if !queueHealthy {
@@ -102,6 +103,7 @@ func CreateNewConfig() (*ParmenidesHandler, error) {
 			return nil, err
 		}
 
+		logging.Debug(fmt.Sprintf("creating new aggregator client: %s", aggregatorAddress))
 		logging.Debug("waiting for aggregator to be ready")
 		aggregatorHealthy := aggregator.WaitForHealthyState()
 		if !aggregatorHealthy {

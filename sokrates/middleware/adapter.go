@@ -105,9 +105,11 @@ func LogRequestDetails(tracer arv1.TraceService_ChorusClient) Adapter {
 				logging.Info(logLine)
 			}
 
-			w.Header().Set(config.HeaderKey, requestId)
+			trace.SpanId = spanID
+			newRequestId := comedy.CreateCombinedId(trace)
+			w.Header().Set(config.HeaderKey, newRequestId)
 			w.Header().Set(config.SessionIdKey, sessionId)
-			ctx := context.WithValue(r.Context(), config.HeaderKey, requestId)
+			ctx := context.WithValue(r.Context(), config.HeaderKey, newRequestId)
 			ctx = context.WithValue(ctx, config.SessionIdKey, sessionId)
 			f.ServeHTTP(w, r.WithContext(ctx))
 		})

@@ -9,7 +9,7 @@ require (
 	github.com/odysseia-greek/apologia/alkibiades v0.1.1
 	github.com/odysseia-greek/apologia/antisthenes v0.1.2
 	github.com/odysseia-greek/apologia/aristippos v0.1.2
-	github.com/odysseia-greek/apologia/aspasia v0.0.1-rho1
+	github.com/odysseia-greek/apologia/aspasia v0.0.2
 	github.com/odysseia-greek/apologia/kritias v0.1.2
 	github.com/odysseia-greek/apologia/kriton v0.1.1
 	github.com/odysseia-greek/apologia/xenofon v0.1.1
@@ -59,11 +59,10 @@ require (
 	github.com/odysseia-greek/agora/aristoteles v0.1.15 // indirect
 	github.com/odysseia-greek/agora/diogenes v0.1.15 // indirect
 	github.com/odysseia-greek/agora/eupalinos v0.2.7 // indirect
-	github.com/odysseia-greek/apologia/diotima v0.0.1-rho2 // indirect
-	github.com/odysseia-greek/attike v0.2.1 // indirect
+	github.com/odysseia-greek/apologia/diotima v0.0.1-rho3 // indirect
 	github.com/odysseia-greek/delphi/aristides v0.0.1 // indirect
-	github.com/odysseia-greek/makedonia/antigonos v0.0.1-rho1 // indirect
-	github.com/odysseia-greek/makedonia/filippos v0.0.3-rho2 // indirect
+	github.com/odysseia-greek/makedonia/antigonos v0.0.2 // indirect
+	github.com/odysseia-greek/makedonia/filippos v0.0.4 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/ryanuber/go-glob v1.0.0 // indirect
