@@ -14,8 +14,8 @@ github.com/odysseia-greek/agora/eupalinos v0.2.7 h1:9hkbj7MtGXh4SvtPHqP7Ro0XTj5E
 github.com/odysseia-greek/agora/eupalinos v0.2.7/go.mod h1:fl96Ggm6I7DjFB+DDNeo9R4IgXRPZbBmT1h+c/0r8nE=
 github.com/odysseia-greek/agora/plato v0.2.12 h1:hxZ8wr38lskNSaUlgWPgwaMEFXFbUuP2QUttY5owYew=
 github.com/odysseia-greek/agora/plato v0.2.12/go.mod h1:8Y89JmcuT7XH9OHi9aIxTu8BXZNV/C4QbWdlfWuzm0E=
-github.com/odysseia-greek/attike/aristophanes v0.7.0-rho5 h1:P1q5QPy6lje5zkekThkePXCG3ao4ktkLZtKzzzn+CIM=
-github.com/odysseia-greek/attike/aristophanes v0.7.0-rho5/go.mod h1:PnfzmFnr4wgiYqw2v5uBEE/Gi2+3FQE9RnTcnIzycsY=
+github.com/odysseia-greek/attike/aristophanes v0.7.0-rho6 h1:mAPKL1vJpIOApIO74vR8HsnDDGfy3ENT6SvS48E/tb4=
+github.com/odysseia-greek/attike/aristophanes v0.7.0-rho6/go.mod h1:PnfzmFnr4wgiYqw2v5uBEE/Gi2+3FQE9RnTcnIzycsY=
 github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 h1:Jamvg5psRIccs7FGNTlIRMkT8wgtp5eCXdBlqhYGL6U=
 github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/testify v1.11.1 h1:7s2iGBzp5EwR7/aIZr8ao5+dra3wiQyKjjFuvgVKu7U=
