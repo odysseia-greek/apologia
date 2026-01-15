@@ -8,6 +8,7 @@ package kritiasv1
 
 import (
 	context "context"
+	v1 "github.com/odysseia-greek/apologia/diotima/gen/go/koinos/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -22,8 +23,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type KritiasClient interface {
-	Health(ctx context.Context, in *HealthRequest, opts ...grpc.CallOption) (*HealthResponse, error)
-	Options(ctx context.Context, in *OptionsRequest, opts ...grpc.CallOption) (*AggregatedOptions, error)
+	Health(ctx context.Context, in *v1.HealthRequest, opts ...grpc.CallOption) (*v1.HealthResponse, error)
+	Options(ctx context.Context, in *v1.OptionsRequest, opts ...grpc.CallOption) (*AggregatedOptions, error)
 	Question(ctx context.Context, in *CreationRequest, opts ...grpc.CallOption) (*QuizResponse, error)
 	Answer(ctx context.Context, in *AnswerRequest, opts ...grpc.CallOption) (*AnswerResponse, error)
 }
@@ -36,8 +37,8 @@ func NewKritiasClient(cc grpc.ClientConnInterface) KritiasClient {
 	return &kritiasClient{cc}
 }
 
-func (c *kritiasClient) Health(ctx context.Context, in *HealthRequest, opts ...grpc.CallOption) (*HealthResponse, error) {
-	out := new(HealthResponse)
+func (c *kritiasClient) Health(ctx context.Context, in *v1.HealthRequest, opts ...grpc.CallOption) (*v1.HealthResponse, error) {
+	out := new(v1.HealthResponse)
 	err := c.cc.Invoke(ctx, "/kritias.v1.Kritias/Health", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -45,7 +46,7 @@ func (c *kritiasClient) Health(ctx context.Context, in *HealthRequest, opts ...g
 	return out, nil
 }
 
-func (c *kritiasClient) Options(ctx context.Context, in *OptionsRequest, opts ...grpc.CallOption) (*AggregatedOptions, error) {
+func (c *kritiasClient) Options(ctx context.Context, in *v1.OptionsRequest, opts ...grpc.CallOption) (*AggregatedOptions, error) {
 	out := new(AggregatedOptions)
 	err := c.cc.Invoke(ctx, "/kritias.v1.Kritias/Options", in, out, opts...)
 	if err != nil {
@@ -76,8 +77,8 @@ func (c *kritiasClient) Answer(ctx context.Context, in *AnswerRequest, opts ...g
 // All implementations must embed UnimplementedKritiasServer
 // for forward compatibility
 type KritiasServer interface {
-	Health(context.Context, *HealthRequest) (*HealthResponse, error)
-	Options(context.Context, *OptionsRequest) (*AggregatedOptions, error)
+	Health(context.Context, *v1.HealthRequest) (*v1.HealthResponse, error)
+	Options(context.Context, *v1.OptionsRequest) (*AggregatedOptions, error)
 	Question(context.Context, *CreationRequest) (*QuizResponse, error)
 	Answer(context.Context, *AnswerRequest) (*AnswerResponse, error)
 	mustEmbedUnimplementedKritiasServer()
@@ -87,10 +88,10 @@ type KritiasServer interface {
 type UnimplementedKritiasServer struct {
 }
 
-func (UnimplementedKritiasServer) Health(context.Context, *HealthRequest) (*HealthResponse, error) {
+func (UnimplementedKritiasServer) Health(context.Context, *v1.HealthRequest) (*v1.HealthResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Health not implemented")
 }
-func (UnimplementedKritiasServer) Options(context.Context, *OptionsRequest) (*AggregatedOptions, error) {
+func (UnimplementedKritiasServer) Options(context.Context, *v1.OptionsRequest) (*AggregatedOptions, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Options not implemented")
 }
 func (UnimplementedKritiasServer) Question(context.Context, *CreationRequest) (*QuizResponse, error) {
@@ -113,7 +114,7 @@ func RegisterKritiasServer(s grpc.ServiceRegistrar, srv KritiasServer) {
 }
 
 func _Kritias_Health_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HealthRequest)
+	in := new(v1.HealthRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -125,13 +126,13 @@ func _Kritias_Health_Handler(srv interface{}, ctx context.Context, dec func(inte
 		FullMethod: "/kritias.v1.Kritias/Health",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(KritiasServer).Health(ctx, req.(*HealthRequest))
+		return srv.(KritiasServer).Health(ctx, req.(*v1.HealthRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Kritias_Options_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OptionsRequest)
+	in := new(v1.OptionsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -143,7 +144,7 @@ func _Kritias_Options_Handler(srv interface{}, ctx context.Context, dec func(int
 		FullMethod: "/kritias.v1.Kritias/Options",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(KritiasServer).Options(ctx, req.(*OptionsRequest))
+		return srv.(KritiasServer).Options(ctx, req.(*v1.OptionsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

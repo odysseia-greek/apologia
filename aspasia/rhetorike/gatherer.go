@@ -12,6 +12,7 @@ import (
 	"github.com/odysseia-greek/agora/plato/models"
 	"github.com/odysseia-greek/agora/plato/service"
 	v1 "github.com/odysseia-greek/apologia/aspasia/gen/go/v1"
+	koinosv1 "github.com/odysseia-greek/apologia/diotima/gen/go/koinos/v1"
 	"github.com/odysseia-greek/attike/aristophanes/comedy"
 	arv1 "github.com/odysseia-greek/attike/aristophanes/gen/go/v1"
 	antigonosv1 "github.com/odysseia-greek/makedonia/antigonos/gen/go/v1"
@@ -20,6 +21,15 @@ import (
 	"golang.org/x/sync/errgroup"
 	"google.golang.org/grpc/metadata"
 )
+
+func (g *GathererServiceImpl) Health(context.Context, *koinosv1.HealthRequest) (*koinosv1.HealthResponse, error) {
+	return &koinosv1.HealthResponse{
+		Healthy:        true,
+		Time:           time.Now().String(),
+		DatabaseHealth: nil,
+		Version:        g.Version,
+	}, nil
+}
 
 func (g *GathererServiceImpl) Search(ctx context.Context, request *v1.ExtendedSearch) (*v1.ExtendedSearchResponse, error) {
 	requestId := CurrentRequestID(ctx, config.DefaultTracingName, service.HeaderKey)

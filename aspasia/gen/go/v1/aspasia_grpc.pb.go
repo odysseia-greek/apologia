@@ -8,6 +8,7 @@ package aspasiav1
 
 import (
 	context "context"
+	v1 "github.com/odysseia-greek/apologia/diotima/gen/go/koinos/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -22,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AspasiaServiceClient interface {
+	Health(ctx context.Context, in *v1.HealthRequest, opts ...grpc.CallOption) (*v1.HealthResponse, error)
 	Search(ctx context.Context, in *ExtendedSearch, opts ...grpc.CallOption) (*ExtendedSearchResponse, error)
 }
 
@@ -31,6 +33,15 @@ type aspasiaServiceClient struct {
 
 func NewAspasiaServiceClient(cc grpc.ClientConnInterface) AspasiaServiceClient {
 	return &aspasiaServiceClient{cc}
+}
+
+func (c *aspasiaServiceClient) Health(ctx context.Context, in *v1.HealthRequest, opts ...grpc.CallOption) (*v1.HealthResponse, error) {
+	out := new(v1.HealthResponse)
+	err := c.cc.Invoke(ctx, "/aspasia.v1.AspasiaService/Health", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *aspasiaServiceClient) Search(ctx context.Context, in *ExtendedSearch, opts ...grpc.CallOption) (*ExtendedSearchResponse, error) {
@@ -46,6 +57,7 @@ func (c *aspasiaServiceClient) Search(ctx context.Context, in *ExtendedSearch, o
 // All implementations must embed UnimplementedAspasiaServiceServer
 // for forward compatibility
 type AspasiaServiceServer interface {
+	Health(context.Context, *v1.HealthRequest) (*v1.HealthResponse, error)
 	Search(context.Context, *ExtendedSearch) (*ExtendedSearchResponse, error)
 	mustEmbedUnimplementedAspasiaServiceServer()
 }
@@ -54,6 +66,9 @@ type AspasiaServiceServer interface {
 type UnimplementedAspasiaServiceServer struct {
 }
 
+func (UnimplementedAspasiaServiceServer) Health(context.Context, *v1.HealthRequest) (*v1.HealthResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Health not implemented")
+}
 func (UnimplementedAspasiaServiceServer) Search(context.Context, *ExtendedSearch) (*ExtendedSearchResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Search not implemented")
 }
@@ -68,6 +83,24 @@ type UnsafeAspasiaServiceServer interface {
 
 func RegisterAspasiaServiceServer(s grpc.ServiceRegistrar, srv AspasiaServiceServer) {
 	s.RegisterService(&AspasiaService_ServiceDesc, srv)
+}
+
+func _AspasiaService_Health_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.HealthRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AspasiaServiceServer).Health(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/aspasia.v1.AspasiaService/Health",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AspasiaServiceServer).Health(ctx, req.(*v1.HealthRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _AspasiaService_Search_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -95,6 +128,10 @@ var AspasiaService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "aspasia.v1.AspasiaService",
 	HandlerType: (*AspasiaServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Health",
+			Handler:    _AspasiaService_Health_Handler,
+		},
 		{
 			MethodName: "Search",
 			Handler:    _AspasiaService_Search_Handler,

@@ -11,7 +11,9 @@ import (
 	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/models"
+	koinosv1 "github.com/odysseia-greek/apologia/diotima/gen/go/koinos/v1"
 	v1 "github.com/odysseia-greek/apologia/kritias/gen/go/v1"
+	"github.com/odysseia-greek/attike/aristophanes/comedy"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
@@ -25,16 +27,16 @@ const (
 	OPTIONSEGMENTKEY string = "archytassavedoptions"
 )
 
-func (m *MultipleChoiceServiceImpl) Health(context.Context, *v1.HealthRequest) (*v1.HealthResponse, error) {
+func (m *MultipleChoiceServiceImpl) Health(context.Context, *koinosv1.HealthRequest) (*koinosv1.HealthResponse, error) {
 	elasticHealth := m.Elastic.Health().Info()
-	dbHealth := &v1.DatabaseHealth{
+	dbHealth := &koinosv1.DatabaseHealth{
 		Healthy:       elasticHealth.Healthy,
 		ClusterName:   elasticHealth.ClusterName,
 		ServerName:    elasticHealth.ServerName,
 		ServerVersion: elasticHealth.ServerVersion,
 	}
 
-	return &v1.HealthResponse{
+	return &koinosv1.HealthResponse{
 		Healthy:        true,
 		Time:           time.Now().String(),
 		DatabaseHealth: dbHealth,
@@ -42,7 +44,7 @@ func (m *MultipleChoiceServiceImpl) Health(context.Context, *v1.HealthRequest) (
 	}, nil
 }
 
-func (m *MultipleChoiceServiceImpl) Options(ctx context.Context, request *v1.OptionsRequest) (*v1.AggregatedOptions, error) {
+func (m *MultipleChoiceServiceImpl) Options(ctx context.Context, request *koinosv1.OptionsRequest) (*v1.AggregatedOptions, error) {
 	var unparsedResponse []byte
 	cacheItem, _ := m.Archytas.Read(OPTIONSEGMENTKEY)
 	if cacheItem != nil {
@@ -107,7 +109,7 @@ func (m *MultipleChoiceServiceImpl) Question(ctx context.Context, request *v1.Cr
 			return nil, err
 		}
 
-		go cacheSpan(string(cacheItem), segmentKey, ctx)
+		go comedy.CacheSpan(string(cacheItem), segmentKey, ctx, m.Streamer)
 	} else {
 		mustQuery := []map[string]string{
 			{
@@ -128,7 +130,7 @@ func (m *MultipleChoiceServiceImpl) Question(ctx context.Context, request *v1.Cr
 			return nil, errors.New("no hits found in query")
 		}
 
-		go databaseSpan(elasticResponse, query, ctx)
+		go comedy.DatabaseSpan(query, elasticResponse.Hits.Total.Value, elasticResponse.Took, ctx, m.Streamer)
 		source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
 		err = json.Unmarshal(source, &option)
 		if err != nil {
@@ -225,7 +227,7 @@ func (m *MultipleChoiceServiceImpl) Question(ctx context.Context, request *v1.Cr
 	if sessionId != "" {
 		progressList, _ := m.Progress.GetProgressForSegment(sessionId, segmentKey, int(request.DoneAfter))
 		for word, p := range progressList {
-			quiz.Progress = append(quiz.Progress, &v1.ProgressEntry{
+			quiz.Progress = append(quiz.Progress, &koinosv1.ProgressEntry{
 				Greek:          word,
 				Translation:    p.Translation,
 				PlayCount:      int32(p.PlayCount),
@@ -259,7 +261,7 @@ func (m *MultipleChoiceServiceImpl) Answer(ctx context.Context, request *v1.Answ
 			return nil, err
 		}
 
-		go cacheSpan(string(cacheItem), segmentKey, ctx)
+		go comedy.CacheSpan(string(cacheItem), segmentKey, ctx, m.Streamer)
 	} else {
 		mustQuery := []map[string]string{
 			{
@@ -279,7 +281,7 @@ func (m *MultipleChoiceServiceImpl) Answer(ctx context.Context, request *v1.Answ
 			return nil, fmt.Errorf("no hits found in Elastic")
 		}
 
-		go databaseSpan(elasticResponse, query, ctx)
+		go comedy.DatabaseSpan(query, elasticResponse.Hits.Total.Value, elasticResponse.Took, ctx, m.Streamer)
 
 		source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
 		err = json.Unmarshal(source, &option)
@@ -305,7 +307,7 @@ func (m *MultipleChoiceServiceImpl) Answer(ctx context.Context, request *v1.Answ
 		progressList, finished := m.Progress.GetProgressForSegment(sessionId, segmentKey, int(request.DoneAfter))
 		answer.Finished = finished
 		for word, p := range progressList {
-			answer.Progress = append(answer.Progress, &v1.ProgressEntry{
+			answer.Progress = append(answer.Progress, &koinosv1.ProgressEntry{
 				Greek:          word,
 				Translation:    p.Translation,
 				PlayCount:      int32(p.PlayCount),

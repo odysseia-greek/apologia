@@ -3,6 +3,9 @@ package philia
 import (
 	"context"
 	"fmt"
+	"os"
+	"time"
+
 	"github.com/google/uuid"
 	"github.com/odysseia-greek/agora/archytas"
 	"github.com/odysseia-greek/agora/aristoteles"
@@ -15,11 +18,7 @@ import (
 	"github.com/odysseia-greek/delphi/aristides/diplomat"
 	pb "github.com/odysseia-greek/delphi/aristides/proto"
 	"google.golang.org/grpc/metadata"
-	"os"
-	"time"
 )
-
-var streamer arv1.TraceService_ChorusClient
 
 func CreateNewConfig(ctx context.Context) (*DialogueServiceImpl, error) {
 	tls := config.BoolFromEnv(config.EnvTlSKey)
@@ -31,7 +30,7 @@ func CreateNewConfig(ctx context.Context) (*DialogueServiceImpl, error) {
 		os.Exit(1)
 	}
 
-	streamer, err = tracer.Chorus(ctx)
+	streamer, err := tracer.Chorus(ctx)
 	if err != nil {
 		logging.Error(err.Error())
 	}

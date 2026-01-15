@@ -12,6 +12,8 @@ import (
 	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
 	v1 "github.com/odysseia-greek/apologia/antisthenes/gen/go/v1"
+	koinosv1 "github.com/odysseia-greek/apologia/diotima/gen/go/koinos/v1"
+	"github.com/odysseia-greek/attike/aristophanes/comedy"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
@@ -24,16 +26,16 @@ const (
 	SEGMENT          string = "segment"
 )
 
-func (g *GrammarServiceImpl) Health(context.Context, *v1.HealthRequest) (*v1.HealthResponse, error) {
+func (g *GrammarServiceImpl) Health(context.Context, *koinosv1.HealthRequest) (*koinosv1.HealthResponse, error) {
 	elasticHealth := g.Elastic.Health().Info()
-	dbHealth := &v1.DatabaseHealth{
+	dbHealth := &koinosv1.DatabaseHealth{
 		Healthy:       elasticHealth.Healthy,
 		ClusterName:   elasticHealth.ClusterName,
 		ServerName:    elasticHealth.ServerName,
 		ServerVersion: elasticHealth.ServerVersion,
 	}
 
-	return &v1.HealthResponse{
+	return &koinosv1.HealthResponse{
 		Healthy:        true,
 		Time:           time.Now().String(),
 		DatabaseHealth: dbHealth,
@@ -41,7 +43,7 @@ func (g *GrammarServiceImpl) Health(context.Context, *v1.HealthRequest) (*v1.Hea
 	}, nil
 }
 
-func (g *GrammarServiceImpl) Options(ctx context.Context, request *v1.OptionsRequest) (*v1.AggregatedOptions, error) {
+func (g *GrammarServiceImpl) Options(ctx context.Context, request *koinosv1.OptionsRequest) (*v1.AggregatedOptions, error) {
 	var unparsedResponse []byte
 	cacheItem, _ := g.Archytas.Read(OPTIONSEGMENTKEY)
 	if cacheItem != nil {
@@ -100,7 +102,7 @@ func (g *GrammarServiceImpl) Question(ctx context.Context, request *v1.CreationR
 			return nil, err
 		}
 
-		go cacheSpan(string(cacheItem), segmentKey, ctx)
+		go comedy.CacheSpan(string(cacheItem), segmentKey, ctx, g.Streamer)
 	} else {
 		mustQuery := []map[string]string{
 			{
@@ -124,7 +126,7 @@ func (g *GrammarServiceImpl) Question(ctx context.Context, request *v1.CreationR
 			return nil, errors.New("no hits found in query")
 		}
 
-		go databaseSpan(elasticResponse, query, ctx)
+		go comedy.DatabaseSpan(query, elasticResponse.Hits.Total.Value, elasticResponse.Took, ctx, g.Streamer)
 		source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
 		err = json.Unmarshal(source, &option)
 		if err != nil {
@@ -230,7 +232,7 @@ func (g *GrammarServiceImpl) Question(ctx context.Context, request *v1.CreationR
 	if sessionId != "" {
 		progressList, _ := g.Progress.GetProgressForSegment(sessionId, segmentKey, int(request.DoneAfter))
 		for word, p := range progressList {
-			quiz.Progress = append(quiz.Progress, &v1.ProgressEntry{
+			quiz.Progress = append(quiz.Progress, &koinosv1.ProgressEntry{
 				Greek:          word,
 				Translation:    p.Translation,
 				PlayCount:      int32(p.PlayCount),
@@ -266,7 +268,7 @@ func (g *GrammarServiceImpl) Answer(ctx context.Context, request *v1.AnswerReque
 			return nil, err
 		}
 
-		go cacheSpan(string(cacheItem), segmentKey, ctx)
+		go comedy.CacheSpan(string(cacheItem), segmentKey, ctx, g.Streamer)
 	} else {
 		mustQuery := []map[string]string{
 			{
@@ -289,7 +291,7 @@ func (g *GrammarServiceImpl) Answer(ctx context.Context, request *v1.AnswerReque
 			return nil, fmt.Errorf("no hits found in Elastic")
 		}
 
-		go databaseSpan(elasticResponse, query, ctx)
+		go comedy.DatabaseSpan(query, elasticResponse.Hits.Total.Value, elasticResponse.Took, ctx, g.Streamer)
 
 		source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
 		err = json.Unmarshal(source, &option)
@@ -315,7 +317,7 @@ func (g *GrammarServiceImpl) Answer(ctx context.Context, request *v1.AnswerReque
 		progressList, finished := g.Progress.GetProgressForSegment(sessionId, segmentKey, int(request.DoneAfter))
 		answer.Finished = finished
 		for word, p := range progressList {
-			answer.Progress = append(answer.Progress, &v1.ProgressEntry{
+			answer.Progress = append(answer.Progress, &koinosv1.ProgressEntry{
 				Greek:          word,
 				Translation:    p.Translation,
 				PlayCount:      int32(p.PlayCount),

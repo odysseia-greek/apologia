@@ -9,6 +9,7 @@ import (
 	"github.com/odysseia-greek/agora/hesiodos"
 	"github.com/odysseia-greek/agora/plato/service"
 	v1 "github.com/odysseia-greek/apologia/aspasia/gen/go/v1"
+	koinosv1 "github.com/odysseia-greek/apologia/diotima/gen/go/koinos/v1"
 	arv1 "github.com/odysseia-greek/attike/aristophanes/gen/go/v1"
 	"github.com/odysseia-greek/makedonia/antigonos/monophthalmus"
 	"google.golang.org/grpc"
@@ -54,13 +55,23 @@ func NewAspasiaClient(address string) (*GathererClient, error) {
 
 func (g *GathererClient) WaitForHealthyState() bool {
 	timeout := 30 * time.Second
+	checkInterval := 1 * time.Second
 	endTime := time.Now().Add(timeout)
 
 	for time.Now().Before(endTime) {
-		return true
+		response, err := g.Health(context.Background(), &koinosv1.HealthRequest{})
+		if err == nil && response.Healthy {
+			return true
+		}
+
+		time.Sleep(checkInterval)
 	}
 
 	return false
+}
+
+func (g *GathererClient) Health(ctx context.Context, request *koinosv1.HealthRequest) (*koinosv1.HealthResponse, error) {
+	return g.gatherer.Health(ctx, request)
 }
 
 func (g *GathererClient) Search(ctx context.Context, request *v1.ExtendedSearch) (*v1.ExtendedSearchResponse, error) {

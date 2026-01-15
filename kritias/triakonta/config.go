@@ -21,8 +21,6 @@ import (
 	"google.golang.org/grpc/metadata"
 )
 
-var streamer arv1.TraceService_ChorusClient
-
 func CreateNewConfig(ctx context.Context) (*MultipleChoiceServiceImpl, error) {
 	tls := config.BoolFromEnv(config.EnvTlSKey)
 
@@ -33,7 +31,7 @@ func CreateNewConfig(ctx context.Context) (*MultipleChoiceServiceImpl, error) {
 		os.Exit(1)
 	}
 
-	streamer, err = tracer.Chorus(ctx)
+	streamer, err := tracer.Chorus(ctx)
 	if err != nil {
 		logging.Error(err.Error())
 	}

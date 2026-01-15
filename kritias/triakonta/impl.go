@@ -10,6 +10,7 @@ import (
 	"github.com/odysseia-greek/agora/plato/progress"
 	"github.com/odysseia-greek/agora/plato/randomizer"
 	"github.com/odysseia-greek/agora/plato/service"
+	koinosv1 "github.com/odysseia-greek/apologia/diotima/gen/go/koinos/v1"
 	v1 "github.com/odysseia-greek/apologia/kritias/gen/go/v1"
 	arv1 "github.com/odysseia-greek/attike/aristophanes/gen/go/v1"
 	"google.golang.org/grpc"
@@ -18,7 +19,7 @@ import (
 
 type MultipleChoiceService interface {
 	WaitForHealthyState() bool
-	Options(ctx context.Context, request *v1.OptionsRequest) (*v1.AggregatedOptions, error)
+	Options(ctx context.Context, request *koinosv1.OptionsRequest) (*v1.AggregatedOptions, error)
 	Question(ctx context.Context, request *v1.CreationRequest) (*v1.QuizResponse, error)
 	Answer(ctx context.Context, request *v1.AnswerRequest) (*v1.AnswerResponse, error)
 }
@@ -65,7 +66,7 @@ func (m *MutpleChoiceClient) WaitForHealthyState() bool {
 	endTime := time.Now().Add(timeout)
 
 	for time.Now().Before(endTime) {
-		response, err := m.Health(context.Background(), &v1.HealthRequest{})
+		response, err := m.Health(context.Background(), &koinosv1.HealthRequest{})
 		if err == nil && response.Healthy {
 			return true
 		}
@@ -76,11 +77,11 @@ func (m *MutpleChoiceClient) WaitForHealthyState() bool {
 	return false
 }
 
-func (m *MutpleChoiceClient) Health(ctx context.Context, request *v1.HealthRequest) (*v1.HealthResponse, error) {
+func (m *MutpleChoiceClient) Health(ctx context.Context, request *koinosv1.HealthRequest) (*koinosv1.HealthResponse, error) {
 	return m.multiplechoice.Health(ctx, request)
 }
 
-func (m *MutpleChoiceClient) Options(ctx context.Context, request *v1.OptionsRequest) (*v1.AggregatedOptions, error) {
+func (m *MutpleChoiceClient) Options(ctx context.Context, request *koinosv1.OptionsRequest) (*v1.AggregatedOptions, error) {
 	return m.multiplechoice.Options(ctx, request)
 }
 

@@ -1,20 +1,17 @@
 syntax = "proto3";
-option go_package = "github.com/odysseia-greek/apologia/xenofon/gen/go/v1;xenofon.v1";
-
 package xenofon.v1;
+
+import "koinos/v1/health.proto";
+import "koinos/v1/koinos.proto";
+
+option go_package = "github.com/odysseia-greek/apologia/xenofon/gen/go/v1;xenofonv1";
 
 service Xenofon {
   rpc Health (koinos.v1.HealthRequest) returns (koinos.v1.HealthResponse) {};
-    rpc Options (koinos.v1.OptionsRequest) returns (AggregatedOptions) {};
+  rpc Options (koinos.v1.OptionsRequest) returns (AggregatedOptions) {};
   rpc Question (CreationRequest) returns (QuizResponse) {};
   rpc Answer (AnswerRequest) returns (AnswerResponse) {};
   rpc WordForms (WordFormRequest) returns (WordFormResponse);
-}
-
-// Empty request messages since these endpoints require no body
-message HealthRequest {}
-
-message OptionsRequest {
 }
 
 message WordFormRequest {
@@ -30,22 +27,6 @@ message WordFormResponse {
 message WordFormList {
   string dictionary_form = 1;
   repeated string words_in_text = 2;
-}
-
-// Response message for health check
-message HealthResponse {
-  bool healthy = 1;
-  string time = 2;
-  string version = 3;
-  DatabaseHealth database_health = 4;
-}
-
-// Nested message for database health details
-message DatabaseHealth {
-  bool healthy = 1;
-  string cluster_name = 2;
-  string server_name = 3;
-  string server_version = 4;
 }
 
 // Response message for quiz options
@@ -91,7 +72,7 @@ message QuizResponse {
   string reference = 3;
   Quiz quiz = 4;
   repeated GrammarQuizAdded grammarQuiz = 5;
-  repeated ProgressEntry progress = 6; // Optional: only if sessionId is set
+  repeated koinos.v1.ProgressEntry progress = 6; // Optional: only if sessionId is set
 
 }
 
@@ -116,17 +97,7 @@ message AnswerResponse {
   bool correct = 1;
   string quizWord = 2;
   repeated string wordsInText = 3;
-  repeated ProgressEntry progress = 4; // Optional: only if sessionId is set
+  repeated koinos.v1.ProgressEntry progress = 4; // Optional: only if sessionId is set
   bool finished = 5;
 
-}
-
-// Word progress entry
-message ProgressEntry {
-  string greek = 1;
-  string translation = 2;
-  int32 play_count = 3;
-  int32 correct_count = 4;
-  int32 incorrect_count = 5;
-  string last_played = 6; // ISO timestamp format
 }

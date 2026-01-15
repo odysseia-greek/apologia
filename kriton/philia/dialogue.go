@@ -6,7 +6,10 @@ import (
 	"fmt"
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/models"
-	pb "github.com/odysseia-greek/apologia/kriton/proto"
+	koinosv1 "github.com/odysseia-greek/apologia/diotima/gen/go/koinos/v1"
+	v1 "github.com/odysseia-greek/apologia/kriton/gen/go/v1"
+	"github.com/odysseia-greek/attike/aristophanes/comedy"
+
 	"strconv"
 	"time"
 )
@@ -17,16 +20,16 @@ const (
 	OPTIONSEGMENTKEY string = "archytassavedoptions"
 )
 
-func (d *DialogueServiceImpl) Health(context.Context, *pb.HealthRequest) (*pb.HealthResponse, error) {
+func (d *DialogueServiceImpl) Health(context.Context, *koinosv1.HealthRequest) (*koinosv1.HealthResponse, error) {
 	elasticHealth := d.Elastic.Health().Info()
-	dbHealth := &pb.DatabaseHealth{
+	dbHealth := &koinosv1.DatabaseHealth{
 		Healthy:       elasticHealth.Healthy,
 		ClusterName:   elasticHealth.ClusterName,
 		ServerName:    elasticHealth.ServerName,
 		ServerVersion: elasticHealth.ServerVersion,
 	}
 
-	return &pb.HealthResponse{
+	return &koinosv1.HealthResponse{
 		Healthy:        true,
 		Time:           time.Now().String(),
 		DatabaseHealth: dbHealth,
@@ -34,7 +37,7 @@ func (d *DialogueServiceImpl) Health(context.Context, *pb.HealthRequest) (*pb.He
 	}, nil
 }
 
-func (d *DialogueServiceImpl) Options(ctx context.Context, request *pb.OptionsRequest) (*pb.AggregatedOptions, error) {
+func (d *DialogueServiceImpl) Options(ctx context.Context, request *koinosv1.OptionsRequest) (*v1.AggregatedOptions, error) {
 	var unparsedResponse []byte
 	cacheItem, _ := d.Archytas.Read(OPTIONSEGMENTKEY)
 	if cacheItem != nil {
@@ -62,7 +65,7 @@ func (d *DialogueServiceImpl) Options(ctx context.Context, request *pb.OptionsRe
 	return result, nil
 }
 
-func (d *DialogueServiceImpl) Question(ctx context.Context, request *pb.CreationRequest) (*pb.QuizResponse, error) {
+func (d *DialogueServiceImpl) Question(ctx context.Context, request *v1.CreationRequest) (*v1.QuizResponse, error) {
 	segmentKey := fmt.Sprintf("%s+%s", request.Theme, request.Set)
 	cacheItem, _ := d.Archytas.Read(segmentKey)
 
@@ -74,7 +77,7 @@ func (d *DialogueServiceImpl) Question(ctx context.Context, request *pb.Creation
 			return nil, err
 		}
 
-		go cacheSpan(string(cacheItem), segmentKey, ctx)
+		go comedy.CacheSpan(string(cacheItem), segmentKey, ctx, d.Streamer)
 	} else {
 		mustQuery := []map[string]string{
 			{
@@ -94,7 +97,7 @@ func (d *DialogueServiceImpl) Question(ctx context.Context, request *pb.Creation
 			return nil, fmt.Errorf("no hits found in Elastic")
 		}
 
-		go databaseSpan(elasticResponse, query, ctx)
+		go comedy.DatabaseSpan(query, elasticResponse.Hits.Total.Value, elasticResponse.Took, ctx, d.Streamer)
 
 		source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
 		err = json.Unmarshal(source, &quiz)
@@ -103,8 +106,8 @@ func (d *DialogueServiceImpl) Question(ctx context.Context, request *pb.Creation
 		}
 	}
 
-	result := &pb.QuizResponse{
-		QuizMetadata: &pb.QuizMetadata{
+	result := &v1.QuizResponse{
+		QuizMetadata: &v1.QuizMetadata{
 			Language: quiz.QuizMetadata.Language,
 		},
 		Theme:     quiz.Theme,
@@ -113,14 +116,14 @@ func (d *DialogueServiceImpl) Question(ctx context.Context, request *pb.Creation
 		Reference: quiz.Reference,
 	}
 
-	dialogue := &pb.Dialogue{
+	dialogue := &v1.Dialogue{
 		Introduction:  quiz.Dialogue.Introduction,
 		Section:       quiz.Dialogue.Section,
 		LinkToPerseus: quiz.Dialogue.LinkToPerseus,
 	}
 
 	for _, speaker := range quiz.Dialogue.Speakers {
-		dialogue.Speakers = append(dialogue.Speakers, &pb.Speaker{
+		dialogue.Speakers = append(dialogue.Speakers, &v1.Speaker{
 			Name:        speaker.Name,
 			Shorthand:   speaker.Shorthand,
 			Translation: speaker.Translation,
@@ -130,7 +133,7 @@ func (d *DialogueServiceImpl) Question(ctx context.Context, request *pb.Creation
 	result.Dialogue = dialogue
 
 	for _, content := range quiz.Content {
-		dialogueContent := &pb.DialogueContent{
+		dialogueContent := &v1.DialogueContent{
 			Translation: content.Translation,
 			Greek:       content.Greek,
 			Place:       int32(content.Place),
@@ -143,7 +146,7 @@ func (d *DialogueServiceImpl) Question(ctx context.Context, request *pb.Creation
 	return result, nil
 }
 
-func (d *DialogueServiceImpl) Answer(ctx context.Context, request *pb.AnswerRequest) (*pb.AnswerResponse, error) {
+func (d *DialogueServiceImpl) Answer(ctx context.Context, request *v1.AnswerRequest) (*v1.AnswerResponse, error) {
 	segmentKey := fmt.Sprintf("%s+%s", request.Theme, request.Set)
 	cacheItem, _ := d.Archytas.Read(segmentKey)
 
@@ -155,7 +158,7 @@ func (d *DialogueServiceImpl) Answer(ctx context.Context, request *pb.AnswerRequ
 			return nil, err
 		}
 
-		go cacheSpan(string(cacheItem), segmentKey, ctx)
+		go comedy.CacheSpan(string(cacheItem), segmentKey, ctx, d.Streamer)
 	} else {
 		mustQuery := []map[string]string{
 			{
@@ -175,7 +178,7 @@ func (d *DialogueServiceImpl) Answer(ctx context.Context, request *pb.AnswerRequ
 			return nil, fmt.Errorf("no hits found in Elastic")
 		}
 
-		go databaseSpan(elasticResponse, query, ctx)
+		go comedy.DatabaseSpan(query, elasticResponse.Hits.Total.Value, elasticResponse.Took, ctx, d.Streamer)
 
 		source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
 		err = json.Unmarshal(source, &option)
@@ -184,15 +187,15 @@ func (d *DialogueServiceImpl) Answer(ctx context.Context, request *pb.AnswerRequ
 		}
 	}
 
-	answer := &pb.AnswerResponse{
+	answer := &v1.AnswerResponse{
 		Percentage:    0,
 		Input:         request.Content,
-		Answer:        []*pb.DialogueContent{},
+		Answer:        []*v1.DialogueContent{},
 		WronglyPlaced: nil,
 	}
 
 	for _, content := range option.Content {
-		answer.Answer = append(answer.Answer, &pb.DialogueContent{
+		answer.Answer = append(answer.Answer, &v1.DialogueContent{
 			Translation: content.Translation,
 			Greek:       content.Greek,
 			Place:       int32(content.Place),
@@ -208,7 +211,7 @@ func (d *DialogueServiceImpl) Answer(ctx context.Context, request *pb.AnswerRequ
 		if verifiedContent.Greek == dialogue.Greek && int32(verifiedContent.Place) == dialogue.Place {
 			correctPlace++
 		} else {
-			correctedPlacing := &pb.DialogueCorrection{
+			correctedPlacing := &v1.DialogueCorrection{
 				Translation:  dialogue.Translation,
 				Greek:        dialogue.Greek,
 				Place:        dialogue.Place,

@@ -11,8 +11,11 @@ PROTO_DOC_IMAGE ?= localproto:latest
 SPECTAQL_DIR    := ./sokrates/docs
 SPECTAQL_CFG    := spectaql.yaml
 
+ROOT ?= .
+OWNER ?= odysseia-greek
+
 # Make runs each recipe line in its own shell by default; enable bash + strict mode.
-SHELL := bash
+SHELL := /usr/bin/env bash
 .SHELLFLAGS := -euo pipefail -c
 
 .DEFAULT_GOAL := all
@@ -40,9 +43,6 @@ endef
 all: generate docs
 
 generate: generate-buf
-
-SHELL := bash
-.SHELLFLAGS := -euo pipefail -c
 
 # Run a bash snippet for each directory in a list:
 define for_each_dir
@@ -98,10 +98,21 @@ tidy-go:
 	fi; \
 	for d in $$mods; do \
 		echo "==> go mod tidy in $$d"; \
-		( cd "$$d" && go mod tidy ); \
+		( cd "$$d" && go mod tidy && go fmt ./... ); \
 	done
 
 # Convenience: list all module dirs found
 .PHONY: mods
 mods:
 	@find . -name go.mod -print0 | xargs -0 -n1 dirname | sort -u
+
+
+.PHONY: images-dev images-prod
+
+images-dev:
+	OWNER="$(OWNER)" ROOT="$(ROOT)" GROUP=dev \
+		./bump-images.sh
+
+images-prod:
+	OWNER="$(OWNER)" ROOT="$(ROOT)" GROUP=prod \
+		./bump-images.sh
