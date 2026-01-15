@@ -4,8 +4,8 @@ package kritias.v1;
 option go_package = "github.com/odysseia-greek/apologia/kritias/gen/go/v1;kritiasv1";
 
 service Kritias {
-  rpc Health (HealthRequest) returns (HealthResponse) {};
-  rpc Options (OptionsRequest) returns (AggregatedOptions) {};
+  rpc Health (koinos.v1.HealthRequest) returns (koinos.v1.HealthResponse) {};
+    rpc Options (koinos.v1.OptionsRequest) returns (AggregatedOptions) {};
   rpc Question (CreationRequest) returns (QuizResponse) {};
   rpc Answer (AnswerRequest) returns (AnswerResponse) {};
 }

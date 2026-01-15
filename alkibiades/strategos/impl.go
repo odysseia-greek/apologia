@@ -9,7 +9,7 @@ import (
 	"github.com/odysseia-greek/agora/aristoteles"
 	"github.com/odysseia-greek/agora/plato/randomizer"
 	"github.com/odysseia-greek/agora/plato/service"
-	pb "github.com/odysseia-greek/apologia/alkibiades/proto"
+	v1 "github.com/odysseia-greek/apologia/alkibiades/gen/go/v1"
 	arv1 "github.com/odysseia-greek/attike/aristophanes/gen/go/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -17,8 +17,8 @@ import (
 
 type JourneyService interface {
 	WaitForHealthyState() bool
-	Options(ctx context.Context, request *pb.OptionsRequest) (*pb.AggregatedOptions, error)
-	Question(ctx context.Context, request *pb.CreationRequest) (*pb.QuizResponse, error)
+	Options(ctx context.Context, request *v1.OptionsRequest) (*v1.AggregatedOptions, error)
+	Question(ctx context.Context, request *v1.CreationRequest) (*v1.QuizResponse, error)
 }
 
 const (
@@ -33,7 +33,7 @@ type JourneyServiceImpl struct {
 	Client     service.OdysseiaClient
 	Streamer   arv1.TraceService_ChorusClient
 	Archytas   archytas.Client
-	pb.UnimplementedAlkibiadesServer
+	v1.UnimplementedAlkibiadesServer
 }
 
 type JourneyServiceClient struct {
@@ -41,7 +41,7 @@ type JourneyServiceClient struct {
 }
 
 type JourneyClient struct {
-	journey pb.AlkibiadesClient
+	journey v1.AlkibiadesClient
 }
 
 func NewAlkibiadesClient(address string) (*JourneyClient, error) {
@@ -52,7 +52,7 @@ func NewAlkibiadesClient(address string) (*JourneyClient, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to connect to tracing service: %w", err)
 	}
-	client := pb.NewAlkibiadesClient(conn)
+	client := v1.NewAlkibiadesClient(conn)
 	return &JourneyClient{journey: client}, nil
 }
 
@@ -62,7 +62,7 @@ func (j *JourneyClient) WaitForHealthyState() bool {
 	endTime := time.Now().Add(timeout)
 
 	for time.Now().Before(endTime) {
-		response, err := j.Health(context.Background(), &pb.HealthRequest{})
+		response, err := j.Health(context.Background(), &v1.HealthRequest{})
 		if err == nil && response.Healthy {
 			return true
 		}
@@ -73,14 +73,14 @@ func (j *JourneyClient) WaitForHealthyState() bool {
 	return false
 }
 
-func (j *JourneyClient) Health(ctx context.Context, request *pb.HealthRequest) (*pb.HealthResponse, error) {
+func (j *JourneyClient) Health(ctx context.Context, request *v1.HealthRequest) (*v1.HealthResponse, error) {
 	return j.journey.Health(ctx, request)
 }
 
-func (j *JourneyClient) Options(ctx context.Context, request *pb.OptionsRequest) (*pb.AggregatedOptions, error) {
+func (j *JourneyClient) Options(ctx context.Context, request *v1.OptionsRequest) (*v1.AggregatedOptions, error) {
 	return j.journey.Options(ctx, request)
 }
 
-func (j *JourneyClient) Question(ctx context.Context, request *pb.CreationRequest) (*pb.QuizResponse, error) {
+func (j *JourneyClient) Question(ctx context.Context, request *v1.CreationRequest) (*v1.QuizResponse, error) {
 	return j.journey.Question(ctx, request)
 }

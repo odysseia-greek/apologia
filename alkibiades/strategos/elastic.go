@@ -3,7 +3,7 @@ package strategos
 import (
 	"encoding/json"
 	"fmt"
-	pb "github.com/odysseia-greek/apologia/alkibiades/proto"
+	v1 "github.com/odysseia-greek/apologia/alkibiades/gen/go/v1"
 )
 
 func quizAggregationQuery() map[string]interface{} {
@@ -42,7 +42,7 @@ func quizAggregationQuery() map[string]interface{} {
 	}
 }
 
-func parseAggregationResult(rawESOutput []byte) (*pb.AggregatedOptions, error) {
+func parseAggregationResult(rawESOutput []byte) (*v1.AggregatedOptions, error) {
 	// Define a structure to match the new Elasticsearch response
 	var esResponse struct {
 		Aggregations struct {
@@ -81,23 +81,23 @@ func parseAggregationResult(rawESOutput []byte) (*pb.AggregatedOptions, error) {
 		return nil, fmt.Errorf("failed to parse Elasticsearch response: %w", err)
 	}
 
-	var result pb.AggregatedOptions
+	var result v1.AggregatedOptions
 
 	for _, themeBucket := range esResponse.Aggregations.UniqueThemes.Buckets {
-		theme := &pb.Theme{
+		theme := &v1.Theme{
 			Name: themeBucket.Key,
 		}
 
 		for _, segmentBucket := range themeBucket.UniqueSegments.Buckets {
-			var coords *pb.Coordinates
+			var coords *v1.Coordinates
 			if len(segmentBucket.SegmentData.Hits.Hits) > 0 {
 				src := segmentBucket.SegmentData.Hits.Hits[0].Source
-				coords = &pb.Coordinates{
+				coords = &v1.Coordinates{
 					X: src.Coordinates.X,
 					Y: src.Coordinates.Y,
 				}
 
-				segment := &pb.Segments{
+				segment := &v1.Segments{
 					Name:        segmentBucket.Key,
 					Number:      src.Number,
 					Location:    src.Location,

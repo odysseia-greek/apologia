@@ -5,9 +5,9 @@ go 1.25.5
 require (
 	github.com/google/uuid v1.6.0
 	github.com/odysseia-greek/agora/archytas v0.1.2
-	github.com/odysseia-greek/agora/aristoteles v0.2.0
+	github.com/odysseia-greek/agora/aristoteles v0.2.2
 	github.com/odysseia-greek/agora/plato v0.2.12
-	github.com/odysseia-greek/attike/aristophanes v0.7.0-rho2
+	github.com/odysseia-greek/attike/aristophanes v0.7.0-rho7
 	github.com/odysseia-greek/delphi/aristides v0.0.1
 	google.golang.org/grpc v1.78.0
 	google.golang.org/protobuf v1.36.11
@@ -22,7 +22,7 @@ require (
 	github.com/dgraph-io/ristretto v0.2.0 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/elastic/elastic-transport-go/v8 v8.8.0 // indirect
-	github.com/elastic/go-elasticsearch/v8 v8.18.1 // indirect
+	github.com/elastic/go-elasticsearch/v9 v9.2.1 // indirect
 	github.com/go-jose/go-jose/v4 v4.1.3 // indirect
 	github.com/go-logr/logr v1.4.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect

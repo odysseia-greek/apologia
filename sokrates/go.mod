@@ -13,7 +13,7 @@ require (
 	github.com/odysseia-greek/apologia/kritias v0.1.2
 	github.com/odysseia-greek/apologia/kriton v0.1.1
 	github.com/odysseia-greek/apologia/xenofon v0.1.1
-	github.com/odysseia-greek/attike/aristophanes v0.7.0-rho2
+	github.com/odysseia-greek/attike/aristophanes v0.7.0-rho7
 	github.com/vektah/gqlparser/v2 v2.5.31
 	google.golang.org/grpc v1.78.0
 )

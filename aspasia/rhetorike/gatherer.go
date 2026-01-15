@@ -12,7 +12,7 @@ import (
 	"github.com/odysseia-greek/agora/plato/models"
 	"github.com/odysseia-greek/agora/plato/service"
 	v1 "github.com/odysseia-greek/apologia/aspasia/gen/go/v1"
-	"github.com/odysseia-greek/apologia/diotima/theoria"
+	"github.com/odysseia-greek/attike/aristophanes/comedy"
 	arv1 "github.com/odysseia-greek/attike/aristophanes/gen/go/v1"
 	antigonosv1 "github.com/odysseia-greek/makedonia/antigonos/gen/go/v1"
 	"github.com/odysseia-greek/makedonia/antigonos/monophthalmus"
@@ -22,14 +22,7 @@ import (
 )
 
 func (g *GathererServiceImpl) Search(ctx context.Context, request *v1.ExtendedSearch) (*v1.ExtendedSearchResponse, error) {
-	md, ok := metadata.FromIncomingContext(ctx)
-	var requestId string
-	if ok {
-		headerValue := md.Get(service.HeaderKey)
-		if len(headerValue) > 0 {
-			requestId = headerValue[0]
-		}
-	}
+	requestId := CurrentRequestID(ctx, config.DefaultTracingName, service.HeaderKey)
 
 	analyseResult := &v1.ExtendedSearchResponse{}
 
@@ -42,7 +35,7 @@ func (g *GathererServiceImpl) Search(ctx context.Context, request *v1.ExtendedSe
 
 		logging.Debug(fmt.Sprintf("found in cache: %s number of results: %d", request.Word, len(analyseResult.FoundInText.Texts)))
 
-		go theoria.CacheSpan(string(cacheItem), request.Word, ctx, g.Streamer)
+		go comedy.CacheSpan(string(cacheItem), request.Word, ctx, g.Streamer)
 		return analyseResult, nil
 	}
 
@@ -94,10 +87,10 @@ func (g *GathererServiceImpl) gatherSimilarWords(
 		}},
 	}
 
-	fuzzyClientCtx, cancel := g.createRequestHeader(requestId, "")
+	fuzzyClientCtx, cancel := createRequestHeader(ctx, requestId, "")
 	defer cancel()
 
-	theoria.ServiceToServiceSpanWithCtx(ctx, antigonosSpan, g.Streamer)
+	comedy.ServiceToServiceSpanWithCtx(ctx, antigonosSpan, g.Streamer)
 
 	request := &koinos.SearchQuery{
 		Word:            word,
@@ -169,7 +162,7 @@ func (g *GathererServiceImpl) gatherTexts(ctx context.Context, word, requestId s
 		}},
 	}
 
-	theoria.ServiceToServiceSpanWithCtx(ctx, herodotosSpan, g.Streamer)
+	comedy.ServiceToServiceSpanWithCtx(ctx, herodotosSpan, g.Streamer)
 
 	r := models.AnalyzeTextRequest{Rootword: word}
 	jsonBody, err := json.Marshal(r)
@@ -242,11 +235,25 @@ func (g *GathererServiceImpl) normalizeGreekWithArticle(s string) string {
 	return s
 }
 
-func (g *GathererServiceImpl) createRequestHeader(requestID, sessionId string) (context.Context, context.CancelFunc) {
-	requestCtx, ctxCancel := context.WithTimeout(context.Background(), 30*time.Second)
-	md := metadata.New(map[string]string{config.HeaderKey: requestID,
-		config.SessionIdKey: sessionId})
-	requestCtx = metadata.NewOutgoingContext(requestCtx, md)
+func createRequestHeader(ctx context.Context, requestID, sessionId string) (context.Context, context.CancelFunc) {
+	requestCtx, cancel := context.WithTimeout(ctx, 30*time.Second)
+	md := metadata.New(map[string]string{
+		config.HeaderKey:    requestID,
+		config.SessionIdKey: sessionId,
+	})
+	return metadata.NewOutgoingContext(requestCtx, md), cancel
+}
 
-	return requestCtx, ctxCancel
+func CurrentRequestID(ctx context.Context, ctxKey any, headerKey string) string {
+	if v := ctx.Value(ctxKey); v != nil {
+		if s, ok := v.(string); ok && s != "" {
+			return s
+		}
+	}
+	if md, ok := metadata.FromIncomingContext(ctx); ok {
+		if vals := md.Get(headerKey); len(vals) > 0 {
+			return vals[0]
+		}
+	}
+	return ""
 }

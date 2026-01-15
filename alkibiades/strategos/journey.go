@@ -5,12 +5,14 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/odysseia-greek/agora/plato/config"
-	"github.com/odysseia-greek/agora/plato/logging"
-	pb "github.com/odysseia-greek/apologia/alkibiades/proto"
-	"google.golang.org/grpc/metadata"
 	"os"
 	"time"
+
+	"github.com/odysseia-greek/agora/plato/config"
+	"github.com/odysseia-greek/agora/plato/logging"
+	v1 "github.com/odysseia-greek/apologia/alkibiades/gen/go/v1"
+	"github.com/odysseia-greek/attike/aristophanes/comedy"
+	"google.golang.org/grpc/metadata"
 )
 
 const (
@@ -19,16 +21,16 @@ const (
 	SEGMENT          string = "segment"
 )
 
-func (j *JourneyServiceImpl) Health(context.Context, *pb.HealthRequest) (*pb.HealthResponse, error) {
+func (j *JourneyServiceImpl) Health(context.Context, *v1.HealthRequest) (*v1.HealthResponse, error) {
 	elasticHealth := j.Elastic.Health().Info()
-	dbHealth := &pb.DatabaseHealth{
+	dbHealth := &v1.DatabaseHealth{
 		Healthy:       elasticHealth.Healthy,
 		ClusterName:   elasticHealth.ClusterName,
 		ServerName:    elasticHealth.ServerName,
 		ServerVersion: elasticHealth.ServerVersion,
 	}
 
-	return &pb.HealthResponse{
+	return &v1.HealthResponse{
 		Healthy:        true,
 		Time:           time.Now().String(),
 		DatabaseHealth: dbHealth,
@@ -36,7 +38,7 @@ func (j *JourneyServiceImpl) Health(context.Context, *pb.HealthRequest) (*pb.Hea
 	}, nil
 }
 
-func (j *JourneyServiceImpl) Options(ctx context.Context, request *pb.OptionsRequest) (*pb.AggregatedOptions, error) {
+func (j *JourneyServiceImpl) Options(ctx context.Context, request *v1.OptionsRequest) (*v1.AggregatedOptions, error) {
 	var unparsedResponse []byte
 	cacheItem, _ := j.Archytas.Read(OPTIONSEGMENTKEY)
 	if cacheItem != nil {
@@ -60,7 +62,7 @@ func (j *JourneyServiceImpl) Options(ctx context.Context, request *pb.OptionsReq
 	return parseAggregationResult(unparsedResponse)
 }
 
-func (j *JourneyServiceImpl) Question(ctx context.Context, request *pb.CreationRequest) (*pb.QuizResponse, error) {
+func (j *JourneyServiceImpl) Question(ctx context.Context, request *v1.CreationRequest) (*v1.QuizResponse, error) {
 	var sessionId string
 	md, ok := metadata.FromIncomingContext(ctx)
 	if ok {
@@ -83,7 +85,7 @@ func (j *JourneyServiceImpl) Question(ctx context.Context, request *pb.CreationR
 			return nil, err
 		}
 
-		go cacheSpan(string(cacheItem), segmentKey, ctx)
+		go comedy.CacheSpan(string(cacheItem), segmentKey, ctx, j.Streamer)
 	} else {
 		mustQuery := []map[string]string{
 			{
@@ -104,7 +106,7 @@ func (j *JourneyServiceImpl) Question(ctx context.Context, request *pb.CreationR
 			return nil, errors.New("no hits found in query")
 		}
 
-		go databaseSpan(elasticResponse, query, ctx)
+		go comedy.DatabaseSpan(query, elasticResponse.Hits.Total.Value, elasticResponse.Took, ctx, j.Streamer)
 		source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
 		err = json.Unmarshal(source, &option)
 		if err != nil {
@@ -121,20 +123,20 @@ func (j *JourneyServiceImpl) Question(ctx context.Context, request *pb.CreationR
 		}
 	}
 
-	quiz := &pb.QuizResponse{
+	quiz := &v1.QuizResponse{
 		Theme:       option.Theme,
 		Segment:     option.Segment,
 		Number:      int32(option.Number),
 		Sentence:    option.FullSentence,
 		Translation: option.Translation,
 		ContextNote: option.ContextNote.Text,
-		Quiz:        []*pb.QuizStep{},
+		Quiz:        []*v1.QuizStep{},
 	}
 
 	// Add the intro from fixed steps if it exists
 	for _, fixedStep := range option.FixedSteps {
 		if fixedStep.Type == "intro" {
-			quiz.Intro = &pb.Intro{
+			quiz.Intro = &v1.Intro{
 				Author: fixedStep.Content.Author,
 
 				Work:       fixedStep.Content.Work,
@@ -148,28 +150,28 @@ func (j *JourneyServiceImpl) Question(ctx context.Context, request *pb.CreationR
 
 	// Create quiz steps from random steps
 	for _, randomStep := range shuffledSteps {
-		var quizStep *pb.QuizStep
+		var quizStep *v1.QuizStep
 
 		switch randomStep.Type {
 		case "match":
-			pairs := []*pb.MatchPair{}
+			pairs := []*v1.MatchPair{}
 			for _, pair := range randomStep.Pairs {
-				pairs = append(pairs, &pb.MatchPair{
+				pairs = append(pairs, &v1.MatchPair{
 					Greek:  pair.Greek,
 					Answer: pair.Answer,
 				})
 			}
 
 			for _, pair := range randomStep.Verbs {
-				pairs = append(pairs, &pb.MatchPair{
+				pairs = append(pairs, &v1.MatchPair{
 					Greek:  pair.Word,
 					Answer: pair.Answer,
 				})
 			}
 
-			quizStep = &pb.QuizStep{
-				Type: &pb.QuizStep_Match{
-					Match: &pb.MatchQuiz{
+			quizStep = &v1.QuizStep{
+				Type: &v1.QuizStep_Match{
+					Match: &v1.MatchQuiz{
 						Instruction: randomStep.Instruction,
 						Pairs:       pairs,
 					},
@@ -184,9 +186,9 @@ func (j *JourneyServiceImpl) Question(ctx context.Context, request *pb.CreationR
 				options = j.randomizeOptions(options, randomStep.Answer)
 			}
 
-			quizStep = &pb.QuizStep{
-				Type: &pb.QuizStep_Trivia{
-					Trivia: &pb.TriviaQuiz{
+			quizStep = &v1.QuizStep{
+				Type: &v1.QuizStep_Trivia{
+					Trivia: &v1.TriviaQuiz{
 						Question: randomStep.Question,
 						Options:  options,
 						Answer:   randomStep.Answer,
@@ -196,17 +198,17 @@ func (j *JourneyServiceImpl) Question(ctx context.Context, request *pb.CreationR
 			}
 
 		case "media":
-			mediaFiles := []*pb.MediaEntry{}
+			mediaFiles := []*v1.MediaEntry{}
 			for _, media := range randomStep.MediaFiles {
-				mediaFiles = append(mediaFiles, &pb.MediaEntry{
+				mediaFiles = append(mediaFiles, &v1.MediaEntry{
 					Word:   media.Word,
 					Answer: media.Answer,
 				})
 			}
 
-			quizStep = &pb.QuizStep{
-				Type: &pb.QuizStep_Media{
-					Media: &pb.MediaDropQuiz{
+			quizStep = &v1.QuizStep{
+				Type: &v1.QuizStep_Media{
+					Media: &v1.MediaDropQuiz{
 						Instruction: randomStep.Instruction,
 						MediaFiles:  mediaFiles,
 					},
@@ -221,9 +223,9 @@ func (j *JourneyServiceImpl) Question(ctx context.Context, request *pb.CreationR
 				options = j.randomizeOptions(options, randomStep.Answer)
 			}
 
-			quizStep = &pb.QuizStep{
-				Type: &pb.QuizStep_Structure{
-					Structure: &pb.StructureQuiz{
+			quizStep = &v1.QuizStep{
+				Type: &v1.QuizStep_Structure{
+					Structure: &v1.StructureQuiz{
 						Title:    randomStep.Title,
 						Text:     randomStep.Text,
 						Question: randomStep.Question,
@@ -248,9 +250,9 @@ func (j *JourneyServiceImpl) Question(ctx context.Context, request *pb.CreationR
 			options = j.randomizeOptions(options, option.FinalStep.Answer)
 		}
 
-		finalStep := &pb.QuizStep{
-			Type: &pb.QuizStep_FinalTranslation{
-				FinalTranslation: &pb.TranslationStep{
+		finalStep := &v1.QuizStep{
+			Type: &v1.QuizStep_FinalTranslation{
+				FinalTranslation: &v1.TranslationStep{
 					Instruction: option.FinalStep.Instruction,
 					Options:     options,
 					Answer:      option.FinalStep.Answer,

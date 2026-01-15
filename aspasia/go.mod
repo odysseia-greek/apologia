@@ -6,8 +6,7 @@ require (
 	github.com/odysseia-greek/agora/archytas v0.1.2
 	github.com/odysseia-greek/agora/hesiodos v0.1.1
 	github.com/odysseia-greek/agora/plato v0.2.12
-	github.com/odysseia-greek/apologia/diotima v0.0.1-rho6
-	github.com/odysseia-greek/attike/aristophanes v0.7.0-rho5
+	github.com/odysseia-greek/attike/aristophanes v0.7.0-rho7
 	github.com/odysseia-greek/makedonia/antigonos v0.0.2
 	github.com/odysseia-greek/makedonia/filippos v0.0.4
 	golang.org/x/sync v0.19.0

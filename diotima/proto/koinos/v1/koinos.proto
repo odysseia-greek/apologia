@@ -1,0 +1,19 @@
+
+syntax = "proto3";
+
+package koinos.v1;
+option go_package = "github.com/odysseia-greek/apologia/diotima/gen/go/koinos/v1;koinosv1";
+
+
+message OptionsRequest {
+}
+
+// Word progress entry
+message ProgressEntry {
+  string greek = 1;
+  string translation = 2;
+  int32 play_count = 3;
+  int32 correct_count = 4;
+  int32 incorrect_count = 5;
+  string last_played = 6; // ISO timestamp format
+}

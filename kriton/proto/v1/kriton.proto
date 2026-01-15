@@ -1,11 +1,11 @@
 syntax = "proto3";
-option go_package = "github.com/odysseia-greek/apologia/kriton/proto";
+option go_package = "github.com/odysseia-greek/apologia/kriton/gen/go/v1;kritonv1";
 
-package apologia_kriton;
+package kriton.v1;
 
 service Kriton {
-  rpc Health (HealthRequest) returns (HealthResponse) {};
-  rpc Options (OptionsRequest) returns (AggregatedOptions) {};
+  rpc Health (koinos.v1.HealthRequest) returns (koinos.v1.HealthResponse) {};
+    rpc Options (koinos.v1.OptionsRequest) returns (AggregatedOptions) {};
   rpc Question (CreationRequest) returns (QuizResponse) {};
   rpc Answer (AnswerRequest) returns (AnswerResponse) {};
 }

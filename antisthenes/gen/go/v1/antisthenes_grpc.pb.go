@@ -8,6 +8,7 @@ package antisthenesv1
 
 import (
 	context "context"
+	v1 "github.com/odysseia-greek/apologia/diotima/gen/go/koinos/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -22,8 +23,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AntisthenesClient interface {
-	Health(ctx context.Context, in *HealthRequest, opts ...grpc.CallOption) (*HealthResponse, error)
-	Options(ctx context.Context, in *OptionsRequest, opts ...grpc.CallOption) (*AggregatedOptions, error)
+	Health(ctx context.Context, in *v1.HealthRequest, opts ...grpc.CallOption) (*v1.HealthResponse, error)
+	Options(ctx context.Context, in *v1.OptionsRequest, opts ...grpc.CallOption) (*AggregatedOptions, error)
 	Question(ctx context.Context, in *CreationRequest, opts ...grpc.CallOption) (*QuizResponse, error)
 	Answer(ctx context.Context, in *AnswerRequest, opts ...grpc.CallOption) (*AnswerResponse, error)
 }
@@ -36,8 +37,8 @@ func NewAntisthenesClient(cc grpc.ClientConnInterface) AntisthenesClient {
 	return &antisthenesClient{cc}
 }
 
-func (c *antisthenesClient) Health(ctx context.Context, in *HealthRequest, opts ...grpc.CallOption) (*HealthResponse, error) {
-	out := new(HealthResponse)
+func (c *antisthenesClient) Health(ctx context.Context, in *v1.HealthRequest, opts ...grpc.CallOption) (*v1.HealthResponse, error) {
+	out := new(v1.HealthResponse)
 	err := c.cc.Invoke(ctx, "/antisthenes.v1.Antisthenes/Health", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -45,7 +46,7 @@ func (c *antisthenesClient) Health(ctx context.Context, in *HealthRequest, opts 
 	return out, nil
 }
 
-func (c *antisthenesClient) Options(ctx context.Context, in *OptionsRequest, opts ...grpc.CallOption) (*AggregatedOptions, error) {
+func (c *antisthenesClient) Options(ctx context.Context, in *v1.OptionsRequest, opts ...grpc.CallOption) (*AggregatedOptions, error) {
 	out := new(AggregatedOptions)
 	err := c.cc.Invoke(ctx, "/antisthenes.v1.Antisthenes/Options", in, out, opts...)
 	if err != nil {
@@ -76,8 +77,8 @@ func (c *antisthenesClient) Answer(ctx context.Context, in *AnswerRequest, opts 
 // All implementations must embed UnimplementedAntisthenesServer
 // for forward compatibility
 type AntisthenesServer interface {
-	Health(context.Context, *HealthRequest) (*HealthResponse, error)
-	Options(context.Context, *OptionsRequest) (*AggregatedOptions, error)
+	Health(context.Context, *v1.HealthRequest) (*v1.HealthResponse, error)
+	Options(context.Context, *v1.OptionsRequest) (*AggregatedOptions, error)
 	Question(context.Context, *CreationRequest) (*QuizResponse, error)
 	Answer(context.Context, *AnswerRequest) (*AnswerResponse, error)
 	mustEmbedUnimplementedAntisthenesServer()
@@ -87,10 +88,10 @@ type AntisthenesServer interface {
 type UnimplementedAntisthenesServer struct {
 }
 
-func (UnimplementedAntisthenesServer) Health(context.Context, *HealthRequest) (*HealthResponse, error) {
+func (UnimplementedAntisthenesServer) Health(context.Context, *v1.HealthRequest) (*v1.HealthResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Health not implemented")
 }
-func (UnimplementedAntisthenesServer) Options(context.Context, *OptionsRequest) (*AggregatedOptions, error) {
+func (UnimplementedAntisthenesServer) Options(context.Context, *v1.OptionsRequest) (*AggregatedOptions, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Options not implemented")
 }
 func (UnimplementedAntisthenesServer) Question(context.Context, *CreationRequest) (*QuizResponse, error) {
@@ -113,7 +114,7 @@ func RegisterAntisthenesServer(s grpc.ServiceRegistrar, srv AntisthenesServer) {
 }
 
 func _Antisthenes_Health_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HealthRequest)
+	in := new(v1.HealthRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -125,13 +126,13 @@ func _Antisthenes_Health_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: "/antisthenes.v1.Antisthenes/Health",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AntisthenesServer).Health(ctx, req.(*HealthRequest))
+		return srv.(AntisthenesServer).Health(ctx, req.(*v1.HealthRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Antisthenes_Options_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OptionsRequest)
+	in := new(v1.OptionsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -143,7 +144,7 @@ func _Antisthenes_Options_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: "/antisthenes.v1.Antisthenes/Options",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AntisthenesServer).Options(ctx, req.(*OptionsRequest))
+		return srv.(AntisthenesServer).Options(ctx, req.(*v1.OptionsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
