@@ -3,16 +3,18 @@ module github.com/odysseia-greek/apologia/sokrates
 go 1.25.5
 
 require (
-	github.com/99designs/gqlgen v0.17.85
+	github.com/99designs/gqlgen v0.17.86
 	github.com/gorilla/mux v1.8.1
+	github.com/odysseia-greek/agora/hesiodos v0.1.1
 	github.com/odysseia-greek/agora/plato v0.2.12
-	github.com/odysseia-greek/apologia/alkibiades v0.1.1
-	github.com/odysseia-greek/apologia/antisthenes v0.1.2
-	github.com/odysseia-greek/apologia/aristippos v0.1.2
-	github.com/odysseia-greek/apologia/aspasia v0.0.2
-	github.com/odysseia-greek/apologia/kritias v0.1.2
-	github.com/odysseia-greek/apologia/kriton v0.1.1
-	github.com/odysseia-greek/apologia/xenofon v0.1.1
+	github.com/odysseia-greek/apologia/alkibiades v0.1.2
+	github.com/odysseia-greek/apologia/antisthenes v0.1.3
+	github.com/odysseia-greek/apologia/aristippos v0.1.3
+	github.com/odysseia-greek/apologia/aspasia v0.0.3
+	github.com/odysseia-greek/apologia/diotima v0.0.1-rho8
+	github.com/odysseia-greek/apologia/kritias v0.1.3
+	github.com/odysseia-greek/apologia/kriton v0.1.2
+	github.com/odysseia-greek/apologia/xenofon v0.1.2
 	github.com/odysseia-greek/attike/aristophanes v0.7.0-rho7
 	github.com/vektah/gqlparser/v2 v2.5.31
 	google.golang.org/grpc v1.78.0
@@ -27,8 +29,8 @@ require (
 	github.com/dgraph-io/badger/v3 v3.2103.5 // indirect
 	github.com/dgraph-io/ristretto v0.2.0 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
-	github.com/elastic/elastic-transport-go/v8 v8.7.0 // indirect
-	github.com/elastic/go-elasticsearch/v8 v8.18.1 // indirect
+	github.com/elastic/elastic-transport-go/v8 v8.8.0 // indirect
+	github.com/elastic/go-elasticsearch/v9 v9.2.1 // indirect
 	github.com/go-jose/go-jose/v4 v4.1.3 // indirect
 	github.com/go-logr/logr v1.4.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
@@ -56,10 +58,9 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/odysseia-greek/agora/archytas v0.1.2 // indirect
-	github.com/odysseia-greek/agora/aristoteles v0.1.15 // indirect
+	github.com/odysseia-greek/agora/aristoteles v0.2.2 // indirect
 	github.com/odysseia-greek/agora/diogenes v0.1.15 // indirect
 	github.com/odysseia-greek/agora/eupalinos v0.2.7 // indirect
-	github.com/odysseia-greek/apologia/diotima v0.0.1-rho3 // indirect
 	github.com/odysseia-greek/delphi/aristides v0.0.1 // indirect
 	github.com/odysseia-greek/makedonia/antigonos v0.0.2 // indirect
 	github.com/odysseia-greek/makedonia/filippos v0.0.4 // indirect
@@ -77,7 +78,7 @@ require (
 	golang.org/x/net v0.48.0 // indirect
 	golang.org/x/sync v0.19.0 // indirect
 	golang.org/x/sys v0.39.0 // indirect
-	golang.org/x/text v0.32.0 // indirect
+	golang.org/x/text v0.33.0 // indirect
 	golang.org/x/time v0.11.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20251029180050-ab9386a59fda // indirect
 	google.golang.org/protobuf v1.36.11 // indirect

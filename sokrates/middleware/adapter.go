@@ -8,17 +8,16 @@ import (
 	"io"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/odysseia-greek/agora/plato/config"
+	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/attike/aristophanes/comedy"
 	arv1 "github.com/odysseia-greek/attike/aristophanes/gen/go/v1"
-
-	"github.com/odysseia-greek/agora/plato/logging"
 )
 
 type Adapter func(http.Handler) http.Handler
 
-// Adapt Iterate over adapters and run them one by one
 func Adapt(h http.Handler, adapters ...Adapter) http.Handler {
 	for _, adapter := range adapters {
 		h = adapter(h)
@@ -26,111 +25,152 @@ func Adapt(h http.Handler, adapters ...Adapter) http.Handler {
 	return h
 }
 
-// LogRequestDetails is a middleware function that captures and logs details of incoming requests,
-// and initiates traces based on the configured trace probabilities for specific GraphQL operations.
-// It reads the incoming request body to extract the operation name and query from GraphQL requests.
-// The middleware then checks the trace configuration to determine whether to initiate a trace for
-// the given operation. If the trace probability condition is met, a trace is started using the
-// provided tracer's StartTrace method. The trace ID is logged, and the middleware creates a new
-// context with the trace ID to pass it along to downstream handlers.
-//
-// Parameters:
-// - tracer: The tracer instance used to initiate traces.
-// - traceConfig: The configuration specifying the trace probabilities for specific operations.
-//
-// Returns:
-// An Adapter that wraps an http.Handler and performs the described middleware actions.
+// statusRecorder lets us capture the final HTTP status code written by the handler.
+type statusRecorder struct {
+	http.ResponseWriter
+	status int
+}
+
+func (r *statusRecorder) WriteHeader(code int) {
+	r.status = code
+	r.ResponseWriter.WriteHeader(code)
+}
+
+func (r *statusRecorder) Write(b []byte) (int, error) {
+	// If handler never called WriteHeader, status is implicitly 200 on first Write.
+	if r.status == 0 {
+		r.status = http.StatusOK
+	}
+	return r.ResponseWriter.Write(b)
+}
+
 func LogRequestDetails(tracer arv1.TraceService_ChorusClient) Adapter {
 	return func(f http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			requestId := r.Header.Get(config.HeaderKey)
 			sessionId := r.Header.Get(config.SessionIdKey)
-			trace := traceFromString(requestId)
 
+			trace := comedy.TraceBareFromString(requestId)
+			// If this request isn't being traced, just pass through.
+			if trace.TraceId == "" || trace.SpanId == "" || !trace.Save {
+				f.ServeHTTP(w, r)
+				return
+			}
+
+			// Read body once; restore for downstream
 			bodyBytes, err := io.ReadAll(r.Body)
 			if err != nil {
 				http.Error(w, "Failed to read request body", http.StatusInternalServerError)
 				return
 			}
-			r.Body = io.NopCloser(bytes.NewReader(bodyBytes)) // Set the original request body
+			_ = r.Body.Close()
+			r.Body = io.NopCloser(bytes.NewReader(bodyBytes))
 
-			var bodyClone map[string]interface{}
-			decoder := json.NewDecoder(bytes.NewReader(bodyBytes))
-			if err := decoder.Decode(&bodyClone); err != nil {
-				http.Error(w, "Failed to parse request body", http.StatusInternalServerError)
-				return
-			}
+			var (
+				operationName string
+				query         string
+			)
 
-			operationName, _ := bodyClone["operationName"].(string)
-			query, _ := bodyClone["query"].(string)
-
-			if operationName == "" {
-				splitQuery := strings.Split(query, "{")
-				if len(splitQuery) != 0 {
-					if strings.Contains(splitQuery[1], "(") {
-						splitsStringPart := strings.Split(splitQuery[1], "(")[0]
-						operationName = strings.TrimSpace(splitsStringPart)
-						logging.Debug(fmt.Sprintf("extracted operationName from query: %s", operationName))
+			// Best-effort JSON parse (GraphQL POST)
+			if len(bodyBytes) > 0 {
+				var bodyClone map[string]any
+				if err := json.Unmarshal(bodyBytes, &bodyClone); err == nil {
+					if v, ok := bodyClone["operationName"].(string); ok {
+						operationName = v
+					}
+					if v, ok := bodyClone["query"].(string); ok {
+						query = v
 					}
 				}
 			}
 
-			spanID := comedy.GenerateSpanID()
+			// Fallback extraction if operationName missing but query exists
+			if operationName == "" && query != "" {
+				// naive, but works for "query foo(...) {"
+				splitQuery := strings.Split(query, "{")
+				if len(splitQuery) > 1 {
+					part := splitQuery[1]
+					if strings.Contains(part, "(") {
+						part = strings.Split(part, "(")[0]
+					}
+					operationName = strings.TrimSpace(part)
+				}
+			}
+
+			// Create a span representing THIS GraphQL operation
+			parentSpan := trace.SpanId
+			graphqlSpan := comedy.GenerateSpanID()
 
 			payload := &arv1.ObserveGraphQL{
 				Operation: operationName,
 				RootQuery: query,
 			}
 
+			// Emit GRAPHQL event (child of incoming span)
 			parabasis := &arv1.ObserveRequest{
 				TraceId:      trace.TraceId,
-				ParentSpanId: trace.SpanId,
-				SpanId:       spanID,
+				ParentSpanId: parentSpan,
+				SpanId:       graphqlSpan,
 				Kind:         &arv1.ObserveRequest_Graphql{Graphql: payload},
 			}
 
 			if err := tracer.Send(parabasis); err != nil {
-				logging.Error(fmt.Sprintf("failed to send trace data: %v", err))
+				logging.Error(fmt.Sprintf("failed to send graphql trace data: %v", err))
 			}
-
-			logging.Trace(fmt.Sprintf("trace with requestID: %s and parentSpan: %s and span: %s", trace.TraceId, trace.SpanId, spanID))
 
 			if operationName != "IntrospectionQuery" {
-				jsonPayload, err := json.MarshalIndent(payload, "", "  ")
-				if err != nil {
-					logging.Error(err.Error())
+				if jsonPayload, err := json.MarshalIndent(payload, "", "  "); err == nil {
+					logging.Info(fmt.Sprintf("REQUEST | traceId: %s and params:\n%s", trace.TraceId, string(jsonPayload)))
 				}
-
-				logLine := fmt.Sprintf("REQUEST | traceId: %s and params:\n%s", trace.TraceId, string(jsonPayload))
-				logging.Info(logLine)
 			}
 
-			trace.SpanId = spanID
+			// Propagate: downstream should treat this GraphQL span as the current parent
+			trace.SpanId = graphqlSpan
 			newRequestId := comedy.CreateCombinedId(trace)
+
+			// You usually don't want to mutate response headers here (clients may ignore),
+			// but keeping your behavior for now:
 			w.Header().Set(config.HeaderKey, newRequestId)
 			w.Header().Set(config.SessionIdKey, sessionId)
+
 			ctx := context.WithValue(r.Context(), config.HeaderKey, newRequestId)
 			ctx = context.WithValue(ctx, config.SessionIdKey, sessionId)
-			f.ServeHTTP(w, r.WithContext(ctx))
+
+			// Wrap writer to capture status + measure duration
+			rec := &statusRecorder{ResponseWriter: w}
+			start := time.Now()
+
+			f.ServeHTTP(rec, r.WithContext(ctx))
+
+			dur := time.Since(start)
+			status := rec.status
+			if status == 0 {
+				status = http.StatusOK
+			}
+
+			// Emit close-hop (TRACE_HOP_STOP) for the GraphQL span
+			// ParentSpanId should be the span we are closing (graphqlSpan),
+			// and SpanId should be a fresh span id for the stop event itself.
+			stop := &arv1.ObserveRequest{
+				TraceId:      trace.TraceId,
+				ParentSpanId: graphqlSpan,
+				SpanId:       comedy.GenerateSpanID(),
+				Kind: &arv1.ObserveRequest_TraceHopStop{
+					TraceHopStop: &arv1.ObserveTraceHopStop{
+						ResponseCode: int32(status),      // HTTP code
+						TookMs:       dur.Milliseconds(), // duration in ms
+					},
+				},
+			}
+
+			if err := tracer.Send(stop); err != nil {
+				logging.Error(fmt.Sprintf("failed to send graphql close-hop: %v", err))
+			}
+
+			logging.Trace(fmt.Sprintf(
+				"graphql span closed | traceId=%s parent=%s span=%s status=%d tookMs=%d",
+				trace.TraceId, parentSpan, graphqlSpan, status, dur.Milliseconds(),
+			))
 		})
 	}
-}
-
-func traceFromString(requestId string) *arv1.TraceBare {
-	splitID := strings.Split(requestId, "+")
-
-	trace := &arv1.TraceBare{}
-
-	if len(splitID) >= 3 {
-		trace.Save = splitID[2] == "1"
-	}
-
-	if len(splitID) >= 1 {
-		trace.TraceId = splitID[0]
-	}
-	if len(splitID) >= 2 {
-		trace.SpanId = splitID[1]
-	}
-
-	return trace
 }

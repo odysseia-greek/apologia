@@ -2,6 +2,10 @@ package routing
 
 import (
 	"encoding/json"
+	"net/http"
+	"os"
+	"time"
+
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/handler/extension"
 	"github.com/99designs/gqlgen/graphql/handler/transport"
@@ -10,9 +14,6 @@ import (
 	"github.com/odysseia-greek/apologia/sokrates/gateway"
 	"github.com/odysseia-greek/apologia/sokrates/graph"
 	"github.com/odysseia-greek/apologia/sokrates/middleware"
-	"net/http"
-	"os"
-	"time"
 )
 
 // InitRoutes initializes the mux router with middleware and GraphQL handler
@@ -37,9 +38,6 @@ func InitRoutes(handlerConfig *gateway.SokratesHandler) *mux.Router {
 
 	// --- health endpoints ---
 	serveMux.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
-		writeHealthResponse(w)
-	})
-	serveMux.HandleFunc("/sokrates/v1/ping", func(w http.ResponseWriter, r *http.Request) {
 		writeHealthResponse(w)
 	})
 

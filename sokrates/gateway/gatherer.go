@@ -1,13 +1,15 @@
 package gateway
 
 import (
+	"context"
+
 	v1 "github.com/odysseia-greek/apologia/aspasia/gen/go/v1"
 	"github.com/odysseia-greek/apologia/aspasia/rhetorike"
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
 )
 
-func (s *SokratesHandler) GatherComprehensiveResponse(word, requestID, sessionId string) (*model.ComprehensiveResponse, error) {
-	gatherClientCtx, cancel := s.createRequestHeader(requestID, sessionId)
+func (s *SokratesHandler) GatherComprehensiveResponse(ctx context.Context, word string) (*model.ComprehensiveResponse, error) {
+	outCtx, cancel := s.outgoingCtx(ctx)
 	defer cancel()
 
 	var grpcResponse *v1.ExtendedSearchResponse
@@ -16,7 +18,7 @@ func (s *SokratesHandler) GatherComprehensiveResponse(word, requestID, sessionId
 
 	err := s.GathererClient.CallWithReconnect(func(client *rhetorike.GathererClient) error {
 		var innerErr error
-		grpcResponse, innerErr = client.Search(gatherClientCtx, request)
+		grpcResponse, innerErr = client.Search(outCtx, request)
 		return innerErr
 	})
 	if err != nil {

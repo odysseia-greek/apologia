@@ -1,20 +1,23 @@
 package gateway
 
 import (
+	"context"
+
 	v1 "github.com/odysseia-greek/apologia/antisthenes/gen/go/v1"
 	"github.com/odysseia-greek/apologia/antisthenes/kunismos"
+	koinosv1 "github.com/odysseia-greek/apologia/diotima/gen/go/koinos/v1"
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
 )
 
-func (s *SokratesHandler) CreateGrammarQuiz(request *v1.CreationRequest, requestID, sessionId string) (*model.GrammarQuizResponse, error) {
-	grammarClientCtx, cancel := s.createRequestHeader(requestID, sessionId)
+func (s *SokratesHandler) CreateGrammarQuiz(ctx context.Context, request *v1.CreationRequest) (*model.GrammarQuizResponse, error) {
+	outCtx, cancel := s.outgoingCtx(ctx)
 	defer cancel()
 
 	var grpcResponse *v1.QuizResponse
 
 	err := s.GrammarClient.CallWithReconnect(func(client *kunismos.GrammarClient) error {
 		var innerErr error
-		grpcResponse, innerErr = client.Question(grammarClientCtx, request)
+		grpcResponse, innerErr = client.Question(outCtx, request)
 		return innerErr
 	})
 	if err != nil {
@@ -52,15 +55,15 @@ func (s *SokratesHandler) CreateGrammarQuiz(request *v1.CreationRequest, request
 	return quizResponse, nil
 }
 
-func (s *SokratesHandler) CheckGrammar(request *v1.AnswerRequest, requestID, sessionId string) (*model.GrammarAnswer, error) {
-	grammarClientCtx, cancel := s.createRequestHeader(requestID, sessionId)
+func (s *SokratesHandler) CheckGrammar(ctx context.Context, request *v1.AnswerRequest) (*model.GrammarAnswer, error) {
+	outCtx, cancel := s.outgoingCtx(ctx)
 	defer cancel()
 
 	var grpcResponse *v1.AnswerResponse
 
 	err := s.GrammarClient.CallWithReconnect(func(client *kunismos.GrammarClient) error {
 		var innerErr error
-		grpcResponse, innerErr = client.Answer(grammarClientCtx, request)
+		grpcResponse, innerErr = client.Answer(outCtx, request)
 		return innerErr
 	})
 	if err != nil {
@@ -87,15 +90,15 @@ func (s *SokratesHandler) CheckGrammar(request *v1.AnswerRequest, requestID, ses
 	return mappedResponse, nil
 }
 
-func (s *SokratesHandler) GrammarOptions(requestID, sessionId string) (*model.GrammarOptions, error) {
-	optionsCtx, cancel := s.createRequestHeader(requestID, sessionId)
+func (s *SokratesHandler) GrammarOptions(ctx context.Context) (*model.GrammarOptions, error) {
+	outCtx, cancel := s.outgoingCtx(ctx)
 	defer cancel()
 
 	var grpcResponse *v1.AggregatedOptions
 
 	err := s.GrammarClient.CallWithReconnect(func(client *kunismos.GrammarClient) error {
 		var innerErr error
-		grpcResponse, innerErr = client.Options(optionsCtx, &v1.OptionsRequest{})
+		grpcResponse, innerErr = client.Options(outCtx, &koinosv1.OptionsRequest{})
 		return innerErr
 	})
 	if err != nil {

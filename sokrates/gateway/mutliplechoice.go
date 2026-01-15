@@ -1,20 +1,23 @@
 package gateway
 
 import (
+	"context"
+
+	koinosv1 "github.com/odysseia-greek/apologia/diotima/gen/go/koinos/v1"
 	v1 "github.com/odysseia-greek/apologia/kritias/gen/go/v1"
 	"github.com/odysseia-greek/apologia/kritias/triakonta"
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
 )
 
-func (s *SokratesHandler) CreateMultipleChoiceQuiz(request *v1.CreationRequest, requestID, sessionId string) (*model.MultipleChoiceResponse, error) {
-	multipleChoiceCtx, cancel := s.createRequestHeader(requestID, sessionId)
+func (s *SokratesHandler) CreateMultipleChoiceQuiz(ctx context.Context, request *v1.CreationRequest) (*model.MultipleChoiceResponse, error) {
+	outCtx, cancel := s.outgoingCtx(ctx)
 	defer cancel()
 
 	var grpcResponse *v1.QuizResponse
 
 	err := s.MultiChoiceClient.CallWithReconnect(func(client *triakonta.MutpleChoiceClient) error {
 		var innerErr error
-		grpcResponse, innerErr = client.Question(multipleChoiceCtx, request)
+		grpcResponse, innerErr = client.Question(outCtx, request)
 		return innerErr
 	})
 	if err != nil {
@@ -46,15 +49,15 @@ func (s *SokratesHandler) CreateMultipleChoiceQuiz(request *v1.CreationRequest, 
 	return quizResponse, nil
 }
 
-func (s *SokratesHandler) CheckMultipleChoice(request *v1.AnswerRequest, requestID, sessionId string) (*model.ComprehensiveResponse, error) {
-	multipleChoiceCtx, cancel := s.createRequestHeader(requestID, sessionId)
+func (s *SokratesHandler) CheckMultipleChoice(ctx context.Context, request *v1.AnswerRequest) (*model.ComprehensiveResponse, error) {
+	outCtx, cancel := s.outgoingCtx(ctx)
 	defer cancel()
 
 	var grpcResponse *v1.AnswerResponse
 
 	err := s.MultiChoiceClient.CallWithReconnect(func(client *triakonta.MutpleChoiceClient) error {
 		var innerErr error
-		grpcResponse, innerErr = client.Answer(multipleChoiceCtx, request)
+		grpcResponse, innerErr = client.Answer(outCtx, request)
 		return innerErr
 	})
 	if err != nil {
@@ -81,15 +84,15 @@ func (s *SokratesHandler) CheckMultipleChoice(request *v1.AnswerRequest, request
 	return mappedResponse, nil
 }
 
-func (s *SokratesHandler) MultipleChoiceOptions(requestID, sessionId string) (*model.ThemedOptions, error) {
-	multipleChoiceCtx, cancel := s.createRequestHeader(requestID, sessionId)
+func (s *SokratesHandler) MultipleChoiceOptions(ctx context.Context) (*model.ThemedOptions, error) {
+	outCtx, cancel := s.outgoingCtx(ctx)
 	defer cancel()
 
 	var grpcResponse *v1.AggregatedOptions
 
 	err := s.MultiChoiceClient.CallWithReconnect(func(client *triakonta.MutpleChoiceClient) error {
 		var innerErr error
-		grpcResponse, innerErr = client.Options(multipleChoiceCtx, &v1.OptionsRequest{})
+		grpcResponse, innerErr = client.Options(outCtx, &koinosv1.OptionsRequest{})
 		return innerErr
 	})
 	if err != nil {

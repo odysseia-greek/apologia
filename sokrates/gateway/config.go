@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/odysseia-greek/agora/hesiodos"
 	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/apologia/alkibiades/strategos"
@@ -63,7 +64,7 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 	}
 
 	mediaClientAddress := config.StringFromEnv(config.EnvMediaClient, config.DefaultMediaAddress)
-	mediaClient, err := NewGenericGrpcClient[*hedone.MediaClient](
+	mediaClient, err := hesiodos.NewGenericGrpcClient[*hedone.MediaClient](
 		mediaClientAddress,
 		hedone.NewAristipposClient,
 	)
@@ -73,11 +74,11 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 
 	mediaClientHealthy := false
 	if mediaClient != nil {
-		mediaClientHealthy = mediaClient.client.WaitForHealthyState()
+		mediaClientHealthy = mediaClient.Client.WaitForHealthyState()
 	}
 
 	multipleChoiceClientAddress := config.StringFromEnv(config.EnvMultiChoiceClient, config.DefaultMultiChoiceAddress)
-	multipleChoiceClient, err := NewGenericGrpcClient[*triakonta.MutpleChoiceClient](
+	multipleChoiceClient, err := hesiodos.NewGenericGrpcClient[*triakonta.MutpleChoiceClient](
 		multipleChoiceClientAddress,
 		triakonta.NewKritiasClient,
 	)
@@ -87,11 +88,11 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 
 	multipleChoiceClientHealthy := false
 	if multipleChoiceClient != nil {
-		multipleChoiceClientHealthy = multipleChoiceClient.client.WaitForHealthyState()
+		multipleChoiceClientHealthy = multipleChoiceClient.Client.WaitForHealthyState()
 	}
 
 	authorBasedClientAddress := config.StringFromEnv(config.EnvAuthorBasedClient, config.DefaultAuthorBasedAddress)
-	authorBasedClient, err := NewGenericGrpcClient[*anabasis.AuthorBasedClient](
+	authorBasedClient, err := hesiodos.NewGenericGrpcClient[*anabasis.AuthorBasedClient](
 		authorBasedClientAddress,
 		anabasis.NewXenofonClient,
 	)
@@ -102,11 +103,11 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 
 	authorBasedClientHealthy := false
 	if authorBasedClient != nil {
-		authorBasedClientHealthy = authorBasedClient.client.WaitForHealthyState()
+		authorBasedClientHealthy = authorBasedClient.Client.WaitForHealthyState()
 	}
 
 	dialogueClientAddress := config.StringFromEnv(config.EnvDialogueClient, config.DefaultDialogueAddress)
-	dialogueClient, err := NewGenericGrpcClient[*philia.DialogueClient](
+	dialogueClient, err := hesiodos.NewGenericGrpcClient[*philia.DialogueClient](
 		dialogueClientAddress,
 		philia.NewKritonClient,
 	)
@@ -118,11 +119,11 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 
 	dialogueClientHealthy := false
 	if dialogueClient != nil {
-		dialogueClientHealthy = dialogueClient.client.WaitForHealthyState()
+		dialogueClientHealthy = dialogueClient.Client.WaitForHealthyState()
 	}
 
 	grammarClientAddress := config.StringFromEnv(config.EnvGrammarBasedClient, config.DefaultGrammarBasedAddress)
-	grammarClient, err := NewGenericGrpcClient[*kunismos.GrammarClient](
+	grammarClient, err := hesiodos.NewGenericGrpcClient[*kunismos.GrammarClient](
 		grammarClientAddress,
 		kunismos.NewAntisthenesClient,
 	)
@@ -133,11 +134,11 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 
 	grammarClientHealthy := false
 	if grammarClient != nil {
-		grammarClientHealthy = grammarClient.client.WaitForHealthyState()
+		grammarClientHealthy = grammarClient.Client.WaitForHealthyState()
 	}
 
 	journeyClientAddress := config.StringFromEnv(config.EnvJourneyClient, config.DefaultJourneyAddress)
-	journeyClient, err := NewGenericGrpcClient[*strategos.JourneyClient](
+	journeyClient, err := hesiodos.NewGenericGrpcClient[*strategos.JourneyClient](
 		journeyClientAddress,
 		strategos.NewAlkibiadesClient,
 	)
@@ -149,11 +150,11 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 
 	journeyClientHealthy := false
 	if journeyClient != nil {
-		journeyClientHealthy = journeyClient.client.WaitForHealthyState()
+		journeyClientHealthy = journeyClient.Client.WaitForHealthyState()
 	}
 
 	gathererClientAddress := config.StringFromEnv("ASPASIA_SERVICE", "aspasia:50060")
-	gathererClient, err := NewGenericGrpcClient[*rhetorike.GathererClient](
+	gathererClient, err := hesiodos.NewGenericGrpcClient[*rhetorike.GathererClient](
 		gathererClientAddress,
 		rhetorike.NewAspasiaClient,
 	)
@@ -165,7 +166,7 @@ func CreateNewConfig(ctx context.Context) (*SokratesHandler, error) {
 
 	gathererClientHealthy := false
 	if gathererClient != nil {
-		gathererClientHealthy = gathererClient.client.WaitForHealthyState()
+		gathererClientHealthy = gathererClient.Client.WaitForHealthyState()
 	}
 
 	elapsed := time.Since(start)
