@@ -174,8 +174,8 @@ github.com/odysseia-greek/apologia/antisthenes v0.1.3 h1:eEcLeoH0A0GhMOt5WwhU2R/
 github.com/odysseia-greek/apologia/antisthenes v0.1.3/go.mod h1:ACtT2k6ZPo4n+c1ZhyTViB1OK3dZ2tk6h9BP3kHfDqU=
 github.com/odysseia-greek/apologia/aristippos v0.1.3 h1:fBKVPNQzSqqbSqsENl8Wa5vh4mgeRf16lfL95Rhy7mA=
 github.com/odysseia-greek/apologia/aristippos v0.1.3/go.mod h1:y0tN81ZY+4w7QWpu4JEOrmqxh8gusZ6sAbdHbIsIb6s=
-github.com/odysseia-greek/apologia/aspasia v0.0.3 h1:5hdjXI16ZFKBSwhX8Vw/A2kJEB3gWdynJhf4360QavQ=
-github.com/odysseia-greek/apologia/aspasia v0.0.3/go.mod h1:5pHhIe776puVedTawNN94/VyT+Pwsy6r2QaJaMVwibE=
+github.com/odysseia-greek/apologia/aspasia v0.0.4 h1:1FRrIJwJ5D0qVMVAAnXcxh5K3Uw6CByfnqA1v78rcUI=
+github.com/odysseia-greek/apologia/aspasia v0.0.4/go.mod h1:9h//cAVioIdLTWM/e0ZUFrTk1+UrGM1IlB1Y3wADNTk=
 github.com/odysseia-greek/apologia/diotima v0.0.1-rho8 h1:MiHVTJFVyW9Uu19ggL2iPvDrWexHBlfsyF8w8+ZxUUA=
 github.com/odysseia-greek/apologia/diotima v0.0.1-rho8/go.mod h1:bEouTggeLIP0iIXHSxmQ9lA7la0vMBxLvn8+vbTqb8g=
 github.com/odysseia-greek/apologia/kritias v0.1.3 h1:X1LChtnFfUC1s1D13VtBrsZF3N3jf5XsRCWSDx9wkxU=

@@ -3,15 +3,15 @@ package rhetorike
 import (
 	"context"
 	"fmt"
+	"net"
+	"net/http"
 	"os"
 	"time"
 
 	"github.com/odysseia-greek/agora/archytas"
-	"github.com/odysseia-greek/agora/hesiodos"
 	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
 	aristophanes "github.com/odysseia-greek/attike/aristophanes/comedy"
-	"github.com/odysseia-greek/makedonia/antigonos/monophthalmus"
 )
 
 func CreateNewConfig(ctx context.Context) (*GathererServiceImpl, error) {
@@ -29,19 +29,8 @@ func CreateNewConfig(ctx context.Context) (*GathererServiceImpl, error) {
 		return nil, err
 	}
 
-	fuzzyClientAddress := config.StringFromEnv("ANTIGONOS_SERVICE", "antigonos.makedonia.svc.cluster.local:50060")
-	fuzzyClient, err := hesiodos.NewGenericGrpcClient[*monophthalmus.FuzzyClient](
-		fuzzyClientAddress,
-		monophthalmus.NewAntigonosClient,
-	)
-
 	if err != nil {
 		logging.Error(err.Error())
-	}
-
-	fuzzyClientHealthy := false
-	if fuzzyClient != nil {
-		fuzzyClientHealthy = fuzzyClient.Client.WaitForHealthyState()
 	}
 
 	tracer, err := aristophanes.NewClientTracer(aristophanes.DefaultAddress)
@@ -52,22 +41,45 @@ func CreateNewConfig(ctx context.Context) (*GathererServiceImpl, error) {
 	}
 
 	streamer, err := tracer.Chorus(ctx)
+	alexandrosGraphQLEndpoint := config.StringFromEnv("ALEXANDROS_GATEWAY", "http://alexandros.makedonia.svc:8080/alexandros/graphq")
+	tr := &http.Transport{
+		Proxy: http.ProxyFromEnvironment,
+
+		DialContext: (&net.Dialer{
+			Timeout:   3 * time.Second,
+			KeepAlive: 30 * time.Second,
+		}).DialContext,
+
+		ForceAttemptHTTP2:     true,
+		MaxIdleConns:          100,
+		MaxIdleConnsPerHost:   20,
+		IdleConnTimeout:       90 * time.Second,
+		TLSHandshakeTimeout:   3 * time.Second,
+		ExpectContinueTimeout: 1 * time.Second,
+		ResponseHeaderTimeout: 5 * time.Second,
+	}
+
+	httpClient := &http.Client{
+		Transport: tr,
+		Timeout:   10 * time.Second, // “hard cap” safety; ctx can be shorter
+	}
 
 	elapsed := time.Since(start)
 
 	logging.System(fmt.Sprintf(`Aspasia Configuration Overview:
 - Initialization Time: %s
-- Antigonos Service:   %v (Address: %s)
+- Alexandros Service:  %s
 `,
 		elapsed,
-		fuzzyClientHealthy, fuzzyClientAddress,
+		alexandrosGraphQLEndpoint,
 	))
 
 	return &GathererServiceImpl{
-		Archytas:    cache,
-		Version:     version,
-		Client:      client,
-		FuzzyClient: fuzzyClient,
-		Streamer:    streamer,
+		Archytas:          cache,
+		Version:           version,
+		Client:            client,
+		Streamer:          streamer,
+		GraphqlClient:     httpClient,
+		AlexandrosAddress: alexandrosGraphQLEndpoint,
 	}, nil
 }

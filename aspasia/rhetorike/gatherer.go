@@ -1,9 +1,12 @@
 package rhetorike
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
+	"net/http"
 	"strings"
 	"time"
 
@@ -14,9 +17,6 @@ import (
 	v1 "github.com/odysseia-greek/apologia/aspasia/gen/go/v1"
 	"github.com/odysseia-greek/attike/aristophanes/comedy"
 	arv1 "github.com/odysseia-greek/attike/aristophanes/gen/go/v1"
-	antigonosv1 "github.com/odysseia-greek/makedonia/antigonos/gen/go/v1"
-	"github.com/odysseia-greek/makedonia/antigonos/monophthalmus"
-	koinos "github.com/odysseia-greek/makedonia/filippos/gen/go/koinos/v1"
 	"golang.org/x/sync/errgroup"
 	"google.golang.org/grpc/metadata"
 )
@@ -52,7 +52,7 @@ func (g *GathererServiceImpl) Search(ctx context.Context, request *v1.ExtendedSe
 
 	eg.Go(func() error {
 		var err error
-		dictionaryResults, err = g.gatherSimilarWords(egCtx, request.Word, requestId)
+		dictionaryResults, err = g.gatherSimilarWords(egCtx, request.Word)
 		return err
 	})
 
@@ -74,79 +74,133 @@ func (g *GathererServiceImpl) Search(ctx context.Context, request *v1.ExtendedSe
 	return analyseResult, nil
 }
 
-func (g *GathererServiceImpl) gatherSimilarWords(
-	ctx context.Context,
-	word, requestId string,
-) ([]*v1.SimilarWords, error) {
+func (g *GathererServiceImpl) gatherSimilarWords(ctx context.Context, word string) ([]*v1.SimilarWords, error) {
 	var similarWords []*v1.SimilarWords
 
-	antigonosSpan := &arv1.ObserveRequest{
+	// ---- tracing: start action span
+	alexandrosSpan := &arv1.ObserveRequest{
 		Kind: &arv1.ObserveRequest_Action{Action: &arv1.ObserveAction{
-			Action: "analyseText",
-			Status: fmt.Sprintf("querying Antigonos for word: %s", word),
+			Action: "gatherSimilarWords",
+			Status: fmt.Sprintf("querying Alexandros fuzzy for word: %s", word),
 		}},
 	}
+	// This should set TraceId / ParentSpanId / SpanId using ctx (your helper)
+	comedy.ServiceToServiceSpanWithCtx(ctx, alexandrosSpan, g.Streamer)
 
-	fuzzyClientCtx, cancel := createRequestHeader(ctx, requestId, "")
-	defer cancel()
+	start := time.Now()
+	defer func() {
+		// close span as action (or TraceHopStop if you prefer)
+		if g.Streamer != nil {
+			_ = g.Streamer.Send(&arv1.ObserveRequest{
+				TraceId:      alexandrosSpan.TraceId,
+				ParentSpanId: alexandrosSpan.SpanId,
+				SpanId:       comedy.GenerateSpanID(),
+				Kind: &arv1.ObserveRequest_Action{
+					Action: &arv1.ObserveAction{
+						Action: "CloseSpan",
+						Status: "alexandros fuzzy finished",
+						TookMs: time.Since(start).Milliseconds(),
+					},
+				},
+			})
+		}
+	}()
 
-	comedy.ServiceToServiceSpanWithCtx(ctx, antigonosSpan, g.Streamer)
-
-	request := &koinos.SearchQuery{
-		Word:            word,
-		Language:        koinos.Language_LANG_GREEK,
-		NumberOfResults: 10, // we search for 10 words so we can return at least 5 results
+	// ---- build GraphQL request
+	body := gqlReq{
+		Query: fuzzyMiniQuery,
+		Variables: map[string]any{
+			"input": map[string]any{
+				"word": word,
+				"size": 20, // ask more than we need; we’ll trim to 5 after filtering
+			},
+		},
 	}
 
-	var grpcResponse *antigonosv1.SearchResponse
-
-	err := g.FuzzyClient.CallWithReconnect(func(client *monophthalmus.FuzzyClient) error {
-		var innerErr error
-		grpcResponse, innerErr = client.Search(fuzzyClientCtx, request)
-		return innerErr
-	})
+	b, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 
-	// Precompute normalized form of the requested word
-	targetNorm := g.normalizeGreekWithArticle(word)
+	// ---- make HTTP request
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, g.AlexandrosAddress, bytes.NewReader(b))
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Content-Type", "application/json")
 
-	for _, result := range grpcResponse.Results {
+	if rid, _ := ctx.Value(config.HeaderKey).(string); rid != "" {
+		req.Header.Set(config.HeaderKey, rid)
+	}
+	if sid, _ := ctx.Value(config.SessionIdKey).(string); sid != "" {
+		req.Header.Set(config.SessionIdKey, sid)
+	}
+
+	client := g.GraphqlClient
+	if client == nil {
+		client = &http.Client{Timeout: 10 * time.Second}
+	}
+
+	res, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+
+	raw, err := io.ReadAll(res.Body)
+	if err != nil {
+		return nil, err
+	}
+	if res.StatusCode < 200 || res.StatusCode >= 300 {
+		return nil, fmt.Errorf("alexandros fuzzy http %d: %s", res.StatusCode, string(raw))
+	}
+
+	var parsed alexandrosFuzzyResp
+	if err := json.Unmarshal(raw, &parsed); err != nil {
+		return nil, err
+	}
+	if len(parsed.Errors) > 0 {
+		return nil, fmt.Errorf("alexandros fuzzy gql error: %s", parsed.Errors[0].Message)
+	}
+
+	// ---- filter / dedupe / trim to 5
+	targetNorm := g.normalizeGreekWithArticle(word)
+	seen := make(map[string]struct{}, 16)
+
+	for _, r := range parsed.Data.Fuzzy.Results {
 		if len(similarWords) >= 5 {
 			break
 		}
+		if r.Headword == "" {
+			continue
+		}
 
-		// Normalize headword and skip if it's effectively the same as the input.
-		headwordNorm := g.normalizeGreekWithArticle(result.Headword)
+		headwordNorm := g.normalizeGreekWithArticle(r.Headword)
+
+		// skip identical to query word
 		if headwordNorm == targetNorm {
 			continue
 		}
 
-		// avoid duplicates if Antigonos returns both "λόγος" and "ὁ λόγος").
-		duplicate := false
-		for _, existing := range similarWords {
-			if g.normalizeGreekWithArticle(existing.Greek) == headwordNorm {
-				duplicate = true
-				break
-			}
-		}
-		if duplicate {
+		// skip duplicates (handles "λόγος" vs "ὁ λόγος" etc)
+		if _, ok := seen[headwordNorm]; ok {
 			continue
 		}
+		seen[headwordNorm] = struct{}{}
 
-		similarWord := v1.SimilarWords{
-			Greek: result.Headword,
+		sw := &v1.SimilarWords{
+			Greek: r.Headword,
 		}
 
-		for _, gloss := range result.QuickGlosses {
-			if gloss.Language == "en" {
-				similarWord.English = gloss.Gloss
+		// pick english quick gloss if present
+		for _, qg := range r.QuickGlosses {
+			if qg.Language == "en" {
+				sw.English = qg.Gloss
 				break
 			}
 		}
 
-		similarWords = append(similarWords, &similarWord)
+		similarWords = append(similarWords, sw)
 	}
 
 	return similarWords, nil

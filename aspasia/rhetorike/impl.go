@@ -3,14 +3,13 @@ package rhetorike
 import (
 	"context"
 	"fmt"
+	"net/http"
 	"time"
 
 	"github.com/odysseia-greek/agora/archytas"
-	"github.com/odysseia-greek/agora/hesiodos"
 	"github.com/odysseia-greek/agora/plato/service"
 	v1 "github.com/odysseia-greek/apologia/aspasia/gen/go/v1"
 	arv1 "github.com/odysseia-greek/attike/aristophanes/gen/go/v1"
-	"github.com/odysseia-greek/makedonia/antigonos/monophthalmus"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
@@ -25,11 +24,12 @@ const (
 )
 
 type GathererServiceImpl struct {
-	Version     string
-	Archytas    archytas.Client
-	Client      service.OdysseiaClient
-	FuzzyClient *hesiodos.GenericGrpcClient[*monophthalmus.FuzzyClient]
-	Streamer    arv1.TraceService_ChorusClient
+	Version           string
+	AlexandrosAddress string
+	GraphqlClient     *http.Client
+	Archytas          archytas.Client
+	Client            service.OdysseiaClient
+	Streamer          arv1.TraceService_ChorusClient
 	v1.UnimplementedAspasiaServiceServer
 }
 
