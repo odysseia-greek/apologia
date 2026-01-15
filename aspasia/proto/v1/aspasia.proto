@@ -4,13 +4,10 @@ package aspasia.v1;
 option go_package = "github.com/odysseia-greek/apologia/aspasia/gen/go/v1;aspasiav1";
 
 import "google/protobuf/empty.proto";
-import "koinos/v1/health.proto";
 
 service AspasiaService {
-  rpc Health (koinos.v1.HealthRequest) returns (koinos.v1.HealthResponse) {};
   rpc Search(ExtendedSearch) returns (ExtendedSearchResponse);
 }
-
 
 message ExtendedSearch {
   string word = 1;        // e.g., "Ἀθηναῖος"

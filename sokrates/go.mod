@@ -7,14 +7,14 @@ require (
 	github.com/gorilla/mux v1.8.1
 	github.com/odysseia-greek/agora/hesiodos v0.1.1
 	github.com/odysseia-greek/agora/plato v0.2.12
-	github.com/odysseia-greek/apologia/alkibiades v0.1.2
+	github.com/odysseia-greek/apologia/alkibiades v0.1.3
 	github.com/odysseia-greek/apologia/antisthenes v0.1.3
 	github.com/odysseia-greek/apologia/aristippos v0.1.3
 	github.com/odysseia-greek/apologia/aspasia v0.0.3
 	github.com/odysseia-greek/apologia/diotima v0.0.1-rho8
 	github.com/odysseia-greek/apologia/kritias v0.1.3
 	github.com/odysseia-greek/apologia/kriton v0.1.2
-	github.com/odysseia-greek/apologia/xenofon v0.1.2
+	github.com/odysseia-greek/apologia/xenofon v0.1.3
 	github.com/odysseia-greek/attike/aristophanes v0.7.0-rho8
 	github.com/vektah/gqlparser/v2 v2.5.31
 	google.golang.org/grpc v1.78.0
