@@ -5,16 +5,18 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"math/rand/v2"
+	"time"
+
 	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/models"
 	koinosv1 "github.com/odysseia-greek/apologia/diotima/gen/go/koinos/v1"
 	v1 "github.com/odysseia-greek/apologia/xenofon/gen/go/v1"
+	"github.com/odysseia-greek/attike/aristophanes/comedy"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
-	"math/rand/v2"
-	"time"
 )
 
 const (
@@ -98,7 +100,7 @@ func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *v1.Creat
 			return nil, err
 		}
 
-		go cacheSpan(string(cacheItem), segmentKey, ctx)
+		go comedy.CacheSpan(string(cacheItem), segmentKey, ctx, a.Streamer)
 	} else {
 		mustQuery := []map[string]string{
 			{
@@ -128,7 +130,7 @@ func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *v1.Creat
 			return nil, err
 		}
 
-		go databaseSpan(elasticResponse, query, ctx)
+		go comedy.DatabaseSpan(query, elasticResponse.Hits.Total.Value, elasticResponse.Took, ctx, a.Streamer)
 
 		err = a.Archytas.Set(segmentKey, string(source))
 		if err != nil {
@@ -280,7 +282,7 @@ func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *v1.Creat
 	if sessionId != "" {
 		progressList, _ := a.Progress.GetProgressForSegment(sessionId, segmentKey, int(request.DoneAfter))
 		for word, p := range progressList {
-			authorQuiz.Progress = append(authorQuiz.Progress, &v1.ProgressEntry{
+			authorQuiz.Progress = append(authorQuiz.Progress, &koinosv1.ProgressEntry{
 				Greek:          word,
 				Translation:    p.Translation,
 				PlayCount:      int32(p.PlayCount),
@@ -314,7 +316,7 @@ func (a *AuthorBasedServiceImpl) Answer(ctx context.Context, request *v1.AnswerR
 			return nil, err
 		}
 
-		go cacheSpan(string(cacheItem), segmentKey, ctx)
+		go comedy.CacheSpan(string(cacheItem), segmentKey, ctx, a.Streamer)
 	} else {
 		mustQuery := []map[string]string{
 			{
@@ -337,7 +339,7 @@ func (a *AuthorBasedServiceImpl) Answer(ctx context.Context, request *v1.AnswerR
 			return nil, fmt.Errorf("no hits found in Elastic")
 		}
 
-		go databaseSpan(elasticResponse, query, ctx)
+		go comedy.DatabaseSpan(query, elasticResponse.Hits.Total.Value, elasticResponse.Took, ctx, a.Streamer)
 
 		source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
 		err = json.Unmarshal(source, &option)
@@ -366,7 +368,7 @@ func (a *AuthorBasedServiceImpl) Answer(ctx context.Context, request *v1.AnswerR
 		progressList, finished := a.Progress.GetProgressForSegment(sessionId, segmentKey, int(request.DoneAfter))
 		answer.Finished = finished
 		for word, p := range progressList {
-			answer.Progress = append(answer.Progress, &v1.ProgressEntry{
+			answer.Progress = append(answer.Progress, &koinosv1.ProgressEntry{
 				Greek:          word,
 				Translation:    p.Translation,
 				PlayCount:      int32(p.PlayCount),
@@ -397,7 +399,7 @@ func (a *AuthorBasedServiceImpl) WordForms(ctx context.Context, request *v1.Word
 			return nil, err
 		}
 
-		go cacheSpan(string(cacheItem), segmentKey, ctx)
+		go comedy.CacheSpan(string(cacheItem), segmentKey, ctx, a.Streamer)
 	} else {
 		mustQuery := []map[string]string{
 			{
@@ -420,7 +422,7 @@ func (a *AuthorBasedServiceImpl) WordForms(ctx context.Context, request *v1.Word
 			return nil, fmt.Errorf("no hits found in Elastic")
 		}
 
-		go databaseSpan(elasticResponse, query, ctx)
+		go comedy.DatabaseSpan(query, elasticResponse.Hits.Total.Value, elasticResponse.Took, ctx, a.Streamer)
 
 		source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
 		err = json.Unmarshal(source, &option)

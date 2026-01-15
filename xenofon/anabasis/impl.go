@@ -19,7 +19,7 @@ import (
 
 type AuthorBasedService interface {
 	WaitForHealthyState() bool
-	Options(ctx context.Context, request *koinosv1.OptionsRequest) (*koinosv1.AggregatedOptions, error)
+	Options(ctx context.Context, request *koinosv1.OptionsRequest) (*v1.AggregatedOptions, error)
 	Question(ctx context.Context, request *v1.CreationRequest) (*v1.QuizResponse, error)
 	Answer(ctx context.Context, request *v1.AnswerRequest) (*v1.AnswerResponse, error)
 	WordForms(ctx context.Context, request *v1.WordFormRequest) (*v1.WordFormRequest, error)
