@@ -166,8 +166,7 @@ github.com/odysseia-greek/agora/eupalinos v0.2.7 h1:9hkbj7MtGXh4SvtPHqP7Ro0XTj5E
 github.com/odysseia-greek/agora/eupalinos v0.2.7/go.mod h1:fl96Ggm6I7DjFB+DDNeo9R4IgXRPZbBmT1h+c/0r8nE=
 github.com/odysseia-greek/agora/hesiodos v0.1.1 h1:+3o+4Yvvq39hoJ+Z9rneeD7sJIiHyT+mGAMitu49duc=
 github.com/odysseia-greek/agora/hesiodos v0.1.1/go.mod h1:HR/ElUBEzkc0LR2ChtZLo6IlFO0mP8MF36/h3LMGR8o=
-github.com/odysseia-greek/agora/plato v0.2.12 h1:hxZ8wr38lskNSaUlgWPgwaMEFXFbUuP2QUttY5owYew=
-github.com/odysseia-greek/agora/plato v0.2.12/go.mod h1:8Y89JmcuT7XH9OHi9aIxTu8BXZNV/C4QbWdlfWuzm0E=
+github.com/odysseia-greek/agora/plato v0.2.16 h1:FUb51WxE1NThsj9DUroaCIx53VVLaOdL0QGxWg6Jgto=
 github.com/odysseia-greek/agora/plato v0.2.16/go.mod h1:8Y89JmcuT7XH9OHi9aIxTu8BXZNV/C4QbWdlfWuzm0E=
 github.com/odysseia-greek/apologia/alkibiades v0.1.3 h1:U5xM3YYI6DMYTc7p2ZCgHSVy6WdoPjegnq5ovdmmc04=
 github.com/odysseia-greek/apologia/alkibiades v0.1.3/go.mod h1:yvVjRXI7mmY153OPF4FpXU0YVCStc2Crh1WhVsRKoDk=
@@ -177,8 +176,8 @@ github.com/odysseia-greek/apologia/aristippos v0.1.3 h1:fBKVPNQzSqqbSqsENl8Wa5vh
 github.com/odysseia-greek/apologia/aristippos v0.1.3/go.mod h1:y0tN81ZY+4w7QWpu4JEOrmqxh8gusZ6sAbdHbIsIb6s=
 github.com/odysseia-greek/apologia/aspasia v0.0.5 h1:VPZ5ZUMLlTPhd2PJgsdc6qeHbx6M5GyA2WO+AWeS8u8=
 github.com/odysseia-greek/apologia/aspasia v0.0.5/go.mod h1:lJOS9GZtCOiyNv4RxtsJvJFMOmIfZMu1nO9l276cMuI=
-github.com/odysseia-greek/apologia/diotima v0.0.1-rho8 h1:MiHVTJFVyW9Uu19ggL2iPvDrWexHBlfsyF8w8+ZxUUA=
-github.com/odysseia-greek/apologia/diotima v0.0.1-rho8/go.mod h1:bEouTggeLIP0iIXHSxmQ9lA7la0vMBxLvn8+vbTqb8g=
+github.com/odysseia-greek/apologia/diotima v0.0.1 h1:T9kX9sxoXGY40iRFpa0Xh4MZIShxT6/QjdA4wF/zckw=
+github.com/odysseia-greek/apologia/diotima v0.0.1/go.mod h1:bEouTggeLIP0iIXHSxmQ9lA7la0vMBxLvn8+vbTqb8g=
 github.com/odysseia-greek/apologia/kritias v0.1.3 h1:X1LChtnFfUC1s1D13VtBrsZF3N3jf5XsRCWSDx9wkxU=
 github.com/odysseia-greek/apologia/kritias v0.1.3/go.mod h1:b7De0ayiGufA5yCzgaWw0crraSyO7Yya28OYny01tCQ=
 github.com/odysseia-greek/apologia/kriton v0.1.2 h1:L/qJ/seCEZ8VNBbjA8SYPWraZFVoSPUaFCjiRSO2mdY=

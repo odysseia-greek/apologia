@@ -11,7 +11,7 @@ require (
 	github.com/odysseia-greek/apologia/antisthenes v0.1.3
 	github.com/odysseia-greek/apologia/aristippos v0.1.3
 	github.com/odysseia-greek/apologia/aspasia v0.0.5
-	github.com/odysseia-greek/apologia/diotima v0.0.1-rho8
+	github.com/odysseia-greek/apologia/diotima v0.0.1
 	github.com/odysseia-greek/apologia/kritias v0.1.3
 	github.com/odysseia-greek/apologia/kriton v0.1.2
 	github.com/odysseia-greek/apologia/xenofon v0.1.3
