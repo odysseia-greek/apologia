@@ -40,6 +40,9 @@ func InitRoutes(handlerConfig *gateway.SokratesHandler) *mux.Router {
 	serveMux.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
 		writeHealthResponse(w)
 	})
+	serveMux.HandleFunc("/sokrates/v1/ping", func(w http.ResponseWriter, r *http.Request) {
+		writeHealthResponse(w)
+	})
 
 	return serveMux
 }

@@ -4,7 +4,7 @@ spectaql:
 
 introspection:
   removeTrailingPeriodFromDescriptions: false
-  url: http://k3d-odysseia.greek:8080/sokrates/graphql
+  url: http://byzantium.odysseia-greek:4900/sokrates/graphql
   queryNameStrategy: capitalizeFirst
   fieldExpansionDepth: 3
 
@@ -27,11 +27,10 @@ info:
         https://github.com/odysseia-greek/apologia/sokrates
         https://github.com/anvilco/spectaql
 
-
 servers:
-  - url: http://k3d-odysseia.greek:8080/sokrates/graphql
-    description: k3d
+  - url: http://byzantium.odysseia-greek:4900/sokrates/graphql
+    description: romaioi
     production: false
   - url: https://odysseia-greek.com/sokrates/graphql
-    description: Production
+    description: production
     production: true

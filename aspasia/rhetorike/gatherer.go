@@ -24,7 +24,10 @@ import (
 func (g *GathererServiceImpl) Search(ctx context.Context, request *v1.ExtendedSearch) (*v1.ExtendedSearchResponse, error) {
 	requestId := CurrentRequestID(ctx, config.DefaultTracingName, service.HeaderKey)
 
+	cleanWord := parseWordIntoParts(request.Word)
 	analyseResult := &v1.ExtendedSearchResponse{}
+
+	request.Word = cleanWord
 
 	cacheItem, _ := g.Archytas.Read(request.Word)
 	if cacheItem != nil {
@@ -52,7 +55,7 @@ func (g *GathererServiceImpl) Search(ctx context.Context, request *v1.ExtendedSe
 
 	eg.Go(func() error {
 		var err error
-		dictionaryResults, err = g.gatherSimilarWords(egCtx, request.Word)
+		dictionaryResults, err = g.gatherSimilarWords(egCtx, request.Word, requestId)
 		return err
 	})
 
@@ -74,7 +77,7 @@ func (g *GathererServiceImpl) Search(ctx context.Context, request *v1.ExtendedSe
 	return analyseResult, nil
 }
 
-func (g *GathererServiceImpl) gatherSimilarWords(ctx context.Context, word string) ([]*v1.SimilarWords, error) {
+func (g *GathererServiceImpl) gatherSimilarWords(ctx context.Context, word, requestId string) ([]*v1.SimilarWords, error) {
 	var similarWords []*v1.SimilarWords
 
 	// ---- tracing: start action span
@@ -128,13 +131,7 @@ func (g *GathererServiceImpl) gatherSimilarWords(ctx context.Context, word strin
 		return nil, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-
-	if rid, _ := ctx.Value(config.HeaderKey).(string); rid != "" {
-		req.Header.Set(config.HeaderKey, rid)
-	}
-	if sid, _ := ctx.Value(config.SessionIdKey).(string); sid != "" {
-		req.Header.Set(config.SessionIdKey, sid)
-	}
+	req.Header.Set(config.HeaderKey, requestId)
 
 	client := g.GraphqlClient
 	if client == nil {
@@ -202,6 +199,8 @@ func (g *GathererServiceImpl) gatherSimilarWords(ctx context.Context, word strin
 
 		similarWords = append(similarWords, sw)
 	}
+
+	logging.Debug(fmt.Sprintf("found in alexandros: %s number of results: %d", word, len(similarWords)))
 
 	return similarWords, nil
 }
@@ -310,4 +309,28 @@ func CurrentRequestID(ctx context.Context, ctxKey any, headerKey string) string 
 		}
 	}
 	return ""
+}
+
+func parseWordIntoParts(word string) string {
+	word = strings.TrimSpace(word)
+
+	// Split on whitespace
+	parts := strings.Fields(word)
+	if len(parts) <= 1 {
+		return word
+	}
+
+	// Known Greek articles (with and without accents)
+	articles := map[string]struct{}{
+		"ὁ": {}, "ἡ": {}, "τό": {}, "τὸ": {},
+		"οἱ": {}, "αἱ": {}, "τά": {}, "τὰ": {},
+	}
+
+	// If first part is an article, return the rest
+	if _, ok := articles[parts[0]]; ok {
+		return strings.Join(parts[1:], " ")
+	}
+
+	// Fallback: return last part (safer than first)
+	return parts[len(parts)-1]
 }

@@ -51,9 +51,11 @@ func LogRequestDetails(tracer arv1.TraceService_ChorusClient) Adapter {
 			sessionId := r.Header.Get(config.SessionIdKey)
 
 			trace := comedy.TraceBareFromString(requestId)
+
 			// If this request isn't being traced, just pass through.
 			if trace.TraceId == "" || trace.SpanId == "" || !trace.Save {
-				f.ServeHTTP(w, r)
+				ctx := context.WithValue(r.Context(), config.SessionIdKey, sessionId)
+				f.ServeHTTP(w, r.WithContext(ctx))
 				return
 			}
 
@@ -148,13 +150,10 @@ func LogRequestDetails(tracer arv1.TraceService_ChorusClient) Adapter {
 				status = http.StatusOK
 			}
 
-			// Emit close-hop (TRACE_HOP_STOP) for the GraphQL span
-			// ParentSpanId should be the span we are closing (graphqlSpan),
-			// and SpanId should be a fresh span id for the stop event itself.
 			stop := &arv1.ObserveRequest{
 				TraceId:      trace.TraceId,
-				ParentSpanId: graphqlSpan,
-				SpanId:       comedy.GenerateSpanID(),
+				ParentSpanId: parentSpan,  // same parent as start
+				SpanId:       graphqlSpan, // same span as start
 				Kind: &arv1.ObserveRequest_TraceHopStop{
 					TraceHopStop: &arv1.ObserveTraceHopStop{
 						ResponseCode: int32(status),      // HTTP code

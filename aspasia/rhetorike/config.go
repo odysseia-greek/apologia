@@ -41,7 +41,7 @@ func CreateNewConfig(ctx context.Context) (*GathererServiceImpl, error) {
 	}
 
 	streamer, err := tracer.Chorus(ctx)
-	alexandrosGraphQLEndpoint := config.StringFromEnv("ALEXANDROS_GATEWAY", "http://alexandros.makedonia.svc:8080/alexandros/graphq")
+	alexandrosGraphQLEndpoint := config.StringFromEnv("ALEXANDROS_GATEWAY", "http://alexandros.makedonia.svc:8080/alexandros/graphql")
 	tr := &http.Transport{
 		Proxy: http.ProxyFromEnvironment,
 

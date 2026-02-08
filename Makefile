@@ -59,21 +59,23 @@ generate-buf:
 		$(BUF) generate --template "$$dir/buf.gen.yaml" "$$dir"; \
 	)
 .PHONY: docs
-docs: docs-proto spectaql
+docs: docs-grpc spectaql
 
-.PHONY: docs-proto
-docs-proto:
-	$(call for_each_dir,$(PROTO_DIRS), \
-		echo "Generating docs in $$dir..."; \
-		$(DOCKER) run --rm \
-			-v "$$PWD/$$dir/docs:/out" \
-			-v "$$PWD/$$dir/proto:/protos" \
-			$(PROTO_DOC_IMAGE) --doc_opt=html,docs.html; \
-		$(DOCKER) run --rm \
-			-v "$$PWD/$$dir/docs:/out" \
-			-v "$$PWD/$$dir/proto:/protos" \
-			$(PROTO_DOC_IMAGE) --doc_opt=markdown,docs.md; \
-	)
+.PHONY: tools
+tools: $(PROTOC_GEN_DOC)
+
+$(PROTOC_GEN_DOC):
+	@mkdir -p $(TOOLS_DIR)
+	@echo "Installing protoc-gen-doc..."
+	@GOBIN=$(TOOLS_DIR) go install github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc@latest
+
+
+.PHONY: docs-grpc
+docs-grpc: tools
+	@for dir in $(PROTO_DIRS); do \
+		echo "Generating gRPC docs in $$dir..."; \
+		PATH=$(TOOLS_DIR):$$PATH buf generate --template $$dir/buf.gen.docs.yaml $$dir; \
+	done
 
 .PHONY: spectaql
 spectaql:

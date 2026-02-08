@@ -3,41 +3,37 @@
 
 ## Table of Contents
 
-- [alkibiades.proto](#alkibiades-proto)
-    - [AggregatedOptions](#apologia_alkibiades-AggregatedOptions)
-    - [Coordinates](#apologia_alkibiades-Coordinates)
-    - [CreationRequest](#apologia_alkibiades-CreationRequest)
-    - [DatabaseHealth](#apologia_alkibiades-DatabaseHealth)
-    - [HealthRequest](#apologia_alkibiades-HealthRequest)
-    - [HealthResponse](#apologia_alkibiades-HealthResponse)
-    - [Intro](#apologia_alkibiades-Intro)
-    - [MatchPair](#apologia_alkibiades-MatchPair)
-    - [MatchQuiz](#apologia_alkibiades-MatchQuiz)
-    - [MediaDropQuiz](#apologia_alkibiades-MediaDropQuiz)
-    - [MediaEntry](#apologia_alkibiades-MediaEntry)
-    - [OptionsRequest](#apologia_alkibiades-OptionsRequest)
-    - [QuizResponse](#apologia_alkibiades-QuizResponse)
-    - [QuizStep](#apologia_alkibiades-QuizStep)
-    - [Segments](#apologia_alkibiades-Segments)
-    - [StructureQuiz](#apologia_alkibiades-StructureQuiz)
-    - [Theme](#apologia_alkibiades-Theme)
-    - [TranslationStep](#apologia_alkibiades-TranslationStep)
-    - [TriviaQuiz](#apologia_alkibiades-TriviaQuiz)
+- [v1/alkibiades.proto](#v1_alkibiades-proto)
+    - [AggregatedOptions](#alkibiades-v1-AggregatedOptions)
+    - [Coordinates](#alkibiades-v1-Coordinates)
+    - [CreationRequest](#alkibiades-v1-CreationRequest)
+    - [Intro](#alkibiades-v1-Intro)
+    - [MatchPair](#alkibiades-v1-MatchPair)
+    - [MatchQuiz](#alkibiades-v1-MatchQuiz)
+    - [MediaDropQuiz](#alkibiades-v1-MediaDropQuiz)
+    - [MediaEntry](#alkibiades-v1-MediaEntry)
+    - [QuizResponse](#alkibiades-v1-QuizResponse)
+    - [QuizStep](#alkibiades-v1-QuizStep)
+    - [Segments](#alkibiades-v1-Segments)
+    - [StructureQuiz](#alkibiades-v1-StructureQuiz)
+    - [Theme](#alkibiades-v1-Theme)
+    - [TranslationStep](#alkibiades-v1-TranslationStep)
+    - [TriviaQuiz](#alkibiades-v1-TriviaQuiz)
   
-    - [Alkibiades](#apologia_alkibiades-Alkibiades)
+    - [Alkibiades](#alkibiades-v1-Alkibiades)
   
 - [Scalar Value Types](#scalar-value-types)
 
 
 
-<a name="alkibiades-proto"></a>
+<a name="v1_alkibiades-proto"></a>
 <p align="right"><a href="#top">Top</a></p>
 
-## alkibiades.proto
+## v1/alkibiades.proto
 
 
 
-<a name="apologia_alkibiades-AggregatedOptions"></a>
+<a name="alkibiades-v1-AggregatedOptions"></a>
 
 ### AggregatedOptions
 
@@ -45,14 +41,14 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| themes | [Theme](#apologia_alkibiades-Theme) | repeated |  |
+| themes | [Theme](#alkibiades-v1-Theme) | repeated |  |
 
 
 
 
 
 
-<a name="apologia_alkibiades-Coordinates"></a>
+<a name="alkibiades-v1-Coordinates"></a>
 
 ### Coordinates
 
@@ -68,7 +64,7 @@
 
 
 
-<a name="apologia_alkibiades-CreationRequest"></a>
+<a name="alkibiades-v1-CreationRequest"></a>
 
 ### CreationRequest
 
@@ -84,53 +80,7 @@
 
 
 
-<a name="apologia_alkibiades-DatabaseHealth"></a>
-
-### DatabaseHealth
-Nested message for database health details
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| healthy | [bool](#bool) |  |  |
-| cluster_name | [string](#string) |  |  |
-| server_name | [string](#string) |  |  |
-| server_version | [string](#string) |  |  |
-
-
-
-
-
-
-<a name="apologia_alkibiades-HealthRequest"></a>
-
-### HealthRequest
-Empty request messages since these endpoints require no body
-
-
-
-
-
-
-<a name="apologia_alkibiades-HealthResponse"></a>
-
-### HealthResponse
-Response message for health check
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| healthy | [bool](#bool) |  |  |
-| time | [string](#string) |  |  |
-| version | [string](#string) |  |  |
-| database_health | [DatabaseHealth](#apologia_alkibiades-DatabaseHealth) |  |  |
-
-
-
-
-
-
-<a name="apologia_alkibiades-Intro"></a>
+<a name="alkibiades-v1-Intro"></a>
 
 ### Intro
 
@@ -147,7 +97,7 @@ Response message for health check
 
 
 
-<a name="apologia_alkibiades-MatchPair"></a>
+<a name="alkibiades-v1-MatchPair"></a>
 
 ### MatchPair
 
@@ -163,7 +113,7 @@ Response message for health check
 
 
 
-<a name="apologia_alkibiades-MatchQuiz"></a>
+<a name="alkibiades-v1-MatchQuiz"></a>
 
 ### MatchQuiz
 
@@ -172,14 +122,14 @@ Response message for health check
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | instruction | [string](#string) |  |  |
-| pairs | [MatchPair](#apologia_alkibiades-MatchPair) | repeated |  |
+| pairs | [MatchPair](#alkibiades-v1-MatchPair) | repeated |  |
 
 
 
 
 
 
-<a name="apologia_alkibiades-MediaDropQuiz"></a>
+<a name="alkibiades-v1-MediaDropQuiz"></a>
 
 ### MediaDropQuiz
 
@@ -188,14 +138,14 @@ Response message for health check
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | instruction | [string](#string) |  |  |
-| mediaFiles | [MediaEntry](#apologia_alkibiades-MediaEntry) | repeated |  |
+| mediaFiles | [MediaEntry](#alkibiades-v1-MediaEntry) | repeated |  |
 
 
 
 
 
 
-<a name="apologia_alkibiades-MediaEntry"></a>
+<a name="alkibiades-v1-MediaEntry"></a>
 
 ### MediaEntry
 
@@ -211,17 +161,7 @@ Response message for health check
 
 
 
-<a name="apologia_alkibiades-OptionsRequest"></a>
-
-### OptionsRequest
-
-
-
-
-
-
-
-<a name="apologia_alkibiades-QuizResponse"></a>
+<a name="alkibiades-v1-QuizResponse"></a>
 
 ### QuizResponse
 
@@ -235,15 +175,15 @@ Response message for health check
 | sentence | [string](#string) |  | Full Greek sentence |
 | translation | [string](#string) |  | English translation |
 | contextNote | [string](#string) |  | Informational text about the passage |
-| intro | [Intro](#apologia_alkibiades-Intro) |  |  |
-| quiz | [QuizStep](#apologia_alkibiades-QuizStep) | repeated | Quiz is polymorphic — see below |
+| intro | [Intro](#alkibiades-v1-Intro) |  |  |
+| quiz | [QuizStep](#alkibiades-v1-QuizStep) | repeated | Quiz is polymorphic — see below |
 
 
 
 
 
 
-<a name="apologia_alkibiades-QuizStep"></a>
+<a name="alkibiades-v1-QuizStep"></a>
 
 ### QuizStep
 
@@ -251,18 +191,18 @@ Response message for health check
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| match | [MatchQuiz](#apologia_alkibiades-MatchQuiz) |  |  |
-| trivia | [TriviaQuiz](#apologia_alkibiades-TriviaQuiz) |  |  |
-| structure | [StructureQuiz](#apologia_alkibiades-StructureQuiz) |  |  |
-| media | [MediaDropQuiz](#apologia_alkibiades-MediaDropQuiz) |  |  |
-| final_translation | [TranslationStep](#apologia_alkibiades-TranslationStep) |  |  |
+| match | [MatchQuiz](#alkibiades-v1-MatchQuiz) |  |  |
+| trivia | [TriviaQuiz](#alkibiades-v1-TriviaQuiz) |  |  |
+| structure | [StructureQuiz](#alkibiades-v1-StructureQuiz) |  |  |
+| media | [MediaDropQuiz](#alkibiades-v1-MediaDropQuiz) |  |  |
+| final_translation | [TranslationStep](#alkibiades-v1-TranslationStep) |  |  |
 
 
 
 
 
 
-<a name="apologia_alkibiades-Segments"></a>
+<a name="alkibiades-v1-Segments"></a>
 
 ### Segments
 
@@ -273,14 +213,14 @@ Response message for health check
 | name | [string](#string) |  |  |
 | number | [int32](#int32) |  |  |
 | location | [string](#string) |  |  |
-| coordinates | [Coordinates](#apologia_alkibiades-Coordinates) |  |  |
+| coordinates | [Coordinates](#alkibiades-v1-Coordinates) |  |  |
 
 
 
 
 
 
-<a name="apologia_alkibiades-StructureQuiz"></a>
+<a name="alkibiades-v1-StructureQuiz"></a>
 
 ### StructureQuiz
 
@@ -300,7 +240,7 @@ Response message for health check
 
 
 
-<a name="apologia_alkibiades-Theme"></a>
+<a name="alkibiades-v1-Theme"></a>
 
 ### Theme
 
@@ -309,14 +249,14 @@ Response message for health check
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | name | [string](#string) |  |  |
-| segments | [Segments](#apologia_alkibiades-Segments) | repeated |  |
+| segments | [Segments](#alkibiades-v1-Segments) | repeated |  |
 
 
 
 
 
 
-<a name="apologia_alkibiades-TranslationStep"></a>
+<a name="alkibiades-v1-TranslationStep"></a>
 
 ### TranslationStep
 
@@ -333,7 +273,7 @@ Response message for health check
 
 
 
-<a name="apologia_alkibiades-TriviaQuiz"></a>
+<a name="alkibiades-v1-TriviaQuiz"></a>
 
 ### TriviaQuiz
 
@@ -357,16 +297,16 @@ Response message for health check
  
 
 
-<a name="apologia_alkibiades-Alkibiades"></a>
+<a name="alkibiades-v1-Alkibiades"></a>
 
 ### Alkibiades
 
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| Health | [HealthRequest](#apologia_alkibiades-HealthRequest) | [HealthResponse](#apologia_alkibiades-HealthResponse) |  |
-| Options | [OptionsRequest](#apologia_alkibiades-OptionsRequest) | [AggregatedOptions](#apologia_alkibiades-AggregatedOptions) |  |
-| Question | [CreationRequest](#apologia_alkibiades-CreationRequest) | [QuizResponse](#apologia_alkibiades-QuizResponse) |  |
+| Health | [.koinos.v1.HealthRequest](#koinos-v1-HealthRequest) | [.koinos.v1.HealthResponse](#koinos-v1-HealthResponse) |  |
+| Options | [.koinos.v1.OptionsRequest](#koinos-v1-OptionsRequest) | [AggregatedOptions](#alkibiades-v1-AggregatedOptions) |  |
+| Question | [CreationRequest](#alkibiades-v1-CreationRequest) | [QuizResponse](#alkibiades-v1-QuizResponse) |  |
 
  
 
