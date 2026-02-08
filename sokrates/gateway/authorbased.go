@@ -1,20 +1,23 @@
 package gateway
 
 import (
+	"context"
+
+	koinosv1 "github.com/odysseia-greek/apologia/diotima/gen/go/koinos/v1"
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
 	"github.com/odysseia-greek/apologia/xenofon/anabasis"
-	pbxenofon "github.com/odysseia-greek/apologia/xenofon/proto"
+	v1 "github.com/odysseia-greek/apologia/xenofon/gen/go/v1"
 )
 
-func (s *SokratesHandler) CreateAuthorBasedQuiz(request *pbxenofon.CreationRequest, requestID, sessionId string) (*model.AuthorBasedResponse, error) {
-	authorBasedCtx, cancel := s.createRequestHeader(requestID, sessionId)
+func (s *SokratesHandler) CreateAuthorBasedQuiz(ctx context.Context, request *v1.CreationRequest) (*model.AuthorBasedResponse, error) {
+	outCtx, cancel := s.outgoingCtx(ctx)
 	defer cancel()
 
-	var grpcResponse *pbxenofon.QuizResponse
+	var grpcResponse *v1.QuizResponse
 
 	err := s.AuthorBasedClient.CallWithReconnect(func(client *anabasis.AuthorBasedClient) error {
 		var innerErr error
-		grpcResponse, innerErr = client.Question(authorBasedCtx, request)
+		grpcResponse, innerErr = client.Question(outCtx, request)
 		return innerErr
 	})
 	if err != nil {
@@ -63,15 +66,19 @@ func (s *SokratesHandler) CreateAuthorBasedQuiz(request *pbxenofon.CreationReque
 	return quizResponse, nil
 }
 
-func (s *SokratesHandler) CheckAuthorBased(request *pbxenofon.AnswerRequest, requestID, sessionId string) (*model.AuthorBasedAnswerResponse, error) {
-	authorBasedCtx, cancel := s.createRequestHeader(requestID, sessionId)
+func (s *SokratesHandler) CheckAuthorBased(
+	ctx context.Context,
+	request *v1.AnswerRequest,
+) (*model.AuthorBasedAnswerResponse, error) {
+
+	outCtx, cancel := s.outgoingCtx(ctx)
 	defer cancel()
 
-	var grpcResponse *pbxenofon.AnswerResponse
+	var grpcResponse *v1.AnswerResponse
 
 	err := s.AuthorBasedClient.CallWithReconnect(func(client *anabasis.AuthorBasedClient) error {
 		var innerErr error
-		grpcResponse, innerErr = client.Answer(authorBasedCtx, request)
+		grpcResponse, innerErr = client.Answer(outCtx, request)
 		return innerErr
 	})
 	if err != nil {
@@ -99,15 +106,15 @@ func (s *SokratesHandler) CheckAuthorBased(request *pbxenofon.AnswerRequest, req
 	return answerResponse, nil
 }
 
-func (s *SokratesHandler) AuthorBasedOptions(requestID, sessionId string) (*model.AggregatedOptions, error) {
-	optionsCtx, cancel := s.createRequestHeader(requestID, sessionId)
+func (s *SokratesHandler) AuthorBasedOptions(ctx context.Context) (*model.AggregatedOptions, error) {
+	outCtx, cancel := s.outgoingCtx(ctx)
 	defer cancel()
 
-	var grpcResponse *pbxenofon.AggregatedOptions
+	var grpcResponse *v1.AggregatedOptions
 
 	err := s.AuthorBasedClient.CallWithReconnect(func(client *anabasis.AuthorBasedClient) error {
 		var innerErr error
-		grpcResponse, innerErr = client.Options(optionsCtx, &pbxenofon.OptionsRequest{})
+		grpcResponse, innerErr = client.Options(outCtx, &koinosv1.OptionsRequest{})
 		return innerErr
 	})
 	if err != nil {
@@ -136,15 +143,15 @@ func (s *SokratesHandler) AuthorBasedOptions(requestID, sessionId string) (*mode
 	}, nil
 }
 
-func (s *SokratesHandler) AuthorBasedWordForms(request *pbxenofon.WordFormRequest, requestID, sessionId string) (*model.AuthorBasedWordFormsResponse, error) {
-	wordFormsCtx, cancel := s.createRequestHeader(requestID, sessionId)
+func (s *SokratesHandler) AuthorBasedWordForms(ctx context.Context, request *v1.WordFormRequest) (*model.AuthorBasedWordFormsResponse, error) {
+	outCtx, cancel := s.outgoingCtx(ctx)
 	defer cancel()
 
-	var grpcResponse *pbxenofon.WordFormResponse
+	var grpcResponse *v1.WordFormResponse
 
 	err := s.AuthorBasedClient.CallWithReconnect(func(client *anabasis.AuthorBasedClient) error {
 		var innerErr error
-		grpcResponse, innerErr = client.WordForms(wordFormsCtx, request)
+		grpcResponse, innerErr = client.WordForms(outCtx, request)
 		return innerErr
 	})
 	if err != nil {

@@ -5,23 +5,19 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"math/rand/v2"
+	"os"
+	"time"
+
 	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/models"
-	"github.com/odysseia-greek/agora/plato/service"
-	"github.com/odysseia-greek/agora/plato/transform"
-	pb "github.com/odysseia-greek/apologia/aristippos/proto"
+	v1 "github.com/odysseia-greek/apologia/aristippos/gen/go/v1"
+	koinosv1 "github.com/odysseia-greek/apologia/diotima/gen/go/koinos/v1"
 	"github.com/odysseia-greek/attike/aristophanes/comedy"
-	pbar "github.com/odysseia-greek/attike/aristophanes/proto"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
-	"math/rand/v2"
-	"net/http"
-	"os"
-	"strings"
-	"sync"
-	"time"
 )
 
 const (
@@ -33,16 +29,16 @@ const (
 	OPTIONSEGMENTKEY string = "archytassavedoptions"
 )
 
-func (m *MediaServiceImpl) Health(context.Context, *pb.HealthRequest) (*pb.HealthResponse, error) {
+func (m *MediaServiceImpl) Health(context.Context, *koinosv1.HealthRequest) (*koinosv1.HealthResponse, error) {
 	elasticHealth := m.Elastic.Health().Info()
-	dbHealth := &pb.DatabaseHealth{
+	dbHealth := &koinosv1.DatabaseHealth{
 		Healthy:       elasticHealth.Healthy,
 		ClusterName:   elasticHealth.ClusterName,
 		ServerName:    elasticHealth.ServerName,
 		ServerVersion: elasticHealth.ServerVersion,
 	}
 
-	return &pb.HealthResponse{
+	return &koinosv1.HealthResponse{
 		Healthy:        true,
 		Time:           time.Now().String(),
 		DatabaseHealth: dbHealth,
@@ -50,7 +46,7 @@ func (m *MediaServiceImpl) Health(context.Context, *pb.HealthRequest) (*pb.Healt
 	}, nil
 }
 
-func (m *MediaServiceImpl) Options(ctx context.Context, request *pb.OptionsRequest) (*pb.AggregatedOptions, error) {
+func (m *MediaServiceImpl) Options(ctx context.Context, request *koinosv1.OptionsRequest) (*v1.AggregatedOptions, error) {
 	var unparsedResponse []byte
 	cacheItem, _ := m.Archytas.Read(OPTIONSEGMENTKEY)
 	if cacheItem != nil {
@@ -78,7 +74,7 @@ func (m *MediaServiceImpl) Options(ctx context.Context, request *pb.OptionsReque
 	return result, nil
 }
 
-func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationRequest) (*pb.QuizResponse, error) {
+func (m *MediaServiceImpl) Question(ctx context.Context, request *v1.CreationRequest) (*v1.QuizResponse, error) {
 	if request.Order == "" {
 		request.Order = GREENGORDER
 	}
@@ -115,7 +111,8 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 			return nil, err
 		}
 
-		go cacheSpan(string(cacheItem), segmentKey, ctx)
+		go comedy.CacheSpan(string(cacheItem), segmentKey, ctx, m.Streamer)
+
 	} else {
 		mustQuery := []map[string]string{
 			{
@@ -139,7 +136,7 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 			return nil, errors.New("no hits found in query")
 		}
 
-		go databaseSpan(elasticResponse, query, ctx)
+		go comedy.DatabaseSpan(query, elasticResponse.Hits.Total.Value, elasticResponse.Took, ctx, m.Streamer)
 		source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
 		err = json.Unmarshal(source, &option)
 		if err != nil {
@@ -166,7 +163,7 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 		m.Progress.InitWordsForSegment(sessionId, segmentKey, allGreekWords)
 	}
 
-	quiz := &pb.QuizResponse{
+	quiz := &v1.QuizResponse{
 		NumberOfItems: int32(len(option.Content)),
 	}
 
@@ -206,7 +203,7 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 
 	quiz.QuizItem = question.Greek
 	translation = question.Translation
-	quiz.Options = append(quiz.Options, &pb.Options{
+	quiz.Options = append(quiz.Options, &v1.Options{
 		Option:   question.Translation,
 		ImageUrl: question.ImageURL,
 	})
@@ -223,7 +220,7 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 
 		exists := findQuizWord(quiz.Options, randEntry.Translation)
 		if !exists {
-			option := &pb.Options{
+			option := &v1.Options{
 				Option:   randEntry.Translation,
 				ImageUrl: randEntry.ImageURL,
 			}
@@ -240,7 +237,7 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 	if sessionId != "" {
 		progressList, _ := m.Progress.GetProgressForSegment(sessionId, segmentKey, int(request.DoneAfter))
 		for word, p := range progressList {
-			quiz.Progress = append(quiz.Progress, &pb.ProgressEntry{
+			quiz.Progress = append(quiz.Progress, &koinosv1.ProgressEntry{
 				Greek:          word,
 				Translation:    p.Translation,
 				PlayCount:      int32(p.PlayCount),
@@ -254,7 +251,7 @@ func (m *MediaServiceImpl) Question(ctx context.Context, request *pb.CreationReq
 	return quiz, nil
 }
 
-func (m *MediaServiceImpl) Answer(ctx context.Context, request *pb.AnswerRequest) (*pb.ComprehensiveResponse, error) {
+func (m *MediaServiceImpl) Answer(ctx context.Context, request *v1.AnswerRequest) (*v1.AnswerResponse, error) {
 	var sessionId string
 	md, ok := metadata.FromIncomingContext(ctx)
 	if ok {
@@ -274,7 +271,7 @@ func (m *MediaServiceImpl) Answer(ctx context.Context, request *pb.AnswerRequest
 			return nil, err
 		}
 
-		go cacheSpan(string(cacheItem), segmentKey, ctx)
+		go comedy.CacheSpan(string(cacheItem), segmentKey, ctx, m.Streamer)
 	} else {
 		mustQuery := []map[string]string{
 			{
@@ -297,7 +294,7 @@ func (m *MediaServiceImpl) Answer(ctx context.Context, request *pb.AnswerRequest
 			return nil, fmt.Errorf("no hits found in Elastic")
 		}
 
-		go databaseSpan(elasticResponse, query, ctx)
+		go comedy.DatabaseSpan(query, elasticResponse.Hits.Total.Value, elasticResponse.Took, ctx, m.Streamer)
 
 		source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
 		err = json.Unmarshal(source, &option)
@@ -306,19 +303,7 @@ func (m *MediaServiceImpl) Answer(ctx context.Context, request *pb.AnswerRequest
 		}
 	}
 
-	answer := pb.ComprehensiveResponse{Correct: false, QuizWord: request.QuizWord}
-
-	if request.Comprehensive {
-		md, ok := metadata.FromIncomingContext(ctx)
-		var traceID string
-		if ok {
-			headerValue := md.Get(service.HeaderKey)
-			if len(headerValue) > 0 {
-				traceID = headerValue[0]
-			}
-		}
-		m.gatherComprehensiveData(&answer, traceID)
-	}
+	answer := v1.AnswerResponse{Correct: false, QuizWord: request.QuizWord}
 
 	for _, content := range option.Content {
 		if content.Greek == request.QuizWord {
@@ -335,7 +320,7 @@ func (m *MediaServiceImpl) Answer(ctx context.Context, request *pb.AnswerRequest
 		progressList, finished := m.Progress.GetProgressForSegment(sessionId, segmentKey, int(request.DoneAfter))
 		answer.Finished = finished
 		for word, p := range progressList {
-			answer.Progress = append(answer.Progress, &pb.ProgressEntry{
+			answer.Progress = append(answer.Progress, &koinosv1.ProgressEntry{
 				Greek:          word,
 				Translation:    p.Translation,
 				PlayCount:      int32(p.PlayCount),
@@ -360,198 +345,13 @@ func (m *MediaServiceImpl) Answer(ctx context.Context, request *pb.AnswerRequest
 }
 
 // findQuizWord takes a slice and looks for an element in it
-func findQuizWord(slice []*pb.Options, val string) bool {
+func findQuizWord(slice []*v1.Options, val string) bool {
 	for _, item := range slice {
 		if item.Option == val {
 			return true
 		}
 	}
 	return false
-}
-
-func (m *MediaServiceImpl) gatherComprehensiveData(answer *pb.ComprehensiveResponse, requestID string) {
-	splitID := strings.Split(requestID, "+")
-
-	traceCall := false
-	var traceID, parentSpanID string
-
-	if len(splitID) >= 3 {
-		traceCall = splitID[2] == "1"
-	}
-
-	if len(splitID) >= 1 {
-		traceID = splitID[0]
-	}
-	if len(splitID) >= 2 {
-		parentSpanID = splitID[1]
-	}
-
-	wordToBeSend := extractBaseWord(answer.QuizWord)
-
-	// Use a WaitGroup to wait for both goroutines to finish
-	var wg sync.WaitGroup
-	wg.Add(2)
-
-	// Buffered channels to capture 1 response
-	foundInTextChan := make(chan *http.Response, 1)
-	similarWordsChan := make(chan *http.Response, 1)
-	errChan := make(chan error, 2) // Buffered to hold potential errors from both calls
-
-	go func() {
-		defer wg.Done()
-		if traceCall {
-			herodotosSpan := &pbar.ParabasisRequest{
-				TraceId:      traceID,
-				ParentSpanId: parentSpanID,
-				SpanId:       comedy.GenerateSpanID(),
-				RequestType: &pbar.ParabasisRequest_Span{Span: &pbar.SpanRequest{
-					Action: "analyseText",
-					Status: fmt.Sprintf("querying Herodotos for word: %s", wordToBeSend),
-				}},
-			}
-
-			err := m.Streamer.Send(herodotosSpan)
-			if err != nil {
-				logging.Error(fmt.Sprintf("error returned from tracer: %s", err.Error()))
-			}
-		}
-		r := models.AnalyzeTextRequest{Rootword: wordToBeSend}
-		jsonBody, err := json.Marshal(r)
-		foundInText, err := m.Client.Herodotos().Analyze(jsonBody, requestID)
-		if err != nil {
-			logging.Error(fmt.Sprintf("could not query any texts for word: %s error: %s", answer.QuizWord, err.Error()))
-			errChan <- err
-			return
-		}
-		foundInTextChan <- foundInText
-	}()
-
-	go func() {
-		defer wg.Done()
-		if traceCall {
-			alexandrosSpan := &pbar.ParabasisRequest{
-				TraceId:      traceID,
-				ParentSpanId: parentSpanID,
-				SpanId:       comedy.GenerateSpanID(),
-				RequestType: &pbar.ParabasisRequest_Span{Span: &pbar.SpanRequest{
-					Action: "analyseText",
-					Status: fmt.Sprintf("querying Alexandros for word: %s", wordToBeSend),
-				}},
-			}
-
-			err := m.Streamer.Send(alexandrosSpan)
-			if err != nil {
-				logging.Error(fmt.Sprintf("error returned from tracer: %s", err.Error()))
-			}
-		}
-		similarWords, err := m.Client.Alexandros().Search(wordToBeSend, "greek", "fuzzy", "false", requestID)
-		if err != nil {
-			logging.Error(fmt.Sprintf("could not query any similar words for word: %s error: %s", answer.QuizWord, err.Error()))
-			errChan <- err
-			return
-		}
-		similarWordsChan <- similarWords
-	}()
-
-	// Wait for both goroutines to complete
-	wg.Wait()
-
-	// Process responses
-	close(errChan)
-	close(foundInTextChan)
-	close(similarWordsChan)
-
-	for err := range errChan {
-		logging.Error(err.Error())
-	}
-
-	for foundInText := range foundInTextChan {
-		defer foundInText.Body.Close()
-		var foundInTextModel models.AnalyzeTextResponse
-		err := json.NewDecoder(foundInText.Body).Decode(&foundInTextModel)
-		if err != nil {
-			logging.Error(fmt.Sprintf("error while decoding: %s", err.Error()))
-		}
-
-		grpcModel := &pb.AnalyzeTextResponse{
-			Rootword:     foundInTextModel.Rootword,
-			PartOfSpeech: foundInTextModel.PartOfSpeech,
-		}
-
-		var conj []*pb.Conjugations
-		for _, conjugation := range foundInTextModel.Conjugations {
-			conj = append(conj, &pb.Conjugations{
-				Word: conjugation.Word,
-				Rule: conjugation.Rule,
-			})
-		}
-
-		grpcModel.Conjugations = conj
-
-		var result []*pb.AnalyzeResult
-		for _, text := range foundInTextModel.Results {
-			result = append(result, &pb.AnalyzeResult{
-				ReferenceLink: text.ReferenceLink,
-				Author:        text.Author,
-				Book:          text.Book,
-				Reference:     text.Reference,
-				Text: &pb.Rhema{
-					Greek:        text.Text.Greek,
-					Translations: text.Text.Translations,
-					Section:      text.Text.Section,
-				},
-			})
-		}
-
-		grpcModel.Texts = result
-
-		answer.FoundInText = grpcModel
-	}
-
-	for similarWords := range similarWordsChan {
-		defer similarWords.Body.Close()
-		var extended models.ExtendedResponse
-		err := json.NewDecoder(similarWords.Body).Decode(&extended)
-		if err != nil {
-			logging.Error(fmt.Sprintf("error while decoding: %s", err.Error()))
-		}
-
-		for _, meros := range extended.Hits {
-			answer.SimilarWords = append(answer.SimilarWords, &pb.Meros{
-				Greek:      meros.Hit.Greek,
-				English:    meros.Hit.English,
-				Dutch:      meros.Hit.Dutch,
-				LinkedWord: meros.Hit.LinkedWord,
-				Original:   meros.Hit.Original,
-			})
-		}
-	}
-}
-
-func extractBaseWord(queryWord string) string {
-	// Normalize and split the input
-	strippedWord := transform.RemoveAccents(strings.ToLower(queryWord))
-	splitWord := strings.Split(strippedWord, " ")
-
-	greekPronouns := map[string]bool{"η": true, "ο": true, "το": true}
-	cleanWord := func(word string) string {
-		return strings.Trim(word, ",.!?-") // Add any other punctuation as needed
-	}
-
-	for _, word := range splitWord {
-		cleanedWord := cleanWord(word)
-
-		if strings.HasPrefix(cleanedWord, "-") {
-			continue
-		}
-
-		if _, isPronoun := greekPronouns[cleanedWord]; !isPronoun {
-			// If the word is not a pronoun, it's likely the correct word
-			return cleanedWord
-		}
-	}
-
-	return queryWord
 }
 
 func sliceToSet(words []string) map[string]struct{} {

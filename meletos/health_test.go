@@ -4,11 +4,12 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"net/http"
+	"time"
+
 	"github.com/odysseia-greek/apologia/meletos/model"
 	"github.com/odysseia-greek/apologia/meletos/model/queries/health"
 	"github.com/stretchr/testify/assert"
-	"net/http"
-	"time"
 )
 
 const (

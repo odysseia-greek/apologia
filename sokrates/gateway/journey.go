@@ -1,20 +1,23 @@
 package gateway
 
 import (
-	pbalkibiades "github.com/odysseia-greek/apologia/alkibiades/proto"
+	"context"
+
+	v1 "github.com/odysseia-greek/apologia/alkibiades/gen/go/v1"
 	"github.com/odysseia-greek/apologia/alkibiades/strategos"
+	koinosv1 "github.com/odysseia-greek/apologia/diotima/gen/go/koinos/v1"
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
 )
 
-func (s *SokratesHandler) JourneyOptions(requestID, sessionId string) (*model.JourneyOptions, error) {
-	optionsCtx, cancel := s.createRequestHeader(requestID, sessionId)
+func (s *SokratesHandler) JourneyOptions(ctx context.Context) (*model.JourneyOptions, error) {
+	outCtx, cancel := s.outgoingCtx(ctx)
 	defer cancel()
 
-	var grpcResponse *pbalkibiades.AggregatedOptions
+	var grpcResponse *v1.AggregatedOptions
 
 	err := s.JourneyClient.CallWithReconnect(func(client *strategos.JourneyClient) error {
 		var innerErr error
-		grpcResponse, innerErr = client.Options(optionsCtx, &pbalkibiades.OptionsRequest{})
+		grpcResponse, innerErr = client.Options(outCtx, &koinosv1.OptionsRequest{})
 		return innerErr
 	})
 	if err != nil {
@@ -47,15 +50,15 @@ func (s *SokratesHandler) JourneyOptions(requestID, sessionId string) (*model.Jo
 	}, nil
 }
 
-func (s *SokratesHandler) CreateJourneySection(requestID, sessionId string, request *pbalkibiades.CreationRequest) (*model.JourneySegmentQuiz, error) {
-	journeyCreateCtx, cancel := s.createRequestHeader(requestID, sessionId)
+func (s *SokratesHandler) CreateJourneySection(ctx context.Context, request *v1.CreationRequest) (*model.JourneySegmentQuiz, error) {
+	outCtx, cancel := s.outgoingCtx(ctx)
 	defer cancel()
 
-	var grpcResponse *pbalkibiades.QuizResponse
+	var grpcResponse *v1.QuizResponse
 
 	err := s.JourneyClient.CallWithReconnect(func(client *strategos.JourneyClient) error {
 		var innerErr error
-		grpcResponse, innerErr = client.Question(journeyCreateCtx, request)
+		grpcResponse, innerErr = client.Question(outCtx, request)
 		return innerErr
 	})
 	if err != nil {
@@ -87,19 +90,19 @@ func (s *SokratesHandler) CreateJourneySection(requestID, sessionId string, requ
 
 	for _, section := range grpcResponse.Quiz {
 		switch s := section.Type.(type) {
-		case *pbalkibiades.QuizStep_Match:
+		case *v1.QuizStep_Match:
 			quiz = append(quiz, &model.MatchQuiz{
 				Instruction: s.Match.Instruction,
 				Pairs:       mapPairs(s.Match.Pairs),
 			})
-		case *pbalkibiades.QuizStep_Trivia:
+		case *v1.QuizStep_Trivia:
 			quiz = append(quiz, &model.TriviaQuiz{
 				Question: s.Trivia.Question,
 				Options:  s.Trivia.Options,
 				Answer:   s.Trivia.Answer,
 				Note:     &s.Trivia.Note,
 			})
-		case *pbalkibiades.QuizStep_Structure:
+		case *v1.QuizStep_Structure:
 			quiz = append(quiz, &model.StructureQuiz{
 				Title:    s.Structure.Title,
 				Text:     s.Structure.Text,
@@ -108,12 +111,12 @@ func (s *SokratesHandler) CreateJourneySection(requestID, sessionId string, requ
 				Answer:   s.Structure.Answer,
 				Note:     &s.Structure.Note,
 			})
-		case *pbalkibiades.QuizStep_Media:
+		case *v1.QuizStep_Media:
 			quiz = append(quiz, &model.MediaQuiz{
 				Instruction: s.Media.Instruction,
 				MediaFiles:  mapMediaPairs(s.Media.MediaFiles),
 			})
-		case *pbalkibiades.QuizStep_FinalTranslation:
+		case *v1.QuizStep_FinalTranslation:
 			quiz = append(quiz, &model.FinalTranslationQuiz{
 				Instruction: s.FinalTranslation.Instruction,
 				Options:     s.FinalTranslation.Options,
@@ -133,7 +136,7 @@ func float32ToFloat64Ptr(f float32) *float64 {
 	return &val
 }
 
-func mapPairs(grpcPairs []*pbalkibiades.MatchPair) []*model.QuizPair {
+func mapPairs(grpcPairs []*v1.MatchPair) []*model.QuizPair {
 	var pairs []*model.QuizPair
 	for _, p := range grpcPairs {
 		pairs = append(pairs, &model.QuizPair{
@@ -144,7 +147,7 @@ func mapPairs(grpcPairs []*pbalkibiades.MatchPair) []*model.QuizPair {
 	return pairs
 }
 
-func mapMediaPairs(files []*pbalkibiades.MediaEntry) []*model.MediaPair {
+func mapMediaPairs(files []*v1.MediaEntry) []*model.MediaPair {
 	var result []*model.MediaPair
 	for _, f := range files {
 		result = append(result, &model.MediaPair{

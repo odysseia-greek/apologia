@@ -1,0 +1,67 @@
+syntax = "proto3";
+package kritias.v1;
+
+import "koinos/v1/health.proto";
+import "koinos/v1/koinos.proto";
+
+option go_package = "github.com/odysseia-greek/apologia/kritias/gen/go/v1;kritiasv1";
+
+service Kritias {
+  rpc Health (koinos.v1.HealthRequest) returns (koinos.v1.HealthResponse) {};
+  rpc Options (koinos.v1.OptionsRequest) returns (AggregatedOptions) {};
+  rpc Question (CreationRequest) returns (QuizResponse) {};
+  rpc Answer (AnswerRequest) returns (AnswerResponse) {};
+}
+
+// Response message for quiz options
+message AggregatedOptions {
+  repeated Theme themes = 1;
+}
+
+// Structure for quiz themes
+message Theme {
+  string name = 1;
+  float max_set = 2;
+}
+
+// Request message for creating a quiz question
+message CreationRequest {
+  string theme = 1;
+  string set = 2;
+  string segment = 3; // Optional
+  string order = 4;
+  int32 doneAfter = 5; // Number of times a word must be played before it's considered done
+  bool resetProgress = 6;   // Hard reset
+  bool archiveProgress = 7; // Soft reset (archive and start fresh)
+}
+
+// Response message for quiz creation
+message QuizResponse {
+  string quiz_item = 1;
+  int32 number_of_items = 2;
+  repeated Options options = 3;
+  repeated koinos.v1.ProgressEntry progress = 4; // Optional: only if sessionId is set
+}
+
+// Quiz options (word, audio, image)
+message Options {
+  string option = 1;
+}
+
+// Request message for checking an answer
+message AnswerRequest {
+  string theme = 1;
+  string set = 2;
+  string segment = 4; // Optional
+  string answer = 5;
+  string quiz_word = 6;
+  int32 doneAfter = 7;
+}
+
+// Response message for answer validation
+message AnswerResponse {
+  bool correct = 1;
+  string quiz_word = 2;
+  repeated koinos.v1.ProgressEntry progress = 3; // Optional: only if sessionId is set
+  bool finished = 4;
+}

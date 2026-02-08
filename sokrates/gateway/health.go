@@ -8,21 +8,15 @@ import (
 	"github.com/odysseia-greek/apologia/alkibiades/strategos"
 	"github.com/odysseia-greek/apologia/antisthenes/kunismos"
 	"github.com/odysseia-greek/apologia/aristippos/hedone"
+	koinosv1 "github.com/odysseia-greek/apologia/diotima/gen/go/koinos/v1"
 	"github.com/odysseia-greek/apologia/kritias/triakonta"
 	"github.com/odysseia-greek/apologia/kriton/philia"
 	"github.com/odysseia-greek/apologia/xenofon/anabasis"
 
-	pbalkibiades "github.com/odysseia-greek/apologia/alkibiades/proto"
-	pbantisthenes "github.com/odysseia-greek/apologia/antisthenes/proto"
-	pbartrippos "github.com/odysseia-greek/apologia/aristippos/proto"
-	pbkritias "github.com/odysseia-greek/apologia/kritias/proto"
-	pbkriton "github.com/odysseia-greek/apologia/kriton/proto"
-	pbxenofon "github.com/odysseia-greek/apologia/xenofon/proto"
-
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
 )
 
-func (s *SokratesHandler) Health(requestID, sessionId string) (*model.AggregatedHealthResponse, error) {
+func (s *SokratesHandler) Health(ctx context.Context) (*model.AggregatedHealthResponse, error) {
 	var services []*model.ServiceHealth
 	allHealthy := true
 
@@ -35,10 +29,10 @@ func (s *SokratesHandler) Health(requestID, sessionId string) (*model.Aggregated
 		{
 			name: "media",
 			client: func(ctx context.Context) (bool, *model.DatabaseInfo, *string) {
-				var resp *pbartrippos.HealthResponse
+				var resp *koinosv1.HealthResponse
 				err := s.MediaClient.CallWithReconnect(func(c *hedone.MediaClient) error {
 					var innerErr error
-					resp, innerErr = c.Health(ctx, &pbartrippos.HealthRequest{})
+					resp, innerErr = c.Health(ctx, &koinosv1.HealthRequest{})
 					return innerErr
 				})
 				if err != nil || resp == nil {
@@ -56,10 +50,10 @@ func (s *SokratesHandler) Health(requestID, sessionId string) (*model.Aggregated
 		{
 			name: "multiple-choice",
 			client: func(ctx context.Context) (bool, *model.DatabaseInfo, *string) {
-				var resp *pbkritias.HealthResponse
+				var resp *koinosv1.HealthResponse
 				err := s.MultiChoiceClient.CallWithReconnect(func(c *triakonta.MutpleChoiceClient) error {
 					var innerErr error
-					resp, innerErr = c.Health(ctx, &pbkritias.HealthRequest{})
+					resp, innerErr = c.Health(ctx, &koinosv1.HealthRequest{})
 					return innerErr
 				})
 				if err != nil || resp == nil {
@@ -77,10 +71,10 @@ func (s *SokratesHandler) Health(requestID, sessionId string) (*model.Aggregated
 		{
 			name: "author-based",
 			client: func(ctx context.Context) (bool, *model.DatabaseInfo, *string) {
-				var resp *pbxenofon.HealthResponse
+				var resp *koinosv1.HealthResponse
 				err := s.AuthorBasedClient.CallWithReconnect(func(c *anabasis.AuthorBasedClient) error {
 					var innerErr error
-					resp, innerErr = c.Health(ctx, &pbxenofon.HealthRequest{})
+					resp, innerErr = c.Health(ctx, &koinosv1.HealthRequest{})
 					return innerErr
 				})
 				if err != nil || resp == nil {
@@ -98,10 +92,10 @@ func (s *SokratesHandler) Health(requestID, sessionId string) (*model.Aggregated
 		{
 			name: "dialogue",
 			client: func(ctx context.Context) (bool, *model.DatabaseInfo, *string) {
-				var resp *pbkriton.HealthResponse
+				var resp *koinosv1.HealthResponse
 				err := s.DialogueClient.CallWithReconnect(func(c *philia.DialogueClient) error {
 					var innerErr error
-					resp, innerErr = c.Health(ctx, &pbkriton.HealthRequest{})
+					resp, innerErr = c.Health(ctx, &koinosv1.HealthRequest{})
 					return innerErr
 				})
 				if err != nil || resp == nil {
@@ -119,10 +113,10 @@ func (s *SokratesHandler) Health(requestID, sessionId string) (*model.Aggregated
 		{
 			name: "grammar",
 			client: func(ctx context.Context) (bool, *model.DatabaseInfo, *string) {
-				var resp *pbantisthenes.HealthResponse
+				var resp *koinosv1.HealthResponse
 				err := s.GrammarClient.CallWithReconnect(func(c *kunismos.GrammarClient) error {
 					var innerErr error
-					resp, innerErr = c.Health(ctx, &pbantisthenes.HealthRequest{})
+					resp, innerErr = c.Health(ctx, &koinosv1.HealthRequest{})
 					return innerErr
 				})
 				if err != nil || resp == nil {
@@ -140,10 +134,10 @@ func (s *SokratesHandler) Health(requestID, sessionId string) (*model.Aggregated
 		{
 			name: "journey",
 			client: func(ctx context.Context) (bool, *model.DatabaseInfo, *string) {
-				var resp *pbalkibiades.HealthResponse
+				var resp *koinosv1.HealthResponse
 				err := s.JourneyClient.CallWithReconnect(func(c *strategos.JourneyClient) error {
 					var innerErr error
-					resp, innerErr = c.Health(ctx, &pbalkibiades.HealthRequest{})
+					resp, innerErr = c.Health(ctx, &koinosv1.HealthRequest{})
 					return innerErr
 				})
 				if err != nil || resp == nil {
@@ -162,8 +156,9 @@ func (s *SokratesHandler) Health(requestID, sessionId string) (*model.Aggregated
 	}
 
 	for _, check := range checks {
-		healthCtx, cancel := s.createRequestHeader(requestID, sessionId)
-		healthy, dbHealthy, version := check.client(healthCtx)
+		outCtx, cancel := s.outgoingCtx(ctx)
+		defer cancel()
+		healthy, dbHealthy, version := check.client(outCtx)
 		cancel()
 
 		serviceHealth := &model.ServiceHealth{

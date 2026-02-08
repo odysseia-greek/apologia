@@ -5,29 +5,31 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strings"
+	"sync"
+
 	"github.com/google/uuid"
 	elastic "github.com/odysseia-greek/agora/aristoteles"
 	pb "github.com/odysseia-greek/agora/eupalinos/proto"
+	"github.com/odysseia-greek/agora/eupalinos/stomion"
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/models"
 	"github.com/odysseia-greek/agora/plato/service"
+	arisv1 "github.com/odysseia-greek/alexandreia/aristarchos/gen/go/v1"
 	aristides "github.com/odysseia-greek/delphi/aristides/diplomat"
-	pba "github.com/odysseia-greek/olympia/aristarchos/proto"
-	"strings"
-	"sync"
 )
 
 type ParmenidesHandler struct {
 	Index            string
 	Created          int
 	Elastic          elastic.Client
-	Eupalinos        EupalinosClient
+	Eupalinos        *stomion.QueueClient
 	Channel          string
 	DutchChannel     string
 	ExitCode         string
 	PolicyName       string
 	Ambassador       *aristides.ClientAmbassador
-	Aggregator       pba.Aristarchos_CreateNewEntryClient
+	Aggregator       arisv1.Aristarchos_CreateNewEntryClient
 	AggregatorCancel context.CancelFunc
 }
 
@@ -49,23 +51,7 @@ func (p *ParmenidesHandler) DeleteIndexAtStartUp() error {
 	return nil
 }
 
-func (p *ParmenidesHandler) createPolicyAtStartup() error {
-	policyCreated, err := p.Elastic.Policy().CreateHotPolicy(p.PolicyName)
-	if err != nil {
-		return err
-	}
-
-	logging.Info(fmt.Sprintf("created policy: %s %v", p.PolicyName, policyCreated.Acknowledged))
-
-	return nil
-}
-
 func (p *ParmenidesHandler) CreateIndexAtStartup() error {
-	logging.Info(fmt.Sprintf("creating policy: %s", p.PolicyName))
-	err := p.createPolicyAtStartup()
-	if err != nil {
-		return err
-	}
 	indexMapping := quizIndex(p.PolicyName, 1, 0)
 	created, err := p.Elastic.Index().Create(p.Index, indexMapping)
 	if err != nil {
@@ -288,18 +274,18 @@ func (p *ParmenidesHandler) sendToAggregator(ctx context.Context, grammarQuestio
 	}
 
 	// send word to aggregator
-	partOfSpeech := pba.PartOfSpeech_VERB
+	partOfSpeech := arisv1.PartOfSpeech_VERB
 	if grammarQuestion.TypeOfWord == "noun" {
-		partOfSpeech = pba.PartOfSpeech_NOUN
+		partOfSpeech = arisv1.PartOfSpeech_NOUN
 	} else if grammarQuestion.TypeOfWord == "misc" {
-		partOfSpeech = pba.PartOfSpeech_PARTICIPLE
+		partOfSpeech = arisv1.PartOfSpeech_PARTICIPLE
 	} else if grammarQuestion.TypeOfWord == "verb" {
 		if strings.Contains(grammarQuestion.CorrectAnswer, "part") {
-			partOfSpeech = pba.PartOfSpeech_PARTICLE
+			partOfSpeech = arisv1.PartOfSpeech_PARTICLE
 		}
 	}
 
-	request := &pba.AggregatorCreationRequest{
+	request := &arisv1.AggregatorCreationRequest{
 		Word:         grammarQuestion.WordInText,
 		Rule:         grammarQuestion.CorrectAnswer,
 		RootWord:     greekWord,

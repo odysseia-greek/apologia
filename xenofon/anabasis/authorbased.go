@@ -5,15 +5,18 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"math/rand/v2"
+	"time"
+
 	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/models"
-	pb "github.com/odysseia-greek/apologia/xenofon/proto"
+	koinosv1 "github.com/odysseia-greek/apologia/diotima/gen/go/koinos/v1"
+	v1 "github.com/odysseia-greek/apologia/xenofon/gen/go/v1"
+	"github.com/odysseia-greek/attike/aristophanes/comedy"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
-	"math/rand/v2"
-	"time"
 )
 
 const (
@@ -23,16 +26,16 @@ const (
 	OPTIONSEGMENTKEY string = "archytassavedoptions"
 )
 
-func (a *AuthorBasedServiceImpl) Health(context.Context, *pb.HealthRequest) (*pb.HealthResponse, error) {
+func (a *AuthorBasedServiceImpl) Health(context.Context, *koinosv1.HealthRequest) (*koinosv1.HealthResponse, error) {
 	elasticHealth := a.Elastic.Health().Info()
-	dbHealth := &pb.DatabaseHealth{
+	dbHealth := &koinosv1.DatabaseHealth{
 		Healthy:       elasticHealth.Healthy,
 		ClusterName:   elasticHealth.ClusterName,
 		ServerName:    elasticHealth.ServerName,
 		ServerVersion: elasticHealth.ServerVersion,
 	}
 
-	return &pb.HealthResponse{
+	return &koinosv1.HealthResponse{
 		Healthy:        true,
 		Time:           time.Now().String(),
 		DatabaseHealth: dbHealth,
@@ -40,7 +43,7 @@ func (a *AuthorBasedServiceImpl) Health(context.Context, *pb.HealthRequest) (*pb
 	}, nil
 }
 
-func (a *AuthorBasedServiceImpl) Options(ctx context.Context, request *pb.OptionsRequest) (*pb.AggregatedOptions, error) {
+func (a *AuthorBasedServiceImpl) Options(ctx context.Context, request *koinosv1.OptionsRequest) (*v1.AggregatedOptions, error) {
 	var unparsedResponse []byte
 	cacheItem, _ := a.Archytas.Read(OPTIONSEGMENTKEY)
 	if cacheItem != nil {
@@ -68,7 +71,7 @@ func (a *AuthorBasedServiceImpl) Options(ctx context.Context, request *pb.Option
 	return result, nil
 }
 
-func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *pb.CreationRequest) (*pb.QuizResponse, error) {
+func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *v1.CreationRequest) (*v1.QuizResponse, error) {
 	var sessionId string
 	md, ok := metadata.FromIncomingContext(ctx)
 	if ok {
@@ -97,7 +100,7 @@ func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *pb.Creat
 			return nil, err
 		}
 
-		go cacheSpan(string(cacheItem), segmentKey, ctx)
+		go comedy.CacheSpan(string(cacheItem), segmentKey, ctx, a.Streamer)
 	} else {
 		mustQuery := []map[string]string{
 			{
@@ -127,7 +130,7 @@ func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *pb.Creat
 			return nil, err
 		}
 
-		go databaseSpan(elasticResponse, query, ctx)
+		go comedy.DatabaseSpan(query, elasticResponse.Hits.Total.Value, elasticResponse.Took, ctx, a.Streamer)
 
 		err = a.Archytas.Set(segmentKey, string(source))
 		if err != nil {
@@ -147,7 +150,7 @@ func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *pb.Creat
 		a.Progress.InitWordsForSegment(sessionId, segmentKey, allGreekWords)
 	}
 
-	quiz := &pb.Quiz{
+	quiz := &v1.Quiz{
 		NumberOfItems: int32(len(option.Content)),
 	}
 
@@ -164,7 +167,7 @@ func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *pb.Creat
 		wordPool = sliceToSet(retryable)
 	}
 
-	var grammarQuiz []*pb.GrammarQuizAdded
+	var grammarQuiz []*v1.GrammarQuizAdded
 	var filteredContent []models.AuthorBasedContent
 
 	for _, content := range option.Content {
@@ -189,14 +192,14 @@ func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *pb.Creat
 
 	quiz.QuizItem = question.Greek
 	translation = question.Translation
-	quiz.Options = append(quiz.Options, &pb.Options{
+	quiz.Options = append(quiz.Options, &v1.Options{
 		QuizWord: question.Translation,
 	})
 
 	if question.HasGrammarQuestions {
 		//add grammar question
 		for _, grammarQuestion := range question.GrammarQuestions {
-			grammarQuizOption := &pb.GrammarQuizAdded{
+			grammarQuizOption := &v1.GrammarQuizAdded{
 				CorrectAnswer:    grammarQuestion.CorrectAnswer,
 				WordInText:       grammarQuestion.WordInText,
 				ExtraInformation: grammarQuestion.ExtraInformation,
@@ -215,9 +218,9 @@ func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *pb.Creat
 				setToQuery = option.GrammarQuestionOptions.Nouns
 			}
 
-			var grammarOptions []*pb.Options
+			var grammarOptions []*v1.Options
 
-			grammarOptions = append(grammarOptions, &pb.Options{
+			grammarOptions = append(grammarOptions, &v1.Options{
 				QuizWord: grammarQuizOption.CorrectAnswer,
 			})
 
@@ -228,7 +231,7 @@ func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *pb.Creat
 
 				exists := findQuizWord(grammarOptions, randEntry)
 				if !exists {
-					grammarOption := &pb.Options{
+					grammarOption := &v1.Options{
 						QuizWord: randEntry,
 					}
 					grammarOptions = append(grammarOptions, grammarOption)
@@ -255,7 +258,7 @@ func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *pb.Creat
 
 		exists := findQuizWord(quiz.Options, randEntry.Translation)
 		if !exists {
-			option := &pb.Options{
+			option := &v1.Options{
 				QuizWord: randEntry.Translation,
 			}
 			quiz.Options = append(quiz.Options, option)
@@ -268,7 +271,7 @@ func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *pb.Creat
 		quiz.Options[i], quiz.Options[j] = quiz.Options[j], quiz.Options[i]
 	})
 
-	authorQuiz := pb.QuizResponse{
+	authorQuiz := v1.QuizResponse{
 		FullSentence: option.FullSentence,
 		Translation:  option.Translation,
 		Reference:    option.Reference,
@@ -279,7 +282,7 @@ func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *pb.Creat
 	if sessionId != "" {
 		progressList, _ := a.Progress.GetProgressForSegment(sessionId, segmentKey, int(request.DoneAfter))
 		for word, p := range progressList {
-			authorQuiz.Progress = append(authorQuiz.Progress, &pb.ProgressEntry{
+			authorQuiz.Progress = append(authorQuiz.Progress, &koinosv1.ProgressEntry{
 				Greek:          word,
 				Translation:    p.Translation,
 				PlayCount:      int32(p.PlayCount),
@@ -293,7 +296,7 @@ func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *pb.Creat
 	return &authorQuiz, nil
 }
 
-func (a *AuthorBasedServiceImpl) Answer(ctx context.Context, request *pb.AnswerRequest) (*pb.AnswerResponse, error) {
+func (a *AuthorBasedServiceImpl) Answer(ctx context.Context, request *v1.AnswerRequest) (*v1.AnswerResponse, error) {
 	var sessionId string
 	md, ok := metadata.FromIncomingContext(ctx)
 	if ok {
@@ -313,7 +316,7 @@ func (a *AuthorBasedServiceImpl) Answer(ctx context.Context, request *pb.AnswerR
 			return nil, err
 		}
 
-		go cacheSpan(string(cacheItem), segmentKey, ctx)
+		go comedy.CacheSpan(string(cacheItem), segmentKey, ctx, a.Streamer)
 	} else {
 		mustQuery := []map[string]string{
 			{
@@ -336,7 +339,7 @@ func (a *AuthorBasedServiceImpl) Answer(ctx context.Context, request *pb.AnswerR
 			return nil, fmt.Errorf("no hits found in Elastic")
 		}
 
-		go databaseSpan(elasticResponse, query, ctx)
+		go comedy.DatabaseSpan(query, elasticResponse.Hits.Total.Value, elasticResponse.Took, ctx, a.Streamer)
 
 		source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
 		err = json.Unmarshal(source, &option)
@@ -345,7 +348,7 @@ func (a *AuthorBasedServiceImpl) Answer(ctx context.Context, request *pb.AnswerR
 		}
 	}
 
-	answer := &pb.AnswerResponse{
+	answer := &v1.AnswerResponse{
 		Correct:  false,
 		QuizWord: request.QuizWord,
 	}
@@ -365,7 +368,7 @@ func (a *AuthorBasedServiceImpl) Answer(ctx context.Context, request *pb.AnswerR
 		progressList, finished := a.Progress.GetProgressForSegment(sessionId, segmentKey, int(request.DoneAfter))
 		answer.Finished = finished
 		for word, p := range progressList {
-			answer.Progress = append(answer.Progress, &pb.ProgressEntry{
+			answer.Progress = append(answer.Progress, &koinosv1.ProgressEntry{
 				Greek:          word,
 				Translation:    p.Translation,
 				PlayCount:      int32(p.PlayCount),
@@ -384,7 +387,7 @@ func (a *AuthorBasedServiceImpl) Answer(ctx context.Context, request *pb.AnswerR
 	return answer, nil
 }
 
-func (a *AuthorBasedServiceImpl) WordForms(ctx context.Context, request *pb.WordFormRequest) (*pb.WordFormResponse, error) {
+func (a *AuthorBasedServiceImpl) WordForms(ctx context.Context, request *v1.WordFormRequest) (*v1.WordFormResponse, error) {
 	segmentKey := fmt.Sprintf("%s+%s+%s", request.Theme, request.Set, request.Segment)
 	cacheItem, _ := a.Archytas.Read(segmentKey)
 
@@ -396,7 +399,7 @@ func (a *AuthorBasedServiceImpl) WordForms(ctx context.Context, request *pb.Word
 			return nil, err
 		}
 
-		go cacheSpan(string(cacheItem), segmentKey, ctx)
+		go comedy.CacheSpan(string(cacheItem), segmentKey, ctx, a.Streamer)
 	} else {
 		mustQuery := []map[string]string{
 			{
@@ -419,7 +422,7 @@ func (a *AuthorBasedServiceImpl) WordForms(ctx context.Context, request *pb.Word
 			return nil, fmt.Errorf("no hits found in Elastic")
 		}
 
-		go databaseSpan(elasticResponse, query, ctx)
+		go comedy.DatabaseSpan(query, elasticResponse.Hits.Total.Value, elasticResponse.Took, ctx, a.Streamer)
 
 		source, _ := json.Marshal(elasticResponse.Hits.Hits[0].Source)
 		err = json.Unmarshal(source, &option)
@@ -428,12 +431,12 @@ func (a *AuthorBasedServiceImpl) WordForms(ctx context.Context, request *pb.Word
 		}
 	}
 
-	forms := &pb.WordFormResponse{
-		Forms: []*pb.WordFormList{},
+	forms := &v1.WordFormResponse{
+		Forms: []*v1.WordFormList{},
 	}
 
 	for _, content := range option.Content {
-		wordFromList := &pb.WordFormList{
+		wordFromList := &v1.WordFormList{
 			DictionaryForm: content.Greek,
 			WordsInText:    content.WordsInText,
 		}
@@ -445,7 +448,7 @@ func (a *AuthorBasedServiceImpl) WordForms(ctx context.Context, request *pb.Word
 }
 
 // findQuizWord takes a slice and looks for an element in it
-func findQuizWord(slice []*pb.Options, val string) bool {
+func findQuizWord(slice []*v1.Options, val string) bool {
 	for _, item := range slice {
 		if item.QuizWord == val {
 			return true

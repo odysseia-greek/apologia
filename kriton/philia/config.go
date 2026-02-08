@@ -3,6 +3,9 @@ package philia
 import (
 	"context"
 	"fmt"
+	"os"
+	"time"
+
 	"github.com/google/uuid"
 	"github.com/odysseia-greek/agora/archytas"
 	"github.com/odysseia-greek/agora/aristoteles"
@@ -11,15 +14,11 @@ import (
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/service"
 	aristophanes "github.com/odysseia-greek/attike/aristophanes/comedy"
-	pbar "github.com/odysseia-greek/attike/aristophanes/proto"
+	arv1 "github.com/odysseia-greek/attike/aristophanes/gen/go/v1"
 	"github.com/odysseia-greek/delphi/aristides/diplomat"
 	pb "github.com/odysseia-greek/delphi/aristides/proto"
 	"google.golang.org/grpc/metadata"
-	"os"
-	"time"
 )
-
-var streamer pbar.TraceService_ChorusClient
 
 func CreateNewConfig(ctx context.Context) (*DialogueServiceImpl, error) {
 	tls := config.BoolFromEnv(config.EnvTlSKey)
@@ -31,7 +30,7 @@ func CreateNewConfig(ctx context.Context) (*DialogueServiceImpl, error) {
 		os.Exit(1)
 	}
 
-	streamer, err = tracer.Chorus(ctx)
+	streamer, err := tracer.Chorus(ctx)
 	if err != nil {
 		logging.Error(err.Error())
 	}
@@ -55,21 +54,21 @@ func CreateNewConfig(ctx context.Context) (*DialogueServiceImpl, error) {
 	ambassadorCtx, ctxCancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer ctxCancel()
 
-	payload := &pbar.StartTraceRequest{
+	payload := &arv1.ObserveTraceStart{
 		Method:        "GetSecret",
 		Url:           diplomat.DEFAULTADDRESS,
 		Host:          "",
 		RemoteAddress: "",
-		Operation:     "/delphi_aristides.Aristides/GetSecret",
+		Operation:     "/delphi_ptolemaios.Ptolemaios/GetSecret",
 	}
 
 	go func() {
-		parabasis := &pbar.ParabasisRequest{
+		parabasis := &arv1.ObserveRequest{
 			TraceId:      traceID,
 			ParentSpanId: spanID,
 			SpanId:       spanID,
-			RequestType: &pbar.ParabasisRequest_StartTrace{
-				StartTrace: payload,
+			Kind: &arv1.ObserveRequest_TraceStart{
+				TraceStart: payload,
 			},
 		}
 		if err := streamer.Send(parabasis); err != nil {
@@ -88,12 +87,12 @@ func CreateNewConfig(ctx context.Context) (*DialogueServiceImpl, error) {
 	}
 
 	go func() {
-		parabasis := &pbar.ParabasisRequest{
+		parabasis := &arv1.ObserveRequest{
 			TraceId:      traceID,
 			ParentSpanId: spanID,
 			SpanId:       spanID,
-			RequestType: &pbar.ParabasisRequest_CloseTrace{
-				CloseTrace: &pbar.CloseTraceRequest{
+			Kind: &arv1.ObserveRequest_TraceStop{
+				TraceStop: &arv1.ObserveTraceStop{
 					ResponseBody: fmt.Sprintf("user retrieved from vault: %s", vaultConfig.ElasticUsername),
 				},
 			},

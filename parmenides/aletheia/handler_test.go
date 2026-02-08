@@ -23,14 +23,12 @@ func TestParmenidesHandlerAdd(t *testing.T) {
 	}
 
 	channel := "testchannel"
-	mockClient := &MockEupalinosClient{}
 
 	t.Run("EnqueueTask", func(t *testing.T) {
 		testHandler := ParmenidesHandler{
-			Index:     index,
-			Created:   0,
-			Channel:   channel,
-			Eupalinos: mockClient,
+			Index:   index,
+			Created: 0,
+			Channel: channel,
 		}
 
 		message, err := body.Marshal()

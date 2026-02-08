@@ -1,0 +1,103 @@
+syntax = "proto3";
+package xenofon.v1;
+
+import "koinos/v1/health.proto";
+import "koinos/v1/koinos.proto";
+
+option go_package = "github.com/odysseia-greek/apologia/xenofon/gen/go/v1;xenofonv1";
+
+service Xenofon {
+  rpc Health (koinos.v1.HealthRequest) returns (koinos.v1.HealthResponse) {};
+  rpc Options (koinos.v1.OptionsRequest) returns (AggregatedOptions) {};
+  rpc Question (CreationRequest) returns (QuizResponse) {};
+  rpc Answer (AnswerRequest) returns (AnswerResponse) {};
+  rpc WordForms (WordFormRequest) returns (WordFormResponse);
+}
+
+message WordFormRequest {
+  string theme = 1;
+  string segment = 2;
+  string set = 3;
+}
+
+message WordFormResponse {
+  repeated WordFormList forms = 1;
+}
+
+message WordFormList {
+  string dictionary_form = 1;
+  repeated string words_in_text = 2;
+}
+
+// Response message for quiz options
+message AggregatedOptions {
+  repeated Theme themes = 1;
+}
+
+// Structure for quiz themes
+message Theme {
+  string name = 1;
+  repeated Segment segments = 2;
+}
+
+// Structure for segments within a theme
+message Segment {
+  string name = 1;
+  float max_set = 2;
+}
+
+// Request message for creating a quiz question
+message CreationRequest {
+  string theme = 1;
+  string set = 2;
+  string segment = 3; // Optional
+  int32 doneAfter = 4; // Number of times a word must be played before it's considered done
+  bool resetProgress = 5;   // Hard reset
+  bool archiveProgress = 6; // Soft reset (archive and start fresh)
+}
+
+// Request message for checking an answer
+message AnswerRequest {
+  string theme = 1;
+  string set = 2;
+  string segment = 3;
+  string answer = 4;
+  string quiz_word = 5;
+  int32 doneAfter = 6;
+}
+
+message QuizResponse {
+  string fullSentence = 1;
+  string translation = 2;
+  string reference = 3;
+  Quiz quiz = 4;
+  repeated GrammarQuizAdded grammarQuiz = 5;
+  repeated koinos.v1.ProgressEntry progress = 6; // Optional: only if sessionId is set
+
+}
+
+message Quiz {
+  string quizItem = 1;
+  int32 numberOfItems = 2;
+  repeated Options options = 3;
+}
+
+message Options {
+  string quizWord = 1;
+}
+
+message GrammarQuizAdded {
+  string correctAnswer = 1;
+  string wordInText = 2;
+  string extraInformation = 3;
+  repeated Options options = 4;
+}
+
+message AnswerResponse {
+  bool correct = 1;
+  string quizWord = 2;
+  repeated string wordsInText = 3;
+  repeated koinos.v1.ProgressEntry progress = 4; // Optional: only if sessionId is set
+  bool finished = 5;
+
+}

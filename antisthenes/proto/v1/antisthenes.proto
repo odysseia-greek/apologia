@@ -1,0 +1,80 @@
+syntax = "proto3";
+option go_package = "github.com/odysseia-greek/apologia/antisthenes/gen/go/v1;antisthenesv1";
+
+import "koinos/v1/health.proto";
+import "koinos/v1/koinos.proto";
+
+package antisthenes.v1;
+
+service Antisthenes {
+  rpc Health (koinos.v1.HealthRequest) returns (koinos.v1.HealthResponse) {};
+  rpc Options (koinos.v1.OptionsRequest) returns (AggregatedOptions) {};
+  rpc Question (CreationRequest) returns (QuizResponse) {};
+  rpc Answer (AnswerRequest) returns (AnswerResponse) {};
+}
+
+
+// Response message for quiz options
+message AggregatedOptions {
+  repeated Theme themes = 1;
+}
+
+// Structure for quiz themes
+message Theme {
+  string name = 1;
+  repeated Segment segments = 2;
+}
+
+// Structure for segments within a theme
+message Segment {
+  string name = 1;
+  string difficulty = 2;
+  float max_set = 3;
+}
+
+// Request message for creating a quiz question
+message CreationRequest {
+  string theme = 1;
+  string set = 2;
+  string segment = 3; // Optional
+  int32 doneAfter = 4; // Number of times a word must be played before it's considered done
+  bool resetProgress = 5;   // Hard reset
+  bool archiveProgress = 6; // Soft reset (archive and start fresh)
+}
+
+message QuizResponse {
+  string quiz_item = 1;
+  string dictionary_form = 2;
+  string stem = 3;
+  string translation = 4;
+  int32 number_of_items = 5;
+  string description = 6;
+  string difficulty = 7;
+  string contraction_rule = 8;
+  repeated GrammarOptions options = 9;
+  repeated koinos.v1.ProgressEntry progress = 10;
+}
+
+// Each option includes the Greek form and grammar metadata
+message GrammarOptions {
+  string option = 1;
+}
+
+// Request message for checking an answer
+message AnswerRequest {
+  string theme = 1;
+  string set = 2;
+  string segment = 4; // Optional
+  string answer = 5;
+  string quiz_word = 6;
+  string dictionary_form = 7;
+  int32 doneAfter = 8;
+}
+
+// Response message for answer validation
+message AnswerResponse {
+  bool correct = 1;
+  string quiz_word = 2;
+  repeated koinos.v1.ProgressEntry progress = 3; // Optional: only if sessionId is set
+  bool finished = 5;
+}

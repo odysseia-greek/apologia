@@ -1,20 +1,23 @@
 package gateway
 
 import (
+	"context"
+
+	koinosv1 "github.com/odysseia-greek/apologia/diotima/gen/go/koinos/v1"
+	v1 "github.com/odysseia-greek/apologia/kriton/gen/go/v1"
 	"github.com/odysseia-greek/apologia/kriton/philia"
-	pbkriton "github.com/odysseia-greek/apologia/kriton/proto"
 	"github.com/odysseia-greek/apologia/sokrates/graph/model"
 )
 
-func (s *SokratesHandler) CreateDialogueQuiz(request *pbkriton.CreationRequest, requestID, sessionId string) (*model.DialogueQuizResponse, error) {
-	dialogueClientCtx, cancel := s.createRequestHeader(requestID, sessionId)
+func (s *SokratesHandler) CreateDialogueQuiz(ctx context.Context, request *v1.CreationRequest) (*model.DialogueQuizResponse, error) {
+	outCtx, cancel := s.outgoingCtx(ctx)
 	defer cancel()
 
-	var grpcResponse *pbkriton.QuizResponse
+	var grpcResponse *v1.QuizResponse
 
 	err := s.DialogueClient.CallWithReconnect(func(client *philia.DialogueClient) error {
 		var innerErr error
-		grpcResponse, innerErr = client.Question(dialogueClientCtx, request)
+		grpcResponse, innerErr = client.Question(outCtx, request)
 		return innerErr
 	})
 	if err != nil {
@@ -56,15 +59,15 @@ func (s *SokratesHandler) CreateDialogueQuiz(request *pbkriton.CreationRequest, 
 	return quizResponse, nil
 }
 
-func (s *SokratesHandler) CheckDialogueQuiz(request *pbkriton.AnswerRequest, requestID, sessionId string) (*model.DialogueAnswer, error) {
-	dialogueClientCtx, cancel := s.createRequestHeader(requestID, sessionId)
+func (s *SokratesHandler) CheckDialogueQuiz(ctx context.Context, request *v1.AnswerRequest) (*model.DialogueAnswer, error) {
+	outCtx, cancel := s.outgoingCtx(ctx)
 	defer cancel()
 
-	var grpcResponse *pbkriton.AnswerResponse
+	var grpcResponse *v1.AnswerResponse
 
 	err := s.DialogueClient.CallWithReconnect(func(client *philia.DialogueClient) error {
 		var innerErr error
-		grpcResponse, innerErr = client.Answer(dialogueClientCtx, request)
+		grpcResponse, innerErr = client.Answer(outCtx, request)
 		return innerErr
 	})
 	if err != nil {
@@ -109,15 +112,15 @@ func (s *SokratesHandler) CheckDialogueQuiz(request *pbkriton.AnswerRequest, req
 	return answer, nil
 }
 
-func (s *SokratesHandler) DialogueOptions(requestID, sessionId string) (*model.ThemedOptions, error) {
-	optionsCtx, cancel := s.createRequestHeader(requestID, sessionId)
+func (s *SokratesHandler) DialogueOptions(ctx context.Context) (*model.ThemedOptions, error) {
+	outCtx, cancel := s.outgoingCtx(ctx)
 	defer cancel()
 
-	var grpcResponse *pbkriton.AggregatedOptions
+	var grpcResponse *v1.AggregatedOptions
 
 	err := s.DialogueClient.CallWithReconnect(func(client *philia.DialogueClient) error {
 		var innerErr error
-		grpcResponse, innerErr = client.Options(optionsCtx, &pbkriton.OptionsRequest{})
+		grpcResponse, innerErr = client.Options(outCtx, &koinosv1.OptionsRequest{})
 		return innerErr
 	})
 	if err != nil {

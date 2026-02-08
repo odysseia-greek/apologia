@@ -3,34 +3,29 @@ package aletheia
 import (
 	"context"
 	"fmt"
+	"os"
+	"time"
+
 	"github.com/google/uuid"
 	"github.com/odysseia-greek/agora/aristoteles"
 	"github.com/odysseia-greek/agora/aristoteles/models"
-	pb "github.com/odysseia-greek/agora/eupalinos/proto"
+	eupalinos "github.com/odysseia-greek/agora/eupalinos/stomion"
 	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/service"
+	aristarchos "github.com/odysseia-greek/alexandreia/aristarchos/scholar"
 	"github.com/odysseia-greek/delphi/aristides/diplomat"
 	pbp "github.com/odysseia-greek/delphi/aristides/proto"
-	aristarchos "github.com/odysseia-greek/olympia/aristarchos/scholar"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/metadata"
-	"os"
-	"time"
 )
 
-type EupalinosClient interface {
-	EnqueueMessage(ctx context.Context, in *pb.Epistello, opts ...grpc.CallOption) (*pb.EnqueueResponse, error)
-}
-
-func CreateNewConfig() (*ParmenidesHandler, *grpc.ClientConn, error) {
+func CreateNewConfig() (*ParmenidesHandler, error) {
 	tls := config.BoolFromEnv(config.EnvTlSKey)
 
 	var cfg models.Config
 	ambassador, err := diplomat.NewClientAmbassador(diplomat.DEFAULTADDRESS)
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 
 	healthy := ambassador.WaitForHealthyState()
@@ -47,7 +42,7 @@ func CreateNewConfig() (*ParmenidesHandler, *grpc.ClientConn, error) {
 	vaultConfig, err := ambassador.GetSecret(ctx, &pbp.VaultRequest{})
 	if err != nil {
 		logging.Error(err.Error())
-		return nil, nil, err
+		return nil, err
 	}
 
 	elasticService := aristoteles.ElasticService(tls)
@@ -61,29 +56,37 @@ func CreateNewConfig() (*ParmenidesHandler, *grpc.ClientConn, error) {
 
 	elastic, err := aristoteles.NewClient(cfg)
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 
 	channel := config.StringFromEnv(config.EnvChannel, config.DefaultParmenidesChannel)
-	eupalinosAddress := config.StringFromEnv(config.EnvEupalinosService, config.DefaultEupalinosService)
 
 	index := config.StringFromEnv(config.EnvIndex, "")
 	if index == "" {
-		return nil, nil, fmt.Errorf("no index found in environment please set %s", config.EnvIndex)
+		return nil, fmt.Errorf("no index found in environment please set %s", config.EnvIndex)
 	}
 
-	client, conn, err := createEupalinosClient(eupalinosAddress)
+	eupalinosAddress := config.StringFromEnv(config.EnvEupalinosService, config.DefaultEupalinosService)
+	logging.Debug(fmt.Sprintf("creating new eupalinos client: %s", eupalinosAddress))
+	queue, err := eupalinos.NewEupalinosClient(eupalinosAddress)
 	if err != nil {
-		return nil, nil, err
+		logging.Error(err.Error())
 	}
 
-	policyName := fmt.Sprintf("%s_policy", index)
+	logging.Debug(fmt.Sprintf("created new eupalinos client with channel and dutch: %s + %s + %s", eupalinosAddress, channel, config.DefaultDutchChannel))
+	logging.Debug("waiting for queue to be ready")
+	queueHealthy := queue.WaitForHealthyState()
+	if !queueHealthy {
+		logging.Debug("no queue that is healthy")
+	}
+
+	policyName := config.StringFromEnv("HOT_POLICY_NAME", "hot_plain")
 
 	handler := &ParmenidesHandler{
 		Index:            index,
 		Created:          0,
 		Elastic:          elastic,
-		Eupalinos:        client,
+		Eupalinos:        queue,
 		Channel:          channel,
 		DutchChannel:     config.DefaultDutchChannel,
 		PolicyName:       policyName,
@@ -97,35 +100,29 @@ func CreateNewConfig() (*ParmenidesHandler, *grpc.ClientConn, error) {
 		aggregator, err := aristarchos.NewClientAggregator(aggregatorAddress)
 		if err != nil {
 			logging.Error(err.Error())
-			return nil, nil, err
+			return nil, err
 		}
+
+		logging.Debug(fmt.Sprintf("creating new aggregator client: %s", aggregatorAddress))
+		logging.Debug("waiting for aggregator to be ready")
 		aggregatorHealthy := aggregator.WaitForHealthyState()
 		if !aggregatorHealthy {
 			logging.Debug("aggregator service not ready - restarting seems the only option")
 			os.Exit(1)
 		}
 
+		logging.Debug("aggregator is ready")
 		// New context for aggregator streamer
 		aggrContext, aggregatorCancel := context.WithCancel(context.Background())
 		aristarchosStreamer, err := aggregator.CreateNewEntry(aggrContext)
 		if err != nil {
 			logging.Error(err.Error())
-			return nil, nil, err
+			return nil, err
 		}
 
 		handler.Aggregator = aristarchosStreamer
 		handler.AggregatorCancel = aggregatorCancel
 	}
 
-	return handler, conn, nil
-}
-
-func createEupalinosClient(serverAddress string) (pb.EupalinosClient, *grpc.ClientConn, error) {
-	conn, err := grpc.NewClient(serverAddress, grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		return nil, nil, err
-	}
-
-	client := pb.NewEupalinosClient(conn)
-	return client, conn, nil
+	return handler, nil
 }

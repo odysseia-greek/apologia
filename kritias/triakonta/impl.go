@@ -3,23 +3,25 @@ package triakonta
 import (
 	"context"
 	"fmt"
+	"time"
+
 	"github.com/odysseia-greek/agora/archytas"
 	"github.com/odysseia-greek/agora/aristoteles"
 	"github.com/odysseia-greek/agora/plato/progress"
 	"github.com/odysseia-greek/agora/plato/randomizer"
 	"github.com/odysseia-greek/agora/plato/service"
-	pb "github.com/odysseia-greek/apologia/kritias/proto"
-	pbar "github.com/odysseia-greek/attike/aristophanes/proto"
+	koinosv1 "github.com/odysseia-greek/apologia/diotima/gen/go/koinos/v1"
+	v1 "github.com/odysseia-greek/apologia/kritias/gen/go/v1"
+	arv1 "github.com/odysseia-greek/attike/aristophanes/gen/go/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	"time"
 )
 
 type MultipleChoiceService interface {
 	WaitForHealthyState() bool
-	Options(ctx context.Context, request *pb.OptionsRequest) (*pb.AggregatedOptions, error)
-	Question(ctx context.Context, request *pb.CreationRequest) (*pb.QuizResponse, error)
-	Answer(ctx context.Context, request *pb.AnswerRequest) (*pb.ComprehensiveResponse, error)
+	Options(ctx context.Context, request *koinosv1.OptionsRequest) (*v1.AggregatedOptions, error)
+	Question(ctx context.Context, request *v1.CreationRequest) (*v1.QuizResponse, error)
+	Answer(ctx context.Context, request *v1.AnswerRequest) (*v1.AnswerResponse, error)
 }
 
 const (
@@ -32,10 +34,10 @@ type MultipleChoiceServiceImpl struct {
 	Version    string
 	Randomizer randomizer.Random
 	Client     service.OdysseiaClient
-	Streamer   pbar.TraceService_ChorusClient
+	Streamer   arv1.TraceService_ChorusClient
 	Archytas   archytas.Client
 	Progress   *progress.ProgressTracker
-	pb.UnimplementedKritiasServer
+	v1.UnimplementedKritiasServer
 }
 
 type MultipleChoiceServiceClient struct {
@@ -43,7 +45,7 @@ type MultipleChoiceServiceClient struct {
 }
 
 type MutpleChoiceClient struct {
-	multiplechoice pb.KritiasClient
+	multiplechoice v1.KritiasClient
 }
 
 func NewKritiasClient(address string) (*MutpleChoiceClient, error) {
@@ -54,7 +56,7 @@ func NewKritiasClient(address string) (*MutpleChoiceClient, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to connect to tracing service: %w", err)
 	}
-	client := pb.NewKritiasClient(conn)
+	client := v1.NewKritiasClient(conn)
 	return &MutpleChoiceClient{multiplechoice: client}, nil
 }
 
@@ -64,7 +66,7 @@ func (m *MutpleChoiceClient) WaitForHealthyState() bool {
 	endTime := time.Now().Add(timeout)
 
 	for time.Now().Before(endTime) {
-		response, err := m.Health(context.Background(), &pb.HealthRequest{})
+		response, err := m.Health(context.Background(), &koinosv1.HealthRequest{})
 		if err == nil && response.Healthy {
 			return true
 		}
@@ -75,18 +77,18 @@ func (m *MutpleChoiceClient) WaitForHealthyState() bool {
 	return false
 }
 
-func (m *MutpleChoiceClient) Health(ctx context.Context, request *pb.HealthRequest) (*pb.HealthResponse, error) {
+func (m *MutpleChoiceClient) Health(ctx context.Context, request *koinosv1.HealthRequest) (*koinosv1.HealthResponse, error) {
 	return m.multiplechoice.Health(ctx, request)
 }
 
-func (m *MutpleChoiceClient) Options(ctx context.Context, request *pb.OptionsRequest) (*pb.AggregatedOptions, error) {
+func (m *MutpleChoiceClient) Options(ctx context.Context, request *koinosv1.OptionsRequest) (*v1.AggregatedOptions, error) {
 	return m.multiplechoice.Options(ctx, request)
 }
 
-func (m *MutpleChoiceClient) Question(ctx context.Context, request *pb.CreationRequest) (*pb.QuizResponse, error) {
+func (m *MutpleChoiceClient) Question(ctx context.Context, request *v1.CreationRequest) (*v1.QuizResponse, error) {
 	return m.multiplechoice.Question(ctx, request)
 }
 
-func (m *MutpleChoiceClient) Answer(ctx context.Context, request *pb.AnswerRequest) (*pb.ComprehensiveResponse, error) {
+func (m *MutpleChoiceClient) Answer(ctx context.Context, request *v1.AnswerRequest) (*v1.AnswerResponse, error) {
 	return m.multiplechoice.Answer(ctx, request)
 }

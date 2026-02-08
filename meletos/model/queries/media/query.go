@@ -37,7 +37,7 @@ func Answer(answer model.MediaAnswerInput) (string, map[string]interface{}) {
 			}
 		) {
 			correct
-			finished
+				finished
 			quizWord
 			similarWords {
 			  greek
@@ -58,13 +58,13 @@ func Answer(answer model.MediaAnswerInput) (string, map[string]interface{}) {
 				}
 			  }
 			}
-				progress {
-					greek
-					playCount
-					correctCount
-					incorrectCount
-					lastPlayed
-				}
+			progress {
+				greek
+				playCount
+				correctCount
+				incorrectCount
+				lastPlayed
+			}
 		  }
 		}
 `

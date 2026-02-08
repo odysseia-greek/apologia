@@ -1,0 +1,86 @@
+syntax = "proto3";
+package kriton.v1;
+
+import "koinos/v1/health.proto";
+import "koinos/v1/koinos.proto";
+
+option go_package = "github.com/odysseia-greek/apologia/kriton/gen/go/v1;kritonv1";
+
+
+service Kriton {
+  rpc Health (koinos.v1.HealthRequest) returns (koinos.v1.HealthResponse) {};
+  rpc Options (koinos.v1.OptionsRequest) returns (AggregatedOptions) {};
+  rpc Question (CreationRequest) returns (QuizResponse) {};
+  rpc Answer (AnswerRequest) returns (AnswerResponse) {};
+}
+
+// Response message for quiz options
+message AggregatedOptions {
+  repeated Theme themes = 1;
+}
+
+// Structure for quiz themes
+message Theme {
+  string name = 1;
+  float max_set = 2;
+}
+
+message AnswerResponse {
+  double percentage = 1;
+  repeated DialogueContent input = 2;
+  repeated DialogueContent answer = 3;
+  repeated DialogueCorrection wronglyPlaced = 4;
+}
+
+message DialogueContent {
+  string translation = 1;
+  string greek = 2;
+  int32 place = 3;
+  string speaker = 4;
+}
+
+message DialogueCorrection {
+  string translation = 1;
+  string greek = 2;
+  int32 place = 3;
+  string speaker = 4;
+  int32 correctPlace = 5;
+}
+
+message QuizResponse {
+  QuizMetadata quizMetadata = 1;
+  string theme = 2;
+  string set = 3;
+  string segment = 4;
+  string reference = 5;
+  Dialogue dialogue = 6;
+  repeated DialogueContent content = 7;
+}
+
+message QuizMetadata {
+  string language = 1;
+}
+
+message Dialogue {
+  string introduction = 1;
+  repeated Speaker speakers = 2;
+  string section = 3;
+  string linkToPerseus = 4;
+}
+
+message Speaker {
+  string name = 1;
+  string shorthand = 2;
+  string translation = 3;
+}
+
+message CreationRequest {
+  string theme = 1;
+  string set = 2;
+}
+
+message AnswerRequest {
+  string theme = 1;
+  string set = 2;
+  repeated DialogueContent content = 3;
+}

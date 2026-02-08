@@ -158,28 +158,6 @@ type ProgressEntry {
   lastPlayed: String
 }
 
-
-type AggregatedHealthResponse {
-  healthy: Boolean
-  time: String
-  version: String
-  services: [ServiceHealth]
-}
-
-type ServiceHealth {
-  name: String
-  healthy: Boolean
-  version: String
-  databaseInfo: DatabaseInfo
-}
-
-type DatabaseInfo {
-  healthy: Boolean
-  clusterName: String
-  serverName: String
-  serverVersion: String
-}
-
 type AggregatedOptions {
   themes: [Theme]
 }
@@ -405,8 +383,7 @@ type FinalTranslationQuiz {
   answer: String!
 }
 
-type Query {
-  health: AggregatedHealthResponse
+extend type Query {
   mediaOptions: AggregatedOptions
   multipleChoiceOptions: ThemedOptions
   authorBasedOptions: AggregatedOptions

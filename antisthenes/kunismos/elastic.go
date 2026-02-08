@@ -3,7 +3,8 @@ package kunismos
 import (
 	"encoding/json"
 	"fmt"
-	pb "github.com/odysseia-greek/apologia/antisthenes/proto"
+
+	v1 "github.com/odysseia-greek/apologia/antisthenes/gen/go/v1"
 )
 
 func quizAggregationQuery() map[string]interface{} {
@@ -46,7 +47,7 @@ func quizAggregationQuery() map[string]interface{} {
 	}
 }
 
-func parseAggregationResult(rawESOutput []byte) (*pb.AggregatedOptions, error) {
+func parseAggregationResult(rawESOutput []byte) (*v1.AggregatedOptions, error) {
 	// Define a structure to match the raw ES aggregation result format
 	var esResponse struct {
 		Aggregations struct {
@@ -83,10 +84,10 @@ func parseAggregationResult(rawESOutput []byte) (*pb.AggregatedOptions, error) {
 		return nil, fmt.Errorf("failed to parse Elasticsearch response: %w", err)
 	}
 
-	var result pb.AggregatedOptions
+	var result v1.AggregatedOptions
 
 	for _, themeBucket := range esResponse.Aggregations.UniqueThemes.Buckets {
-		theme := &pb.Theme{
+		theme := &v1.Theme{
 			Name: themeBucket.Key,
 		}
 		for _, segmentBucket := range themeBucket.UniqueSegments.Buckets {
@@ -96,7 +97,7 @@ func parseAggregationResult(rawESOutput []byte) (*pb.AggregatedOptions, error) {
 				difficulty = segmentBucket.Difficulty.Hits.Hits[0].Source.Difficulty
 			}
 
-			segment := &pb.Segment{
+			segment := &v1.Segment{
 				Name:       segmentBucket.Key,
 				Difficulty: difficulty,
 				MaxSet:     float32(segmentBucket.MaxSet.Value),

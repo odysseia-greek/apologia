@@ -1,0 +1,15 @@
+# apologia/buf.yaml
+version: v2
+modules:
+  - path: diotima/proto
+  - path: aspasia/proto
+  - path: kritias/proto
+  - path: kriton/proto
+  - path: xenofon/proto
+  - path: aristippos/proto
+  - path: antisthenes/proto
+  - path: alkibiades/proto
+lint:
+  use: [DEFAULT]
+breaking:
+  use: [FILE]
