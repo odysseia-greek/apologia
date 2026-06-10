@@ -1,0 +1,214 @@
+[
+  {
+    "theme": "The First Philosophers",
+    "segment": "Herakleitos",
+    "number": 1,
+    "location": "Ephesos",
+    "coordinates": {
+      "x": 0.78,
+      "y": 0.56
+    },
+    "fullSentence": "ποταμοῖσι τοῖσιν αὐτοῖσιν ἐμβαίνουσιν ἕτερα καὶ ἕτερα ὕδατα ἐπιρρεῖ.",
+    "translation": "Upon those who step into the same rivers, different and different waters flow.",
+    "fixedSteps": [
+      {
+        "step": "intro",
+        "type": "intro",
+        "content": {
+          "author": "Herakleitos",
+          "work": "Fragment on the river",
+          "background": "Herakleitos of Ephesos is famous for presenting the world as something always in motion. The later phrase πάντα ῥεῖ, 'everything flows', captures the spirit of his thought, even if the river fragment gives us the richer Greek image."
+        }
+      }
+    ],
+    "randomSteps": [
+      {
+        "type": "structure",
+        "title": "The River of Change",
+        "text": "Herakleitos uses the image of a river to show that something can seem the same while constantly changing.",
+        "question": "What point is Herakleitos making through the image of the river?",
+        "options": [
+          "Nature is fundamentally stable and never changes.",
+          "Everything is constantly changing.",
+          "Rivers were forbidden places in Greek religion.",
+          "Only water can reveal the truth."
+        ],
+        "answer": "Everything is constantly changing.",
+        "noteOnCorrect": "The river appears to be the same river, but its waters are always different. This makes it a powerful image for change."
+      }
+    ],
+    "finalStep": {
+      "type": "translation",
+      "instruction": "Which best captures the message of this passage?",
+      "options": [
+        "Reality is fixed and eternal.",
+        "Change is woven into the nature of existence.",
+        "Only rivers change, while everything else remains still.",
+        "Water is the only true element."
+      ],
+      "answer": "Change is woven into the nature of existence."
+    },
+    "contextNote": {
+      "text": "This journey begins in Ephesos with Herakleitos and the idea that reality is not still. The world flows, shifts, and transforms — even when it seems familiar."
+    }
+  },
+  {
+    "theme": "The First Philosophers",
+    "segment": "Parmenides",
+    "number": 2,
+    "location": "Elea",
+    "coordinates": {
+      "x": 0.19,
+      "y": 0.76
+    },
+    "fullSentence": "τὸ γὰρ αὐτὸ νοεῖν ἐστίν τε καὶ εἶναι.",
+    "translation": "For thinking and being are the same.",
+    "fixedSteps": [
+      {
+        "step": "intro",
+        "type": "intro",
+        "content": {
+          "author": "Parmenides",
+          "work": "On Nature",
+          "background": "Parmenides of Elea argued almost the opposite of Herakleitos. For him, true reality does not come into being or pass away. What truly is, simply is — and it can be grasped by thought."
+        }
+      }
+    ],
+    "randomSteps": [
+      {
+        "type": "structure",
+        "title": "Thinking and Being",
+        "text": "Parmenides links νοεῖν, 'thinking', with εἶναι, 'being'. This is a difficult but central idea in early Greek philosophy.",
+        "question": "What relationship does Parmenides suggest between thought and reality?",
+        "options": [
+          "Thinking and being belong together.",
+          "Thinking is only imagination.",
+          "Reality cannot be thought about.",
+          "Only the senses reveal what is true."
+        ],
+        "answer": "Thinking and being belong together.",
+        "noteOnCorrect": "For Parmenides, what truly is can be thought, and what cannot be is not truly thinkable."
+      }
+    ],
+    "finalStep": {
+      "type": "translation",
+      "instruction": "What is Parmenides ultimately claiming?",
+      "options": [
+        "Change is the deepest truth.",
+        "Knowledge comes from the senses alone.",
+        "What truly exists can be thought and known.",
+        "Reality is made of atoms."
+      ],
+      "answer": "What truly exists can be thought and known."
+    },
+    "contextNote": {
+      "text": "After Herakleitos' world of change, Parmenides gives us a radical challenge: perhaps true reality is not changing at all. Greek philosophy often grows through this kind of sharp disagreement."
+    }
+  },
+  {
+    "theme": "The First Philosophers",
+    "segment": "Demokritos",
+    "number": 3,
+    "location": "Abdera",
+    "coordinates": {
+      "x": 0.57,
+      "y": 0.41
+    },
+    "fullSentence": "νόμῳ γλυκὺ καὶ νόμῳ πικρόν, νόμῳ θερμόν, νόμῳ ψυχρόν, νόμῳ χροιή· ἐτεῇ δὲ ἄτομα καὶ κενόν.",
+    "translation": "By convention sweet is sweet, bitter is bitter, hot is hot, cold is cold, color is color; but in truth there are only atoms and the void.",
+    "fixedSteps": [
+      {
+        "step": "intro",
+        "type": "intro",
+        "content": {
+          "author": "Demokritos",
+          "work": "Atomist fragment",
+          "background": "Demokritos of Abdera proposed that the world is made from tiny indivisible bodies moving through empty space. The qualities we experience — sweetness, bitterness, heat, cold, and color — belong to perception and convention."
+        }
+      }
+    ],
+    "randomSteps": [
+      {
+        "type": "trivia",
+        "title": "Atoms and the Void",
+        "text": "Demokritos draws a contrast between how things appear to us and what he thinks truly exists underneath those appearances.",
+        "question": "According to Demokritos, what truly exists?",
+        "options": [
+          "The four elements.",
+          "Atoms and the void.",
+          "Perfect forms beyond the world.",
+          "Only gods and souls."
+        ],
+        "answer": "Atoms and the void.",
+        "noteOnCorrect": "For Demokritos, the underlying reality is made of atoms moving through empty space."
+      }
+    ],
+    "finalStep": {
+      "type": "translation",
+      "instruction": "What contrast is Demokritos drawing in this passage?",
+      "options": [
+        "Between law and justice.",
+        "Between appearance and underlying reality.",
+        "Between Greeks and barbarians.",
+        "Between courage and cowardice."
+      ],
+      "answer": "Between appearance and underlying reality."
+    },
+    "contextNote": {
+      "text": "Demokritos moves the journey from being and change to matter itself. What we taste, feel, and see may not be the final truth of what exists."
+    }
+  },
+  {
+    "theme": "The First Philosophers",
+    "segment": "Sokrates",
+    "number": 4,
+    "location": "Athens",
+    "coordinates": {
+      "x": 0.44,
+      "y": 0.55
+    },
+    "fullSentence": "ἓν οἶδα ὅτι οὐδὲν οἶδα.",
+    "translation": "I know one thing: that I know nothing.",
+    "fixedSteps": [
+      {
+        "step": "intro",
+        "type": "intro",
+        "content": {
+          "author": "Sokrates",
+          "work": "Socratic tradition",
+          "background": "Whether Sokrates ever said these exact words is debated, but they capture the spirit of his philosophy. Wisdom begins not with pretending to know, but with recognizing the limits of one's own knowledge."
+        }
+      }
+    ],
+    "randomSteps": [
+      {
+        "type": "structure",
+        "title": "The Wisdom of Not Knowing",
+        "text": "The sentence seems paradoxical: Sokrates claims to know one thing, namely that he knows nothing.",
+        "question": "Why does Sokrates treat admitting ignorance as valuable?",
+        "options": [
+          "Because knowledge is impossible.",
+          "Because questioning can lead to genuine understanding.",
+          "Because ordinary people should obey philosophers.",
+          "Because books cannot be trusted."
+        ],
+        "answer": "Because questioning can lead to genuine understanding.",
+        "noteOnCorrect": "Sokratic wisdom begins with humility. If you know that you do not know, you can start asking better questions."
+      }
+    ],
+    "finalStep": {
+      "type": "translation",
+      "instruction": "What lesson does this statement encourage?",
+      "options": [
+        "Seek certainty at all costs.",
+        "Avoid difficult questions.",
+        "Humility is the beginning of wisdom.",
+        "Only experts possess truth."
+      ],
+      "answer": "Humility is the beginning of wisdom."
+    },
+    "contextNote": {
+      "text": "The journey ends in Athens with Sokrates. After asking what changes, what exists, and what reality is made of, Sokrates turns the question back on us: what do we really know?"
+    }
+  }
+]

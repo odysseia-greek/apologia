@@ -414,6 +414,17 @@
         "noteOnCorrect": "Aeschylus’ *Persians* is the only surviving tragedy that centers on recent history and gives voice to the defeated Persians."
       }
     ],
+    "finalStep": {
+      "type": "translation",
+      "instruction": "Which best captures the purpose and tone of this passage?",
+      "options": [
+        "Aeschylus celebrates Persian military glory and urges revenge.",
+        "The passage invites the audience to share in the grief and human cost of defeat.",
+        "Xerxes proudly recounts the victories of the Persian fleet.",
+        "The Chorus explains the technical details of naval warfare."
+      ],
+      "answer": "The passage invites the audience to share in the grief and human cost of defeat."
+    },
     "contextNote": {
       "text": "This line brings us to the heart of Susa, not on the map of battles, but at the emotional epicenter of Persian loss. Aeschylus invites us to see war not only through the victors' eyes, but through the grief of the defeated."
     }
