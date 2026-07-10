@@ -1765,5 +1765,219 @@
         }
       }
     ]
+  },
+  {
+    "theme": "Active - Participle",
+    "set": 2,
+    "segment": "Present",
+    "description": "Feminine",
+    "difficulty": "intermediate",
+    "content": [
+      {
+        "greek": "λύουσα",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "sing",
+          "correctAnswer": "nom sing - pres - act - part"
+        }
+      },
+      {
+        "greek": "λυούσης",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "sing",
+          "correctAnswer": "gen sing - pres - act - part"
+        }
+      },
+      {
+        "greek": "λυούσῃ",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "sing",
+          "correctAnswer": "dat sing - pres - act - part"
+        }
+      },
+      {
+        "greek": "λύουσαν",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "sing",
+          "correctAnswer": "acc sing - pres - act - part"
+        }
+      },
+      {
+        "greek": "λύουσαι",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "plur",
+          "correctAnswer": "nom plur - pres - act - part"
+        }
+      },
+      {
+        "greek": "λυουσῶν",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "plur",
+          "correctAnswer": "gen plur - pres - act - part"
+        }
+      },
+      {
+        "greek": "λυούσαις",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "plur",
+          "correctAnswer": "dat plur - pres - act - part"
+        }
+      },
+      {
+        "greek": "λυούσας",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "plur",
+          "correctAnswer": "acc plur - pres - act - part"
+        }
+      }
+    ]
+  },
+  {
+    "theme": "Active - Participle",
+    "set": 3,
+    "segment": "Present",
+    "description": "Neuter",
+    "difficulty": "intermediate",
+    "content": [
+      {
+        "greek": "λῦον",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "sing",
+          "correctAnswer": "nom/acc sing - pres - act - part"
+        }
+      },
+      {
+        "greek": "λύοντος",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "sing",
+          "correctAnswer": "gen sing - pres - act - part"
+        }
+      },
+      {
+        "greek": "λύοντι",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "sing",
+          "correctAnswer": "dat sing - pres - act - part"
+        }
+      },
+      {
+        "greek": "λύοντα",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "plur",
+          "correctAnswer": "nom/acc plur - pres - act - part"
+        }
+      },
+      {
+        "greek": "λυόντων",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "plur",
+          "correctAnswer": "gen plur - pres - act - part"
+        }
+      },
+      {
+        "greek": "λύουσι(ν)",
+        "dictionaryForm": "λύω",
+        "translation": "to release",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "person": "",
+          "number": "plur",
+          "correctAnswer": "dat plur - pres - act - part"
+        }
+      }
+    ]
   }
 ]

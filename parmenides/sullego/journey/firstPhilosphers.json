@@ -4,10 +4,7 @@
     "segment": "Herakleitos",
     "number": 1,
     "location": "Ephesos",
-    "coordinates": {
-      "x": 0.78,
-      "y": 0.56
-    },
+    "coordinates": { "x": 0.717, "y": 0.552 },
     "fullSentence": "ποταμοῖσι τοῖσιν αὐτοῖσιν ἐμβαίνουσιν ἕτερα καὶ ἕτερα ὕδατα ἐπιρρεῖ.",
     "translation": "Upon those who step into the same rivers, different and different waters flow.",
     "fixedSteps": [
@@ -57,10 +54,7 @@
     "segment": "Parmenides",
     "number": 2,
     "location": "Elea",
-    "coordinates": {
-      "x": 0.19,
-      "y": 0.76
-    },
+    "coordinates": { "x": 0.006, "y": 0.658 },
     "fullSentence": "τὸ γὰρ αὐτὸ νοεῖν ἐστίν τε καὶ εἶναι.",
     "translation": "For thinking and being are the same.",
     "fixedSteps": [
@@ -110,10 +104,7 @@
     "segment": "Demokritos",
     "number": 3,
     "location": "Abdera",
-    "coordinates": {
-      "x": 0.57,
-      "y": 0.41
-    },
+    "coordinates": { "x": 0.501, "y": 0.222 },
     "fullSentence": "νόμῳ γλυκὺ καὶ νόμῳ πικρόν, νόμῳ θερμόν, νόμῳ ψυχρόν, νόμῳ χροιή· ἐτεῇ δὲ ἄτομα καὶ κενόν.",
     "translation": "By convention sweet is sweet, bitter is bitter, hot is hot, cold is cold, color is color; but in truth there are only atoms and the void.",
     "fixedSteps": [
@@ -163,10 +154,7 @@
     "segment": "Sokrates",
     "number": 4,
     "location": "Athens",
-    "coordinates": {
-      "x": 0.44,
-      "y": 0.55
-    },
+    "coordinates": { "x": 0.432, "y": 0.54 },
     "fullSentence": "ἓν οἶδα ὅτι οὐδὲν οἶδα.",
     "translation": "I know one thing: that I know nothing.",
     "fixedSteps": [

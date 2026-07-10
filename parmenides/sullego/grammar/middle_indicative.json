@@ -184,5 +184,303 @@
         }
       }
     ]
+  },
+  {
+    "theme": "Middle - Indicative",
+    "set": 1,
+    "segment": "Aorist",
+    "description": "Middle Voice in the Aorist",
+    "difficulty": "beginner",
+    "content": [
+      {
+        "greek": "ἐλυσάμην",
+        "dictionaryForm": "λύω",
+        "translation": "to release (for oneself)",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "aorist",
+          "voice": "middle",
+          "mood": "indicative",
+          "person": "1st",
+          "number": "sing",
+          "correctAnswer": "1st sing - aor - ind - mid"
+        }
+      },
+      {
+        "greek": "ἐλύσω",
+        "dictionaryForm": "λύω",
+        "translation": "to release (for oneself)",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "aorist",
+          "voice": "middle",
+          "mood": "indicative",
+          "person": "2nd",
+          "number": "sing",
+          "correctAnswer": "2nd sing - aor - ind - mid"
+        }
+      },
+      {
+        "greek": "ἐλύσατο",
+        "dictionaryForm": "λύω",
+        "translation": "to release (for oneself)",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "aorist",
+          "voice": "middle",
+          "mood": "indicative",
+          "person": "3rd",
+          "number": "sing",
+          "correctAnswer": "3rd sing - aor - ind - mid"
+        }
+      },
+      {
+        "greek": "ἐλυσάμεθα",
+        "dictionaryForm": "λύω",
+        "translation": "to release (for ourselves)",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "aorist",
+          "voice": "middle",
+          "mood": "indicative",
+          "person": "1st",
+          "number": "plur",
+          "correctAnswer": "1st plur - aor - ind - mid"
+        }
+      },
+      {
+        "greek": "ἐλύσασθε",
+        "dictionaryForm": "λύω",
+        "translation": "to release (for yourselves)",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "aorist",
+          "voice": "middle",
+          "mood": "indicative",
+          "person": "2nd",
+          "number": "plur",
+          "correctAnswer": "2nd plur - aor - ind - mid"
+        }
+      },
+      {
+        "greek": "ἐλύσαντο",
+        "dictionaryForm": "λύω",
+        "translation": "to release (for themselves)",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "aorist",
+          "voice": "middle",
+          "mood": "indicative",
+          "person": "3rd",
+          "number": "plur",
+          "correctAnswer": "3rd plur - aor - ind - mid"
+        }
+      },
+      {
+        "greek": "ἐπαιδευσάμην",
+        "dictionaryForm": "παιδεύω",
+        "translation": "to educate (for oneself)",
+        "stem": "παιδευ-",
+        "grammarQuestion": {
+          "tense": "aorist",
+          "voice": "middle",
+          "mood": "indicative",
+          "person": "1st",
+          "number": "sing",
+          "correctAnswer": "1st sing - aor - ind - mid"
+        }
+      },
+      {
+        "greek": "ἐπαιδεύσω",
+        "dictionaryForm": "παιδεύω",
+        "translation": "to educate (for oneself)",
+        "stem": "παιδευ-",
+        "grammarQuestion": {
+          "tense": "aorist",
+          "voice": "middle",
+          "mood": "indicative",
+          "person": "2nd",
+          "number": "sing",
+          "correctAnswer": "2nd sing - aor - ind - mid"
+        }
+      },
+      {
+        "greek": "ἐπαιδεύσατο",
+        "dictionaryForm": "παιδεύω",
+        "translation": "to educate (for oneself)",
+        "stem": "παιδευ-",
+        "grammarQuestion": {
+          "tense": "aorist",
+          "voice": "middle",
+          "mood": "indicative",
+          "person": "3rd",
+          "number": "sing",
+          "correctAnswer": "3rd sing - aor - ind - mid"
+        }
+      },
+      {
+        "greek": "ἐπαιδευσάμεθα",
+        "dictionaryForm": "παιδεύω",
+        "translation": "to educate (for ourselves)",
+        "stem": "παιδευ-",
+        "grammarQuestion": {
+          "tense": "aorist",
+          "voice": "middle",
+          "mood": "indicative",
+          "person": "1st",
+          "number": "plur",
+          "correctAnswer": "1st plur - aor - ind - mid"
+        }
+      },
+      {
+        "greek": "ἐπαιδεύσασθε",
+        "dictionaryForm": "παιδεύω",
+        "translation": "to educate (for yourselves)",
+        "stem": "παιδευ-",
+        "grammarQuestion": {
+          "tense": "aorist",
+          "voice": "middle",
+          "mood": "indicative",
+          "person": "2nd",
+          "number": "plur",
+          "correctAnswer": "2nd plur - aor - ind - mid"
+        }
+      },
+      {
+        "greek": "ἐπαιδεύσαντο",
+        "dictionaryForm": "παιδεύω",
+        "translation": "to educate (for themselves)",
+        "stem": "παιδευ-",
+        "grammarQuestion": {
+          "tense": "aorist",
+          "voice": "middle",
+          "mood": "indicative",
+          "person": "3rd",
+          "number": "plur",
+          "correctAnswer": "3rd plur - aor - ind - mid"
+        }
+      }
+    ]
+  },
+  {
+    "theme": "Middle - Participle",
+    "set": 1,
+    "segment": "Present",
+    "description": "Masculine",
+    "difficulty": "intermediate",
+    "content": [
+      {
+        "greek": "λυόμενος",
+        "dictionaryForm": "λύω",
+        "translation": "releasing oneself / being released",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "participle",
+          "person": "",
+          "number": "sing",
+          "correctAnswer": "nom sing - pres - mid - part"
+        }
+      },
+      {
+        "greek": "λυομένου",
+        "dictionaryForm": "λύω",
+        "translation": "releasing oneself / being released",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "participle",
+          "person": "",
+          "number": "sing",
+          "correctAnswer": "gen sing - pres - mid - part"
+        }
+      },
+      {
+        "greek": "λυομένῳ",
+        "dictionaryForm": "λύω",
+        "translation": "releasing oneself / being released",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "participle",
+          "person": "",
+          "number": "sing",
+          "correctAnswer": "dat sing - pres - mid - part"
+        }
+      },
+      {
+        "greek": "λυόμενον",
+        "dictionaryForm": "λύω",
+        "translation": "releasing oneself / being released",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "participle",
+          "person": "",
+          "number": "sing",
+          "correctAnswer": "acc sing - pres - mid - part"
+        }
+      },
+      {
+        "greek": "λυόμενοι",
+        "dictionaryForm": "λύω",
+        "translation": "releasing themselves / being released",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "participle",
+          "person": "",
+          "number": "plur",
+          "correctAnswer": "nom plur - pres - mid - part"
+        }
+      },
+      {
+        "greek": "λυομένων",
+        "dictionaryForm": "λύω",
+        "translation": "releasing themselves / being released",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "participle",
+          "person": "",
+          "number": "plur",
+          "correctAnswer": "gen plur - pres - mid - part"
+        }
+      },
+      {
+        "greek": "λυομένοις",
+        "dictionaryForm": "λύω",
+        "translation": "releasing themselves / being released",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "participle",
+          "person": "",
+          "number": "plur",
+          "correctAnswer": "dat plur - pres - mid - part"
+        }
+      },
+      {
+        "greek": "λυομένους",
+        "dictionaryForm": "λύω",
+        "translation": "releasing themselves / being released",
+        "stem": "λυ-",
+        "grammarQuestion": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "participle",
+          "person": "",
+          "number": "plur",
+          "correctAnswer": "acc plur - pres - mid - part"
+        }
+      }
+    ]
   }
 ]

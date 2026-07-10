@@ -428,5 +428,111 @@
       { "greek": "πρίν", "translation": "before", "imageURL": "before.webp", "audioFile": ">" },
       { "greek": "οὐδὲ", "translation": "and not", "imageURL": "andnot.webp", "audioFile": "&!" }
     ]
+  },
+  {
+    "quizMetadata": {
+      "language": "English"
+    },
+    "theme": "Basic",
+    "set": 1,
+    "segment": "Measurements and Numbers",
+    "content": [
+      {
+        "greek": "μέγας",
+        "translation": "big, great",
+        "imageURL": "big.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "μικρός",
+        "translation": "small, little",
+        "imageURL": "small.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "πολύς",
+        "translation": "many, much",
+        "imageURL": "many.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ὀλίγος",
+        "translation": "few, little",
+        "imageURL": "few.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "πᾶς",
+        "translation": "all, every",
+        "imageURL": "all.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ὅλος",
+        "translation": "whole, entire",
+        "imageURL": "whole.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "μέσος",
+        "translation": "middle",
+        "imageURL": "middle.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "πρῶτος",
+        "translation": "first",
+        "imageURL": "first.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "εἷς",
+        "translation": "one",
+        "imageURL": "one.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "δύο",
+        "translation": "two",
+        "imageURL": "two.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "τρεῖς",
+        "translation": "three",
+        "imageURL": "three.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "δέκα",
+        "translation": "ten",
+        "imageURL": "ten.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ἑκατόν",
+        "translation": "one hundred",
+        "imageURL": "hundred.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "χίλια",
+        "translation": "one thousand",
+        "imageURL": "thousand.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ὁ κύκλος",
+        "translation": "circle, ring",
+        "imageURL": "circle.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ὁ ἀριθμός",
+        "translation": "number",
+        "imageURL": "number.webp",
+        "audioFile": ""
+      }
+    ]
   }
 ]
