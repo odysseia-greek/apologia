@@ -1,9 +1,12 @@
 package rhetorike
 
 import (
+	"errors"
 	"testing"
 
 	dionysiosv1 "github.com/odysseia-greek/alexandreia/dionysios/gen/go/v1"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 func TestMapDionysiosResearch(t *testing.T) {
@@ -37,6 +40,28 @@ func TestMapDionysiosResearch(t *testing.T) {
 	}
 	if result.Texts[0].Text.Greek != "λύει" || result.Texts[0].Text.Translations[0] != "he releases" {
 		t.Fatalf("unexpected mapped text: %#v", result.Texts[0].Text)
+	}
+}
+
+func TestIsDionysiosNoResults(t *testing.T) {
+	tests := []struct {
+		name string
+		err  error
+		want bool
+	}{
+		{name: "canonical not found", err: status.Error(codes.NotFound, "no research results"), want: true},
+		{name: "v0.3.3 wrapped no hits", err: status.Error(codes.InvalidArgument, `research failed: no hits for rootword "ἄγνωστος"`), want: true},
+		{name: "other invalid argument", err: status.Error(codes.InvalidArgument, "rootword is required"), want: false},
+		{name: "service unavailable", err: status.Error(codes.Unavailable, "connection refused"), want: false},
+		{name: "ordinary error", err: errors.New("no hits for rootword"), want: false},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			if got := isDionysiosNoResults(test.err); got != test.want {
+				t.Fatalf("isDionysiosNoResults() = %t, want %t", got, test.want)
+			}
+		})
 	}
 }
 

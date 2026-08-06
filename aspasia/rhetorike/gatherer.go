@@ -18,7 +18,9 @@ import (
 	"github.com/odysseia-greek/attike/aristophanes/comedy"
 	arv1 "github.com/odysseia-greek/attike/aristophanes/gen/go/v1"
 	"golang.org/x/sync/errgroup"
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/status"
 )
 
 func (g *GathererServiceImpl) Search(ctx context.Context, request *v1.ExtendedSearch) (*v1.ExtendedSearchResponse, error) {
@@ -227,6 +229,10 @@ func (g *GathererServiceImpl) gatherTexts(ctx context.Context, word, requestId s
 		Limit:    5,
 	})
 	if err != nil {
+		if isDionysiosNoResults(err) {
+			logging.Debug(fmt.Sprintf("Dionysios found no text results for: %s", word))
+			return emptyAnalyzeTextResponse(word), nil
+		}
 		return nil, fmt.Errorf("Dionysios research failed: %w", err)
 	}
 
@@ -235,11 +241,36 @@ func (g *GathererServiceImpl) gatherTexts(ctx context.Context, word, requestId s
 	return analyseResult, nil
 }
 
-func mapDionysiosResearch(source *dionysiosv1.ResearchResponse) *v1.AnalyzeTextResponse {
-	result := &v1.AnalyzeTextResponse{
+func emptyAnalyzeTextResponse(rootword string) *v1.AnalyzeTextResponse {
+	return &v1.AnalyzeTextResponse{
+		Rootword:     rootword,
 		Conjugations: []*v1.Conjugations{},
 		Texts:        []*v1.AnalyzeResult{},
 	}
+}
+
+func isDionysiosNoResults(err error) bool {
+	if err == nil {
+		return false
+	}
+
+	grpcStatus, ok := status.FromError(err)
+	if !ok {
+		return false
+	}
+	if grpcStatus.Code() == codes.NotFound {
+		return true
+	}
+
+	// Dionysios v0.3.3 currently wraps Kallimachos' no-hit response as
+	// InvalidArgument. Keep this compatibility case narrow so other upstream
+	// validation and availability failures remain visible to callers.
+	return grpcStatus.Code() == codes.InvalidArgument &&
+		strings.Contains(strings.ToLower(grpcStatus.Message()), "no hits for rootword")
+}
+
+func mapDionysiosResearch(source *dionysiosv1.ResearchResponse) *v1.AnalyzeTextResponse {
+	result := emptyAnalyzeTextResponse("")
 	if source == nil {
 		return result
 	}
