@@ -45,19 +45,19 @@ func (g *GrammarServiceImpl) Health(context.Context, *koinosv1.HealthRequest) (*
 
 func (g *GrammarServiceImpl) Options(ctx context.Context, request *koinosv1.OptionsRequest) (*v1.AggregatedOptions, error) {
 	var unparsedResponse []byte
-	cacheItem, _ := g.Archytas.Read(OPTIONSEGMENTKEY)
+	cacheItem, _ := g.Archytas.Get(OPTIONSEGMENTKEY)
 	if cacheItem != nil {
 		unparsedResponse = cacheItem
 	} else {
 		query := quizAggregationQuery()
 
-		elasticResponse, err := g.Elastic.Query().MatchRaw(g.Index, query)
+		elasticResponse, err := g.Elastic.Query().MatchRawWithContext(ctx, g.Index, query)
 		if err != nil {
 			return nil, fmt.Errorf("error in elasticSearch: %s", err.Error())
 		}
 
 		unparsedResponse = elasticResponse
-		err = g.Archytas.Set(OPTIONSEGMENTKEY, string(elasticResponse))
+		err = g.Archytas.SetBytes(OPTIONSEGMENTKEY, elasticResponse)
 		if err != nil {
 			logging.Error(err.Error())
 		}
@@ -92,7 +92,7 @@ func (g *GrammarServiceImpl) Question(ctx context.Context, request *v1.CreationR
 		g.Progress.ResetSegment(sessionId, segmentKey)
 	}
 
-	cacheItem, _ := g.Archytas.Read(segmentKey)
+	cacheItem, _ := g.Archytas.Get(segmentKey)
 
 	var option GrammarBasedQuiz
 
@@ -117,7 +117,7 @@ func (g *GrammarServiceImpl) Question(ctx context.Context, request *v1.CreationR
 		}
 
 		query := g.Elastic.Builder().MultipleMatch(mustQuery)
-		elasticResponse, err := g.Elastic.Query().Match(g.Index, query)
+		elasticResponse, err := g.Elastic.Query().MatchWithContext(ctx, g.Index, query)
 		if err != nil {
 			return nil, err
 		}
@@ -133,7 +133,7 @@ func (g *GrammarServiceImpl) Question(ctx context.Context, request *v1.CreationR
 			return nil, err
 		}
 
-		err = g.Archytas.Set(segmentKey, string(source))
+		err = g.Archytas.SetBytes(segmentKey, source)
 		if err != nil {
 			if err.Error() != "Key not found" {
 				logging.Error(fmt.Sprintf("error when writing cache: %s", err.Error()))
@@ -258,7 +258,7 @@ func (g *GrammarServiceImpl) Answer(ctx context.Context, request *v1.AnswerReque
 
 	rawKey := fmt.Sprintf("%s+%s+%s", request.Theme, request.Set, request.Segment)
 	segmentKey := strings.ReplaceAll(rawKey, " ", "")
-	cacheItem, _ := g.Archytas.Read(segmentKey)
+	cacheItem, _ := g.Archytas.Get(segmentKey)
 
 	var option GrammarBasedQuiz
 
@@ -283,7 +283,7 @@ func (g *GrammarServiceImpl) Answer(ctx context.Context, request *v1.AnswerReque
 		}
 
 		query := g.Elastic.Builder().MultipleMatch(mustQuery)
-		elasticResponse, err := g.Elastic.Query().Match(g.Index, query)
+		elasticResponse, err := g.Elastic.Query().MatchWithContext(ctx, g.Index, query)
 		if err != nil {
 			return nil, err
 		}

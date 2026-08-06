@@ -40,19 +40,19 @@ func (d *DialogueServiceImpl) Health(context.Context, *koinosv1.HealthRequest) (
 
 func (d *DialogueServiceImpl) Options(ctx context.Context, request *koinosv1.OptionsRequest) (*v1.AggregatedOptions, error) {
 	var unparsedResponse []byte
-	cacheItem, _ := d.Archytas.Read(OPTIONSEGMENTKEY)
+	cacheItem, _ := d.Archytas.Get(OPTIONSEGMENTKEY)
 	if cacheItem != nil {
 		unparsedResponse = cacheItem
 	} else {
 		query := quizAggregationQuery()
 
-		elasticResponse, err := d.Elastic.Query().MatchRaw(d.Index, query)
+		elasticResponse, err := d.Elastic.Query().MatchRawWithContext(ctx, d.Index, query)
 		if err != nil {
 			return nil, fmt.Errorf("error in elasticSearch: %s", err.Error())
 		}
 
 		unparsedResponse = elasticResponse
-		err = d.Archytas.Set(OPTIONSEGMENTKEY, string(elasticResponse))
+		err = d.Archytas.SetBytes(OPTIONSEGMENTKEY, elasticResponse)
 		if err != nil {
 			logging.Error(err.Error())
 		}
@@ -68,7 +68,7 @@ func (d *DialogueServiceImpl) Options(ctx context.Context, request *koinosv1.Opt
 
 func (d *DialogueServiceImpl) Question(ctx context.Context, request *v1.CreationRequest) (*v1.QuizResponse, error) {
 	segmentKey := fmt.Sprintf("%s+%s", request.Theme, request.Set)
-	cacheItem, _ := d.Archytas.Read(segmentKey)
+	cacheItem, _ := d.Archytas.Get(segmentKey)
 
 	var quiz models.DialogueQuiz
 
@@ -90,7 +90,7 @@ func (d *DialogueServiceImpl) Question(ctx context.Context, request *v1.Creation
 		}
 
 		query := d.Elastic.Builder().MultipleMatch(mustQuery)
-		elasticResponse, err := d.Elastic.Query().Match(d.Index, query)
+		elasticResponse, err := d.Elastic.Query().MatchWithContext(ctx, d.Index, query)
 		if err != nil {
 			return nil, err
 		}
@@ -149,7 +149,7 @@ func (d *DialogueServiceImpl) Question(ctx context.Context, request *v1.Creation
 
 func (d *DialogueServiceImpl) Answer(ctx context.Context, request *v1.AnswerRequest) (*v1.AnswerResponse, error) {
 	segmentKey := fmt.Sprintf("%s+%s", request.Theme, request.Set)
-	cacheItem, _ := d.Archytas.Read(segmentKey)
+	cacheItem, _ := d.Archytas.Get(segmentKey)
 
 	var option models.DialogueQuiz
 
@@ -171,7 +171,7 @@ func (d *DialogueServiceImpl) Answer(ctx context.Context, request *v1.AnswerRequ
 		}
 
 		query := d.Elastic.Builder().MultipleMatch(mustQuery)
-		elasticResponse, err := d.Elastic.Query().Match(d.Index, query)
+		elasticResponse, err := d.Elastic.Query().MatchWithContext(ctx, d.Index, query)
 		if err != nil {
 			return nil, err
 		}

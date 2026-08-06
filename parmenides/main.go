@@ -42,7 +42,7 @@ func main() {
 
 	logging.Debug("creating config")
 
-	handler, err := aletheia.CreateNewConfig()
+	handler, err := aletheia.CreateNewConfig(ctx)
 	if err != nil {
 		logging.Error(err.Error())
 		log.Fatal("death has found me")

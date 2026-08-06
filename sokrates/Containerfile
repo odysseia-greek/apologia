@@ -1,5 +1,5 @@
 # Base build
-FROM golang:1.25-alpine as base
+FROM golang:1.26.5-alpine AS base
 
 ARG project_name
 ARG TARGETOS
@@ -14,7 +14,7 @@ COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
 # Build binary with Go
-FROM base as builder
+FROM base AS builder
 ENV CGO_ENABLED=0
 
 ARG project_name
@@ -41,7 +41,7 @@ USER 65532:65532
 ENTRYPOINT ["/app/sokrates"]
 
 # Production build
-FROM alpine:3.23.2 as prod
+FROM alpine:3.24.1 AS prod
 WORKDIR /app
 
 ARG project_name

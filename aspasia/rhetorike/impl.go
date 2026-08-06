@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/odysseia-greek/agora/archytas"
-	"github.com/odysseia-greek/agora/plato/service"
+	dionysiosv1 "github.com/odysseia-greek/alexandreia/dionysios/gen/go/v1"
 	v1 "github.com/odysseia-greek/apologia/aspasia/gen/go/v1"
 	arv1 "github.com/odysseia-greek/attike/aristophanes/gen/go/v1"
 	"google.golang.org/grpc"
@@ -28,9 +28,26 @@ type GathererServiceImpl struct {
 	AlexandrosAddress string
 	GraphqlClient     *http.Client
 	Archytas          archytas.Client
-	Client            service.OdysseiaClient
+	Dionysios         DionysiosResearchClient
+	DionysiosConn     *grpc.ClientConn
 	Streamer          arv1.TraceService_ChorusClient
 	v1.UnimplementedAspasiaServiceServer
+}
+
+type DionysiosResearchClient interface {
+	Research(ctx context.Context, request *dionysiosv1.ResearchRequest, opts ...grpc.CallOption) (*dionysiosv1.ResearchResponse, error)
+}
+
+func (g *GathererServiceImpl) Close() error {
+	if g.DionysiosConn != nil {
+		if err := g.DionysiosConn.Close(); err != nil {
+			return err
+		}
+	}
+	if g.Archytas != nil {
+		return g.Archytas.Close()
+	}
+	return nil
 }
 
 type GathererServiceClient struct {
