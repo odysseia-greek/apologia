@@ -1,0 +1,284 @@
+[
+  {
+  "quizMetadata": {
+    "language": "English"
+  },
+  "theme": "Thought",
+  "segment": "Philosophy",
+  "set": 1,
+  "content": [
+    {
+      "greek": "ὁ λόγος",
+      "translation": "word, reason",
+      "imageURL": "logos.webp",
+      "audioFile": ""
+    },
+    {
+      "greek": "ἡ σοφία",
+      "translation": "wisdom",
+      "imageURL": "wisdom.webp",
+      "audioFile": ""
+    },
+    {
+      "greek": "ἡ ψυχή",
+      "translation": "breath, soul",
+      "imageURL": "soul.webp",
+      "audioFile": ""
+    },
+    {
+      "greek": "ὁ βίος",
+      "translation": "life",
+      "imageURL": "life.webp",
+      "audioFile": ""
+    },
+    {
+      "greek": "φιλόσοφος",
+      "translation": "philosopher",
+      "imageURL": "philosopher.webp",
+      "audioFile": ""
+    },
+    {
+      "greek": "ἡ στοά",
+      "translation": "stoa, colonnade",
+      "imageURL": "stoa.webp",
+      "audioFile": ""
+    },
+    {
+      "greek":"πῦρ",
+      "translation":"fire",
+      "imageURL":"fire.webp",
+      "audioFile":""
+    },
+    {
+      "greek":"ἀήρ",
+      "translation":"air",
+      "imageURL":"air.webp",
+      "audioFile":""
+    },
+    {
+      "greek":"γῆ",
+      "translation":"earth",
+      "imageURL":"earth.webp",
+      "audioFile":""
+    },
+    {
+      "greek":"ὕδωρ",
+      "translation":"water",
+      "imageURL":"water.webp",
+      "audioFile":""
+    },
+    {
+      "greek":"ἄτομος",
+      "translation":"atom",
+      "imageURL":"atom.webp",
+      "audioFile":""
+    },
+    {
+      "greek":"κενόν",
+      "translation":"void",
+      "imageURL":"void.webp",
+      "audioFile":""
+    },
+    {
+      "greek":"νοῦς",
+      "translation":"mind, intellect",
+      "imageURL":"mind.webp",
+      "audioFile":""
+    },
+    {
+      "greek":"φύσις",
+      "translation":"nature",
+      "imageURL":"nature.webp",
+      "audioFile":""
+    },
+    {
+      "greek":"κόσμος",
+      "translation":"cosmos, order",
+      "imageURL":"cosmos.webp",
+      "audioFile":""
+    },
+    {
+      "greek":"ἀρχή",
+      "translation":"first principle, beginning",
+      "imageURL":"firstprinciple.webp",
+      "audioFile":""
+    },
+    {
+      "greek":"αἰτία",
+      "translation":"cause",
+      "imageURL":"cause.webp",
+      "audioFile":""
+    },
+    {
+      "greek":"τέλος",
+      "translation":"purpose, end",
+      "imageURL":"purpose.webp",
+      "audioFile":""
+    }
+  ]
+},
+  {
+    "quizMetadata": {
+      "language": "English"
+    },
+    "theme": "Thought",
+    "segment": "Religion",
+    "set": 1,
+    "content": [
+      {
+        "greek":"ὁ θεός",
+        "translation":"god",
+        "imageURL":"god.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ἡ θεά",
+        "translation":"goddess",
+        "imageURL":"goddess.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"τό ἱερόν",
+        "translation":"temple",
+        "imageURL":"temple.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ὁ μάντις",
+        "translation":"prophet",
+        "imageURL":"prophet.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"βωμός",
+        "translation":"altar",
+        "imageURL":"altar.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"θυσία",
+        "translation":"sacrifice",
+        "imageURL":"sacrifice.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"χάος",
+        "translation":"chaos",
+        "imageURL":"chaos.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"κόσμος",
+        "translation":"order, cosmos",
+        "imageURL":"cosmos.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"μαντεῖον",
+        "translation":"oracle",
+        "imageURL":"oracle.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"σπονδή",
+        "translation":"libation",
+        "imageURL":"libation.webp",
+        "audioFile":""
+      }
+    ]
+  },
+  {
+    "quizMetadata": {
+      "language": "English"
+    },
+    "theme": "Thought",
+    "segment": "Ethics",
+    "set": 1,
+    "content": [
+      {
+        "greek":"ἀγαθός",
+        "translation":"good",
+        "imageURL":"good.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"κακός",
+        "translation":"bad",
+        "imageURL":"bad.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ἄριστος",
+        "translation":"best, excellent",
+        "imageURL":"best.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ἡ σοφία",
+        "translation":"wisdom",
+        "imageURL":"wisdom.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ἡ ψυχή",
+        "translation":"soul",
+        "imageURL":"soul.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ὁ βίος",
+        "translation":"life",
+        "imageURL":"life.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ὁ λόγος",
+        "translation":"reason",
+        "imageURL":"logos.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ὁ νόμος",
+        "translation":"law",
+        "imageURL":"law.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ἡ δικαιοσύνη",
+        "translation":"justice",
+        "imageURL":"justice.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ἡ ἐλευθερία",
+        "translation":"freedom",
+        "imageURL":"freedom.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ἡ ἰσονομία",
+        "translation":"equality",
+        "imageURL":"equality.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ἡ εἰρήνη",
+        "translation":"peace",
+        "imageURL":"peace.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"ἀρετή",
+        "translation":"virtue, excellence",
+        "imageURL":"virtue.webp",
+        "audioFile":""
+      },
+      {
+        "greek":"εὐδαιμονία",
+        "translation":"flourishing",
+        "imageURL":"flourishing.webp",
+        "audioFile":""
+      }
+    ]
+  }
+]

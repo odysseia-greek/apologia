@@ -8,6 +8,12 @@
     "segment":"The Market",
     "content":[
       {
+        "greek":"τὸ σύκον",
+        "translation":"fig",
+        "imageURL":"fig.webp",
+        "audioFile":""
+      },
+      {
         "greek":"ή ἀγορά",
         "translation":"agora",
         "imageURL":"agora.webp",
@@ -29,12 +35,6 @@
         "greek":"ὁ χαλκός",
         "translation":"bronze",
         "imageURL":"bronze.webp",
-        "audioFile":""
-      },
-      {
-        "greek":"τὸ ἀργύριον",
-        "translation":"coin",
-        "imageURL":"coin.webp",
         "audioFile":""
       },
       {
@@ -198,10 +198,10 @@
         "audioFile": ""
       },
       {
-        "greek": "τὸ μετάλλιον",
-        "translation": "metalwork",
-        "imageURL": "metalwork.webp",
-        "audioFile": ""
+        "greek":"τὸ ἀργύριον",
+        "translation":"coin",
+        "imageURL":"coin.webp",
+        "audioFile":""
       },
       {
         "greek": "τὸ βαμβάκιον",
@@ -252,9 +252,139 @@
         "audioFile": ""
       },
       {
-        "greek": "ὁ ἀργυραμοιβός",
-        "translation": "money changer",
-        "imageURL": "moneychanger.webp",
+        "greek": "ὁ λιμήν",
+        "translation": "harbor",
+        "imageURL": "harbor.webp",
+        "audioFile": ""
+      }
+    ]
+  },
+  {
+    "quizMetadata": {
+      "language": "English"
+    },
+    "theme": "Economy",
+    "set": 1,
+    "segment": "The Workshop",
+    "content": [
+      {
+        "greek": "ὁ σιδηρεύς",
+        "translation": "blacksmith",
+        "imageURL": "blacksmith.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ὁ τέκτων",
+        "translation": "carpenter",
+        "imageURL": "carpenter.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "τὸ ἐργαστήριον",
+        "translation": "workshop",
+        "imageURL": "workshop.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ἡ τέχνη",
+        "translation": "craft",
+        "imageURL": "craft.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ὁ σίδηρος",
+        "translation": "iron",
+        "imageURL": "iron.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ὁ χαλκός",
+        "translation": "bronze",
+        "imageURL": "bronze.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ὁ χρυσός",
+        "translation": "gold",
+        "imageURL": "gold.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ὁ ἄργυρος",
+        "translation": "silver",
+        "imageURL": "silver.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "τὸ ξύλον",
+        "translation": "wood",
+        "imageURL": "wood.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ὁ λίθος",
+        "translation": "stone",
+        "imageURL": "stone.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ὁ ἀμφορεύς",
+        "translation": "amphora",
+        "imageURL": "amphora.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ὁ κρατήρ",
+        "translation": "mixing bowl",
+        "imageURL": "krater.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ἡ πορφύρα",
+        "translation": "purple dye",
+        "imageURL": "purpledye.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "τὸ ἔλαιον",
+        "translation": "olive oil",
+        "imageURL": "oliveoil.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ὁ κεραμεύς",
+        "translation": "potter",
+        "imageURL": "potter.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ἡ κεραμεία",
+        "translation": "pottery",
+        "imageURL": "pottery.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "χλαμύς",
+        "translation": "cloak",
+        "imageURL": "cloak.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "τὸ βαμβάκιον",
+        "translation": "cotton",
+        "imageURL": "cotton.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "ὕφασμα",
+        "translation": "textile",
+        "imageURL": "textile.webp",
+        "audioFile": ""
+      },
+      {
+        "greek": "τὸ ἐλέφαντον",
+        "translation": "ivory",
+        "imageURL": "ivory.webp",
         "audioFile": ""
       }
     ]

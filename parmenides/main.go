@@ -16,12 +16,14 @@ import (
 	"regexp"
 	"strings"
 	"sync"
+	"time"
 )
 
 //go:embed sullego
 var sullego embed.FS
 
 func main() {
+	ctx := context.Background()
 	logging.System(`
  ____   ____  ____   ___ ___    ___  ____   ____  ___      ___  _____
 |    \ /    ||    \ |   |   |  /  _]|    \ |    ||   \    /  _]/ ___/
@@ -46,11 +48,11 @@ func main() {
 		log.Fatal("death has found me")
 	}
 
-	err = handler.DeleteIndexAtStartUp()
+	err = handler.DeleteIndexAtStartUp(ctx)
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = handler.CreateIndexAtStartup()
+	err = handler.CreateIndexAtStartup(ctx)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -87,9 +89,14 @@ func main() {
 	}
 
 	var wg sync.WaitGroup
+	documentCounts := make(chan int, len(typeDir))
 	documents := 0
 
 	for _, quizFile := range typeDir {
+		if quizFile.IsDir() {
+			continue
+		}
+
 		quizPath := path.Join(typePath, quizFile.Name())
 		content, err := sullego.ReadFile(quizPath)
 		if err != nil {
@@ -100,34 +107,43 @@ func main() {
 		logging.Debug(fmt.Sprintf("Processing file: %s for index: %s", quizPath, handler.Index))
 
 		wg.Add(1)
-		go func(content []byte) {
+		go func(content []byte, quizPath string) {
 			defer wg.Done()
 
+			documentCount := 0
 			switch handler.Index {
 			case "media-quiz":
-				processQuizFile[models.MediaQuiz](content, handler, true) // Queue this
+				documentCount = processQuizFile[models.MediaQuiz](ctx, content, handler, true) // Queue this
 			case "dialogue-quiz":
-				processQuizFile[models.DialogueQuiz](content, handler, false) // No queue for dialogue
+				documentCount = processQuizFile[models.DialogueQuiz](ctx, content, handler, false) // No queue for dialogue
 			case "author-based-quiz":
-				processQuizFile[models.AuthorbasedQuiz](content, handler, true) // Queue this
+				documentCount = processQuizFile[models.AuthorbasedQuiz](ctx, content, handler, true) // Queue this
 			case "multiple-choice-quiz":
-				processQuizFile[models.MultipleChoiceQuiz](content, handler, true) // Queue this
+				documentCount = processQuizFile[models.MultipleChoiceQuiz](ctx, content, handler, true) // Queue this
 			case "grammar-quiz":
-				processQuizFile[aletheia.GrammarBasedQuiz](content, handler, true)
+				documentCount = processQuizFile[aletheia.GrammarBasedQuiz](ctx, content, handler, true)
 			case "journey-quiz":
-				processQuizFile[aletheia.JourneyBasedQuiz](content, handler, false) // No queue for journey mode
+				documentCount = processQuizFile[aletheia.JourneyBasedQuiz](ctx, content, handler, false) // No queue for journey mode
 			}
 
-		}(content)
+			logging.Info(fmt.Sprintf("Documents found in %s: %d", quizPath, documentCount))
+			documentCounts <- documentCount
+		}(content, quizPath)
 	}
 
 	wg.Wait()
+	close(documentCounts)
+	for documentCount := range documentCounts {
+		documents += documentCount
+	}
 	logging.Info(fmt.Sprintf("Created: %d documents", handler.Created))
 	logging.Info(fmt.Sprintf("Words found in sullego: %d", documents))
 
 	logging.Debug("Closing aristides because job is done")
 	uuidCode := uuid.New().String()
-	_, err = handler.Ambassador.ShutDown(context.Background(), &pb.ShutDownRequest{Code: uuidCode})
+	shutdownCtx, cancel := context.WithTimeout(ctx, 30*time.Second)
+	defer cancel()
+	_, err = handler.Ambassador.ShutDown(shutdownCtx, &pb.ShutDownRequest{Code: uuidCode})
 	if err != nil {
 		logging.Error(err.Error())
 	}
@@ -142,11 +158,11 @@ func stripQuizSuffix(indexName string) string {
 	return re.ReplaceAllString(indexName, "")          // Remove hyphens
 }
 
-func processQuizFile[T any](content []byte, handler *aletheia.ParmenidesHandler, useQueue bool) {
+func processQuizFile[T any](ctx context.Context, content []byte, handler *aletheia.ParmenidesHandler, useQueue bool) int {
 	var quizzes []T
 	if err := json.Unmarshal(content, &quizzes); err != nil {
 		logging.Error("Failed to unmarshal JSON: " + err.Error())
-		return
+		return 0
 	}
 
 	quizInterfaces := make([]interface{}, len(quizzes))
@@ -156,12 +172,14 @@ func processQuizFile[T any](content []byte, handler *aletheia.ParmenidesHandler,
 
 	if useQueue {
 		// Batch all quizzes together using the queue
-		if err := handler.AddWithQueue(quizInterfaces); err != nil {
+		if err := handler.AddWithQueue(ctx, quizInterfaces); err != nil {
 			logging.Error(err.Error())
 		}
 	} else {
-		if err := handler.AddWithoutQueue(quizInterfaces); err != nil {
+		if err := handler.AddWithoutQueue(ctx, quizInterfaces); err != nil {
 			logging.Error(err.Error())
 		}
 	}
+
+	return len(quizzes)
 }

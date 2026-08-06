@@ -13,9 +13,11 @@ import (
 	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/service"
-	aristarchos "github.com/odysseia-greek/alexandreia/aristarchos/scholar"
+	aristarchos "github.com/odysseia-greek/alexandreia/aristarchos/gen/go/v1"
 	"github.com/odysseia-greek/delphi/aristides/diplomat"
 	pbp "github.com/odysseia-greek/delphi/aristides/proto"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/metadata"
 )
 
@@ -38,7 +40,7 @@ func CreateNewConfig() (*ParmenidesHandler, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
 	defer cancel()
 	md := metadata.New(map[string]string{service.HeaderKey: traceId})
-	ctx = metadata.NewOutgoingContext(context.Background(), md)
+	ctx = metadata.NewOutgoingContext(ctx, md)
 	vaultConfig, err := ambassador.GetSecret(ctx, &pbp.VaultRequest{})
 	if err != nil {
 		logging.Error(err.Error())
@@ -97,16 +99,18 @@ func CreateNewConfig() (*ParmenidesHandler, error) {
 
 	if index == "author-based-quiz" || index == "grammar-quiz" {
 		aggregatorAddress := config.StringFromEnv(config.EnvAggregatorAddress, config.DefaultAggregatorAddress)
-		aggregator, err := aristarchos.NewClientAggregator(aggregatorAddress)
+		conn, err := grpc.NewClient(aggregatorAddress, grpc.WithTransportCredentials(insecure.NewCredentials()))
 		if err != nil {
 			logging.Error(err.Error())
 			return nil, err
 		}
+		aggregator := aristarchos.NewAristarchosClient(conn)
 
 		logging.Debug(fmt.Sprintf("creating new aggregator client: %s", aggregatorAddress))
 		logging.Debug("waiting for aggregator to be ready")
-		aggregatorHealthy := aggregator.WaitForHealthyState()
-		if !aggregatorHealthy {
+		healthCtx, healthCancel := context.WithTimeout(context.Background(), 30*time.Second)
+		defer healthCancel()
+		if !waitForAggregator(healthCtx, aggregator) {
 			logging.Debug("aggregator service not ready - restarting seems the only option")
 			os.Exit(1)
 		}
@@ -116,6 +120,7 @@ func CreateNewConfig() (*ParmenidesHandler, error) {
 		aggrContext, aggregatorCancel := context.WithCancel(context.Background())
 		aristarchosStreamer, err := aggregator.CreateNewEntry(aggrContext)
 		if err != nil {
+			aggregatorCancel()
 			logging.Error(err.Error())
 			return nil, err
 		}
@@ -125,4 +130,22 @@ func CreateNewConfig() (*ParmenidesHandler, error) {
 	}
 
 	return handler, nil
+}
+
+func waitForAggregator(ctx context.Context, client aristarchos.AristarchosClient) bool {
+	ticker := time.NewTicker(time.Second)
+	defer ticker.Stop()
+
+	for {
+		health, err := client.Health(ctx, &aristarchos.HealthRequest{})
+		if err == nil && health.Health {
+			return true
+		}
+
+		select {
+		case <-ctx.Done():
+			return false
+		case <-ticker.C:
+		}
+	}
 }

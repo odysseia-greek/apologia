@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	elastic "github.com/odysseia-greek/agora/aristoteles"
-	pb "github.com/odysseia-greek/agora/eupalinos/proto"
+	pb "github.com/odysseia-greek/agora/eupalinos/v1"
 	"github.com/odysseia-greek/agora/plato/models"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -26,9 +26,10 @@ func TestParmenidesHandlerAdd(t *testing.T) {
 
 	t.Run("EnqueueTask", func(t *testing.T) {
 		testHandler := ParmenidesHandler{
-			Index:   index,
-			Created: 0,
-			Channel: channel,
+			Index:     index,
+			Created:   0,
+			Channel:   channel,
+			Eupalinos: &MockEupalinosClient{},
 		}
 
 		message, err := body.Marshal()
@@ -59,7 +60,7 @@ func TestHandlerDeleteIndex(t *testing.T) {
 			Created: 0,
 		}
 
-		err = testHandler.DeleteIndexAtStartUp()
+		err = testHandler.DeleteIndexAtStartUp(context.Background())
 		assert.Nil(t, err)
 	})
 
@@ -74,7 +75,7 @@ func TestHandlerDeleteIndex(t *testing.T) {
 			Index:   index,
 			Created: 0,
 		}
-		err = testHandler.DeleteIndexAtStartUp()
+		err = testHandler.DeleteIndexAtStartUp(context.Background())
 		assert.Nil(t, err)
 	})
 
@@ -90,7 +91,7 @@ func TestHandlerDeleteIndex(t *testing.T) {
 			Created: 0,
 		}
 
-		err = testHandler.DeleteIndexAtStartUp()
+		err = testHandler.DeleteIndexAtStartUp(context.Background())
 		assert.NotNil(t, err)
 	})
 }
@@ -110,7 +111,7 @@ func TestHandlerCreateIndex(t *testing.T) {
 			Created:    0,
 			PolicyName: fmt.Sprintf("%s-policy", index),
 		}
-		err = testHandler.CreateIndexAtStartup()
+		err = testHandler.CreateIndexAtStartup(context.Background())
 		assert.Nil(t, err)
 	})
 
@@ -126,7 +127,7 @@ func TestHandlerCreateIndex(t *testing.T) {
 			Created: 0,
 		}
 
-		err = testHandler.CreateIndexAtStartup()
+		err = testHandler.CreateIndexAtStartup(context.Background())
 		assert.NotNil(t, err)
 	})
 }
