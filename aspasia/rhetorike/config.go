@@ -11,7 +11,10 @@ import (
 	"github.com/odysseia-greek/agora/archytas"
 	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
+	dionysiosv1 "github.com/odysseia-greek/alexandreia/dionysios/gen/go/v1"
 	aristophanes "github.com/odysseia-greek/attike/aristophanes/comedy"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 func CreateNewConfig(ctx context.Context) (*GathererServiceImpl, error) {
@@ -24,14 +27,12 @@ func CreateNewConfig(ctx context.Context) (*GathererServiceImpl, error) {
 
 	version := os.Getenv(config.EnvVersion)
 
-	client, err := config.CreateOdysseiaClient()
+	dionysiosAddress := config.StringFromEnv(config.EnvDionysiosService, "dionysios:50060")
+	dionysiosConn, err := grpc.NewClient(dionysiosAddress, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("create Dionysios client: %w", err)
 	}
-
-	if err != nil {
-		logging.Error(err.Error())
-	}
+	dionysiosClient := dionysiosv1.NewDionysiosServiceClient(dionysiosConn)
 
 	tracer, err := aristophanes.NewClientTracer(aristophanes.DefaultAddress)
 	healthy := tracer.WaitForHealthyState()
@@ -69,15 +70,18 @@ func CreateNewConfig(ctx context.Context) (*GathererServiceImpl, error) {
 	logging.System(fmt.Sprintf(`Aspasia Configuration Overview:
 - Initialization Time: %s
 - Alexandros Service:  %s
+- Dionysios Service:   %s
 `,
 		elapsed,
 		alexandrosGraphQLEndpoint,
+		dionysiosAddress,
 	))
 
 	return &GathererServiceImpl{
 		Archytas:          cache,
 		Version:           version,
-		Client:            client,
+		Dionysios:         dionysiosClient,
+		DionysiosConn:     dionysiosConn,
 		Streamer:          streamer,
 		GraphqlClient:     httpClient,
 		AlexandrosAddress: alexandrosGraphQLEndpoint,

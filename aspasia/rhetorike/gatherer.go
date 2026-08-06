@@ -12,8 +12,8 @@ import (
 
 	"github.com/odysseia-greek/agora/plato/config"
 	"github.com/odysseia-greek/agora/plato/logging"
-	"github.com/odysseia-greek/agora/plato/models"
 	"github.com/odysseia-greek/agora/plato/service"
+	dionysiosv1 "github.com/odysseia-greek/alexandreia/dionysios/gen/go/v1"
 	v1 "github.com/odysseia-greek/apologia/aspasia/gen/go/v1"
 	"github.com/odysseia-greek/attike/aristophanes/comedy"
 	arv1 "github.com/odysseia-greek/attike/aristophanes/gen/go/v1"
@@ -29,7 +29,7 @@ func (g *GathererServiceImpl) Search(ctx context.Context, request *v1.ExtendedSe
 
 	request.Word = cleanWord
 
-	cacheItem, _ := g.Archytas.Read(request.Word)
+	cacheItem, _ := g.Archytas.Get(request.Word)
 	if cacheItem != nil {
 		err := json.Unmarshal(cacheItem, &analyseResult)
 		if err != nil {
@@ -69,7 +69,7 @@ func (g *GathererServiceImpl) Search(ctx context.Context, request *v1.ExtendedSe
 	analyseResultJson, _ := json.Marshal(analyseResult)
 
 	standardDuration := time.Minute * 10
-	err := g.Archytas.SetWithTTL(request.Word, string(analyseResultJson), standardDuration)
+	err := g.Archytas.SetBytesWithTTL(request.Word, analyseResultJson, standardDuration)
 	if err != nil {
 		logging.Error(err.Error())
 	}
@@ -206,68 +206,70 @@ func (g *GathererServiceImpl) gatherSimilarWords(ctx context.Context, word, requ
 }
 
 func (g *GathererServiceImpl) gatherTexts(ctx context.Context, word, requestId string) (*v1.AnalyzeTextResponse, error) {
-	var analyseResult *v1.AnalyzeTextResponse
-
-	herodotosSpan := &arv1.ObserveRequest{
+	dionysiosSpan := &arv1.ObserveRequest{
 		Kind: &arv1.ObserveRequest_Action{Action: &arv1.ObserveAction{
-			Action: "analyseText",
-			Status: fmt.Sprintf("querying Herodotos for word: %s", word),
+			Action: "researchText",
+			Status: fmt.Sprintf("querying Dionysios for word: %s", word),
 		}},
 	}
 
-	comedy.ServiceToServiceSpanWithCtx(ctx, herodotosSpan, g.Streamer)
+	comedy.ServiceToServiceSpanWithCtx(ctx, dionysiosSpan, g.Streamer)
 
-	r := models.AnalyzeTextRequest{Rootword: word}
-	jsonBody, err := json.Marshal(r)
+	if g.Dionysios == nil {
+		return nil, fmt.Errorf("Dionysios research client is not configured")
+	}
+
+	researchCtx, cancel := createRequestHeader(ctx, requestId, "")
+	defer cancel()
+
+	source, err := g.Dionysios.Research(researchCtx, &dionysiosv1.ResearchRequest{
+		Rootword: word,
+		Limit:    5,
+	})
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Dionysios research failed: %w", err)
 	}
 
-	foundInText, err := g.Client.Herodotos().Analyze(jsonBody, requestId)
-
-	if foundInText != nil {
-		var source models.AnalyzeTextResponse
-		defer foundInText.Body.Close()
-		err = json.NewDecoder(foundInText.Body).Decode(&source)
-		if err != nil {
-			logging.Error(fmt.Sprintf("error while decoding: %s", err.Error()))
-		}
-
-		analyseResult = &v1.AnalyzeTextResponse{
-			Rootword:     source.Rootword,
-			PartOfSpeech: source.PartOfSpeech,
-			Conjugations: []*v1.Conjugations{},
-			Texts:        []*v1.AnalyzeResult{},
-		}
-
-		for _, text := range source.Results {
-			parsedText := &v1.AnalyzeResult{
-				ReferenceLink: text.ReferenceLink,
-				Author:        text.Author,
-				Book:          text.Book,
-				Reference:     text.Reference,
-				Text: &v1.Rhema{
-					Greek:        text.Text.Greek,
-					Translations: text.Text.Translations,
-					Section:      text.Text.Section,
-				},
-			}
-			analyseResult.Texts = append(analyseResult.Texts, parsedText)
-		}
-
-		for _, conjugation := range source.Conjugations {
-			parsedConjugation := &v1.Conjugations{
-				Word: conjugation.Word,
-				Rule: conjugation.Rule,
-			}
-
-			analyseResult.Conjugations = append(analyseResult.Conjugations, parsedConjugation)
-		}
-
-		logging.Debug(fmt.Sprintf("found in herodotos: %s number of results: %d", word, len(analyseResult.Texts)))
-	}
-
+	analyseResult := mapDionysiosResearch(source)
+	logging.Debug(fmt.Sprintf("found in Dionysios: %s number of results: %d", word, len(analyseResult.Texts)))
 	return analyseResult, nil
+}
+
+func mapDionysiosResearch(source *dionysiosv1.ResearchResponse) *v1.AnalyzeTextResponse {
+	result := &v1.AnalyzeTextResponse{
+		Conjugations: []*v1.Conjugations{},
+		Texts:        []*v1.AnalyzeResult{},
+	}
+	if source == nil {
+		return result
+	}
+
+	result.Rootword = source.GetRootword()
+	result.PartOfSpeech = source.GetPartOfSpeech()
+	for _, conjugation := range source.GetConjugations() {
+		result.Conjugations = append(result.Conjugations, &v1.Conjugations{
+			Word: conjugation.GetWord(),
+			Rule: conjugation.GetRule(),
+		})
+	}
+	for _, text := range source.GetResults() {
+		mapped := &v1.AnalyzeResult{
+			ReferenceLink: text.GetReferenceLink(),
+			Author:        text.GetAuthor(),
+			Book:          text.GetBook(),
+			Reference:     text.GetReference(),
+		}
+		if text.GetText() != nil {
+			mapped.Text = &v1.Rhema{
+				Greek:        text.GetText().GetGreek(),
+				Translations: text.GetText().GetTranslations(),
+				Section:      text.GetText().GetSection(),
+			}
+		}
+		result.Texts = append(result.Texts, mapped)
+	}
+
+	return result
 }
 
 func (g *GathererServiceImpl) normalizeGreekWithArticle(s string) string {

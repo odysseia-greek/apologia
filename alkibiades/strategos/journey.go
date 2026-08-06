@@ -41,20 +41,20 @@ func (j *JourneyServiceImpl) Health(context.Context, *koinosv1.HealthRequest) (*
 
 func (j *JourneyServiceImpl) Options(ctx context.Context, request *koinosv1.OptionsRequest) (*v1.AggregatedOptions, error) {
 	var unparsedResponse []byte
-	cacheItem, _ := j.Archytas.Read(OPTIONSEGMENTKEY)
+	cacheItem, _ := j.Archytas.Get(OPTIONSEGMENTKEY)
 	if cacheItem != nil {
 		unparsedResponse = cacheItem
 	} else {
 		query := quizAggregationQuery()
 		logging.Warn(fmt.Sprintf("%v", query))
 
-		elasticResponse, err := j.Elastic.Query().MatchRaw(j.Index, query)
+		elasticResponse, err := j.Elastic.Query().MatchRawWithContext(ctx, j.Index, query)
 		if err != nil {
 			return nil, fmt.Errorf("error in elasticSearch: %s", err.Error())
 		}
 
 		unparsedResponse = elasticResponse
-		err = j.Archytas.Set(OPTIONSEGMENTKEY, string(elasticResponse))
+		err = j.Archytas.SetBytes(OPTIONSEGMENTKEY, elasticResponse)
 		if err != nil {
 			logging.Error(err.Error())
 		}
@@ -76,7 +76,7 @@ func (j *JourneyServiceImpl) Question(ctx context.Context, request *v1.CreationR
 	logging.Debug(fmt.Sprintf("%v", sessionId))
 
 	segmentKey := fmt.Sprintf("%s+%s", request.Theme, request.Segment)
-	cacheItem, _ := j.Archytas.Read(segmentKey)
+	cacheItem, _ := j.Archytas.Get(segmentKey)
 
 	var option JourneyBasedQuiz
 
@@ -98,7 +98,7 @@ func (j *JourneyServiceImpl) Question(ctx context.Context, request *v1.CreationR
 		}
 
 		query := j.Elastic.Builder().MultipleMatch(mustQuery)
-		elasticResponse, err := j.Elastic.Query().Match(j.Index, query)
+		elasticResponse, err := j.Elastic.Query().MatchWithContext(ctx, j.Index, query)
 		if err != nil {
 			return nil, err
 		}
@@ -114,7 +114,7 @@ func (j *JourneyServiceImpl) Question(ctx context.Context, request *v1.CreationR
 			return nil, err
 		}
 
-		err = j.Archytas.Set(segmentKey, string(source))
+		err = j.Archytas.SetBytes(segmentKey, source)
 		if err != nil {
 			if err.Error() != "Key not found" {
 				logging.Error(fmt.Sprintf("error when writing cache: %s", err.Error()))

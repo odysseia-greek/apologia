@@ -21,7 +21,7 @@ import (
 	"google.golang.org/grpc/metadata"
 )
 
-func CreateNewConfig() (*ParmenidesHandler, error) {
+func CreateNewConfig(ctx context.Context) (*ParmenidesHandler, error) {
 	tls := config.BoolFromEnv(config.EnvTlSKey)
 
 	var cfg models.Config
@@ -37,11 +37,11 @@ func CreateNewConfig() (*ParmenidesHandler, error) {
 	}
 
 	traceId := uuid.New().String()
-	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
+	vaultCtx, cancel := context.WithTimeout(ctx, 1*time.Minute)
 	defer cancel()
 	md := metadata.New(map[string]string{service.HeaderKey: traceId})
-	ctx = metadata.NewOutgoingContext(ctx, md)
-	vaultConfig, err := ambassador.GetSecret(ctx, &pbp.VaultRequest{})
+	vaultCtx = metadata.NewOutgoingContext(vaultCtx, md)
+	vaultConfig, err := ambassador.GetSecret(vaultCtx, &pbp.VaultRequest{})
 	if err != nil {
 		logging.Error(err.Error())
 		return nil, err
@@ -108,7 +108,7 @@ func CreateNewConfig() (*ParmenidesHandler, error) {
 
 		logging.Debug(fmt.Sprintf("creating new aggregator client: %s", aggregatorAddress))
 		logging.Debug("waiting for aggregator to be ready")
-		healthCtx, healthCancel := context.WithTimeout(context.Background(), 30*time.Second)
+		healthCtx, healthCancel := context.WithTimeout(ctx, 30*time.Second)
 		defer healthCancel()
 		if !waitForAggregator(healthCtx, aggregator) {
 			logging.Debug("aggregator service not ready - restarting seems the only option")
@@ -117,7 +117,7 @@ func CreateNewConfig() (*ParmenidesHandler, error) {
 
 		logging.Debug("aggregator is ready")
 		// New context for aggregator streamer
-		aggrContext, aggregatorCancel := context.WithCancel(context.Background())
+		aggrContext, aggregatorCancel := context.WithCancel(ctx)
 		aristarchosStreamer, err := aggregator.CreateNewEntry(aggrContext)
 		if err != nil {
 			aggregatorCancel()

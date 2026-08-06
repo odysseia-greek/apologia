@@ -45,19 +45,19 @@ func (a *AuthorBasedServiceImpl) Health(context.Context, *koinosv1.HealthRequest
 
 func (a *AuthorBasedServiceImpl) Options(ctx context.Context, request *koinosv1.OptionsRequest) (*v1.AggregatedOptions, error) {
 	var unparsedResponse []byte
-	cacheItem, _ := a.Archytas.Read(OPTIONSEGMENTKEY)
+	cacheItem, _ := a.Archytas.Get(OPTIONSEGMENTKEY)
 	if cacheItem != nil {
 		unparsedResponse = cacheItem
 	} else {
 		query := quizAggregationQuery()
 
-		elasticResponse, err := a.Elastic.Query().MatchRaw(a.Index, query)
+		elasticResponse, err := a.Elastic.Query().MatchRawWithContext(ctx, a.Index, query)
 		if err != nil {
 			return nil, fmt.Errorf("error in elasticSearch: %s", err.Error())
 		}
 
 		unparsedResponse = elasticResponse
-		err = a.Archytas.Set(OPTIONSEGMENTKEY, string(elasticResponse))
+		err = a.Archytas.SetBytes(OPTIONSEGMENTKEY, elasticResponse)
 		if err != nil {
 			logging.Error(err.Error())
 		}
@@ -90,7 +90,7 @@ func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *v1.Creat
 		a.Progress.ResetSegment(sessionId, segmentKey)
 	}
 
-	cacheItem, _ := a.Archytas.Read(segmentKey)
+	cacheItem, _ := a.Archytas.Get(segmentKey)
 
 	var option models.AuthorbasedQuiz
 
@@ -115,7 +115,7 @@ func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *v1.Creat
 		}
 
 		query := a.Elastic.Builder().MultipleMatch(mustQuery)
-		elasticResponse, err := a.Elastic.Query().Match(a.Index, query)
+		elasticResponse, err := a.Elastic.Query().MatchWithContext(ctx, a.Index, query)
 		if err != nil {
 			return nil, err
 		}
@@ -132,7 +132,7 @@ func (a *AuthorBasedServiceImpl) Question(ctx context.Context, request *v1.Creat
 
 		go comedy.DatabaseSpan(query, elasticResponse.Hits.Total.Value, elasticResponse.Took, ctx, a.Streamer)
 
-		err = a.Archytas.Set(segmentKey, string(source))
+		err = a.Archytas.SetBytes(segmentKey, source)
 		if err != nil {
 			if err.Error() != "Key not found" {
 				logging.Error(fmt.Sprintf("error when writing cache: %s", err.Error()))
@@ -306,7 +306,7 @@ func (a *AuthorBasedServiceImpl) Answer(ctx context.Context, request *v1.AnswerR
 		}
 	}
 	segmentKey := fmt.Sprintf("%s+%s+%s", request.Theme, request.Set, request.Segment)
-	cacheItem, _ := a.Archytas.Read(segmentKey)
+	cacheItem, _ := a.Archytas.Get(segmentKey)
 
 	var option models.AuthorbasedQuiz
 
@@ -331,7 +331,7 @@ func (a *AuthorBasedServiceImpl) Answer(ctx context.Context, request *v1.AnswerR
 		}
 
 		query := a.Elastic.Builder().MultipleMatch(mustQuery)
-		elasticResponse, err := a.Elastic.Query().Match(a.Index, query)
+		elasticResponse, err := a.Elastic.Query().MatchWithContext(ctx, a.Index, query)
 		if err != nil {
 			return nil, err
 		}
@@ -389,7 +389,7 @@ func (a *AuthorBasedServiceImpl) Answer(ctx context.Context, request *v1.AnswerR
 
 func (a *AuthorBasedServiceImpl) WordForms(ctx context.Context, request *v1.WordFormRequest) (*v1.WordFormResponse, error) {
 	segmentKey := fmt.Sprintf("%s+%s+%s", request.Theme, request.Set, request.Segment)
-	cacheItem, _ := a.Archytas.Read(segmentKey)
+	cacheItem, _ := a.Archytas.Get(segmentKey)
 
 	var option models.AuthorbasedQuiz
 
@@ -414,7 +414,7 @@ func (a *AuthorBasedServiceImpl) WordForms(ctx context.Context, request *v1.Word
 		}
 
 		query := a.Elastic.Builder().MultipleMatch(mustQuery)
-		elasticResponse, err := a.Elastic.Query().Match(a.Index, query)
+		elasticResponse, err := a.Elastic.Query().MatchWithContext(ctx, a.Index, query)
 		if err != nil {
 			return nil, err
 		}

@@ -52,7 +52,7 @@ func CreateNewConfig(ctx context.Context) (*GrammarServiceImpl, error) {
 	spanID := aristophanes.GenerateSpanID()
 	combinedID := fmt.Sprintf("%s+%s+%d", traceID, spanID, 1)
 
-	ambassadorCtx, ctxCancel := context.WithTimeout(context.Background(), 30*time.Second)
+	ambassadorCtx, ctxCancel := context.WithTimeout(ctx, 30*time.Second)
 	defer ctxCancel()
 
 	payload := &arv1.ObserveTraceStart{
@@ -80,7 +80,7 @@ func CreateNewConfig(ctx context.Context) (*GrammarServiceImpl, error) {
 	}()
 
 	md := metadata.New(map[string]string{service.HeaderKey: combinedID})
-	ambassadorCtx = metadata.NewOutgoingContext(context.Background(), md)
+	ambassadorCtx = metadata.NewOutgoingContext(ambassadorCtx, md)
 	vaultConfig, err := ambassador.GetSecret(ambassadorCtx, &pb.VaultRequest{})
 	if err != nil {
 		logging.Error(err.Error())

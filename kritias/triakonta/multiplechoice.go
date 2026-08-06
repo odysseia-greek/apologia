@@ -46,19 +46,19 @@ func (m *MultipleChoiceServiceImpl) Health(context.Context, *koinosv1.HealthRequ
 
 func (m *MultipleChoiceServiceImpl) Options(ctx context.Context, request *koinosv1.OptionsRequest) (*v1.AggregatedOptions, error) {
 	var unparsedResponse []byte
-	cacheItem, _ := m.Archytas.Read(OPTIONSEGMENTKEY)
+	cacheItem, _ := m.Archytas.Get(OPTIONSEGMENTKEY)
 	if cacheItem != nil {
 		unparsedResponse = cacheItem
 	} else {
 		query := quizAggregationQuery()
 
-		elasticResponse, err := m.Elastic.Query().MatchRaw(m.Index, query)
+		elasticResponse, err := m.Elastic.Query().MatchRawWithContext(ctx, m.Index, query)
 		if err != nil {
 			return nil, fmt.Errorf("error in elasticSearch: %s", err.Error())
 		}
 
 		unparsedResponse = elasticResponse
-		err = m.Archytas.Set(OPTIONSEGMENTKEY, string(elasticResponse))
+		err = m.Archytas.SetBytes(OPTIONSEGMENTKEY, elasticResponse)
 		if err != nil {
 			logging.Error(err.Error())
 		}
@@ -99,7 +99,7 @@ func (m *MultipleChoiceServiceImpl) Question(ctx context.Context, request *v1.Cr
 		m.Progress.ResetSegment(sessionId, segmentKey)
 	}
 
-	cacheItem, _ := m.Archytas.Read(segmentKey)
+	cacheItem, _ := m.Archytas.Get(segmentKey)
 
 	var option models.MediaQuiz
 
@@ -121,7 +121,7 @@ func (m *MultipleChoiceServiceImpl) Question(ctx context.Context, request *v1.Cr
 		}
 
 		query := m.Elastic.Builder().MultipleMatch(mustQuery)
-		elasticResponse, err := m.Elastic.Query().Match(m.Index, query)
+		elasticResponse, err := m.Elastic.Query().MatchWithContext(ctx, m.Index, query)
 		if err != nil {
 			return nil, err
 		}
@@ -137,7 +137,7 @@ func (m *MultipleChoiceServiceImpl) Question(ctx context.Context, request *v1.Cr
 			return nil, err
 		}
 
-		err = m.Archytas.Set(segmentKey, string(source))
+		err = m.Archytas.SetBytes(segmentKey, source)
 		if err != nil {
 			if err.Error() != "Key not found" {
 				logging.Error(fmt.Sprintf("error when writing cache: %s", err.Error()))
@@ -251,7 +251,7 @@ func (m *MultipleChoiceServiceImpl) Answer(ctx context.Context, request *v1.Answ
 		}
 	}
 	segmentKey := fmt.Sprintf("%s+%s", request.Theme, request.Set)
-	cacheItem, _ := m.Archytas.Read(segmentKey)
+	cacheItem, _ := m.Archytas.Get(segmentKey)
 
 	var option models.MediaQuiz
 
@@ -273,7 +273,7 @@ func (m *MultipleChoiceServiceImpl) Answer(ctx context.Context, request *v1.Answ
 		}
 
 		query := m.Elastic.Builder().MultipleMatch(mustQuery)
-		elasticResponse, err := m.Elastic.Query().Match(m.Index, query)
+		elasticResponse, err := m.Elastic.Query().MatchWithContext(ctx, m.Index, query)
 		if err != nil {
 			return nil, err
 		}

@@ -45,6 +45,11 @@ func main() {
 		logging.Error(err.Error())
 		log.Fatal("death has found me")
 	}
+	defer func() {
+		if err := cfg.Close(); err != nil {
+			logging.Error(fmt.Sprintf("failed to close Aspasia resources: %v", err))
+		}
+	}()
 
 	listener, err := net.Listen("tcp", port)
 	if err != nil {
