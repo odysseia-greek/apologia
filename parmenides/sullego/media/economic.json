@@ -8,6 +8,12 @@
     "segment":"The Market",
     "content":[
       {
+        "greek":"τὸ σύκον",
+        "translation":"fig",
+        "imageURL":"fig.webp",
+        "audioFile":""
+      },
+      {
         "greek":"ή ἀγορά",
         "translation":"agora",
         "imageURL":"agora.webp",
@@ -29,12 +35,6 @@
         "greek":"ὁ χαλκός",
         "translation":"bronze",
         "imageURL":"bronze.webp",
-        "audioFile":""
-      },
-      {
-        "greek":"τὸ ἀργύριον",
-        "translation":"coin",
-        "imageURL":"coin.webp",
         "audioFile":""
       },
       {
@@ -198,9 +198,9 @@
         "audioFile": ""
       },
       {
-        "greek":"τὸ σύκον",
-        "translation":"fig",
-        "imageURL":"fig.webp",
+        "greek":"τὸ ἀργύριον",
+        "translation":"coin",
+        "imageURL":"coin.webp",
         "audioFile":""
       },
       {

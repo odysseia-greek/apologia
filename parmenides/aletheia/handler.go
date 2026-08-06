@@ -7,11 +7,11 @@ import (
 	"fmt"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/google/uuid"
 	elastic "github.com/odysseia-greek/agora/aristoteles"
-	pb "github.com/odysseia-greek/agora/eupalinos/proto"
-	"github.com/odysseia-greek/agora/eupalinos/stomion"
+	pb "github.com/odysseia-greek/agora/eupalinos/v1"
 	"github.com/odysseia-greek/agora/plato/logging"
 	"github.com/odysseia-greek/agora/plato/models"
 	"github.com/odysseia-greek/agora/plato/service"
@@ -19,11 +19,17 @@ import (
 	aristides "github.com/odysseia-greek/delphi/aristides/diplomat"
 )
 
+const requestTimeout = 30 * time.Second
+
+type queueClient interface {
+	EnqueueMessage(context.Context, *pb.Epistello) (*pb.EnqueueResponse, error)
+}
+
 type ParmenidesHandler struct {
 	Index            string
 	Created          int
 	Elastic          elastic.Client
-	Eupalinos        *stomion.QueueClient
+	Eupalinos        queueClient
 	Channel          string
 	DutchChannel     string
 	ExitCode         string
@@ -33,8 +39,11 @@ type ParmenidesHandler struct {
 	AggregatorCancel context.CancelFunc
 }
 
-func (p *ParmenidesHandler) DeleteIndexAtStartUp() error {
-	deleted, err := p.Elastic.Index().Delete(p.Index)
+func (p *ParmenidesHandler) DeleteIndexAtStartUp(ctx context.Context) error {
+	ctx, cancel := context.WithTimeout(ctx, requestTimeout)
+	defer cancel()
+
+	deleted, err := p.Elastic.Index().DeleteWithContext(ctx, p.Index)
 	logging.Info(fmt.Sprintf("deleted index: %s success: %v", p.Index, deleted))
 	if err != nil {
 		if deleted {
@@ -51,9 +60,12 @@ func (p *ParmenidesHandler) DeleteIndexAtStartUp() error {
 	return nil
 }
 
-func (p *ParmenidesHandler) CreateIndexAtStartup() error {
+func (p *ParmenidesHandler) CreateIndexAtStartup(ctx context.Context) error {
+	ctx, cancel := context.WithTimeout(ctx, requestTimeout)
+	defer cancel()
+
 	indexMapping := quizIndex(p.PolicyName, 1, 0)
-	created, err := p.Elastic.Index().Create(p.Index, indexMapping)
+	created, err := p.Elastic.Index().CreateWithContext(ctx, p.Index, indexMapping)
 	if err != nil {
 		return err
 	}
@@ -63,7 +75,7 @@ func (p *ParmenidesHandler) CreateIndexAtStartup() error {
 	return nil
 }
 
-func (p *ParmenidesHandler) AddWithQueue(quizDocs []interface{}) error {
+func (p *ParmenidesHandler) AddWithQueue(ctx context.Context, quizDocs []interface{}) error {
 	var buf bytes.Buffer
 	var wg sync.WaitGroup
 
@@ -74,28 +86,28 @@ func (p *ParmenidesHandler) AddWithQueue(quizDocs []interface{}) error {
 			wg.Add(1)
 			go func(q models.MediaQuiz) {
 				defer wg.Done()
-				p.processMediaQuiz(q)
+				p.processMediaQuiz(ctx, q)
 			}(q)
 
 		case models.AuthorbasedQuiz:
 			wg.Add(1)
 			go func(q models.AuthorbasedQuiz) {
 				defer wg.Done()
-				p.processAuthorBasedQuiz(q)
+				p.processAuthorBasedQuiz(ctx, q)
 			}(q)
 
 		case models.MultipleChoiceQuiz:
 			wg.Add(1)
 			go func(q models.MultipleChoiceQuiz) {
 				defer wg.Done()
-				p.processMultipleChoiceQuiz(q)
+				p.processMultipleChoiceQuiz(ctx, q)
 			}(q)
 
 		case GrammarBasedQuiz:
 			wg.Add(1)
 			go func(q GrammarBasedQuiz) {
 				defer wg.Done()
-				p.processGrammarQuiz(q)
+				p.processGrammarQuiz(ctx, q)
 			}(q)
 		}
 	}
@@ -119,7 +131,9 @@ func (p *ParmenidesHandler) AddWithQueue(quizDocs []interface{}) error {
 	wg.Wait()
 
 	// Bulk insert into Elasticsearch
-	res, err := p.Elastic.Document().Bulk(buf, p.Index)
+	elasticCtx, cancel := context.WithTimeout(ctx, requestTimeout)
+	defer cancel()
+	res, err := p.Elastic.Document().BulkWithContext(elasticCtx, buf, p.Index)
 	if err != nil {
 		logging.Error(err.Error())
 		return err
@@ -129,7 +143,7 @@ func (p *ParmenidesHandler) AddWithQueue(quizDocs []interface{}) error {
 	return nil
 }
 
-func (p *ParmenidesHandler) AddWithoutQueue(quizDocs []interface{}) error {
+func (p *ParmenidesHandler) AddWithoutQueue(ctx context.Context, quizDocs []interface{}) error {
 	var buf bytes.Buffer
 
 	for _, doc := range quizDocs {
@@ -147,7 +161,9 @@ func (p *ParmenidesHandler) AddWithoutQueue(quizDocs []interface{}) error {
 	}
 
 	// Send all documents in a single bulk request
-	res, err := p.Elastic.Document().Bulk(buf, p.Index)
+	elasticCtx, cancel := context.WithTimeout(ctx, requestTimeout)
+	defer cancel()
+	res, err := p.Elastic.Document().BulkWithContext(elasticCtx, buf, p.Index)
 	if err != nil {
 		logging.Error(err.Error())
 		return err
@@ -157,7 +173,7 @@ func (p *ParmenidesHandler) AddWithoutQueue(quizDocs []interface{}) error {
 	return nil
 }
 
-func (p *ParmenidesHandler) processMediaQuiz(q models.MediaQuiz) {
+func (p *ParmenidesHandler) processMediaQuiz(ctx context.Context, q models.MediaQuiz) {
 	for _, word := range q.Content {
 		meros := models.Meros{
 			Greek:    word.Greek,
@@ -171,14 +187,14 @@ func (p *ParmenidesHandler) processMediaQuiz(q models.MediaQuiz) {
 			Channel: p.Channel,
 		}
 
-		err := p.enqueueTask(context.Background(), msg)
+		err := p.enqueueTask(ctx, msg)
 		if err != nil {
 			logging.Error(err.Error())
 		}
 	}
 }
 
-func (p *ParmenidesHandler) processAuthorBasedQuiz(q models.AuthorbasedQuiz) {
+func (p *ParmenidesHandler) processAuthorBasedQuiz(ctx context.Context, q models.AuthorbasedQuiz) {
 	for _, word := range q.Content {
 		meros := models.Meros{
 			Greek:    word.Greek,
@@ -192,14 +208,14 @@ func (p *ParmenidesHandler) processAuthorBasedQuiz(q models.AuthorbasedQuiz) {
 			Channel: p.Channel,
 		}
 
-		err := p.enqueueTask(context.Background(), msg)
+		err := p.enqueueTask(ctx, msg)
 		if err != nil {
 			logging.Error(err.Error())
 		}
 
 		if word.HasGrammarQuestions {
 			for _, grammarQuestion := range word.GrammarQuestions {
-				err = p.sendToAggregator(context.Background(), grammarQuestion, word.Greek, word.Translation)
+				err = p.sendToAggregator(ctx, grammarQuestion, word.Greek, word.Translation)
 				if err != nil {
 					logging.Error(err.Error())
 					break
@@ -210,7 +226,7 @@ func (p *ParmenidesHandler) processAuthorBasedQuiz(q models.AuthorbasedQuiz) {
 	}
 }
 
-func (p *ParmenidesHandler) processMultipleChoiceQuiz(q models.MultipleChoiceQuiz) {
+func (p *ParmenidesHandler) processMultipleChoiceQuiz(ctx context.Context, q models.MultipleChoiceQuiz) {
 	for _, word := range q.Content {
 		meros := models.Meros{
 			Greek:    word.Greek,
@@ -235,14 +251,14 @@ func (p *ParmenidesHandler) processMultipleChoiceQuiz(q models.MultipleChoiceQui
 			msg.Channel = p.DutchChannel
 		}
 
-		err := p.enqueueTask(context.Background(), msg)
+		err := p.enqueueTask(ctx, msg)
 		if err != nil {
 			logging.Error(err.Error())
 		}
 	}
 }
 
-func (p *ParmenidesHandler) processGrammarQuiz(q GrammarBasedQuiz) {
+func (p *ParmenidesHandler) processGrammarQuiz(ctx context.Context, q GrammarBasedQuiz) {
 	for _, word := range q.Content {
 		grammarQuestion := models.GrammarQuestion{
 			CorrectAnswer:    word.GrammarQuestion.CorrectAnswer,
@@ -255,7 +271,7 @@ func (p *ParmenidesHandler) processGrammarQuiz(q GrammarBasedQuiz) {
 			grammarQuestion.TypeOfWord = "participle"
 		}
 
-		err := p.sendToAggregator(context.Background(), grammarQuestion, word.DictionaryForm, word.Translation)
+		err := p.sendToAggregator(ctx, grammarQuestion, word.DictionaryForm, word.Translation)
 		if err != nil {
 			logging.Error(err.Error())
 		}
@@ -304,6 +320,9 @@ func (p *ParmenidesHandler) sendToAggregator(ctx context.Context, grammarQuestio
 
 // EnqueueTask sends a task to the Eupalinos queue
 func (p *ParmenidesHandler) enqueueTask(ctx context.Context, message *pb.Epistello) error {
+	ctx, cancel := context.WithTimeout(ctx, requestTimeout)
+	defer cancel()
+
 	traceID, err := uuid.NewUUID()
 	ctx = context.WithValue(ctx, service.HeaderKey, traceID.String())
 	if err != nil {
